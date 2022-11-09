@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'graphene_django',
     'dj_database_url',
     # mvp modules
-    'swift',
+    'swiftmovers.swift',
 ]
 
 MIDDLEWARE = [

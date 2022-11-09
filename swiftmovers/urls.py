@@ -17,10 +17,10 @@ from django.contrib import admin
 from django.urls import path
 from django.views.decorators.csrf import csrf_exempt
 from graphene_django.views import GraphQLView
-from .schema import schema
+from swiftmovers.schema import schema
 
 urlpatterns = [
     # shall customise the admin route
     path('admin/', admin.site.urls),
-    path('api/', csrf_exempt(GraphQLView.as_view(schema=schema)))
+    path('', csrf_exempt(GraphQLView.as_view(schema=schema)))
 ]

@@ -32,7 +32,7 @@ application(
         "SERVER_NAME": SimpleLazyObject(get_allowed_host_lazy),
         "REMOTE_ADDR": "127.0.0.1",
         "SERVER_PORT": 80,
-        "PATH_INFO": "/api",
+        "PATH_INFO": "/",
         "wsgi.input": b"",
         "wsgi.multiprocess": True,
     },

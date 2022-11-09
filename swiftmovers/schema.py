@@ -1,6 +1,6 @@
 import graphene
 
-import swift.schema as swift
+import swiftmovers.swift.schema as swift
 
 
 class Query(swift.Query, graphene.ObjectType):
