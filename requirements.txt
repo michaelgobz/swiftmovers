@@ -1,0 +1,13 @@
+django~=4.1.2
+graphene-django
+django-filter
+django-graphql-jwt
+mysql-connector-python
+mysqlclient
+rave
+django-prices
+django-countries
+gunicorn
+dj-database-url
+graphene~=3.1.1
+uvicorn~=0.19.0
