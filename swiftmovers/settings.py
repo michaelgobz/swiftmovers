@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 # Application definition
 
 INSTALLED_APPS = [
+    # django modules
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,6 +44,15 @@ INSTALLED_APPS = [
     'dj_database_url',
     # mvp modules
     'swiftmovers.swift',
+    'swiftmovers.core',
+    'swiftmovers.accounts',
+    'swiftmovers.asgi',
+    'swiftmovers.checkouts',
+    'swiftmovers.invoices',
+    'swiftmovers.payments',
+    'swiftmovers.shipping',
+    'swiftmovers.graphqlcore',
+    'swiftmovers.wsgi'
 ]
 
 MIDDLEWARE = [
@@ -61,7 +71,6 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [TEMPLATES_DIR],
-        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -69,6 +78,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'loaders': [
+                "django.template.loaders.filesystem.Loader",
+                "django.template.loaders.app_directories.Loader",
+            ]
         },
     },
 ]
