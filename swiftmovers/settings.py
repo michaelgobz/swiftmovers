@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import dj_database_url
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,6 +25,8 @@ SECRET_KEY = 'django-insecure-#g#us34=x47@=oe&bhs2rwz$d@o-hnyb7aqh*3jz$_+zb%)w@b
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+PROJECT_ROOT = os.path.normpath(os.path.join(os.path.dirname(__file__), ".."))
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
@@ -53,11 +56,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'swiftmovers.urls'
-
+TEMPLATES_DIR = os.path.join(PROJECT_ROOT, "templates")
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATES_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
