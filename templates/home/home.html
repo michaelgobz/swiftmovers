@@ -168,7 +168,15 @@
             </p>
 
             <div class="tile__container">
-             {% if dashboard_url %}
+            {% if dashboard_url %}
+              <a href="{{dashboard_url}}" target="_blank">
+                <button class="btn tile">
+                  {% include "home/images/dashboard.svg" %}
+                  <span class="tile__label" href="#">Client</span>
+                </button>
+              </a>
+              {% endif %}
+             {% if client_url %}
               <a href="{{client_url}}" target="_blank">
                 <button class="btn tile">
                   {% include "home/images/dashboard.svg" %}

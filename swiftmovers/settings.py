@@ -66,6 +66,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'swiftmovers.urls'
 TEMPLATES_DIR = os.path.join(PROJECT_ROOT, "templates")
+print(TEMPLATES_DIR)
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
