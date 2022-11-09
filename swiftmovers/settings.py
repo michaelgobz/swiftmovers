@@ -46,13 +46,12 @@ INSTALLED_APPS = [
     'swiftmovers.swift',
     'swiftmovers.core',
     'swiftmovers.accounts',
-    'swiftmovers.asgi',
     'swiftmovers.checkouts',
     'swiftmovers.invoices',
     'swiftmovers.payments',
     'swiftmovers.shipping',
     'swiftmovers.graphqlcore',
-    'swiftmovers.wsgi'
+    'swiftmovers.orders'
 ]
 
 MIDDLEWARE = [
