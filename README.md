@@ -1,4 +1,4 @@
-# Swift-movers-api
+# Swift Movers Api
 
 A swift-movers-api project is a portfolio project for the alx Holberton final project
 It a proof of concept for logistics as a service system.
