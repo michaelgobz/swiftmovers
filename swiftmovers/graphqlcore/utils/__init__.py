@@ -21,6 +21,12 @@ REVERSED_DIRECTION = {
 }
 
 
+def get_user_or_app_from_context(context):
+    # order is important
+    # app can be None but user if None then is passed as anonymous
+    return context.app or context.user
+
+
 def query_identifier(document: GraphQLDocument) -> str:
     """Generate a fingerprint for a GraphQL query.
 
