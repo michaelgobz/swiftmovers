@@ -127,7 +127,8 @@ class GraphQLView(View):
                     break
         return response
 
-    def render_playground(self, request):
+    @staticmethod
+    def render_playground(request):
         return render(
             request,
             "playground/playground.html",
