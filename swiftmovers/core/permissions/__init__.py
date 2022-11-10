@@ -62,9 +62,9 @@ def one_of_permissions_or_auth_filter_required(context, permissions):
     granted_by_permissions = False
     granted_by_authorization_filters = False
 
-    from swiftmovers.graphqlcore.utils import get_user_or_app_from_context
+    from swiftmovers.graphqlcore.utils import get_user_from_context
 
-    requestor = get_user_or_app_from_context(context)
+    requestor = get_user_from_context(context)
 
     if requestor and permissions:
         perm_checks_results = []
