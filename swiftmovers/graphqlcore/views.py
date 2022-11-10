@@ -22,7 +22,6 @@ from graphql.error import GraphQLError, GraphQLSyntaxError
 from graphql.execution import ExecutionResult
 from jwt.exceptions import PyJWTError
 
-from .. import __version__ as saleor_version
 from ..core.exceptions import PermissionDenied, ReadOnlyException
 from ..core.utils import is_valid_ipv4, is_valid_ipv6
 from ..webhook import observability
@@ -33,6 +32,7 @@ from .query_cost_map import COST_MAP
 from .utils import format_error, query_fingerprint, query_identifier
 
 INT_ERROR_MSG = "Int cannot represent non 32-bit signed integer value"
+api_version = '1.0.0'
 
 
 def tracing_wrapper(execute, sql, params, many, context):
@@ -68,7 +68,7 @@ class GraphQLView(View):
     HANDLED_EXCEPTIONS = (GraphQLError, PyJWTError, ReadOnlyException, PermissionDenied)
 
     def __init__(
-        self, schema=None, executor=None, middleware=None, root_value=None, backend=None
+            self, schema=None, executor=None, middleware=None, root_value=None, backend=None
     ):
         super().__init__()
         if backend is None:
@@ -130,7 +130,7 @@ class GraphQLView(View):
     def render_playground(self, request):
         return render(
             request,
-            "graphql/playground.html",
+            "playground/playground.html",
             {
                 "api_url": request.build_absolute_uri(str(API_PATH)),
                 "plugins_url": request.build_absolute_uri("/plugins/"),
@@ -208,7 +208,7 @@ class GraphQLView(View):
             return response
 
     def get_response(
-        self, request: HttpRequest, data: dict
+            self, request: HttpRequest, data: dict
     ) -> Tuple[Optional[Dict[str, List[Any]]], int]:
         with observability.report_gql_operation() as operation:
             execution_result = self.execute_graphql_request(request, data)
@@ -236,7 +236,7 @@ class GraphQLView(View):
         return self.root_value
 
     def parse_query(
-        self, query: str
+            self, query: str
     ) -> Tuple[Optional[GraphQLDocument], Optional[ExecutionResult]]:
         """Attempt to parse a query (mandatory) to a gql document object.
 
@@ -454,7 +454,7 @@ def instantiate_middleware(middlewares):
 
 def generate_cache_key(raw_query: str) -> str:
     hashed_query = hashlib.sha256(str(raw_query).encode("utf-8")).hexdigest()
-    return f"{saleor_version}-{hashed_query}"
+    return f"{api_version}-{hashed_query}"
 
 
 def set_query_cost_on_result(execution_result: ExecutionResult, query_cost):
