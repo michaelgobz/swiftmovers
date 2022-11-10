@@ -8,6 +8,7 @@ rave
 redis
 django-prices
 django-countries
+psycopg2
 gunicorn
 dj-database-url
 celery~=5.2.7
@@ -15,6 +16,7 @@ graphene~=3.1.1
 uvicorn~=0.19.0
 cython
 graphql-core
+graphql-python=0.0.1
 pytimeparse~=1.1.8
 opentracing~=2.4.0
 PyJWT~=2.6.0
