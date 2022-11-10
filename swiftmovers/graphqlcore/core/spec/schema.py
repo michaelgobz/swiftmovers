@@ -76,8 +76,8 @@ def create_entity_type_resolver(schema):
 
     def resolve_entity_type(instance, info):
         # Use new strategy to resolve GraphQL Type for `ObjectType`
-        if isinstance(instance, ChannelContext):
-            model = type(instance.node)
+        if isinstance(instance):
+            model = type(instance)
         else:
             model = type(instance)
 
