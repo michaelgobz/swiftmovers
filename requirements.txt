@@ -23,3 +23,4 @@ pytimeparse~=1.1.8
 opentracing~=2.4.0
 PyJWT~=2.6.0
 asgiref~=3.5.2
+phonenumbers
