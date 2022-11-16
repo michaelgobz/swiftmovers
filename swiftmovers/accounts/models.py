@@ -1,6 +1,4 @@
-from django.db import models
 from uuid import uuid4
-import django_mysql
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
@@ -9,19 +7,15 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 
-from django.contrib.postgres.indexes import GinIndex
 from django.db import models
 from django.db.models import JSONField  # type: ignore
-from django.db.models import Q, QuerySet, Value
-from django.db.models.expressions import Exists, OuterRef
-from django.forms.models import model_to_dict
+from django.db.models import Q, Value
 from django.utils import timezone
 from django.utils.crypto import get_random_string
-from django_countries.fields import Country, CountryField
-from phonenumber_field.modelfields import PhoneNumber, PhoneNumberField
+from django_countries.fields import CountryField
+from phonenumber_field.modelfields import PhoneNumberField
 from .validators import validate_possible_number
 from .. import settings
-from ..settings import LANGUAGE_CODE
 
 
 # Create your models here.
@@ -117,9 +111,26 @@ class User(PermissionsMixin, AbstractBaseUser):
     language_code = models.CharField(
         max_length=35, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE
     )
-    search_document = models.TextField(blank=True, default="")
+    search_document = models.TextField(blank=True, default="")  # this shall be used later placeholder for this
     uuid = models.UUIDField(default=uuid4, unique=True)
 
     USERNAME_FIELD = "email"
 
     objects = UserManager()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._effective_permissions = None
+
+    def get_full_name(self):
+        if self.first_name or self.last_name:
+            return ("%s %s" % (self.first_name, self.last_name)).strip()
+        if self.default_billing_address:
+            first_name = self.default_billing_address.first_name
+            last_name = self.default_billing_address.last_name
+            if first_name or last_name:
+                return ("%s %s" % (first_name, last_name)).strip()
+        return self.email
+
+    def get_short_name(self):
+        return self.email
