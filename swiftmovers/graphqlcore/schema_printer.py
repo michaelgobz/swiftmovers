@@ -1,6 +1,6 @@
-"""Code ported from GraphQL Core 3.0.
+"""Code ported from GraphQL core 3.0.
 
-Can be dropped once we upgrade from the legacy version of GraphQL Core.
+Can be dropped once we upgrade from the legacy version of GraphQL core.
 """
 
 from typing import Callable, Dict, List, Optional, Union, cast
