@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'graphene_django',
     'dj_database_url',
+    'django_mysql',
     # mvp modules
     'swiftmovers.swift',
     'swiftmovers.core',
