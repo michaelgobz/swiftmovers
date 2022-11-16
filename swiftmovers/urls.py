@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path
 from django.views.decorators.csrf import csrf_exempt
-from swiftmovers.graphqlcore.views import GraphQLView
+# from swiftmovers.graphqlcore.views import GraphQLView
+from graphene_django.views import GraphQLView
 from swiftmovers.schema import schema
 from swiftmovers.core.views import home
 
