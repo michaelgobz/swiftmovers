@@ -6,7 +6,6 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import JSONField  # type: ignore
-from django_prices.models import MoneyField
 from prices import Money
 
 from ..core.taxes import zero_money
@@ -59,7 +58,7 @@ class Payment(models.Model):
     )
     currency = models.CharField(
         max_length=settings.DEFAULT_CURRENCY_CODE_LENGTH
-    )  # FIXME: add ISO4217 validator
+    )
 
     checkout = models.ForeignKey(
         DeliveryCheckout, null=True, related_name="payments", on_delete=models.SET_NULL
