@@ -7,7 +7,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import JSONField  # type: ignore
 from prices import Money
-
+from django_prices.models import MoneyField
+from django_mysql.models.fields import ListCharField
 from ..core.taxes import zero_money
 from ..checkouts.models import DeliveryCheckout
 from . import (
@@ -21,6 +22,76 @@ from . import (
 
 
 # Create your models here.
+
+class TransactionItem(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=512, blank=True, default="")
+    type = models.CharField(max_length=512, blank=True, default="")
+    reference = models.CharField(max_length=512, blank=True, default="")
+    available_actions = ListCharField(
+        models.CharField(max_length=128, choices=TransactionAction.CHOICES),
+        default=list,
+    )
+
+    currency = models.CharField(max_length=settings.DEFAULT_CURRENCY_CODE_LENGTH)
+
+    amount_charged = MoneyField(amount_field="charged_value", currency_field="currency")
+    charged_value = models.DecimalField(
+        max_digits=settings.DEFAULT_MAX_DIGITS,
+        decimal_places=settings.DEFAULT_DECIMAL_PLACES,
+        default=Decimal("0"),
+    )
+    amount_authorized = MoneyField(
+        amount_field="authorized_value", currency_field="currency"
+    )
+    authorized_value = models.DecimalField(
+        max_digits=settings.DEFAULT_MAX_DIGITS,
+        decimal_places=settings.DEFAULT_DECIMAL_PLACES,
+        default=Decimal("0"),
+    )
+    amount_refunded = MoneyField(
+        amount_field="refunded_value", currency_field="currency"
+    )
+    refunded_value = models.DecimalField(
+        max_digits=settings.DEFAULT_MAX_DIGITS,
+        decimal_places=settings.DEFAULT_DECIMAL_PLACES,
+        default=Decimal("0"),
+    )
+    amount_voided = MoneyField(amount_field="voided_value", currency_field="currency")
+    voided_value = models.DecimalField(
+        max_digits=settings.DEFAULT_MAX_DIGITS,
+        decimal_places=settings.DEFAULT_DECIMAL_PLACES,
+        default=Decimal("0"),
+    )
+
+    checkout = models.ForeignKey(
+        DeliveryCheckout,
+        null=True,
+        related_name="payment_transactions",
+        on_delete=models.SET_NULL,
+    )
+    order = models.ForeignKey(
+        "orders.Order",
+        related_name="payment_transactions",
+        null=True,
+        on_delete=models.PROTECT,
+    )
+
+
+class TransactionEvent(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(
+        max_length=128,
+        choices=TransactionStatus.CHOICES,
+        default=TransactionStatus.SUCCESS,
+    )
+    reference = models.CharField(max_length=512, blank=True, default="")
+    name = models.CharField(max_length=512, blank=True, default="")
+
+    transaction = models.ForeignKey(
+        TransactionItem, related_name="events", on_delete=models.CASCADE
+    )
 
 
 class Payment(models.Model):
