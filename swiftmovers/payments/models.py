@@ -27,16 +27,14 @@ from . import (
 class Payment(models.Model):
     """A model that represents a single payment.
 
-    This might be a transactable payment information such as credit card
-    details, gift card information or a customer's authorization to charge
-    their PayPal account.
-
     All payment process related pieces of information are stored
     at the gateway level, we are operating on the reusable token
     which is a unique identifier of the customer for given gateway.
 
     Several payment methods can be used within a single order. Each payment
     method may consist of multiple transactions.
+
+    with different metadata
     """
 
     gateway = models.CharField(max_length=255)
