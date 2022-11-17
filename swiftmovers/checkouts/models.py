@@ -18,8 +18,7 @@ from prices import Money
 # from ..core.taxes import zero_money # wait till for premium transportation
 from ..core.weight import zero_weight
 from ..core.taxes import zero_money
-
-# from ..shipping.models import ShippingMethod
+from ..shipping.models import ShippingMethod
 
 # Create your models here.
 
@@ -54,7 +53,7 @@ class DeliveryCheckout(models.Model):
     email = models.EmailField(blank=True, null=True)
     token = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     billing_address = models.ForeignKey(
-        "account.Address",
+        "accounts.Address",
         related_name="+",
         editable=False,
         null=True,
