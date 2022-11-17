@@ -1,16 +1,15 @@
 from typing import TYPE_CHECKING, List, Union
 
-from django.conf import settings
 from django.db import models
-from django.db.models import OuterRef, Q, Subquery
 from django_countries.fields import CountryField
 from django_measurement.models import MeasurementField
-from django_prices.models import MoneyField
 from measurement.measures import Weight
 from prices import Money
 
 from . import ShippingMethodType
 from ..core.db.fields import SanitizedJSONField
+from ..core.weight import zero_weight
+from ..core.utils.editor import clean_editor_js
 
 # Create your models here.
 
@@ -18,7 +17,19 @@ if TYPE_CHECKING:
     # flake8: noqa
     from ..checkouts.models import DeliveryCheckout
     # TODO: make the model for the orders
-    # from ..orders.models import DeliveryOrder
+    # from .orders.models import DeliveryOrder
+
+
+def _applicable_weight_based_methods(weight, qs):
+    """Return weight based shipping methods that are applicable for the total weight."""
+    qs = qs.weight_based()
+    min_weight_matched = Q(minimum_order_weight__lte=weight) | Q(
+        minimum_order_weight__isnull=True
+    )
+    max_weight_matched = Q(maximum_order_weight__gte=weight) | Q(
+        maximum_order_weight__isnull=True
+    )
+    return qs.filter(min_weight_matched & max_weight_matched)
 
 
 # shipping zone
@@ -30,7 +41,6 @@ class ShippingZone(models.Model):
 
 
 # shipping method
-
 
 class ShippingMethodQueryset(models.QuerySet):
     def price_based(self):
@@ -67,9 +77,8 @@ class ShippingMethodQueryset(models.QuerySet):
         if product_ids:
             qs = self.exclude_shipping_methods_for_excluded_products(qs, product_ids)
 
-        price_based_methods = _applicable_price_based_methods(price, qs )
         weight_based_methods = _applicable_weight_based_methods(weight, qs)
-        shipping_methods = price_based_methods | weight_based_methods
+        shipping_methods = weight_based_methods
 
         return shipping_methods
 
@@ -100,9 +109,7 @@ class ShippingMethodQueryset(models.QuerySet):
             product_ids=instance_product_ids,
         ).prefetch_related("postal_code_rules")
 
-        return filter_shipping_methods_by_postal_code_rules(
-            applicable_methods, instance.shipping_address
-        )
+        return applicable_methods, instance.shipping_address
 
 
 class ShippingMethod(models.Model):
