@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING, List, Union
 
 from django.db import models
+from django.db.models import Q
 from django_countries.fields import CountryField
 from django_measurement.models import MeasurementField
 from measurement.measures import Weight
