@@ -2,8 +2,6 @@ from decimal import Decimal
 from operator import attrgetter
 
 from django.conf import settings
-from django.contrib.postgres.fields import ArrayField
-from django.contrib.postgres.indexes import GinIndex
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
