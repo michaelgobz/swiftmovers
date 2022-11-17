@@ -61,7 +61,7 @@ class DeliveryCheckout(models.Model):
         on_delete=models.SET_NULL,
     )
     shipping_address = models.ForeignKey(
-        "account.Address",
+        "accounts.Address",
         related_name="+",
         editable=False,
         null=True,
