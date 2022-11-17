@@ -17,6 +17,7 @@ from prices import Money
 
 # from ..core.taxes import zero_money # wait till for premium transportation
 from ..core.weight import zero_weight
+from ..core.taxes import zero_money
 
 # from ..shipping.models import ShippingMethod
 
@@ -176,7 +177,8 @@ class DeliveryCheckout(models.Model):
             return zero_money(currency=self.currency)
         return Money(balance, self.currency)
 
-    def get_total_weight(self, lines: Iterable["CheckoutLineInfo"]) -> "Weight":
+    @staticmethod
+    def get_total_weight(lines: Iterable["CheckoutLineInfo"]) -> "Weight":
         weights = zero_weight()
         for checkout_line_info in lines:
             line = checkout_line_info.line
