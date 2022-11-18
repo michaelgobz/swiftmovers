@@ -20,7 +20,6 @@ from . import (
     TransactionStatus,
 )
 
-
 # Create your models here.
 
 class TransactionItem(models.Model):
