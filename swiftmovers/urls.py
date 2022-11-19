@@ -24,6 +24,6 @@ from swiftmovers.core.views import home
 urlpatterns = [
     # shall customise the admin route
     # path('admin/', admin.site.urls), ### i dont use this url
-    re_path(r'graphql\$', csrf_exempt(GraphQLView.as_view(graphiql=True)), name="api"),
+    re_path(r'^graphql\$', csrf_exempt(GraphQLView.as_view(graphiql=True)), name="api"),
     re_path(r'^$', home, name='home')
 ]
