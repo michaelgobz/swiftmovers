@@ -262,7 +262,8 @@ class GraphQLView(View):
         except (ValueError, GraphQLSyntaxError) as e:
             return None, ExecutionResult(errors=[e], invalid=True)
 
-    def check_if_query_contains_only_schema(self, document: GraphQLDocument):
+    @staticmethod
+    def check_if_query_contains_only_schema(document: GraphQLDocument):
         query_with_schema = False
         for definition in document.document_ast.definitions:
             selections = definition.selection_set.selections

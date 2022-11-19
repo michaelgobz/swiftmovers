@@ -6,12 +6,12 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no"
     />
-    <title>Swift Movers Server</title>
+    <title>Swift Movers</title>
     <style>
       @import url("https://rsms.me/inter/inter.css");
       html,
       body {
-        font-family: Inter;
+          font-family: Inter, serif;
         font-size: 16px;
         font-weight: 300;
         line-height: 19px;
@@ -153,7 +153,7 @@
   <body>
     <div class="container">
       <nav class="nav">
-        <span>View documentation</span>
+          <span><a href="{% url "documentation" %}" target="_blank"  >View documentation</a></span>
       </nav>
       <div class="inner-container">
         <div class="content-container">
@@ -161,7 +161,7 @@
           </div>
           <main class="main">
             <h1>Congratulations.</h1>
-            <h2>The Swift Movers Api is Running Successfully</h2>
+            <h2>The Swift Movers API is Running Successfully</h2>
 
             <p>
               Now Its time to Experiment with the GraphQL API
@@ -185,17 +185,17 @@
               </a>
               {% endif %}
 
-              <a href={% url "api" %}  target="_blank">
+              <a href={% url "graphql" %}  target="_blank">
                 <button class="btn tile">
                   {% include "home/images/playground.svg" %}
-                  <span class="tile__label" href="#">API Playground</span>
+                  <span class="tile__label" href="#">GraphQL Playground</span>
                 </button>
               </a>
             </div>
 
             {% if  not dashboard_url %}
             <p>
-              The api is running alone without a client
+              The API is running alone without a client
               <a
                 href="https://github.com/michaelgobz/swiftmovers"
                 target="_blank"
