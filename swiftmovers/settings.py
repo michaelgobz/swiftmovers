@@ -108,7 +108,7 @@ DATABASE_REPLICA_NAME = 'replica'
 
 DATABASES = {
     DATABASE_DEFAULT_NAME: dj_database_url.config(
-        default='postgres://swiftAdmin:swiftAdmin@0949@localhost:5432/swift', conn_max_age=800
+        default='postgres://swiftAdmin:swiftAdmin@localhost:5432/swift', conn_max_age=800
     )
     # TODO :  add replication user
 
