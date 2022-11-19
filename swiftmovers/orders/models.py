@@ -1,7 +1,4 @@
 from decimal import Decimal
-from operator import attrgetter
-from re import match
-from typing import Optional
 from uuid import uuid4
 
 from django.conf import settings
@@ -10,7 +7,6 @@ from django.core.validators import MinValueValidator
 from django.db import connection, models
 from django.db.models import JSONField  # type: ignore
 from django.db.models import F, Max
-from django.db.models.expressions import Exists, OuterRef
 from django.utils.timezone import now
 from django_measurement.models import MeasurementField
 from django_prices.models import MoneyField, TaxedMoneyField
@@ -20,10 +16,8 @@ from measurement.measures import Weight
 
 from ..shipping.models import ShippingMethod
 from . import (
-    FulfillmentStatus,
     OrderAuthorizeStatus,
     OrderChargeStatus,
-    OrderEvents,
     OrderOrigin,
     OrderStatus,
 )
