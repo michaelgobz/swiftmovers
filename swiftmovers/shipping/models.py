@@ -10,6 +10,7 @@ from prices import Money
 from . import ShippingMethodType
 from ..core.db.fields import SanitizedJSONField
 from ..core.weight import zero_weight
+from ..core.units import WeightUnits
 from ..core.utils.editor import clean_editor_js
 
 # Create your models here.

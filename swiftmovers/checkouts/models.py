@@ -15,10 +15,10 @@ from django_countries.fields import Country, CountryField
 from django_prices.models import MoneyField, TaxedMoneyField
 from prices import Money
 
-# from ..core.taxes import zero_money # wait till for premium transportation
 from ..core.weight import zero_weight
 from ..core.taxes import zero_money
 from ..shipping.models import ShippingMethod
+from ..accounts.models import DeliveryAddress
 
 # Create your models here.
 
@@ -67,15 +67,14 @@ class DeliveryCheckout(models.Model):
         on_delete=models.SET_NULL,
     )
     shipping_method = models.ForeignKey(
-        # TODO: add the shipping models
-        # ShippingMethod,
+        ShippingMethod,
         blank=True,
         null=True,
         related_name="checkouts",
         on_delete=models.SET_NULL,
     )
     delivery_point = models.ForeignKey(
-        # "warehouse.Warehouse",
+        DeliveryAddress,
         # TODO :add the delivery address model
         blank=True,
         null=True,
@@ -236,7 +235,7 @@ class CheckoutLine(models.Model):
     )
     item = models.ForeignKey(
         # TODO: add the product items
-        # "product.ProductVariant", related_name="+", on_delete=models.CASCADE
+        ShippingMethod, related_name="+", on_delete=models.CASCADE
     )
     quantity = models.PositiveIntegerField(validators=[MinValueValidator(1)])
     price_override = models.DecimalField(

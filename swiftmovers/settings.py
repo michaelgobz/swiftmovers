@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'graphene_django',
     'dj_database_url',
     'django_mysql',
@@ -53,7 +54,14 @@ INSTALLED_APPS = [
     'swiftmovers.payments',
     'swiftmovers.shipping',
     'swiftmovers.graphqlcore',
-    'swiftmovers.orders'
+    'swiftmovers.orders',
+    # external apps
+    'django_measurement',
+    'django_prices',
+    'django_countries',
+    'django_filters',
+    'phonenumber_field',
+    'phonenumbers'
 ]
 
 MIDDLEWARE = [

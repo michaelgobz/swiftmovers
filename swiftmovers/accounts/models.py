@@ -46,6 +46,27 @@ class AddressQueryset(models.QuerySet):
         )
 
 
+class DeliveryAddressQuerySet(models.QuerySet):
+    @staticmethod
+    def annotate_default(user):
+        # Set default shipping/billing address pk to None
+        # if default shipping/billing address doesn't exist
+        default_shipping_address_pk, default_billing_address_pk = None, None
+        if user.default_shipping_address:
+            default_shipping_address_pk = user.default_shipping_address.pk
+        if user.default_billing_address:
+            default_billing_address_pk = user.default_billing_address.pk
+
+        return user.addresses.annotate(
+            user_default_shipping_address_pk=Value(
+                default_shipping_address_pk, models.IntegerField()
+            ),
+            user_default_billing_address_pk=Value(
+                default_billing_address_pk, models.IntegerField()
+            ),
+        )
+
+
 class Address(models.Model):
     first_name = models.CharField(max_length=256, blank=True)
     last_name = models.CharField(max_length=256, blank=True)
@@ -60,6 +81,21 @@ class Address(models.Model):
     phone = PossiblePhoneNumberField(blank=True, default="", db_index=True)
 
     objects = models.Manager.from_queryset(AddressQueryset)()
+
+
+class DeliveryAddress(models.Model):
+    first_name = models.CharField(max_length=256, blank=True)
+    last_name = models.CharField(max_length=256, blank=True)
+    company_name = models.CharField(max_length=256, blank=True)
+    street_address_1 = models.CharField(max_length=256, blank=True)
+    street_address_2 = models.CharField(max_length=256, blank=True)
+    city = models.CharField(max_length=256, blank=True)
+    city_area = models.CharField(max_length=128, blank=True)
+    postal_code = models.CharField(max_length=20, blank=True)
+    country = CountryField()
+    country_area = models.CharField(max_length=128, blank=True)
+    phone = PossiblePhoneNumberField(blank=True, default="", db_index=True)
+    address_note = models.CharField(max_length=128, blank=True)
 
 
 class UserManager(BaseUserManager):

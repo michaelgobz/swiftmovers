@@ -5,7 +5,6 @@ from typing import Optional
 from uuid import uuid4
 
 from django.conf import settings
-from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import SearchVectorField
 from django.core.validators import MinValueValidator
 from django.db import connection, models
@@ -29,6 +28,7 @@ from . import (
     OrderStatus,
 )
 from ..core.weight import zero_weight
+from ..core.units import WeightUnits
 
 
 class OrderQueryset(models.QuerySet):
@@ -301,7 +301,7 @@ class OrderLine(models.Model):
     )
     variant = models.ForeignKey(
         # TODO :  add the items model
-        #  "product.ProductVariant",
+        "accounts.Address",
         related_name="order_lines",
         on_delete=models.SET_NULL,
         blank=True,
