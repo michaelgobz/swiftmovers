@@ -4,7 +4,6 @@ from django.contrib.auth.models import (
     BaseUserManager,
     Group,
     Permission,
-    PermissionsMixin,
 )
 
 from django.db import models
@@ -124,7 +123,7 @@ class UserManager(BaseUserManager):
         return self.get_queryset().filter(is_staff=True)
 
 
-class User(PermissionsMixin, AbstractBaseUser):
+class User(AbstractBaseUser):
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=256, blank=True)
     last_name = models.CharField(max_length=256, blank=True)
@@ -155,7 +154,7 @@ class User(PermissionsMixin, AbstractBaseUser):
     objects = UserManager()
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+       # super().__init__(*args, **kwargs)
         self._effective_permissions = None
 
     def get_full_name(self):

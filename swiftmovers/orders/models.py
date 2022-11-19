@@ -147,7 +147,7 @@ class Order(models.Model):
         on_delete=models.SET_NULL,
     )
     collection_point = models.ForeignKey(
-        "warehouse.Warehouse",
+        "accounts.DeliveryAddress",
         blank=True,
         null=True,
         related_name="orders",

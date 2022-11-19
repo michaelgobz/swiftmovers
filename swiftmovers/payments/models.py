@@ -20,6 +20,7 @@ from . import (
     TransactionStatus,
 )
 
+
 # Create your models here.
 
 class TransactionItem(models.Model):
@@ -28,10 +29,8 @@ class TransactionItem(models.Model):
     status = models.CharField(max_length=512, blank=True, default="")
     type = models.CharField(max_length=512, blank=True, default="")
     reference = models.CharField(max_length=512, blank=True, default="")
-    available_actions = ListCharField(
-        models.CharField(max_length=128, choices=TransactionAction.CHOICES),
-        default=list,
-    )
+    available_actions = ListCharField(models.CharField(max_length=256,choices=TransactionAction.CHOICES,
+                                      default=list), name="available_actions", max_length=256,)
 
     currency = models.CharField(max_length=settings.DEFAULT_CURRENCY_CODE_LENGTH)
 

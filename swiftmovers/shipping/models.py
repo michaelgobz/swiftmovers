@@ -133,9 +133,6 @@ class ShippingMethod(models.Model):
         blank=True,
         null=True,
     )
-    excluded_products = models.ManyToManyField(
-        "product.Product", blank=True
-    )  # type: ignore
     maximum_delivery_days = models.PositiveIntegerField(null=True, blank=True)
     minimum_delivery_days = models.PositiveIntegerField(null=True, blank=True)
     description = SanitizedJSONField(blank=True, null=True, sanitizer=clean_editor_js)

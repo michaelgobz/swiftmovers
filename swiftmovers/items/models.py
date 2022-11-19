@@ -1,15 +1,13 @@
-
-
 from django.db import models
 from django.db.models import JSONField  # type: ignore
 from django.db.models import TextField
 from django_measurement.models import MeasurementField
 from measurement.measures import Weight
 
-
 from ..core.db.fields import SanitizedJSONField
 from ..core.utils.editor import clean_editor_js
 from ..core.weight import zero_weight
+from ..core.units import WeightUnits
 from . import ProductTypeKind
 
 
