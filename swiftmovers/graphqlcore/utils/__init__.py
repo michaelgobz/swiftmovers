@@ -30,7 +30,7 @@ def get_user_from_context(context):
 def query_identifier(document: GraphQLDocument) -> str:
     """Generate a fingerprint for a GraphQL query.
 
-    For queries identifier is sorted set of all root objects separated by `,`.
+    For resolvers identifier is sorted set of all root objects separated by `,`.
     e.g
     query AnyQuery {
         product {

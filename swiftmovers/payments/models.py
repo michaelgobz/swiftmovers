@@ -193,7 +193,7 @@ class Payment(models.Model):
         money = zero_money(self.currency)
 
         # Query all the transactions which should be prefetched
-        # to optimize db queries
+        # to optimize db resolvers
         transactions = self.transactions.all()
 
         # There is no authorized amount anymore when capture is succeeded
