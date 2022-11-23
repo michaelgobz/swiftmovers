@@ -28,6 +28,7 @@ SECRET_KEY = 'django-insecure-#g#us34=x47@=oe&bhs2rwz$d@o-hnyb7aqh*3jz$_+zb%)w@b
 DEBUG = True
 
 PROJECT_ROOT = os.path.normpath(os.path.join(os.path.dirname(__file__), ".."))
+ENABLE_ACCOUNT_CONFIRMATION_BY_EMAIL = os.environ.get("ENABLE_ACCOUNT_CONFIRMATION_BY_EMAIL") | False
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
