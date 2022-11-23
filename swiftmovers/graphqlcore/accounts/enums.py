@@ -1,7 +1,7 @@
 import graphene
 from django_countries import countries
 
-from ...checkout import AddressType
+from ...checkouts import AddressType
 from ...graphqlcore.core.enums import to_enum
 from ..core.enums import str_to_enum
 
