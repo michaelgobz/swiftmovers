@@ -75,7 +75,7 @@ LanguageCodeEnum = graphene.Enum(
     [(lang[0].replace("-", "_").upper(), lang[0]) for lang in settings.LANGUAGES],
 )
 
-# unit enums
+# unit enums.py
 MeasurementUnitsEnum = to_enum(MeasurementUnits)
 DistanceUnitsEnum = to_enum(DistanceUnits)
 AreaUnitsEnum = to_enum(AreaUnits)

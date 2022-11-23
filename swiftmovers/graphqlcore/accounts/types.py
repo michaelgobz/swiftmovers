@@ -431,6 +431,7 @@ class UserCreateInput(CustomerInput):
         )
     )
 
+
 class BaseCustomerCreate(ModelMutation, I18nMixin):
     """Base mutation for customer create used by staff and account."""
 

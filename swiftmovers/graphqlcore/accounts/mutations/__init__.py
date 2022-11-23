@@ -114,7 +114,6 @@ class BaseCustomerCreate(graphene.Mutation):
         if default_shipping_address:
             instance.addresses.add(default_shipping_address)
 
-        instance.search_document = prepare_user_search_document_value(instance)
         instance.save(update_fields=["search_document", "updated_at"])
 
         # The instance is a new object in db, create an event
