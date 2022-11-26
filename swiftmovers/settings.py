@@ -9,11 +9,23 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import ast
 from pathlib import Path
 import dj_database_url
 import os
 from .core.languages import LANGUAGES as CORE_LANGUAGES
+
+
+# utility functions
+def get_bool_env(name, default_value):
+    if name in os.environ:
+        value = os.environ[name]
+        try:
+            return ast.literal_eval(value)
+        except ValueError as e:
+            raise ValueError("{} is an invalid value for {}".format(value, name)) from e
+    return default_value
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +40,7 @@ SECRET_KEY = 'django-insecure-#g#us34=x47@=oe&bhs2rwz$d@o-hnyb7aqh*3jz$_+zb%)w@b
 DEBUG = True
 
 PROJECT_ROOT = os.path.normpath(os.path.join(os.path.dirname(__file__), ".."))
-ENABLE_ACCOUNT_CONFIRMATION_BY_EMAIL = os.environ.get("ENABLE_ACCOUNT_CONFIRMATION_BY_EMAIL") | False
+ENABLE_ACCOUNT_CONFIRMATION_BY_EMAIL = get_bool_env("ENABLE_ACCOUNT_CONFIRMATION_BY_EMAIL", False)
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
