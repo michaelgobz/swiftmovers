@@ -20,7 +20,7 @@ from ...account.i18n import I18nMixin
 from ...accounts.types import Address, AddressInput, User
 from ...core.enums import LanguageCodeEnum
 from ...core.types import AccountError
-from ...core.mutations.base import BaseMutation
+from ...core.mutations.base import BaseMutation, ModelMutation
 
 BILLING_ADDRESS_FIELD = "default_billing_address"
 SHIPPING_ADDRESS_FIELD = "default_shipping_address"
@@ -392,7 +392,7 @@ class UserCreateInput(CustomerInput):
     )
 
 
-class BaseCustomerCreate(BaseMutation):
+class BaseCustomerCreate(ModelMutation):
     """Base mutation for customer create used by staff and account."""
 
     class Arguments:
