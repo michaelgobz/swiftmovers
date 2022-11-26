@@ -6,20 +6,13 @@ from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from ....accounts import models
 from ....accounts.error_codes import AccountErrorCode
 
-from ....account.search import prepare_user_search_document_value
 from ....checkouts import AddressType
-from ....core.db.utils import set_mutation_flag_in_context
-from ....core.exceptions import PermissionDenied
-from ....core.permissions import AccountPermissions, AuthorizationFilters
 from ....core.tracing import traced_atomic_transaction
-from ....core.utils.url import validate_storefront_url
-from ....giftcard.utils import assign_user_gift_cards
-from ....graphql.utils import get_user_or_app_from_context
-from ....order.utils import match_orders_with_new_user
-from ...account.i18n import I18nMixin
+from ....graphqlcore.utils import get_user_or_app_from_context
+from ....orders.utils import match_orders_with_new_user
 from ...accounts.types import Address, AddressInput, User
 from ...core.enums import LanguageCodeEnum
-from ...core.types import AccountError
+from ...core.types.globals import AccountError
 from ...core.mutations.base import BaseMutation, ModelMutation
 
 BILLING_ADDRESS_FIELD = "default_billing_address"

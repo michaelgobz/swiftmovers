@@ -89,6 +89,6 @@ CheckoutErrorCode = graphene.Enum.from_enum(checkout_error_codes.CheckoutErrorCo
 OrderErrorCode = graphene.Enum.from_enum(order_error_codes.OrderErrorCode)
 InvoiceErrorCode = graphene.Enum.from_enum(invoice_error_codes.InvoiceErrorCode)
 PaymentErrorCode = graphene.Enum.from_enum(payment_error_codes.PaymentErrorCode)
-shippingErrorCodes = graphene.Enum.from_enum(shipping_error_codes.ShippingErrorCode)
+ShippingErrorCodes = graphene.Enum.from_enum(shipping_error_codes.ShippingErrorCode)
 
 itemsErrorCode = graphene.Enum.from_enum(items_error_codes.ProductErrorCode)
