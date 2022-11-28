@@ -16,7 +16,7 @@ from ..account.utils import check_is_owner_or_has_one_of_perms
 from ..app.dataloaders import AppByIdLoader
 from ..app.types import App
 from ..checkout.dataloaders import CheckoutByUserAndChannelLoader, CheckoutByUserLoader
-from ..checkout.types import Checkout
+from ..checkouts.types import Checkout
 from ..core.connection import CountableConnection, create_connection_slice
 from ..core.descriptions import DEPRECATED_IN_3X_FIELD
 from ..core.enums import LanguageCodeEnum
@@ -27,6 +27,7 @@ from ..core.types.globals import (
     NonNullList,
 
 )
+from ..core.types.model import ModelObjectType
 from ..core.utils import from_global_id_or_error, str_to_enum, to_global_id_or_none
 from ..giftcard.dataloaders import GiftCardsByUserLoader
 from ..meta.types import ObjectWithMetadata
@@ -36,8 +37,7 @@ from .dataloaders import (
     CustomerEventsByUserLoader,
     ThumbnailByUserIdSizeAndFormatLoader,
 )
-from .enums import CountryCodeEnum, CustomerEventsEnum
-from .utils import can_user_manage_group, get_groups_which_user_can_manage
+from .enums import CountryCodeEnum
 
 
 class AddressInput(graphene.InputObjectType):
@@ -151,10 +151,10 @@ class CustomerEvent(ModelObjectType):
     message = graphene.String(description="Content of the event.")
     count = graphene.Int(description="Number of objects concerned by the event.")
     order = graphene.Field(
-        "saleor.graphql.order.types.Order", description="The concerned order."
+        "swiftmovers.graphqlcore.order.types.Order", description="The concerned order."
     )
-    order_line = graphene.Field(
-        "saleor.graphql.order.types.OrderLine", description="The concerned order line."
+    items_line = graphene.Field(
+        "swiftmovers.graphqlcore.order.types.itemsLine", description="The concerned order line."
     )
 
     class Meta:
@@ -166,18 +166,10 @@ class CustomerEvent(ModelObjectType):
     def resolve_user(root: models.CustomerEvent, info):
         user = info.context.user
         if (
-            user == root.user
-            or user.has_perm(AccountPermissions.MANAGE_USERS)
-            or user.has_perm(AccountPermissions.MANAGE_STAFF)
+                user == root.user
+
         ):
             return root.user
-        raise PermissionDenied(
-            permissions=[
-                AccountPermissions.MANAGE_STAFF,
-                AccountPermissions.MANAGE_USERS,
-                AuthorizationFilters.OWNER,
-            ]
-        )
 
     @staticmethod
     def resolve_app(root: models.CustomerEvent, info):
@@ -290,11 +282,6 @@ class User(ModelObjectType):
         description="List of user's permission groups which user can manage.",
     )
     avatar = ThumbnailField()
-    events = PermissionsField(
-        NonNullList(CustomerEvent),
-        description="List of events associated with the user.",
-        permissions=[AccountPermissions.MANAGE_USERS, AccountPermissions.MANAGE_STAFF],
-    )
     stored_payment_sources = NonNullList(
         "saleor.graphql.payment.types.PaymentSource",
         description="List of stored payment sources.",
@@ -467,7 +454,7 @@ class User(ModelObjectType):
 
     @staticmethod
     def __resolve_references(roots: List["User"], info):
-        from .resolvers import resolve_users
+        from .resolvers.resolvers import resolve_users
 
         ids = set()
         emails = set()
@@ -521,63 +508,10 @@ class AddressValidationData(graphene.ObjectType):
     postal_code_prefix = graphene.String(required=True)
 
 
-class StaffNotificationRecipient(graphene.ObjectType):
-    id = graphene.ID(required=True)
-    user = graphene.Field(
-        User,
-        description="Returns a user subscribed to email notifications.",
-        required=False,
-    )
-    email = graphene.String(
-        description=(
-            "Returns email address of a user subscribed to email notifications."
-        ),
-        required=False,
-    )
-    active = graphene.Boolean(description="Determines if a notification active.")
-
-    class Meta:
-        description = (
-            "Represents a recipient of email notifications send by Saleor, "
-            "such as notifications about new orders. Notifications can be "
-            "assigned to staff users or arbitrary email addresses."
-        )
-        interfaces = [relay.Node]
-        model = models.StaffNotificationRecipient
-
-    @staticmethod
-    def get_node(info, id):
-        try:
-            return models.StaffNotificationRecipient.objects.get(pk=id)
-        except models.StaffNotificationRecipient.DoesNotExist:
-            return None
-
-    @staticmethod
-    def resolve_user(root: models.StaffNotificationRecipient, info):
-        user = info.context.user
-        if user == root.user or user.has_perm(AccountPermissions.MANAGE_STAFF):
-            return root.user
-        raise PermissionDenied(
-            permissions=[AccountPermissions.MANAGE_STAFF, AuthorizationFilters.OWNER]
-        )
-
-    @staticmethod
-    def resolve_email(root: models.StaffNotificationRecipient, _info):
-        return root.get_email()
-
-
 @federated_entity("id")
 class Group(ModelObjectType):
     id = graphene.GlobalID(required=True)
     name = graphene.String(required=True)
-    users = PermissionsField(
-        NonNullList(User),
-        description="List of group users",
-        permissions=[
-            AccountPermissions.MANAGE_STAFF,
-        ],
-    )
-    permissions = NonNullList(Permission, description="List of group permissions")
     user_can_manage = graphene.Boolean(
         required=True,
         description=(
@@ -585,38 +519,9 @@ class Group(ModelObjectType):
         ),
     )
 
-    class Meta:
-        description = "Represents permission group data."
-        interfaces = [relay.Node]
-        model = auth_models.Group
-
     @staticmethod
     def resolve_users(root: auth_models.Group, _info):
         return root.user_set.all()
-
-    @staticmethod
-    def resolve_permissions(root: auth_models.Group, _info):
-        permissions = root.permissions.prefetch_related("content_type").order_by(
-            "codename"
-        )
-        return format_permissions_for_display(permissions)
-
-    @staticmethod
-    def resolve_user_can_manage(root: auth_models.Group, info):
-        user = info.context.user
-        return can_user_manage_group(user, root)
-
-    @staticmethod
-    def __resolve_references(roots: List["Group"], info):
-        from .resolvers import resolve_permission_groups
-
-        requestor = get_user_or_app_from_context(info.context)
-        if not requestor.has_perm(AccountPermissions.MANAGE_STAFF):
-            qs = auth_models.Group.objects.none()
-        else:
-            qs = resolve_permission_groups(info)
-
-        return resolve_federation_references(Group, roots, qs)
 
 
 class GroupCountableConnection(CountableConnection):

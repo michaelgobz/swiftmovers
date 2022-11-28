@@ -26,6 +26,7 @@ opentracing~=2.4.0
 PyJWT~=2.6.0
 asgiref~=3.5.2
 phonenumbers
+google-i18n-address==2.5.2
 prices
 django-measurement==3.2.4
 measurement==3.2.0
