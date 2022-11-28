@@ -21,13 +21,7 @@ INVALID_TOKEN = "Invalid or expired token."
 
 
 def check_can_edit_address(context, address):
-    """Determine whether the user or app can edit the given address.
-
-    This method assumes that an address can be edited by:
-    - apps with manage users permission
-    - staff with manage users permission
-    - customers associated to the given address.
-    """
+    """Determine whether the user or app can edit the given address."""
     requester = get_user_or_app_from_context(context)
     if requester.has_perm(AccountPermissions.MANAGE_USERS):
         return True
