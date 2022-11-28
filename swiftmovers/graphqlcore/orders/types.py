@@ -23,7 +23,6 @@ from ...core.permissions import (
 )
 from ...core.prices import quantize_price
 from ...core.tracing import traced_resolver
-from ...discount import OrderDiscountType
 from ...graphqlcore.checkouts.types import DeliveryMethod
 from ...graphql.utils import get_user_or_app_from_context
 from ...graphql.warehouse.dataloaders import StockByIdLoader, WarehouseByIdLoader
