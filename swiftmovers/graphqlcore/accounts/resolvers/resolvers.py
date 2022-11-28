@@ -5,9 +5,9 @@ from django.contrib.auth import models as auth_models
 from django.db.models import Q
 from i18naddress import get_validation_rules
 
-from ...accounts import models
+from ....accounts import models
 
-from ...core.tracing import traced_resolver
+from ....core.tracing import traced_resolver
 from ...payment import gateway
 from ...payment.utils import fetch_customer_id
 from ..core.utils import from_global_id_or_error
@@ -51,59 +51,23 @@ def resolve_staff_users(_info):
 @traced_resolver
 def resolve_user(info, id=None, email=None):
     requester = get_user_or_app_from_context(info.context)
+    filter_kwargs = {}
     if requester:
         filter_kwargs = {}
         if id:
             _model, filter_kwargs["pk"] = from_global_id_or_error(id, User)
         if email:
             filter_kwargs["email"] = email
-        if requester.has_perms(
-            [AccountPermissions.MANAGE_STAFF, AccountPermissions.MANAGE_USERS]
-        ):
             return models.User.objects.filter(**filter_kwargs).first()
-        if requester.has_perm(AccountPermissions.MANAGE_STAFF):
-            return models.User.objects.staff().filter(**filter_kwargs).first()
-        if has_one_of_permissions(
-            requester, [AccountPermissions.MANAGE_USERS, OrderPermissions.MANAGE_ORDERS]
-        ):
-            return models.User.objects.customers().filter(**filter_kwargs).first()
-    return PermissionDenied(
-        permissions=[
-            AccountPermissions.MANAGE_STAFF,
-            AccountPermissions.MANAGE_USERS,
-            OrderPermissions.MANAGE_ORDERS,
-        ]
-    )
+    return models.User.objects.customers().filter(**filter_kwargs).first()
 
 
 @traced_resolver
 def resolve_users(info, ids=None, emails=None):
     requester = get_user_or_app_from_context(info.context)
-    if not requester:
-        return models.User.objects.none()
-
-    if requester.has_perms(
-        [AccountPermissions.MANAGE_STAFF, AccountPermissions.MANAGE_USERS]
-    ):
-        qs = models.User.objects
-    elif requester.has_perm(AccountPermissions.MANAGE_STAFF):
-        qs = models.User.objects.staff()
-    elif requester.has_perm(AccountPermissions.MANAGE_USERS):
-        qs = models.User.objects.customers()
-    elif requester.id:
-        # If user has no access to all users, we can only return themselves, but
-        # only if they are authenticated and one of requested users
-        qs = models.User.objects.filter(id=requester.id)
-    else:
-        qs = models.User.objects.none()
-
-    if ids:
-        ids = {from_global_id_or_error(id, User, raise_error=True)[1] for id in ids}
-
-    if ids and emails:
-        return qs.filter(Q(id__in=ids) | Q(email__in=emails))
-    elif ids:
-        return qs.filter(id__in=ids)
+    if requester:
+        return models.User.objects.all()
+    qs = models.User.objects
     return qs.filter(email__in=emails)
 
 
@@ -197,13 +161,8 @@ def resolve_address(info, id):
     user = info.context.user
     app = info.context.app
     _, address_pk = from_global_id_or_error(id, Address)
-    if app and app.has_perm(AccountPermissions.MANAGE_USERS):
-        return models.Address.objects.filter(pk=address_pk).first()
     if user and not user.is_anonymous:
         return user.addresses.filter(id=address_pk).first()
-    raise PermissionDenied(
-        permissions=[AccountPermissions.MANAGE_USERS, AuthorizationFilters.OWNER]
-    )
 
 
 def resolve_addresses(info, ids):
@@ -213,8 +172,6 @@ def resolve_addresses(info, ids):
         from_global_id_or_error(address_id, Address, raise_error=True)[1]
         for address_id in ids
     ]
-    if app and app.has_perm(AccountPermissions.MANAGE_USERS):
-        return models.Address.objects.filter(id__in=ids)
     if user and not user.is_anonymous:
         return user.addresses.filter(id__in=ids)
     return models.Address.objects.none()
