@@ -779,11 +779,6 @@ class Order(ModelObjectType):
         User,
         description=(
             "User who placed the order. This field is set only for orders placed by "
-            "authenticated users. Can be fetched for orders created in Saleor 3.2 "
-            "and later, for other orders requires one of the following permissions: "
-            f"{AccountPermissions.MANAGE_USERS.name}, "
-            f"{OrderPermissions.MANAGE_ORDERS.name}, "
-            f"{AuthorizationFilters.OWNER.name}."
         ),
     )
     tracking_client_id = graphene.String(required=True)
