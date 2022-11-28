@@ -395,7 +395,7 @@ class User(ModelObjectType):
 
     @staticmethod
     def resolve_orders(root: models.User, info, **kwargs):
-        from ..order.types import OrderCountableConnection
+        from ..orders.types import OrderCountableConnection
 
         def _resolve_orders(orders):
             requester = get_user_or_app_from_context(info.context)
