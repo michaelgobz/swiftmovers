@@ -72,8 +72,6 @@ class ZoneCreate(ModelMutation):
         slug = cleaned_input.get("slug")
         if slug:
             cleaned_input["slug"] = slugify(slug)
-        if stock_settings := cleaned_input.get("stock_settings"):
-            cleaned_input["allocation_strategy"] = stock_settings["allocation_strategy"]
 
         return cleaned_input
 
@@ -99,8 +97,6 @@ class ZoneUpdateInput(ZoneInput):
     default_country = CountryCodeEnum(
         description=(
                 "Default country for the channel. Default country can be "
-                "used in checkout to determine the stock quantities or calculate taxes "
-                "when the country was not explicitly provided." + ADDED_IN_31
         )
     )
     remove_shipping_local_areas = NonNullList(
@@ -112,17 +108,17 @@ class ZoneUpdateInput(ZoneInput):
 
 class ZoneUpdate(ModelMutation):
     class Arguments:
-        id = graphene.ID(required=True, description="ID of a channel to update.")
+        id = graphene.ID(required=True, description="ID of a zone to update.")
         input = ZoneUpdateInput(
-            description="Fields required to update a channel.", required=True
+            description="Fields required to update a zone.", required=True
         )
 
     class Meta:
-        description = "Update a channel."
+        description = "Update a Zone."
         model = models.Zone
         object_type = Zone
-        error_type_class = ChannelError
-        error_type_field = "channel_errors"
+        error_type_class = ZoneError
+        error_type_field = "Zone_errors"
 
     @classmethod
     def clean_input(cls, info, instance, data, input_cls=None):
@@ -146,8 +142,6 @@ class ZoneUpdate(ModelMutation):
         slug = cleaned_input.get("slug")
         if slug:
             cleaned_input["slug"] = slugify(slug)
-        if stock_settings := cleaned_input.get("stock_settings"):
-            cleaned_input["allocation_strategy"] = stock_settings["allocation_strategy"]
 
         return cleaned_input
 
@@ -155,33 +149,31 @@ class ZoneUpdate(ModelMutation):
     @traced_atomic_transaction()
     def _save_m2m(cls, info, instance, cleaned_data):
         super()._save_m2m(info, instance, cleaned_data)
-        cls._update_shipping_zones(instance, cleaned_data)
+        cls._update_shipping_local_areas(instance, cleaned_data)
         cls._update_warehouses(instance, cleaned_data)
         if (
                 "remove_shipping_zones" in cleaned_data
                 or "remove_warehouses" in cleaned_data
         ):
-            warehouse_ids = [
-                warehouse.id for warehouse in cleaned_data.get("remove_warehouses", [])
-            ]
-            shipping_zone_ids = [
+
+            shipping_local_area_ids = [
                 warehouse.id
-                for warehouse in cleaned_data.get("remove_shipping_zones", [])
+                for warehouse in cleaned_data.get("remove_shipping_local_areas", [])
             ]
             delete_invalid_warehouse_to_shipping_zone_relations(
-                instance, warehouse_ids, shipping_zone_ids
+                instance, shipping_local_area_ids
             )
 
     @classmethod
-    def _update_shipping_zones(cls, instance, cleaned_data):
-        add_shipping_zones = cleaned_data.get("add_shipping_zones")
-        if add_shipping_zones:
-            instance.shipping_zones.add(*add_shipping_zones)
-        remove_shipping_zones = cleaned_data.get("remove_shipping_zones")
-        if remove_shipping_zones:
-            instance.shipping_zones.remove(*remove_shipping_zones)
+    def _update_shipping_local_areas(cls, instance, cleaned_data):
+        add_shipping_local_area = cleaned_data.get("add_shipping_local_area")
+        if add_shipping_local_area:
+            instance.shipping_zones.add(*add_shipping_local_area)
+        remove_shipping_local_area = cleaned_data.get("remove_shipping_local_area")
+        if remove_shipping_local_area:
+            instance.shipping_zones.remove(*remove_shipping_local_area)
             shipping_channel_listings = instance.shipping_method_listings.filter(
-                shipping_method__shipping_zone__in=remove_shipping_zones
+                shipping_method__shipping_zone__in=remove_shipping_local_area
             )
             shipping_method_ids = list(
                 shipping_channel_listings.values_list("shipping_method_id", flat=True)
@@ -192,20 +184,11 @@ class ZoneUpdate(ModelMutation):
             )
 
     @classmethod
-    def _update_warehouses(cls, instance, cleaned_data):
-        add_warehouses = cleaned_data.get("add_warehouses")
-        if add_warehouses:
-            instance.warehouses.add(*add_warehouses)
-        remove_warehouses = cleaned_data.get("remove_warehouses")
-        if remove_warehouses:
-            instance.warehouses.remove(*remove_warehouses)
-
-    @classmethod
     def post_save_action(cls, info, instance, cleaned_input):
-        info.context.plugins.channel_updated(instance)
+        info.context.plugins.zone_updated(instance)
 
 
-class ChannelDeleteInput(graphene.InputObjectType):
+class ZoneDeleteInput(graphene.InputObjectType):
     channel_id = graphene.ID(
         required=True,
         description="ID of channel to migrate orders from origin channel.",
