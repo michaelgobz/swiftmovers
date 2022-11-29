@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'swiftmovers.graphqlcore',
     'swiftmovers.orders',
     'swiftmovers.items',
+    "swiftmovers.zones",
     # external apps
     'django_measurement',
     'django_prices',
