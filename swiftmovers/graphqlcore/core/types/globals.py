@@ -1,11 +1,8 @@
 from urllib.parse import urljoin
 
 import graphene
-
 from django.conf import settings
-from ..scalars import PositiveDecimal
-
-from ...accounts.enums import AddressTypeEnum
+from ..enums import ZoneErrorCode
 from ..enums import (
     AccountErrorCode,
     CheckoutErrorCode,
@@ -17,6 +14,8 @@ from ..enums import (
     ShippingErrorCodes,
     WeightUnitsEnum,
 )
+from ..scalars import PositiveDecimal
+from ...accounts.enums import AddressTypeEnum
 
 TYPES_WITH_DOUBLE_ID_AVAILABLE = [""]
 
@@ -60,6 +59,20 @@ class AccountError(Error):
     code = AccountErrorCode(description="The error code.", required=True)
     address_type = AddressTypeEnum(
         description="A type of address that causes the error.", required=False
+    )
+
+
+class ZoneError(Error):
+    code = ZoneErrorCode(description="The error code.", required=True)
+    shipping_zones = NonNullList(
+        graphene.ID,
+        description="List of shipping zone IDs which causes the error.",
+        required=False,
+    )
+    warehouses = NonNullList(
+        graphene.ID,
+        description="List of warehouses IDs which causes the error.",
+        required=False,
     )
 
 

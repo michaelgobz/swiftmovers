@@ -1,5 +1,4 @@
 import datetime
-from collections import defaultdict
 from typing import DefaultDict, Dict, Iterable, List
 
 import graphene
@@ -8,17 +7,15 @@ from django.core.exceptions import ValidationError
 from django.utils.text import slugify
 
 from ....zones import models
-from ....checkouts.models import Checkout
-from ...core.permissions import ChannelPermissions
+from ....checkouts.models import DeliveryCheckout
 from ....core.tracing import traced_atomic_transaction
 from ...core.utils.date_time import convert_to_utc_date_time
 from ....orders.models import Order
 from ...shipping.tasks import drop_invalid_shipping_methods_relations_for_given_channels
 from ...accounts.enums import CountryCodeEnum
-from ..core.descriptions import ADDED_IN_31, ADDED_IN_35, ADDED_IN_37, PREVIEW_FEATURE
 from ..core.inputs import ReorderInput
 from ...core.mutations.base import BaseMutation, ModelMutation
-from ...core.types import ChannelError, ZoneErrorCode, NonNullList
+from ...core.types import ZoneError, ZoneErrorCode, NonNullList
 from ..core.utils import get_duplicated_values, get_duplicates_items
 from ..core.utils.reordering import perform_reordering
 from ..utils.validators import check_for_duplicates
@@ -26,16 +23,6 @@ from ..warehouse.types import Warehouse
 from .enums import AllocationStrategyEnum
 from ..types import Zone
 from .utils import delete_invalid_warehouse_to_shipping_zone_relations
-
-
-class StockSettingsInput(graphene.InputObjectType):
-    allocation_strategy = AllocationStrategyEnum(
-        description=(
-            "Allocation strategy options. Strategy defines the preference "
-            "of warehouses for allocations and reservations."
-        ),
-        required=True,
-    )
 
 
 class ZoneInput(graphene.InputObjectType):
@@ -52,15 +39,11 @@ class ZoneCreateInput(ZoneInput):
     name = graphene.String(description="Name of the zone.", required=True)
     slug = graphene.String(description="Slug of the zone.", required=True)
     currency_code = graphene.String(
-        description="Currency of the channel.", required=True
+        description="Currency of the zone.", required=True
     )
     default_country = CountryCodeEnum(
         description=(
-            "Default country for the channel. Default country can be "
-            "used in checkout to determine the stock quantities or calculate taxes "
-            "when the country was not explicitly provided."
-            + ADDED_IN_31
-            + PREVIEW_FEATURE
+                "Default country for the zone. Default country can be "
         ),
         required=True,
     )
@@ -76,8 +59,7 @@ class ZoneCreate(ModelMutation):
         description = "Creates new Zone."
         model = models.Zone
         object_type = Zone
-        permissions = (ChannelPermissions.MANAGE_CHANNELS,)
-        error_type_class = ChannelError
+        error_type_class = ZoneError
         error_type_field = "zone_errors"
 
     @classmethod
@@ -99,9 +81,9 @@ class ZoneCreate(ModelMutation):
     @traced_atomic_transaction()
     def _save_m2m(cls, info, instance, cleaned_data):
         super()._save_m2m(info, instance, cleaned_data)
-        shipping_zones = cleaned_data.get("add_shipping_zones")
-        if shipping_zones:
-            instance.shipping_zones.add(*shipping_zones)
+        shipping_local_areas = cleaned_data.get("add_shipping_local_area")
+        if shipping_local_areas:
+            instance.shipping_zones.add(*shipping_local_areas)
         warehouses = cleaned_data.get("add_warehouses")
         if warehouses:
             instance.warehouses.add(*warehouses)
@@ -116,21 +98,14 @@ class ZoneUpdateInput(ZoneInput):
     slug = graphene.String(description="Slug of the channel.")
     default_country = CountryCodeEnum(
         description=(
-            "Default country for the channel. Default country can be "
-            "used in checkout to determine the stock quantities or calculate taxes "
-            "when the country was not explicitly provided." + ADDED_IN_31
+                "Default country for the channel. Default country can be "
+                "used in checkout to determine the stock quantities or calculate taxes "
+                "when the country was not explicitly provided." + ADDED_IN_31
         )
     )
-    remove_shipping_zones = NonNullList(
+    remove_shipping_local_areas = NonNullList(
         graphene.ID,
-        description="List of shipping zones to unassign from the channel.",
-        required=False,
-    )
-    remove_warehouses = NonNullList(
-        graphene.ID,
-        description="List of warehouses to unassign from the channel."
-        + ADDED_IN_35
-        + PREVIEW_FEATURE,
+        description="List of shipping zones to unassign from the zone.",
         required=False,
     )
 
@@ -153,15 +128,15 @@ class ZoneUpdate(ModelMutation):
     def clean_input(cls, info, instance, data, input_cls=None):
         errors = {}
         if error := check_for_duplicates(
-            data, "add_shipping_zones", "remove_shipping_zones", "shipping_zones"
+                data, "add_shipping_zones", "remove_shipping_zones", "shipping_zones"
         ):
-            error.code = ChannelErrorCode.DUPLICATED_INPUT_ITEM.value
+            error.code = ZoneErrorCode.DUPLICATED_INPUT_ITEM.value
             errors["shipping_zones"] = error
 
         if error := check_for_duplicates(
-            data, "add_warehouses", "remove_warehouses", "warehouses"
+                data, "add_warehouses", "remove_warehouses", "warehouses"
         ):
-            error.code = ChannelErrorCode.DUPLICATED_INPUT_ITEM.value
+            error.code = ZoneErrorCode.DUPLICATED_INPUT_ITEM.value
             errors["warehouses"] = error
 
         if errors:
@@ -183,8 +158,8 @@ class ZoneUpdate(ModelMutation):
         cls._update_shipping_zones(instance, cleaned_data)
         cls._update_warehouses(instance, cleaned_data)
         if (
-            "remove_shipping_zones" in cleaned_data
-            or "remove_warehouses" in cleaned_data
+                "remove_shipping_zones" in cleaned_data
+                or "remove_warehouses" in cleaned_data
         ):
             warehouse_ids = [
                 warehouse.id for warehouse in cleaned_data.get("remove_warehouses", [])
@@ -349,11 +324,11 @@ class BaseChannelListingMutation(BaseMutation):
 
     @classmethod
     def validate_duplicated_channel_ids(
-        cls,
-        add_channels_ids: Iterable[str],
-        remove_channels_ids: Iterable[str],
-        errors: ErrorType,
-        error_code,
+            cls,
+            add_channels_ids: Iterable[str],
+            remove_channels_ids: Iterable[str],
+            errors: ErrorType,
+            error_code,
     ):
         duplicated_ids = get_duplicates_items(add_channels_ids, remove_channels_ids)
         if duplicated_ids:
@@ -371,7 +346,7 @@ class BaseChannelListingMutation(BaseMutation):
 
     @classmethod
     def validate_duplicated_channel_values(
-        cls, channels_ids: Iterable[str], field_name: str, errors: ErrorType, error_code
+            cls, channels_ids: Iterable[str], field_name: str, errors: ErrorType, error_code
     ):
         duplicates = get_duplicated_values(channels_ids)
         if duplicates:
@@ -385,7 +360,7 @@ class BaseChannelListingMutation(BaseMutation):
 
     @classmethod
     def clean_channels(
-        cls, info, input, errors: ErrorType, error_code, input_source="add_channels"
+            cls, info, input, errors: ErrorType, error_code, input_source="add_channels"
     ) -> Dict:
         add_channels = input.get(input_source, [])
         add_channels_ids = [channel["channel_id"] for channel in add_channels]
@@ -421,7 +396,7 @@ class BaseChannelListingMutation(BaseMutation):
 
     @classmethod
     def clean_publication_date(
-        cls, errors, error_code_enum, cleaned_input, input_source="add_channels"
+            cls, errors, error_code_enum, cleaned_input, input_source="add_channels"
     ):
         invalid_channels = []
         for add_channel in cleaned_input.get(input_source, []):
@@ -454,15 +429,14 @@ class BaseChannelListingMutation(BaseMutation):
             )
 
 
-class ChannelActivate(BaseMutation):
-    channel = graphene.Field(Channel, description="Activated channel.")
+class ZoneActivate(BaseMutation):
+    channel = graphene.Field(Zone, description="Activated channel.")
 
     class Arguments:
         id = graphene.ID(required=True, description="ID of the channel to activate.")
 
     class Meta:
         description = "Activate a channel."
-        permissions = (ChannelPermissions.MANAGE_CHANNELS,)
         error_type_class = ChannelError
         error_type_field = "channel_errors"
 
@@ -473,7 +447,7 @@ class ChannelActivate(BaseMutation):
                 {
                     "id": ValidationError(
                         "This channel is already activated.",
-                        code=ChannelErrorCode.INVALID,
+                        code=ZoneErrorCode.INVALID,
                     )
                 }
             )
@@ -488,15 +462,14 @@ class ChannelActivate(BaseMutation):
         return ChannelActivate(channel=channel)
 
 
-class ChannelDeactivate(BaseMutation):
-    channel = graphene.Field(Channel, description="Deactivated channel.")
+class ZoneDeactivate(BaseMutation):
+    zone = graphene.Field(Zone, description="Deactivated channel.")
 
     class Arguments:
-        id = graphene.ID(required=True, description="ID of the channel to deactivate.")
+        id = graphene.ID(required=True, description="ID of the zone to deactivate.")
 
     class Meta:
-        description = "Deactivate a channel."
-        permissions = (ChannelPermissions.MANAGE_CHANNELS,)
+        description = "Deactivate a Zone."
         error_type_class = ChannelError
         error_type_field = "channel_errors"
 
@@ -514,10 +487,9 @@ class ChannelDeactivate(BaseMutation):
 
     @classmethod
     def perform_mutation(cls, _root, info, **data):
-        channel = cls.get_node_or_error(info, data["id"], only_type=Channel)
-        cls.clean_channel_availability(channel)
-        channel.is_active = False
-        channel.save(update_fields=["is_active"])
+        zone = cls.get_node_or_error(info, data["id"], only_type=Zone)
+        cls.clean_channel_availability(zone)
+        zone.is_active = False
+        zone.save(update_fields=["is_active"])
         info.context.plugins.channel_status_changed(channel)
-        return ChannelDeactivate(channel=channel)
-
+        return ZoneDeactivate(channel=zone)
