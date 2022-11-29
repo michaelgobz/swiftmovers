@@ -27,54 +27,34 @@ from ....product.utils.availability import (
 from ....product.utils.variants import get_variant_selection_attributes
 from ....thumbnail.utils import get_image_or_proxy_url, get_thumbnail_size
 from ....warehouse.reservations import is_reservation_enabled
-from ...account import types as account_types
-from ...account.enums import CountryCodeEnum
-from ...attribute.filters import AttributeFilterInput
-from ...attribute.resolvers import resolve_attributes
-from ...attribute.types import (
-    AssignedVariantAttribute,
-    Attribute,
-    AttributeCountableConnection,
-    SelectedAttribute,
-)
-from ...channel import ChannelContext, ChannelQsContext
-from ...channel.dataloaders import ChannelBySlugLoader
-from ...channel.types import ChannelContextType, ChannelContextTypeWithMetadata
-from ...channel.utils import get_default_channel_slug_or_graphql_error
+from ..accounts import types as account_types
+from ..accounts.enums import CountryCodeEnum
+
 from ...core.connection import (
     CountableConnection,
     create_connection_slice,
     filter_connection_queryset,
 )
-from ...core.descriptions import (
-    ADDED_IN_31,
-    DEPRECATED_IN_3X_FIELD,
-    DEPRECATED_IN_3X_INPUT,
-    PREVIEW_FEATURE,
-    RICH_CONTENT,
-)
-from ...core.enums import ReportingPeriod
-from ...core.federation import federated_entity, resolve_federation_references
-from ...core.fields import (
+from ..core.enums import ReportingPeriod
+from ..core.spec.entities import federated_entity
+from ..core.fields import (
     ConnectionField,
     FilterConnectionField,
     JSONString,
     PermissionsField,
 )
-from ...core.types import (
+from ..core.types import (
     Image,
     ModelObjectType,
     NonNullList,
     TaxedMoney,
     TaxedMoneyRange,
     TaxType,
-    ThumbnailField,
     Weight,
 )
-from ...core.utils import from_global_id_or_error
-from ...discount.dataloaders import DiscountsByDateTimeLoader
-from ...meta.types import ObjectWithMetadata
-from ...order.dataloaders import (
+from ..core.utils import from_global_id_or_error
+from ..meta.types import ObjectWithMetadata
+from ..orders.dataloaders import (
     OrderByIdLoader,
     OrderLinesByVariantIdAndChannelIdLoader,
 )
@@ -89,8 +69,8 @@ from ...translations.types import (
     ProductTranslation,
     ProductVariantTranslation,
 )
-from ...utils import get_user_or_app_from_context
-from ...utils.filters import reporting_period_to_date
+from ..utils import get_user_or_app_from_context
+from ..utils.filters import reporting_period_to_date
 from ...warehouse.dataloaders import (
     AvailableQuantityByProductVariantIdCountryCodeAndChannelSlugLoader,
     PreorderQuantityReservedByVariantChannelListingIdLoader,
