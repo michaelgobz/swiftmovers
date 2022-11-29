@@ -4,6 +4,7 @@ from django_prices.templatetags import prices
 from ....core.prices import quantize_price
 from .globals import *
 from .model import *
+from ..enums import *
 
 
 class Money(graphene.ObjectType):

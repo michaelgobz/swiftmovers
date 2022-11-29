@@ -2,6 +2,7 @@ import graphene
 from django.conf import settings
 
 from ...accounts import error_codes as account_error_codes
+from ...zones import error_codes as zone_error_codes
 from ...checkouts import error_codes as checkout_error_codes
 from ...core.units import (
     AreaUnits,
@@ -85,6 +86,7 @@ unit_enums = [DistanceUnitsEnum, AreaUnitsEnum, VolumeUnitsEnum, WeightUnitsEnum
 
 AccountErrorCode = graphene.Enum.from_enum(account_error_codes.AccountErrorCode)
 CheckoutErrorCode = graphene.Enum.from_enum(checkout_error_codes.CheckoutErrorCode)
+ZoneErrorCode = graphene.Enum.from_enum(zone_error_codes.ZoneErrorCode)
 
 OrderErrorCode = graphene.Enum.from_enum(order_error_codes.OrderErrorCode)
 InvoiceErrorCode = graphene.Enum.from_enum(invoice_error_codes.InvoiceErrorCode)
