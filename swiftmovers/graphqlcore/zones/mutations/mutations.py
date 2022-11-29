@@ -14,7 +14,7 @@ from ....orders.models import Order
 from ...shipping.tasks import drop_invalid_shipping_methods_relations_for_given_channels
 from ...accounts.enums import CountryCodeEnum
 from ..core.inputs import ReorderInput
-from ...core.mutations.base import BaseMutation, ModelMutation
+from ...core.mutations.base import BaseMutation, ModelMutation, ModelDeleteMutation
 from ...core.types import ZoneError, ZoneErrorCode, NonNullList
 from ..core.utils import get_duplicated_values, get_duplicates_items
 from ..core.utils.reordering import perform_reordering
@@ -43,7 +43,7 @@ class ZoneCreateInput(ZoneInput):
     )
     default_country = CountryCodeEnum(
         description=(
-                "Default country for the zone. Default country can be "
+            "Default country for the zone. Default country can be "
         ),
         required=True,
     )
@@ -96,7 +96,7 @@ class ZoneUpdateInput(ZoneInput):
     slug = graphene.String(description="Slug of the channel.")
     default_country = CountryCodeEnum(
         description=(
-                "Default country for the channel. Default country can be "
+            "Default country for the channel. Default country can be "
         )
     )
     remove_shipping_local_areas = NonNullList(
@@ -155,7 +155,6 @@ class ZoneUpdate(ModelMutation):
                 "remove_shipping_zones" in cleaned_data
                 or "remove_warehouses" in cleaned_data
         ):
-
             shipping_local_area_ids = [
                 warehouse.id
                 for warehouse in cleaned_data.get("remove_shipping_local_areas", [])
@@ -195,44 +194,42 @@ class ZoneDeleteInput(graphene.InputObjectType):
     )
 
 
-class ChannelDelete(ModelDeleteMutation):
+class ZoneDelete(ModelDeleteMutation):
     class Arguments:
-        id = graphene.ID(required=True, description="ID of a channel to delete.")
-        input = ChannelDeleteInput(description="Fields required to delete a channel.")
+        id = graphene.ID(required=True, description="ID of a zone to delete.")
+        input = ZoneDeleteInput(description="Fields required to delete a zone.")
 
     class Meta:
         description = (
-            "Delete a channel. Orders associated with the deleted "
-            "channel will be moved to the target channel. "
-            "Checkouts, product availability, and pricing will be removed."
+            "Delete a zone. Orders associated with the deleted "
         )
-        model = models.ZO
-        object_type = Channel
-        permissions = (ChannelPermissions.MANAGE_CHANNELS,)
-        error_type_class = ChannelError
-        error_type_field = "channel_errors"
+        model = models.Zone
+        object_type = Zone
+
+        error_type_class = ZoneError
+        error_type_field = "zone_errors"
 
     @classmethod
-    def validate_input(cls, origin_channel, target_channel):
-        if origin_channel.id == target_channel.id:
+    def validate_input(cls, origin_zone, target_zone):
+        if origin_zone.id == target_zone.id:
             raise ValidationError(
                 {
-                    "channel_id": ValidationError(
+                    "zone_id": ValidationError(
                         "Cannot migrate data to the channel that is being removed.",
-                        code=ChannelErrorCode.INVALID,
+                        code=ZoneErrorCode.INVALID,
                     )
                 }
             )
-        origin_channel_currency = origin_channel.currency_code
-        target_channel_currency = target_channel.currency_code
-        if origin_channel_currency != target_channel_currency:
+        origin_zone_currency = origin_zone.currency_code
+        target_zone_currency = target_zone.currency_code
+        if origin_zone_currency != target_zone_currency:
             raise ValidationError(
                 {
                     "channel_id": ValidationError(
-                        f"Cannot migrate from {origin_channel_currency} "
-                        f"to {target_channel_currency}. "
+                        f"Cannot migrate from {origin_zone_currency} "
+                        f"to {target_zone_currency}. "
                         "Migration are allowed between the same currency",
-                        code=ChannelErrorCode.CHANNELS_CURRENCY_MUST_BE_THE_SAME,
+                        code=ZoneErrorCode.CHANNELS_CURRENCY_MUST_BE_THE_SAME,
                     )
                 }
             )
@@ -244,19 +241,19 @@ class ChannelDelete(ModelDeleteMutation):
         )
 
     @classmethod
-    def delete_checkouts(cls, origin_channel_id):
-        Checkout.objects.select_for_update().filter(
-            channel_id=origin_channel_id
+    def delete_checkouts(cls, origin_zone_id):
+        DeliveryCheckout.objects.select_for_update().filter(
+            channel_id=origin_zone_id
         ).delete()
 
     @classmethod
-    def perform_delete_with_order_migration(cls, origin_channel, target_channel):
-        cls.validate_input(origin_channel, target_channel)
+    def perform_delete_with_order_migration(cls, origin_zone, target_zone):
+        cls.validate_input(origin_zone, target_zone)
 
         with traced_atomic_transaction():
-            origin_channel_id = origin_channel.id
-            cls.delete_checkouts(origin_channel_id)
-            cls.migrate_orders_to_target_channel(origin_channel_id, target_channel.id)
+            origin_zone_id = origin_zone.id
+            cls.delete_checkouts(origin_zone_id)
+            cls.migrate_orders_to_target_channel(origin_zone_id, target_zone.id)
 
     @classmethod
     def perform_delete_channel_without_order(cls, origin_channel):
@@ -266,7 +263,7 @@ class ChannelDelete(ModelDeleteMutation):
                     "id": ValidationError(
                         "Cannot remove channel with orders. Try to migrate orders to "
                         "another channel by passing `targetChannel` param.",
-                        code=ChannelErrorCode.CHANNEL_WITH_ORDERS,
+                        code=ZoneErrorCode.CHANNEL_WITH_ORDERS,
                     )
                 }
             )
@@ -279,18 +276,18 @@ class ChannelDelete(ModelDeleteMutation):
     @classmethod
     @traced_atomic_transaction()
     def perform_mutation(cls, _root, info, **data):
-        origin_channel = cls.get_node_or_error(info, data["id"], only_type=Channel)
-        target_channel_global_id = data.get("input", {}).get("channel_id")
-        if target_channel_global_id:
-            target_channel = cls.get_node_or_error(
+        origin_zone = cls.get_node_or_error(info, data["id"], only_type=Zone)
+        target_zone_global_id = data.get("input", {}).get("channel_id")
+        if target_zone_global_id:
+            target_zone = cls.get_node_or_error(
                 info, target_channel_global_id, only_type=Channel
             )
-            cls.perform_delete_with_order_migration(origin_channel, target_channel)
+            cls.perform_delete_with_order_migration(origin_zone, target_channel)
         else:
-            cls.perform_delete_channel_without_order(origin_channel)
+            cls.perform_delete_channel_without_order(origin_zone)
         delete_invalid_warehouse_to_shipping_zone_relations(
-            origin_channel,
-            origin_channel.warehouses.values("id"),
+            origin_zone,
+            origin_zone.warehouses.values("id"),
             channel_deletion=True,
         )
         return super().perform_mutation(_root, info, **data)
@@ -323,7 +320,7 @@ class BaseChannelListingMutation(BaseMutation):
                 ValidationError(
                     error_msg,
                     code=error_code,
-                    params={"channels": list(duplicated_ids)},
+                    params={"zones": list(duplicated_ids)},
                 )
             )
 
@@ -343,7 +340,7 @@ class BaseChannelListingMutation(BaseMutation):
 
     @classmethod
     def clean_channels(
-            cls, info, input, errors: ErrorType, error_code, input_source="add_channels"
+            cls, info, input, errors: ErrorType, error_code, input_source="add_zones"
     ) -> Dict:
         add_channels = input.get(input_source, [])
         add_channels_ids = [channel["channel_id"] for channel in add_channels]
@@ -360,13 +357,12 @@ class BaseChannelListingMutation(BaseMutation):
 
         if errors:
             return {}
-        channels_to_add: List["models.Channel"] = []
+        channels_to_add: List["models.Zone"] = []
         if add_channels_ids:
             channels_to_add = cls.get_nodes_or_error(  # type: ignore
-                add_channels_ids, "channel_id", Channel
-            )
+                add_zones_ids, "channel_id", Zone)
         remove_channels_pks = cls.get_global_ids_or_error(
-            remove_channels_ids, Channel, field="remove_channels"
+            remove_channels_ids, Zone, field="remove_channels"
         )
 
         cleaned_input = {input_source: [], "remove_channels": remove_channels_pks}
@@ -437,12 +433,12 @@ class ZoneActivate(BaseMutation):
 
     @classmethod
     def perform_mutation(cls, _root, info, **data):
-        channel = cls.get_node_or_error(info, data["id"], only_type=Channel)
-        cls.clean_channel_availability(channel)
-        channel.is_active = True
-        channel.save(update_fields=["is_active"])
-        info.context.plugins.channel_status_changed(channel)
-        return ChannelActivate(channel=channel)
+        zone = cls.get_node_or_error(info, data["id"], only_type=Zone)
+        cls.clean_channel_availability(zone)
+        zone.is_active = True
+        zone.save(update_fields=["is_active"])
+        info.context.plugins.channel_status_changed(zone)
+        return ZoneActivate(zone=zone)
 
 
 class ZoneDeactivate(BaseMutation):
@@ -453,12 +449,12 @@ class ZoneDeactivate(BaseMutation):
 
     class Meta:
         description = "Deactivate a Zone."
-        error_type_class = ChannelError
-        error_type_field = "channel_errors"
+        error_type_class = ZoneError
+        error_type_field = "Zone_errors"
 
     @classmethod
-    def clean_zone_availability(cls, channel):
-        if channel.is_active is False:
+    def clean_zone_availability(cls, zone):
+        if zone.is_active is False:
             raise ValidationError(
                 {
                     "id": ValidationError(
@@ -474,5 +470,5 @@ class ZoneDeactivate(BaseMutation):
         cls.clean_channel_availability(zone)
         zone.is_active = False
         zone.save(update_fields=["is_active"])
-        info.context.plugins.channel_status_changed(channel)
+        info.context.plugins.channel_status_changed(zone)
         return ZoneDeactivate(channel=zone)

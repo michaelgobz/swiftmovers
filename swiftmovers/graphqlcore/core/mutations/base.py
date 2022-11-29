@@ -542,3 +542,35 @@ class ModelMutation(BaseMutation):
         cls._save_m2m(info, instance, cleaned_input)
         cls.post_save_action(info, instance, cleaned_input)
         return cls.success_response(instance)
+
+
+class ModelDeleteMutation(ModelMutation):
+    class Meta:
+        abstract = True
+
+    @classmethod
+    def clean_instance(cls, info, instance):
+        """Perform additional logic before deleting the model instance.
+
+        Override this method to raise custom validation error and abort
+        the deletion process.
+        """
+
+    @classmethod
+    def perform_mutation(cls, _root, info, **data):
+        """Perform a mutation that deletes a model instance."""
+        node_id = data.get("id")
+        model_type = cls.get_type_for_model()
+        instance = cls.get_node_or_error(info, node_id, only_type=model_type)
+
+        if instance:
+            cls.clean_instance(info, instance)
+
+        db_id = instance.id
+        instance.delete()
+
+        # After the instance is deleted, set its ID to the original database's
+        # ID so that the success response contains ID of the deleted object.
+        instance.id = db_id
+        cls.post_save_action(info, instance, None)
+        return cls.success_response(instance)
