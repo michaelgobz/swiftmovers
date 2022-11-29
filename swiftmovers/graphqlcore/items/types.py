@@ -58,51 +58,13 @@ from ..orders.dataloaders import (
     OrderByIdLoader,
     OrderLinesByVariantIdAndChannelIdLoader,
 )
-from ...product.dataloaders.products import (
-    AvailableProductVariantsByProductIdAndChannel,
-    ProductVariantsByProductIdAndChannel,
-)
-from ...translations.fields import TranslationField
-from ...translations.types import (
-    CategoryTranslation,
-    CollectionTranslation,
-    ProductTranslation,
-    ProductVariantTranslation,
-)
+
 from ..utils import get_user_or_app_from_context
-from ..utils.filters import reporting_period_to_date
-from ...warehouse.dataloaders import (
-    AvailableQuantityByProductVariantIdCountryCodeAndChannelSlugLoader,
-    PreorderQuantityReservedByVariantChannelListingIdLoader,
-    StocksWithAvailableQuantityByProductVariantIdCountryCodeAndChannelLoader,
-)
-from ...warehouse.types import Stock
-from ..dataloaders import (
+from ..items.dataloaders.items import (
     CategoryByIdLoader,
-    CategoryChildrenByCategoryIdLoader,
-    CollectionChannelListingByCollectionIdAndChannelSlugLoader,
-    CollectionChannelListingByCollectionIdLoader,
-    CollectionsByProductIdLoader,
-    ImagesByProductIdLoader,
-    ImagesByProductVariantIdLoader,
-    MediaByProductIdLoader,
-    MediaByProductVariantIdLoader,
-    ProductAttributesByProductTypeIdLoader,
     ProductByIdLoader,
-    ProductChannelListingByProductIdAndChannelSlugLoader,
-    ProductChannelListingByProductIdLoader,
     ProductTypeByIdLoader,
-    ProductVariantByIdLoader,
-    ProductVariantsByProductIdLoader,
-    SelectedAttributesByProductIdLoader,
-    SelectedAttributesByProductVariantIdLoader,
-    ThumbnailByCategoryIdSizeAndFormatLoader,
-    ThumbnailByCollectionIdSizeAndFormatLoader,
-    ThumbnailByProductMediaIdSizeAndFormatLoader,
-    VariantAttributesByProductTypeIdLoader,
-    VariantChannelListingByVariantIdAndChannelSlugLoader,
-    VariantChannelListingByVariantIdLoader,
-    VariantsChannelListingByProductIdAndChannelSlugLoader,
+
 )
 from ..enums import ProductMediaType, ProductTypeKindEnum, VariantAttributeScope
 from ..filters import ProductFilterInput
