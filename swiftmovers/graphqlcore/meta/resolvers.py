@@ -9,7 +9,7 @@ from ...orders import models as order_models
 from ...payments import models as payment_models
 from ...items import models as item_models
 from ...shipping import models as shipping_models
-from ...shipping.interface import ShippingMethodData
+from ..shipping.types import ShippingMethodData
 from ..utils import get_user_or_app_from_context
 
 

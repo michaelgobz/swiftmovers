@@ -9,7 +9,7 @@ from ....core.tracing import traced_resolver
 from ....payments import *  # TODO: add gateway
 from ....payments.utils import fetch_customer_id
 from ...core.utils import from_global_id_or_error
-from ..meta.resolvers import resolve_metadata
+from ...meta.resolvers import resolve_metadata
 from ...utils import get_user_or_app_from_context
 from ..types import Address, AddressValidationData, ChoiceValue, User
 from ..utils import (

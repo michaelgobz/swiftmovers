@@ -1,7 +1,7 @@
 import graphene
 
-from ...invoice import models
-from ..core.types import Job, ModelObjectType
+from ...invoices import models
+from ..core.types.model import ModelObjectType
 from ..meta.types import ObjectWithMetadata
 
 
@@ -15,5 +15,5 @@ class Invoice(ModelObjectType):
 
     class Meta:
         description = "Represents an Invoice."
-        interfaces = [ObjectWithMetadata, Job, graphene.relay.Node]
+        interfaces = [ObjectWithMetadata, graphene.relay.Node]
         model = models.Invoice
