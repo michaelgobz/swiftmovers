@@ -7,25 +7,6 @@ from ....payments.models import TransactionItem
 from ...core.dataloaders import DataLoader
 
 
-class OrderLinesByVariantIdAndChannelIdLoader(DataLoader):
-    context_key = "orderliness_by_variant_and_channel"
-
-    def batch_load(self, keys):
-        channel_ids = [key[1] for key in keys]
-        variant_ids = [key[0] for key in keys]
-        order_lines = (
-            OrderLine.objects.using(self.database_connection_name)
-            .filter(order__channel_id__in=channel_ids, variant_id__in=variant_ids)
-            .annotate(channel_id=F("order__channel_id"))
-        )
-
-        order_line_by_variant_and_channel_map = defaultdict(list)
-        for order_line in order_lines:
-            key = (order_line.variant_id, order_line.channel_id)
-            order_line_by_variant_and_channel_map[key].append(order_line)
-        return [order_line_by_variant_and_channel_map[key] for key in keys]
-
-
 class OrderByIdLoader(DataLoader):
     context_key = "order_by_id"
 

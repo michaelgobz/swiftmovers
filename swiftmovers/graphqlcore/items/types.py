@@ -54,9 +54,8 @@ from ..core.types import (
 )
 from ..core.utils import from_global_id_or_error
 from ..meta.types import ObjectWithMetadata
-from ..orders.dataloaders import (
+from ..orders.dataloaders.orders import (
     OrderByIdLoader,
-    OrderLinesByVariantIdAndChannelIdLoader,
 )
 
 from ..utils import get_user_or_app_from_context
