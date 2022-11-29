@@ -3,7 +3,6 @@ from operator import itemgetter
 
 from ...accounts import models as account_models
 from ...checkouts import models as checkout_models
-from ...core.exceptions import PermissionDenied
 from ...core.models import ModelWithMetadata
 from ...orders import models as order_models
 from ...payments import models as payment_models
@@ -16,6 +15,7 @@ from ..utils import get_user_or_app_from_context
 def resolve_object_with_metadata_type(instance):
     # Imports inside resolvers to avoid circular imports.
     from ...invoices import models as invoice_models
+    from ..invoices import types as invoice_types
     from ..accounts import types as account_types
     from ..checkouts import types as checkout_types
     from ..orders import types as order_types
@@ -31,7 +31,6 @@ def resolve_object_with_metadata_type(instance):
             checkout_models.CheckoutLine: checkout_types.CheckoutLine,
             item_models.Collection: product_types.Collection,
             item_models.DigitalContent: product_types.DigitalContent,
-            order_models.Fulfillment: order_types.Fulfillment,
             order_models.Order: order_types.Order,
             order_models.OrderLine: order_types.OrderLine,
             invoice_models.Invoice: invoice_types.Invoice,
