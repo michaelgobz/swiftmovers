@@ -13,7 +13,7 @@ WORKDIR /app
 RUN pip install -r requirements.txt
 
 ### Final image
-FROM python:3.11.0-slim
+FROM python:3.10.0-slim
 
 RUN groupadd -r api && useradd -r -g api api
 

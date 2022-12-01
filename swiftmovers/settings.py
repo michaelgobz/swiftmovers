@@ -69,14 +69,14 @@ INSTALLED_APPS = [
     'swiftmovers.graphqlcore',
     'swiftmovers.orders',
     'swiftmovers.items',
-    "swiftmovers.zones",
+    'swiftmovers.zones',
     # external apps
     'django_measurement',
     'django_prices',
     'django_countries',
     'django_filters',
     'phonenumber_field',
-    'phonenumbers'
+    'phonenumbers',
 ]
 
 MIDDLEWARE = [
