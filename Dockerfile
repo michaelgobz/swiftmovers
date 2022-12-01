@@ -1,5 +1,5 @@
 ### Build and install packages
-FROM python:3.11.0 as build-python
+FROM python:3.10.0 as build-python
 
 RUN apt-get -y update \
   && apt-get install -y gettext \
