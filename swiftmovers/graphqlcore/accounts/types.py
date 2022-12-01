@@ -1,534 +1,529 @@
+import uuid
+from typing import List
+
 import graphene
-from django.contrib.auth import password_validation
-from django.contrib.auth.tokens import default_token_generator
-from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.contrib.auth import get_user_model
+from django.contrib.auth import models as auth_models
+from graphene import relay
 
 from ...accounts import models
-from ...accounts.error_codes import AccountErrorCode
+from ...checkouts.utils import get_user_checkout
 
-from ...checkouts import AddressType
-from ...core.tracing import traced_atomic_transaction
-from ...graphqlcore.utils import match_orders_with_new_user
-
-from ...accounts.types import Address, AddressInput, User
-from ...app.dataloaders import load_app
-from ...zones.utils import clean_zone, validate_zone
-from ...core.context import set_mutation_flag_in_context
+from ...core.tracing import traced_resolver
+from ...orders import OrderStatus
+from ...thumbnail.utils import get_image_or_proxy_url, get_thumbnail_size
+from ..account.utils import check_is_owner_or_has_one_of_perms
+from ..app.dataloaders import AppByIdLoader
+from ..app.types import App
+from ..checkout.dataloaders import CheckoutByUserAndChannelLoader, CheckoutByUserLoader
+from ..checkouts.types import Checkout
+from ..core.connection import CountableConnection, create_connection_slice
+from ..core.descriptions import DEPRECATED_IN_3X_FIELD
 from ..core.enums import LanguageCodeEnum
-from ...core.mutations import (
-    BaseMutation,
-    ModelDeleteMutation,
-    ModelMutation,
-    validation_error_to_error_type,
+from ..core.spec.entities import federated_entity
+from ..core.types.globals import (
+    CountryDisplay,
+    Image,
+    NonNullList,
+
 )
-from ...core.types import AccountError
-from ...plugins.dataloaders import load_plugin_manager
-from .authentication import CreateToken
-
-BILLING_ADDRESS_FIELD = "default_billing_address"
-SHIPPING_ADDRESS_FIELD = "default_shipping_address"
-INVALID_TOKEN = "Invalid or expired token."
-
-
-def check_can_edit_address(context, address):
-    """Determine whether the user or app can edit the given address.
-
-    This method assumes that an address can be edited by:
-    - apps with manage users permission
-    - staff with manage users permission
-    - customers associated to the given address.
-    """
-    requester = get_user_or_app_from_context(context)
-    if requester and requester.has_perm(AccountPermissions.MANAGE_USERS):
-        return True
-    app = load_app(context)
-    if not app and context.user:
-        is_owner = requester.addresses.filter(pk=address.pk).exists()
-        if is_owner:
-            return True
-    raise PermissionDenied(
-        permissions=[AccountPermissions.MANAGE_USERS, AuthorizationFilters.OWNER]
-    )
+from ..core.types.model import ModelObjectType
+from ..core.utils import from_global_id_or_error, str_to_enum, to_global_id_or_none
+from ..giftcard.dataloaders import GiftCardsByUserLoader
+from ..meta.types import ObjectWithMetadata
+from ..order.dataloaders import OrderLineByIdLoader, OrdersByUserLoader
+from ..utils import format_permissions_for_display, get_user_or_app_from_context
+from .dataloaders import (
+    CustomerEventsByUserLoader,
+    ThumbnailByUserIdSizeAndFormatLoader,
+)
+from .enums import CountryCodeEnum
 
 
-class SetPassword(CreateToken):
-    class Arguments:
-        token = graphene.String(
-            description="A one-time token required to set the password.", required=True
-        )
-        email = graphene.String(required=True, description="Email of a user.")
-        password = graphene.String(required=True, description="Password of a user.")
-
-    class Meta:
-        description = (
-            "Sets the user's password from the token sent by email "
-            "using the RequestPasswordReset mutation."
-        )
-        error_type_class = AccountError
-        error_type_field = "account_errors"
-
-    @classmethod
-    def mutate(cls, root, info, **data):
-        set_mutation_flag_in_context(info.context)
-        manager = load_plugin_manager(info.context)
-        result = manager.perform_mutation(
-            mutation_cls=cls, root=root, info=info, data=data
-        )
-        if result is not None:
-            return result
-
-        email = data["email"]
-        password = data["password"]
-        token = data["token"]
-
-        try:
-            cls._set_password_for_user(email, password, token)
-        except ValidationError as e:
-            errors = validation_error_to_error_type(e, AccountError)
-            return cls.handle_typed_errors(errors)
-        return super().mutate(root, info, **data)
-
-    @classmethod
-    def _set_password_for_user(cls, email, password, token):
-        try:
-            user = models.User.objects.get(email=email)
-        except ObjectDoesNotExist:
-            raise ValidationError(
-                {
-                    "email": ValidationError(
-                        "User doesn't exist", code=AccountErrorCode.NOT_FOUND
-                    )
-                }
-            )
-        if not default_token_generator.check_token(user, token):
-            raise ValidationError(
-                {"token": ValidationError(INVALID_TOKEN, code=AccountErrorCode.INVALID)}
-            )
-        try:
-            password_validation.validate_password(password, user)
-        except ValidationError as error:
-            raise ValidationError({"password": error})
-        user.set_password(password)
-        user.save(update_fields=["password", "updated_at"])
-        account_events.customer_password_reset_event(user=user)
-
-
-class RequestPasswordReset(BaseMutation):
-    class Arguments:
-        email = graphene.String(
-            required=True,
-            description="Email of the user that will be used for password recovery.",
-        )
-        redirect_url = graphene.String(
-            required=True,
-            description=(
-                "URL of a view where users should be redirected to "
-                "reset the password. URL in RFC 1808 format."
-            ),
-        )
-        channel = graphene.String(
-            description=(
-                "Slug of a channel which will be used for notify user. Optional when "
-                "only one channel exists."
-            )
-        )
-
-    class Meta:
-        description = "Sends an email with the account password modification link."
-        error_type_class = AccountError
-        error_type_field = "account_errors"
-
-    @classmethod
-    def clean_user(cls, email, redirect_url):
-
-        try:
-            validate_storefront_url(redirect_url)
-        except ValidationError as error:
-            raise ValidationError(
-                {"redirect_url": error}, code=AccountErrorCode.INVALID
-            )
-
-        try:
-            user = models.User.objects.get(email=email)
-        except ObjectDoesNotExist:
-            raise ValidationError(
-                {
-                    "email": ValidationError(
-                        "User with this email doesn't exist",
-                        code=AccountErrorCode.NOT_FOUND,
-                    )
-                }
-            )
-        if not user.is_active:
-            raise ValidationError(
-                {
-                    "email": ValidationError(
-                        "User with this email is inactive",
-                        code=AccountErrorCode.INACTIVE,
-                    )
-                }
-            )
-        return user
-
-    @classmethod
-    def perform_mutation(cls, _root, info, **data):
-        email = data["email"]
-        redirect_url = data["redirect_url"]
-        channel_slug = data.get("channel")
-        user = cls.clean_user(email, redirect_url)
-
-        if not user.is_staff:
-            channel_slug = clean_channel(
-                channel_slug, error_class=AccountErrorCode
-            ).slug
-        elif channel_slug is not None:
-            channel_slug = validate_channel(
-                channel_slug, error_class=AccountErrorCode
-            ).slug
-        manager = load_plugin_manager(info.context)
-        send_password_reset_notification(
-            redirect_url,
-            user,
-            manager,
-            channel_slug=channel_slug,
-            staff=user.is_staff,
-        )
-        return RequestPasswordReset()
-
-
-class ConfirmAccount(BaseMutation):
-    user = graphene.Field(User, description="An activated user account.")
-
-    class Arguments:
-        token = graphene.String(
-            description="A one-time token required to confirm the account.",
-            required=True,
-        )
-        email = graphene.String(
-            description="E-mail of the user performing account confirmation.",
-            required=True,
-        )
-
-    class Meta:
-        description = (
-            "Confirm user account with token sent by email during registration."
-        )
-        error_type_class = AccountError
-        error_type_field = "account_errors"
-
-    @classmethod
-    def perform_mutation(cls, _root, info, **data):
-        try:
-            user = models.User.objects.get(email=data["email"])
-        except ObjectDoesNotExist:
-            raise ValidationError(
-                {
-                    "email": ValidationError(
-                        "User with this email doesn't exist",
-                        code=AccountErrorCode.NOT_FOUND,
-                    )
-                }
-            )
-
-        if not default_token_generator.check_token(user, data["token"]):
-            raise ValidationError(
-                {"token": ValidationError(INVALID_TOKEN, code=AccountErrorCode.INVALID)}
-            )
-
-        user.is_active = True
-        user.save(update_fields=["is_active", "updated_at"])
-
-        match_orders_with_new_user(user)
-        assign_user_gift_cards(user)
-
-        return ConfirmAccount(user=user)
-
-
-class PasswordChange(BaseMutation):
-    user = graphene.Field(User, description="A user instance with a new password.")
-
-    class Arguments:
-        old_password = graphene.String(
-            required=True, description="Current user password."
-        )
-        new_password = graphene.String(required=True, description="New user password.")
-
-    class Meta:
-        description = "Change the password of the logged in user."
-        error_type_class = AccountError
-        error_type_field = "account_errors"
-        permissions = (AuthorizationFilters.AUTHENTICATED_USER,)
-
-    @classmethod
-    def perform_mutation(cls, _root, info, **data):
-        user = info.context.user
-        old_password = data["old_password"]
-        new_password = data["new_password"]
-
-        if not user.check_password(old_password):
-            raise ValidationError(
-                {
-                    "old_password": ValidationError(
-                        "Old password isn't valid.",
-                        code=AccountErrorCode.INVALID_CREDENTIALS,
-                    )
-                }
-            )
-        try:
-            password_validation.validate_password(new_password, user)
-        except ValidationError as error:
-            raise ValidationError({"new_password": error})
-
-        user.set_password(new_password)
-        user.save(update_fields=["password", "updated_at"])
-        account_events.customer_password_changed_event(user=user)
-        return PasswordChange(user=user)
-
-
-class BaseAddressUpdate(ModelMutation, I18nMixin):
-    """Base mutation for address update used by staff and account."""
-
-    user = graphene.Field(
-        User, description="A user object for which the address was edited."
-    )
-
-    class Arguments:
-        id = graphene.ID(description="ID of the address to update.", required=True)
-        input = AddressInput(
-            description="Fields required to update the address.", required=True
-        )
-
-    class Meta:
-        abstract = True
-
-    @classmethod
-    def clean_input(cls, info, instance, data):
-        # Method check_permissions cannot be used for permission check, because
-        # it doesn't have the address instance.
-        check_can_edit_address(info.context, instance)
-        return super().clean_input(info, instance, data)
-
-    @classmethod
-    def perform_mutation(cls, _root, info, **data):
-        instance = cls.get_instance(info, **data)
-        cleaned_input = cls.clean_input(
-            info=info, instance=instance, data=data.get("input")
-        )
-        address = cls.validate_address(cleaned_input, instance=instance)
-        cls.clean_instance(info, address)
-        cls.save(info, address, cleaned_input)
-        cls._save_m2m(info, address, cleaned_input)
-
-        user = address.user_addresses.first()
-        user.search_document = prepare_user_search_document_value(user)
-        user.save(update_fields=["search_document", "updated_at"])
-        manager = load_plugin_manager(info.context)
-        cls.call_event(manager.customer_updated, user)
-        address = manager.change_user_address(address, None, user)
-        cls.call_event(manager.address_updated, address)
-
-        success_response = cls.success_response(address)
-        success_response.user = user
-        success_response.address = address
-        return success_response
-
-
-class BaseAddressDelete(ModelDeleteMutation):
-    """Base mutation for address delete used by staff and customers."""
-
-    user = graphene.Field(
-        User, description="A user instance for which the address was deleted."
-    )
-
-    class Arguments:
-        id = graphene.ID(required=True, description="ID of the address to delete.")
-
-    class Meta:
-        abstract = True
-
-    @classmethod
-    def clean_instance(cls, info, instance):
-        # Method check_permissions cannot be used for permission check, because
-        # it doesn't have the address instance.
-        check_can_edit_address(info.context, instance)
-        return super().clean_instance(info, instance)
-
-    @classmethod
-    def perform_mutation(cls, _root, info, **data):
-        if not cls.check_permissions(info.context):
-            raise PermissionDenied()
-
-        node_id = data.get("id")
-        instance = cls.get_node_or_error(info, node_id, only_type=Address)
-        if instance:
-            cls.clean_instance(info, instance)
-
-        db_id = instance.id
-
-        # Return the first user that the address is assigned to. There is M2M
-        # relation between users and addresses, but in most cases address is
-        # related to only one user.
-        user = instance.user_addresses.first()
-
-        instance.delete()
-        instance.id = db_id
-
-        # Refresh the user instance to clear the default addresses. If the
-        # deleted address was used as default, it would stay cached in the
-        # user instance and the invalid ID returned in the response might cause
-        # an error.
-        user.refresh_from_db()
-
-        user.search_document = prepare_user_search_document_value(user)
-        user.save(update_fields=["search_document", "updated_at"])
-
-        response = cls.success_response(instance)
-
-        response.user = user
-        manager = load_plugin_manager(info.context)
-        cls.call_event(manager.customer_updated, user)
-        cls.call_event(manager.address_deleted, instance)
-        return response
-
-
-class UserInput(graphene.InputObjectType):
+class AddressInput(graphene.InputObjectType):
     first_name = graphene.String(description="Given name.")
     last_name = graphene.String(description="Family name.")
-    email = graphene.String(description="The unique email address of the user.")
-    is_active = graphene.Boolean(required=False, description="User account is active.")
-    note = graphene.String(description="A note about the user.")
+    company_name = graphene.String(description="Company or organization.")
+    street_address_1 = graphene.String(description="Address.")
+    street_address_2 = graphene.String(description="Address.")
+    city = graphene.String(description="City.")
+    city_area = graphene.String(description="District.")
+    postal_code = graphene.String(description="Postal code.")
+    country = CountryCodeEnum(description="Country.")
+    country_area = graphene.String(description="State or province.")
+    phone = graphene.String(description="Phone number.")
 
 
-class UserAddressInput(graphene.InputObjectType):
-    default_billing_address = AddressInput(
-        description="Billing address of the customer."
+@federated_entity("id")
+class Address(ModelObjectType):
+    id = graphene.GlobalID(required=True)
+    first_name = graphene.String(required=True)
+    last_name = graphene.String(required=True)
+    company_name = graphene.String(required=True)
+    street_address_1 = graphene.String(required=True)
+    street_address_2 = graphene.String(required=True)
+    city = graphene.String(required=True)
+    city_area = graphene.String(required=True)
+    postal_code = graphene.String(required=True)
+    country = graphene.Field(
+        CountryDisplay, required=True, description="Shop's default country."
     )
-    default_shipping_address = AddressInput(
-        description="Shipping address of the customer."
+    country_area = graphene.String(required=True)
+    phone = graphene.String()
+    is_default_shipping_address = graphene.Boolean(
+        required=False, description="Address is user's default shipping address."
     )
-
-
-class CustomerInput(UserInput, UserAddressInput):
-    language_code = graphene.Field(
-        LanguageCodeEnum, required=False, description="User language code."
+    is_default_billing_address = graphene.Boolean(
+        required=False, description="Address is user's default billing address."
     )
-
-
-class UserCreateInput(CustomerInput):
-    redirect_url = graphene.String(
-        description=(
-            "URL of a view where users should be redirected to "
-            "set the password. URL in RFC 1808 format."
-        )
-    )
-
-
-class BaseCustomerCreate(ModelMutation, I18nMixin):
-    """Base mutation for customer create used by staff and account."""
-
-    class Arguments:
-        input = UserCreateInput(
-            description="Fields required to create a customer.", required=True
-        )
 
     class Meta:
-        abstract = True
+        description = "Represents user address data."
+        interfaces = [relay.Node]
+        model = models.Address
 
-    @classmethod
-    def clean_input(cls, info, instance, data):
-        shipping_address_data = data.pop(SHIPPING_ADDRESS_FIELD, None)
-        billing_address_data = data.pop(BILLING_ADDRESS_FIELD, None)
-        cleaned_input = super().clean_input(info, instance, data)
+    @staticmethod
+    def resolve_country(root: models.Address, _info):
+        return CountryDisplay(code=root.country.code, country=root.country.name)
 
-        if shipping_address_data:
-            shipping_address = cls.validate_address(
-                shipping_address_data,
-                address_type=AddressType.SHIPPING,
-                instance=getattr(instance, SHIPPING_ADDRESS_FIELD),
-                info=info,
+    @staticmethod
+    def resolve_is_default_shipping_address(root: models.Address, _info):
+        """Look if the address is the default shipping address of the user.
+
+        This field is added through annotation when using the
+        `resolve_addresses` resolver. It's invalid for
+        `resolve_default_shipping_address` and
+        `resolve_default_billing_address`
+        """
+        if not hasattr(root, "user_default_shipping_address_pk"):
+            return None
+
+        user_default_shipping_address_pk = getattr(
+            root, "user_default_shipping_address_pk"
+        )
+        if user_default_shipping_address_pk == root.pk:
+            return True
+        return False
+
+    @staticmethod
+    def resolve_is_default_billing_address(root: models.Address, _info):
+        """Look if the address is the default billing address of the user.
+
+        This field is added through annotation when using the
+        `resolve_addresses` resolver. It's invalid for
+        `resolve_default_shipping_address` and
+        `resolve_default_billing_address`
+        """
+        if not hasattr(root, "user_default_billing_address_pk"):
+            return None
+
+        user_default_billing_address_pk = getattr(
+            root, "user_default_billing_address_pk"
+        )
+        if user_default_billing_address_pk == root.pk:
+            return True
+        return False
+
+    @staticmethod
+    def __resolve_references(roots: List["Address"], info):
+        from .resolvers import resolve_addresses
+
+        root_ids = [root.id for root in roots]
+        addresses = {
+            address.id: address for address in resolve_addresses(info, root_ids)
+        }
+
+        result = []
+        for root_id in root_ids:
+            _, root_id = from_global_id_or_error(root_id, Address)
+            result.append(addresses.get(int(root_id)))
+        return result
+
+
+class CustomerEvent(ModelObjectType):
+    id = graphene.GlobalID(required=True)
+    date = graphene.types.datetime.DateTime(
+        description="Date when event happened at in ISO 8601 format."
+    )
+    type = CustomerEventsEnum(description="Customer event type.")
+    user = graphene.Field(lambda: User, description="User who performed the action.")
+    app = graphene.Field(App, description="App that performed the action.")
+    message = graphene.String(description="Content of the event.")
+    count = graphene.Int(description="Number of objects concerned by the event.")
+    order = graphene.Field(
+        "swiftmovers.graphqlcore.order.types.Order", description="The concerned order."
+    )
+    items_line = graphene.Field(
+        "swiftmovers.graphqlcore.order.types.itemsLine", description="The concerned order line."
+    )
+
+    class Meta:
+        description = "History log of the customer."
+        interfaces = [relay.Node]
+        model = models.CustomerEvent
+
+    @staticmethod
+    def resolve_user(root: models.CustomerEvent, info):
+        user = info.context.user
+        if (
+                user == root.user
+
+        ):
+            return root.user
+
+    @staticmethod
+    def resolve_app(root: models.CustomerEvent, info):
+        requestor = get_user_or_app_from_context(info.context)
+        check_is_owner_or_has_one_of_perms(
+            requestor, root.user, AppPermission.MANAGE_APPS
+        )
+        return AppByIdLoader(info.context).load(root.app_id) if root.app_id else None
+
+    @staticmethod
+    def resolve_message(root: models.CustomerEvent, _info):
+        return root.parameters.get("message", None)
+
+    @staticmethod
+    def resolve_count(root: models.CustomerEvent, _info):
+        return root.parameters.get("count", None)
+
+    @staticmethod
+    def resolve_order_line(root: models.CustomerEvent, info):
+        if "order_line_pk" in root.parameters:
+            return OrderLineByIdLoader(info.context).load(
+                uuid.UUID(root.parameters["order_line_pk"])
             )
-            cleaned_input[SHIPPING_ADDRESS_FIELD] = shipping_address
+        return None
 
-        if billing_address_data:
-            billing_address = cls.validate_address(
-                billing_address_data,
-                address_type=AddressType.BILLING,
-                instance=getattr(instance, BILLING_ADDRESS_FIELD),
-                info=info,
+
+class UserPermission(Permission):
+    source_permission_groups = NonNullList(
+        "saleor.graphql.account.types.Group",
+        description="List of user permission groups which contains this permission.",
+        user_id=graphene.Argument(
+            graphene.ID,
+            description="ID of user whose groups should be returned.",
+            required=True,
+        ),
+        required=False,
+    )
+
+    @staticmethod
+    @traced_resolver
+    def resolve_source_permission_groups(root: Permission, _info, user_id):
+        _type, user_id = from_global_id_or_error(user_id, only_type="User")
+        groups = auth_models.Group.objects.filter(
+            user__pk=user_id, permissions__name=root.name
+        )
+        return groups
+
+
+@federated_entity("id")
+@federated_entity("email")
+class User(ModelObjectType):
+    id = graphene.GlobalID(required=True)
+    email = graphene.String(required=True)
+    first_name = graphene.String(required=True)
+    last_name = graphene.String(required=True)
+    is_staff = graphene.Boolean(required=True)
+    is_active = graphene.Boolean(required=True)
+    addresses = NonNullList(
+        Address, description="List of all user's addresses.", required=True
+    )
+    checkout = graphene.Field(
+        Checkout,
+        description="Returns the last open checkout of this user.",
+        deprecation_reason=(
+            f"{DEPRECATED_IN_3X_FIELD} "
+            "Use the `checkoutTokens` field to fetch the user checkouts."
+        ),
+    )
+    checkout_tokens = NonNullList(
+        UUID,
+        description="Returns the checkout UUID's assigned to this user.",
+        channel=graphene.String(
+            description="Slug of a channel for which the data should be returned."
+        ),
+        deprecation_reason=(f"{DEPRECATED_IN_3X_FIELD} Use `checkoutIds` instead."),
+    )
+    checkout_ids = NonNullList(
+        graphene.ID,
+        description="Returns the checkout ID's assigned to this user.",
+        channel=graphene.String(
+            description="Slug of a channel for which the data should be returned."
+        ),
+    )
+    gift_cards = ConnectionField(
+        "saleor.graphql.giftcard.types.GiftCardCountableConnection",
+        description="List of the user gift cards.",
+    )
+    note = PermissionsField(
+        graphene.String,
+        description="A note about the customer.",
+        permissions=[AccountPermissions.MANAGE_USERS, AccountPermissions.MANAGE_STAFF],
+    )
+    orders = ConnectionField(
+        "saleor.graphql.order.types.OrderCountableConnection",
+        description=(
+            "List of user's orders. Requires one of the following permissions: "
+            f"{AccountPermissions.MANAGE_STAFF.name}, "
+            f"{AuthorizationFilters.OWNER.name}."
+        ),
+    )
+    user_permissions = NonNullList(
+        UserPermission, description="List of user's permissions."
+    )
+    permission_groups = NonNullList(
+        "saleor.graphql.account.types.Group",
+        description="List of user's permission groups.",
+    )
+    editable_groups = NonNullList(
+        "saleor.graphql.account.types.Group",
+        description="List of user's permission groups which user can manage.",
+    )
+    avatar = ThumbnailField()
+    stored_payment_sources = NonNullList(
+        "saleor.graphql.payment.types.PaymentSource",
+        description="List of stored payment sources.",
+        channel=graphene.String(
+            description="Slug of a channel for which the data should be returned."
+        ),
+    )
+    language_code = graphene.Field(
+        LanguageCodeEnum, description="User language code.", required=True
+    )
+    default_shipping_address = graphene.Field(Address)
+    default_billing_address = graphene.Field(Address)
+
+    last_login = graphene.DateTime()
+    date_joined = graphene.DateTime(required=True)
+    updated_at = graphene.DateTime(required=True)
+
+    class Meta:
+        description = "Represents user data."
+        interfaces = [relay.Node, ObjectWithMetadata]
+        model = get_user_model()
+
+    @staticmethod
+    def resolve_addresses(root: models.User, _info):
+        return root.addresses.annotate_default(root).all()  # type: ignore
+
+    @staticmethod
+    def resolve_checkout(root: models.User, _info):
+        return get_user_checkout(root)
+
+    @staticmethod
+    @traced_resolver
+    def resolve_checkout_tokens(root: models.User, info, channel=None):
+        def return_checkout_tokens(checkouts):
+            if not checkouts:
+                return []
+            checkout_global_ids = []
+            for checkout in checkouts:
+                checkout_global_ids.append(checkout.token)
+            return checkout_global_ids
+
+        if not channel:
+            return (
+                CheckoutByUserLoader(info.context)
+                .load(root.id)
+                .then(return_checkout_tokens)
             )
-            cleaned_input[BILLING_ADDRESS_FIELD] = billing_address
+        return (
+            CheckoutByUserAndChannelLoader(info.context)
+            .load((root.id, channel))
+            .then(return_checkout_tokens)
+        )
 
-        if cleaned_input.get("redirect_url"):
-            try:
-                validate_storefront_url(cleaned_input.get("redirect_url"))
-            except ValidationError as error:
-                raise ValidationError(
-                    {"redirect_url": error}, code=AccountErrorCode.INVALID
-                )
+    @staticmethod
+    @traced_resolver
+    def resolve_checkout_ids(root: models.User, info, channel=None):
+        def return_checkout_ids(checkouts):
+            if not checkouts:
+                return []
+            checkout_global_ids = []
+            for checkout in checkouts:
+                checkout_global_ids.append(to_global_id_or_none(checkout))
+            return checkout_global_ids
 
-        return cleaned_input
-
-    class AddressInput(graphene.InputObjectType):
-        first_name = graphene.String(description="Given name.")
-        last_name = graphene.String(description="Family name.")
-        company_name = graphene.String(description="Company or organization.")
-        street_address_1 = graphene.String(description="Address.")
-        street_address_2 = graphene.String(description="Address.")
-        city = graphene.String(description="City.")
-        city_area = graphene.String(description="District.")
-        postal_code = graphene.String(description="Postal code.")
-        country = CountryCodeEnum(description="Country.")
-        country_area = graphene.String(description="State or province.")
-        phone = graphene.String(description="Phone number.")
-
-    @classmethod
-    @traced_atomic_transaction()
-    def save(cls, info, instance, cleaned_input):
-        default_shipping_address = cleaned_input.get(SHIPPING_ADDRESS_FIELD)
-        manager = load_plugin_manager(info.context)
-        if default_shipping_address:
-            default_shipping_address = manager.change_user_address(
-                default_shipping_address, "shipping", instance
+        if not channel:
+            return (
+                CheckoutByUserLoader(info.context)
+                .load(root.id)
+                .then(return_checkout_ids)
             )
-            default_shipping_address.save()
-            instance.default_shipping_address = default_shipping_address
-        default_billing_address = cleaned_input.get(BILLING_ADDRESS_FIELD)
-        if default_billing_address:
-            default_billing_address = manager.change_user_address(
-                default_billing_address, "billing", instance
+        return (
+            CheckoutByUserAndChannelLoader(info.context)
+            .load((root.id, channel))
+            .then(return_checkout_ids)
+        )
+
+    @staticmethod
+    def resolve_gift_cards(root: models.User, info, **kwargs):
+        from ..giftcard.types import GiftCardCountableConnection
+
+        def _resolve_gift_cards(gift_cards):
+            return create_connection_slice(
+                gift_cards, info, kwargs, GiftCardCountableConnection
             )
-            default_billing_address.save()
-            instance.default_billing_address = default_billing_address
 
-        is_creation = instance.pk is None
-        super().save(info, instance, cleaned_input)
-        if default_billing_address:
-            instance.addresses.add(default_billing_address)
-        if default_shipping_address:
-            instance.addresses.add(default_shipping_address)
+        return (
+            GiftCardsByUserLoader(info.context).load(root.id).then(_resolve_gift_cards)
+        )
 
-        instance.search_document = prepare_user_search_document_value(instance)
-        instance.save(update_fields=["search_document", "updated_at"])
+    @staticmethod
+    def resolve_user_permissions(root: models.User, _info):
+        from .resolvers import resolve_permissions
 
-        # The instance is a new object in db, create an event
-        if is_creation:
-            manager.customer_created(customer=instance)
-        else:
-            manager.customer_updated(instance)
+        return resolve_permissions(root)
 
-        if cleaned_input.get("redirect_url"):
-            channel_slug = cleaned_input.get("channel")
-            if not instance.is_staff:
-                channel_slug = clean_channel(
-                    channel_slug, error_class=AccountErrorCode
-                ).slug
-            elif channel_slug is not None:
-                channel_slug = validate_channel(
-                    channel_slug, error_class=AccountErrorCode
-                ).slug
-            send_set_password_notification(
-                cleaned_input.get("redirect_url"),
-                instance,
-                manager,
-                channel_slug,
+    @staticmethod
+    def resolve_permission_groups(root: models.User, _info):
+        return root.groups.all()
+
+    @staticmethod
+    def resolve_editable_groups(root: models.User, _info):
+        return get_groups_which_user_can_manage(root)
+
+    @staticmethod
+    def resolve_note(root: models.User, info):
+        return root.note
+
+    @staticmethod
+    def resolve_events(root: models.User, info):
+        return CustomerEventsByUserLoader(info.context).load(root.id)
+
+    @staticmethod
+    def resolve_orders(root: models.User, info, **kwargs):
+        from ..orders.types import OrderCountableConnection
+
+        def _resolve_orders(orders):
+            requester = get_user_or_app_from_context(info.context)
+            if not requester.has_perm(OrderPermissions.MANAGE_ORDERS):
+                # allow fetch requestor orders (except drafts)
+                if root == info.context.user:
+                    orders = [
+                        order for order in orders if order.status != OrderStatus.DRAFT
+                    ]
+                else:
+                    raise PermissionDenied(
+                        permissions=[
+                            AuthorizationFilters.OWNER,
+                            OrderPermissions.MANAGE_ORDERS,
+                        ]
+                    )
+
+            return create_connection_slice(
+                orders, info, kwargs, OrderCountableConnection
             )
+
+        return OrdersByUserLoader(info.context).load(root.id).then(_resolve_orders)
+
+    @staticmethod
+    def resolve_avatar(root: models.User, info, size=None, format=None):
+        if not root.avatar:
+            return
+
+        if not size:
+            return Image(url=root.avatar.url, alt=None)
+
+        format = format.lower() if format else None
+        size = get_thumbnail_size(size)
+
+        def _resolve_avatar(thumbnail):
+            url = get_image_or_proxy_url(thumbnail, root.uuid, "User", size, format)
+            return Image(url=url, alt=None)
+
+        return (
+            ThumbnailByUserIdSizeAndFormatLoader(info.context)
+            .load((root.id, size, format))
+            .then(_resolve_avatar)
+        )
+
+    @staticmethod
+    def resolve_stored_payment_sources(root: models.User, info, channel=None):
+        from .resolvers import resolve_payment_sources
+
+        if root == info.context.user:
+            return resolve_payment_sources(info, root, channel_slug=channel)
+        raise PermissionDenied(permissions=[AuthorizationFilters.OWNER])
+
+    @staticmethod
+    def resolve_language_code(root, _info):
+        return LanguageCodeEnum[str_to_enum(root.language_code)]
+
+    @staticmethod
+    def __resolve_references(roots: List["User"], info):
+        from .resolvers.resolvers import resolve_users
+
+        ids = set()
+        emails = set()
+        for root in roots:
+            if root.id is not None:
+                ids.add(root.id)
+            else:
+                emails.add(root.email)
+
+        users = list(resolve_users(info, ids=ids, emails=emails))
+        users_by_id = {user.id: user for user in users}
+        users_by_email = {user.email: user for user in users}
+
+        results = []
+        for root in roots:
+            if root.id is not None:
+                _, user_id = from_global_id_or_error(root.id, User)
+                results.append(users_by_id.get(int(user_id)))
+            else:
+                results.append(users_by_email.get(root.email))
+        return results
+
+
+class UserCountableConnection(CountableConnection):
+    class Meta:
+        node = User
+
+
+class ChoiceValue(graphene.ObjectType):
+    raw = graphene.String()
+    verbose = graphene.String()
+
+
+class AddressValidationData(graphene.ObjectType):
+    country_code = graphene.String(required=True)
+    country_name = graphene.String(required=True)
+    address_format = graphene.String(required=True)
+    address_latin_format = graphene.String(required=True)
+    allowed_fields = NonNullList(graphene.String, required=True)
+    required_fields = NonNullList(graphene.String, required=True)
+    upper_fields = NonNullList(graphene.String, required=True)
+    country_area_type = graphene.String(required=True)
+    country_area_choices = NonNullList(ChoiceValue, required=True)
+    city_type = graphene.String(required=True)
+    city_choices = NonNullList(ChoiceValue, required=True)
+    city_area_type = graphene.String(required=True)
+    city_area_choices = NonNullList(ChoiceValue, required=True)
+    postal_code_type = graphene.String(required=True)
+    postal_code_matchers = NonNullList(graphene.String, required=True)
+    postal_code_examples = NonNullList(graphene.String, required=True)
+    postal_code_prefix = graphene.String(required=True)
+
+
+@federated_entity("id")
+class Group(ModelObjectType):
+    id = graphene.GlobalID(required=True)
+    name = graphene.String(required=True)
+    user_can_manage = graphene.Boolean(
+        required=True,
+        description=(
+            "True, if the currently authenticated user has rights to manage a group."
+        ),
+    )
+
+    @staticmethod
+    def resolve_users(root: auth_models.Group, _info):
+        return root.user_set.all()
+
+
+class GroupCountableConnection(CountableConnection):
+    class Meta:
+        node = Group
