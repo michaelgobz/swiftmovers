@@ -23,7 +23,7 @@ from ...account.types import Address, AddressInput, User
 from ...app.dataloaders import load_app
 from ...channel.utils import clean_channel, validate_channel
 from ...core.context import set_mutation_flag_in_context
-from  import LanguageCodeEnum
+from ..core.enums import LanguageCodeEnum
 from ...core.mutations import (
     BaseMutation,
     ModelDeleteMutation,
