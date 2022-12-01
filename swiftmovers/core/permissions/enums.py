@@ -75,7 +75,7 @@ def get_permissions_from_names(names: List[str]):
 
 
 def get_permission_names(permissions: Iterable["Permission"]):
-    """Convert Permissions db objects to list of Permission enums."""
+    """Convert Permissions db objects to list of Permission enums.py."""
     permission_dict = get_permissions_enum_dict()
     names = set()
     for perm in permissions:

@@ -25,7 +25,7 @@ you can specify names of those arguments in "multipliers" list:
     }
 }
 
-This will result in following queries having cost of 100:
+This will result in following resolvers having cost of 100:
 
 { products(first: 100) { edges: { id } } }
 

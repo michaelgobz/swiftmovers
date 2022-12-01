@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import dj_database_url
 import os
+from .core.languages import LANGUAGES as CORE_LANGUAGES
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,6 +28,7 @@ SECRET_KEY = 'django-insecure-#g#us34=x47@=oe&bhs2rwz$d@o-hnyb7aqh*3jz$_+zb%)w@b
 DEBUG = True
 
 PROJECT_ROOT = os.path.normpath(os.path.join(os.path.dirname(__file__), ".."))
+ENABLE_ACCOUNT_CONFIRMATION_BY_EMAIL = os.environ.get("ENABLE_ACCOUNT_CONFIRMATION_BY_EMAIL") | False
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
@@ -34,14 +36,16 @@ ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
 INSTALLED_APPS = [
     # django modules
-    'django.contrib.admin',
+    # 'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'graphene_django',
     'dj_database_url',
+    'django_mysql',
     # mvp modules
     'swiftmovers.swift',
     'swiftmovers.core',
@@ -51,7 +55,15 @@ INSTALLED_APPS = [
     'swiftmovers.payments',
     'swiftmovers.shipping',
     'swiftmovers.graphqlcore',
-    'swiftmovers.orders'
+    'swiftmovers.orders',
+    'swiftmovers.items',
+    # external apps
+    'django_measurement',
+    'django_prices',
+    'django_countries',
+    'django_filters',
+    'phonenumber_field',
+    'phonenumbers'
 ]
 
 MIDDLEWARE = [
@@ -66,7 +78,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'swiftmovers.urls'
 TEMPLATES_DIR = os.path.join(PROJECT_ROOT, "templates")
-print(TEMPLATES_DIR)
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -98,7 +109,7 @@ DATABASE_REPLICA_NAME = 'replica'
 
 DATABASES = {
     DATABASE_DEFAULT_NAME: dj_database_url.config(
-        default='mysql://swiftAdmin:swiftAdmin@0949@localhost:3306/swift', conn_max_age=800
+        default='postgres://swiftAdmin:swiftAdmin@localhost:5432/swift', conn_max_age=800
     )
     # TODO :  add replication user
 
@@ -127,6 +138,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
+LANGUAGES = CORE_LANGUAGES
+
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
@@ -146,3 +159,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 GRAPHENE = {
     'SCHEMA': 'swiftmovers.schema.schema'
 }
+
+AUTH_USER_MODEL = "accounts.User"
+
+DEFAULT_COUNTRY = os.environ.get("DEFAULT_COUNTRY", "US")
+DEFAULT_DECIMAL_PLACES = 3
+DEFAULT_MAX_DIGITS = 12
+DEFAULT_CURRENCY_CODE_LENGTH = 3
