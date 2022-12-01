@@ -34,9 +34,6 @@ jobs:
       - name: Migrate and make migration
         run: python manage.py migrate
 
-      - name: Run server
-        run: python manage.py runserver
-      
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v2
         with:
@@ -66,3 +63,6 @@ jobs:
           app-name: 'swiftmovers-api'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_921EC09591A2444086CE101CD994257C }}
+
+      - name : Runserver
+        run: python manage.py runserver
