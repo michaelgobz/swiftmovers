@@ -48,7 +48,7 @@ ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
 INSTALLED_APPS = [
     # django modules
-    # 'django.contrib.admin',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -68,8 +68,8 @@ INSTALLED_APPS = [
     'swiftmovers.shipping',
     'swiftmovers.graphqlcore',
     'swiftmovers.orders',
-    'swiftmovers.items',
     'swiftmovers.zones',
+    'swiftmovers.items',
     # external apps
     'django_measurement',
     'django_prices',
@@ -122,7 +122,8 @@ DATABASE_REPLICA_NAME = 'replica'
 
 DATABASES = {
     DATABASE_DEFAULT_NAME: dj_database_url.config(
-        default='postgres://michael:Leahjanelle@0949@swiftmovers.postgres.database.azure.com:5432/swift', conn_max_age=800
+        default='postgres://michael:Leahjanelle@0949@swiftmovers.postgres.database.azure.com:5432/swift',
+        conn_max_age=800
     )
     # TODO :  add replication user
 

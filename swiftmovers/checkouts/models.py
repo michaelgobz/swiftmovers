@@ -288,7 +288,3 @@ class CheckoutLine(models.Model):
 
     def __setstate__(self, data):
         self.variant, self.quantity = data
-
-    def is_shipping_required(self) -> bool:
-        """Return `True` if the related product variant requires shipping."""
-        return self.variant.is_shipping_required()

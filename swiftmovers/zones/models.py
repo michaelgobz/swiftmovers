@@ -17,10 +17,11 @@ class Zone(models.Model):
         choices=AllocationStrategy.CHOICES,
         default=AllocationStrategy.PRIORITIZE_SORTING_ORDER,
     )
+    is_with_traffic = models.BooleanField(default=False)
 
     class Meta:
         ordering = ("slug",)
-        app_label = "zone"
+        app_label = "zones"
         # Todo: Add permissions
 
     def __str__(self):

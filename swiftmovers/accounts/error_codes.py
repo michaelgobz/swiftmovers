@@ -31,3 +31,4 @@ class AccountErrorCode(Enum):
     JWT_MISSING_TOKEN = "missing_token"
     JWT_INVALID_CSRF_TOKEN = "invalid_csrf_token"
     ACCOUNT_NOT_CONFIRMED = "account_not_confirmed"
+    ZONE_IS_INVALID = "zone_is_invalid"

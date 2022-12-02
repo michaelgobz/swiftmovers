@@ -78,6 +78,7 @@ class Address(models.Model):
     country = CountryField()
     country_area = models.CharField(max_length=128, blank=True)
     phone = PossiblePhoneNumberField(blank=True, default="", db_index=True)
+    zone = models.CharField(max_length=256, blank=True)
 
     objects = models.Manager.from_queryset(AddressQueryset)()
 
@@ -95,6 +96,7 @@ class DeliveryAddress(models.Model):
     country_area = models.CharField(max_length=128, blank=True)
     phone = PossiblePhoneNumberField(blank=True, default="", db_index=True)
     address_note = models.CharField(max_length=128, blank=True)
+    zone = models.CharField(max_length=256, blank=True)
 
 
 class UserManager(BaseUserManager):
@@ -154,7 +156,7 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     def __init__(self, *args, **kwargs):
-       # super().__init__(*args, **kwargs)
+        # super().__init__(*args, **kwargs)
         self._effective_permissions = None
 
     def get_full_name(self):

@@ -11,3 +11,4 @@ class Swift(models.Model):
     packageWeight = models.IntegerField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     last_change = models.DateTimeField(auto_now=True)
+    last_address = models.TextField(editable=True,default="kampala")
