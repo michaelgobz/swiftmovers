@@ -14,7 +14,7 @@ from ....core.tokens import account_delete_token_generator
 from ....core.tracing import traced_atomic_transaction
 
 from ....orders.utils import match_orders_with_new_user
-from ...channel.utils import clean_channel
+from ...zones.utils import clean_channel
 from ...core.enums import LanguageCodeEnum
 from ...core.mutations.base import BaseMutation, ModelDeleteMutation, ModelMutation
 from ...core.types import AccountError, NonNullList
