@@ -1,4 +1,4 @@
-from ...zones import AllocationStrategy
+from swiftmovers.zones import AllocationStrategy
 from ..core.enums import to_enum
 
 AllocationStrategyEnum = to_enum(

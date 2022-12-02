@@ -3,7 +3,7 @@ from django.conf import settings
 from django.db import models
 from django_countries.fields import CountryField
 
-from . import AllocationStrategy
+from swiftmovers.zones import AllocationStrategy
 
 
 class Zone(models.Model):

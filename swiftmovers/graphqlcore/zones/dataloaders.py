@@ -1,6 +1,6 @@
 from django.db.models import Exists, OuterRef
 
-from ...zones.models import Zone
+from swiftmovers.zones import Zone
 from ...orders.models import Order
 from ..checkouts.dataloaders import CheckoutByTokenLoader, CheckoutLineByIdLoader
 from ..core.dataloaders import DataLoader

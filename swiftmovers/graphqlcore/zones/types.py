@@ -14,7 +14,6 @@ from ..accounts.enums import CountryCodeEnum
 from ..core.types import CountryDisplay, ModelObjectType, NonNullList
 from ..meta.types import ObjectWithMetadata
 from . import ZoneContext
-from .dataloaders import ZoneWithHasOrdersByIdLoader
 from .enums import AllocationStrategyEnum
 
 
