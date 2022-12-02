@@ -17,6 +17,7 @@ from ...orders import error_codes as order_error_codes
 from ...payments import error_codes as payment_error_codes
 from ...items import error_codes as items_error_codes
 from ...shipping import error_codes as shipping_error_codes
+from ...core import error_codes as core_error_codes
 
 
 def str_to_enum(name):
@@ -87,6 +88,7 @@ unit_enums = [DistanceUnitsEnum, AreaUnitsEnum, VolumeUnitsEnum, WeightUnitsEnum
 AccountErrorCode = graphene.Enum.from_enum(account_error_codes.AccountErrorCode)
 CheckoutErrorCode = graphene.Enum.from_enum(checkout_error_codes.CheckoutErrorCode)
 ZoneErrorCode = graphene.Enum.from_enum(zone_error_codes.ZoneErrorCode)
+MetadataErrorCode = graphene.Enum.from_enum(core_error_codes.MetadataErrorCode)
 
 OrderErrorCode = graphene.Enum.from_enum(order_error_codes.OrderErrorCode)
 InvoiceErrorCode = graphene.Enum.from_enum(invoice_error_codes.InvoiceErrorCode)

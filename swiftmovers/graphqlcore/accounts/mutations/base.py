@@ -23,15 +23,8 @@ INVALID_TOKEN = "Invalid or expired token."
 def check_can_edit_address(context, address):
     """Determine whether the user or app can edit the given address."""
     requester = get_user_or_app_from_context(context)
-    if requester.has_perm(AccountPermissions.MANAGE_USERS):
+    if requester is User:
         return True
-    if not context.app and not context.user.is_anonymous:
-        is_owner = requester.addresses.filter(pk=address.pk).exists()
-        if is_owner:
-            return True
-    raise PermissionDenied(
-        permissions=[AccountPermissions.MANAGE_USERS, AuthorizationFilters.OWNER]
-    )
 
 
 class SetPassword(CreateToken):
@@ -52,7 +45,6 @@ class SetPassword(CreateToken):
 
     @classmethod
     def mutate(cls, root, info, **data):
-        set_mutation_flag_in_context(info.context)
         result = info.context.plugins.perform_mutation(
             mutation_cls=cls, root=root, info=info, data=data
         )
@@ -66,7 +58,7 @@ class SetPassword(CreateToken):
         try:
             cls._set_password_for_user(email, password, token)
         except ValidationError as e:
-            errors = validation_error_to_error_type(e, AccountError)
+            errors = (e, AccountError)
             return cls.handle_typed_errors(errors)
         return super().mutate(root, info, **data)
 
@@ -222,7 +214,6 @@ class PasswordChange(BaseMutation):
         description = "Change the password of the logged in user."
         error_type_class = AccountError
         error_type_field = "account_errors"
-        permissions = (AuthorizationFilters.AUTHENTICATED_USER,)
 
     @classmethod
     def perform_mutation(cls, _root, info, **data):
@@ -277,7 +268,7 @@ class BaseAddressUpdate(BaseMutation):
         cls._save_m2m(info, address, cleaned_input)
 
         user = address.user_addresses.first()
-        user.search_document = prepare_user_search_document_value(user)
+        user.search_document = "to be added"
         user.save(update_fields=["search_document", "updated_at"])
 
         info.context.plugins.customer_updated(user)

@@ -13,6 +13,7 @@ from ..enums import (
     itemsErrorCode,
     ShippingErrorCodes,
     WeightUnitsEnum,
+
 )
 from ..scalars import PositiveDecimal
 from ...accounts.enums import AddressTypeEnum
@@ -39,7 +40,8 @@ class LanguageDisplay(graphene.ObjectType):
         description="ISO 639 representation of the language name.", required=True
     )
     language = graphene.String(description="Full name of the language.", required=True)
-
+class MetadataError(Error):
+    code = MetadataErrorCode(description="The error code.", required=True)
 
 class Error(graphene.ObjectType):
     field = graphene.String(
