@@ -4,6 +4,7 @@ graphene-django
 django-prices
 django-filter
 django-graphql-jwt
+cryptography
 django-phonenumber-field
 mysql-connector-python
 django-mysql==4.7.1

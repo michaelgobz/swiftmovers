@@ -8,10 +8,8 @@ from django.db import transaction
 
 from ....accounts import models
 from ....accounts.error_codes import AccountErrorCode
-from ....accounts.utils import remove_the_oldest_user_address_if_address_limit_is_reached
 from ....checkouts import AddressType
 from ....core.jwt import create_token, jwt_decode
-from ....core.permissions import AuthorizationFilters
 from ....core.tokens import account_delete_token_generator
 from ....core.tracing import traced_atomic_transaction
 
