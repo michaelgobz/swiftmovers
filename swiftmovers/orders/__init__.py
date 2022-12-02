@@ -1,3 +1,10 @@
+from dataclasses import dataclass
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .models import FulfillmentLine
+
+
 class OrderStatus:
     DRAFT = "draft"  # fully editable, not finalized order created by staff users
     UNCONFIRMED = (
@@ -171,21 +178,33 @@ class OrderEvents:
         (INVOICE_GENERATED, "An invoice was generated"),
         (INVOICE_UPDATED, "An invoice was updated"),
         (INVOICE_SENT, "An invoice was sent"),
+        (FULFILLMENT_CANCELED, "A fulfillment was canceled"),
+        (FULFILLMENT_RESTOCKED_ITEMS, "The items of the fulfillment were restocked"),
+        (FULFILLMENT_FULFILLED_ITEMS, "Some items were fulfilled"),
+        (FULFILLMENT_REFUNDED, "Some items were refunded"),
+        (FULFILLMENT_RETURNED, "Some items were returned"),
+        (FULFILLMENT_REPLACED, "Some items were replaced"),
+        (FULFILLMENT_AWAITS_APPROVAL, "Fulfillments awaits approval"),
         (TRACKING_UPDATED, "The fulfillment's tracking code was updated"),
         (NOTE_ADDED, "A note was added to the order"),
         (OTHER, "An unknown order event containing a message"),
     ]
 
 
-# auth and charge
-
 class OrderAuthorizeStatus:
-    """Determine a current authorize status for order
+    """Determine a current authorize status for order.
+
+    We treat the order as fully authorized when the sum of authorized and charged funds
+    cover the order.total.
+    We treat the order as partially authorized when the sum of authorized and charged
+    funds covers only part of the order.total
+    We treat the order as not authorized when the sum of authorized and charged funds is
+    0.
 
     NONE - the funds are not authorized
-    PARTIAL - the funds that are authorized or charged don't cover fully the order's for delivery
+    PARTIAL - the funds that are authorized or charged don't cover fully the order's
     total
-    FULL - the funds that are authorized or charged fully cover the order's total or fully paid
+    FULL - the funds that are authorized or charged fully cover the order's total
     """
 
     NONE = "none"
@@ -209,6 +228,11 @@ class OrderAuthorizeStatus:
 class OrderChargeStatus:
     """Determine the current charge status for the order.
 
+    We treat the order as overcharged when the charged amount is bigger that order.total
+    We treat the order as fully charged when the charged amount is equal to order.total.
+    We treat the order as partially charged when the charged amount covers only part of
+    the order.total
+
     NONE - the funds are not charged.
     PARTIAL - the funds that are charged don't cover the order's total
     FULL - the funds that are charged fully cover the order's total
@@ -226,3 +250,10 @@ class OrderChargeStatus:
         (FULL, "The funds that are charged fully cover the order's total"),
         (OVERCHARGED, "The charged funds are bigger than order's total"),
     ]
+
+
+@dataclass
+class FulfillmentLineData:
+    line: "FulfillmentLine"
+    quantity: int
+    replace: bool = False

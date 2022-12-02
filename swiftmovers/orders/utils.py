@@ -13,10 +13,10 @@ from ..core.taxes import zero_money
 from ..core.tracing import traced_atomic_transaction
 from ..core.weight import zero_weight
 
-from ..payment.model_helpers import get_total_authorized
-from ..product.utils.digital_products import get_default_digital_content_settings
-from ....shipping.types import ShippingMethodData
-from ..shipping.models import ShippingMethod, ShippingMethodChannelListing
+from ..payments.model_helpers import get_total_authorized
+
+from ..shipping.types import ShippingMethodData
+from ..shipping.models import ShippingMethod
 from ..shipping.utils import (
     convert_to_shipping_method_data,
     initialize_shipping_method_active_status,
@@ -27,14 +27,13 @@ from ..warehouse.management import (
     increase_allocations,
     increase_stock,
 )
-from ..warehouse.models import Warehouse
+
 from . import (
     ORDER_EDITABLE_STATUS,
     FulfillmentStatus,
     OrderAuthorizeStatus,
     OrderChargeStatus,
     OrderStatus,
-    events,
 )
 from .fetch import OrderLineInfo
 from .models import Order, OrderLine

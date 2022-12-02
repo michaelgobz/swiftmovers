@@ -1,5 +1,6 @@
 from decimal import Decimal
 from uuid import uuid4
+from re import match
 
 from django.conf import settings
 from django.contrib.postgres.search import SearchVectorField
@@ -11,11 +12,14 @@ from django.utils.timezone import now
 from django_measurement.models import MeasurementField
 from django_prices.models import MoneyField, TaxedMoneyField
 from measurement.measures import Weight
+from ..zones.models import Zone
+from ..core.models import ModelWithMetadata
 
 # Create your models here.
 
 from ..shipping.models import ShippingMethod
 from . import (
+    FulfillmentStatus,
     OrderAuthorizeStatus,
     OrderChargeStatus,
     OrderOrigin,
@@ -152,6 +156,11 @@ class Order(models.Model):
         null=True,
         related_name="orders",
         on_delete=models.SET_NULL,
+    )
+    zone = models.ForeignKey(
+        Zone,
+        related_name="orders",
+        on_delete=models.PROTECT,
     )
     shipping_method_name = models.CharField(
         max_length=255, null=True, default=None, blank=True, editable=False
@@ -444,3 +453,78 @@ class OrderLine(models.Model):
 
     objects = models.Manager.from_queryset(OrderLineQueryset)()
 # todo: aad the order fulfillment
+
+class Fulfillment(ModelWithMetadata):
+    fulfillment_order = models.PositiveIntegerField(editable=False)
+    order = models.ForeignKey(
+        Order,
+        related_name="fulfillments",
+        editable=False,
+        on_delete=models.CASCADE,
+    )
+    status = models.CharField(
+        max_length=32,
+        default=FulfillmentStatus.FULFILLED,
+        choices=FulfillmentStatus.CHOICES,
+    )
+    tracking_number = models.CharField(max_length=255, default="", blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    shipping_refund_amount = models.DecimalField(
+        max_digits=settings.DEFAULT_MAX_DIGITS,
+        decimal_places=settings.DEFAULT_DECIMAL_PLACES,
+        null=True,
+        blank=True,
+    )
+    total_refund_amount = models.DecimalField(
+        max_digits=settings.DEFAULT_MAX_DIGITS,
+        decimal_places=settings.DEFAULT_DECIMAL_PLACES,
+        null=True,
+        blank=True,
+    )
+
+    class Meta(ModelWithMetadata.Meta):
+        ordering = ("pk",)
+
+    def __str__(self):
+        return f"Fulfillment #{self.composed_id}"
+
+    def __iter__(self):
+        return iter(self.lines.all())
+
+    def save(self, *args, **kwargs):
+        """Assign an auto incremented value as a fulfillment order."""
+        if not self.pk:
+            groups = self.order.fulfillments.all()
+            existing_max = groups.aggregate(Max("fulfillment_order"))
+            existing_max = existing_max.get("fulfillment_order__max")
+            self.fulfillment_order = existing_max + 1 if existing_max is not None else 1
+        return super().save(*args, **kwargs)
+
+    @property
+    def composed_id(self):
+        return "%s-%s" % (self.order.number, self.fulfillment_order)
+
+    def can_edit(self):
+        return self.status != FulfillmentStatus.CANCELED
+
+    def get_total_quantity(self):
+        return sum([line.quantity for line in self.lines.all()])
+
+    @property
+    def is_tracking_number_url(self):
+        return bool(match(r"^[-\w]+://", self.tracking_number))
+
+
+class FulfillmentLine(models.Model):
+    order_line = models.ForeignKey(
+        OrderLine,
+        related_name="fulfillment_lines",
+        on_delete=models.CASCADE,
+    )
+    fulfillment = models.ForeignKey(
+        Fulfillment, related_name="lines", on_delete=models.CASCADE
+    )
+    quantity = models.PositiveIntegerField()
+
+
