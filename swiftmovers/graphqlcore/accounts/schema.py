@@ -5,8 +5,9 @@ from ..core.utils import from_global_id_or_error
 from ..core.fields import FilterConnectionField, PermissionsField
 from .sort_helpers import *
 from ..core.filters import *
-from .t
+from ..core.types import FilterInputObjectType
 from .enums import CountryCodeEnum
+from .filters import CustomerFilter, StaffUserFilter, PermissionGroupFilter
 from .mutations.mutations import (
     AccountAddressCreate,
     AccountAddressDelete,
@@ -42,10 +43,6 @@ from .types import (
     User,
     UserCountableConnection,
 )
-from ..core.filters import (
-
-)
-
 
 class CustomerFilterInput(FilterInputObjectType):
     class Meta:

@@ -202,3 +202,76 @@ def format_error(error, handled_exceptions):
                 lines.extend(line.rstrip().splitlines())
         result["extensions"]["exception"]["stacktrace"] = lines
     return result
+
+from django.utils import timezone
+
+from ..core.enums import ReportingPeriod
+
+
+def reporting_period_to_date(period):
+    now = timezone.now()
+    if period == ReportingPeriod.TODAY:
+        start_date = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    elif period == ReportingPeriod.THIS_MONTH:
+        start_date = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    else:
+        raise ValueError("Unknown period: %s" % period)
+    return start_date
+
+
+def filter_by_period(queryset, period, field_name):
+    start_date = reporting_period_to_date(period)
+    return queryset.filter(**{"%s__gte" % field_name: start_date})
+
+
+def filter_range_field(qs, field, value):
+    gte, lte = value.get("gte"), value.get("lte")
+    if gte:
+        lookup = {f"{field}__gte": gte}
+        qs = qs.filter(**lookup)
+    if lte:
+        lookup = {f"{field}__lte": lte}
+        qs = qs.filter(**lookup)
+    return qs
+
+def resolve_global_ids_to_primary_keys(
+    ids, graphene_type=None, raise_error: bool = False
+):
+    pks = []
+    invalid_ids = []
+    used_type = graphene_type
+
+    for graphql_id in ids:
+        if not graphql_id:
+            invalid_ids.append(graphql_id)
+            continue
+
+        try:
+            node_type, _id = from_global_id_or_error(graphql_id)
+        except Exception:
+            invalid_ids.append(graphql_id)
+            continue
+
+        # Raise GraphQL error if ID of a different type was passed
+        if used_type and str(used_type) != str(node_type):
+            if not raise_error:
+                continue
+            raise GraphQLError(f"Must receive {str(used_type)} id: {graphql_id}.")
+
+        used_type = node_type
+        pks.append(_id)
+
+    if invalid_ids:
+        raise GraphQLError(ERROR_COULD_NO_RESOLVE_GLOBAL_ID % invalid_ids)
+
+    return used_type, pks
+def filter_by_id(object_type):
+
+
+    def inner(qs, _, value):
+        if not value:
+            return qs
+        _, obj_pks = resolve_global_ids_to_primary_keys(value, object_type)
+        return qs.filter(id__in=obj_pks)
+
+    return inner
