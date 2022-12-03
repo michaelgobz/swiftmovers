@@ -161,6 +161,7 @@ class Order(models.Model):
         Zone,
         related_name="orders",
         on_delete=models.PROTECT,
+        null=True
     )
     shipping_method_name = models.CharField(
         max_length=255, null=True, default=None, blank=True, editable=False

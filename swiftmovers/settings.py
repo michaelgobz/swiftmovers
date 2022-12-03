@@ -122,7 +122,7 @@ DATABASE_REPLICA_NAME = 'replica'
 
 DATABASES = {
     DATABASE_DEFAULT_NAME: dj_database_url.config(
-        default='postgres://michael:Leahjanelle@0949@swiftmovers.postgres.database.azure.com:5432/swift',
+        default='postgres://swiftAdmin:swiftAdmin@localhost:5432/swift',
         conn_max_age=800
     )
     # TODO :  add replication user
@@ -171,7 +171,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 GRAPHENE = {
-    'SCHEMA': 'swiftmovers.schema.schema'
+    'SCHEMA': 'swiftmovers.graphqlcore.api.schema'
 }
 
 AUTH_USER_MODEL = "accounts.User"

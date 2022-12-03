@@ -17,11 +17,11 @@ psycopg2
 gunicorn
 dj-database-url
 celery~=5.2.7
-graphene~=3.1.1
-graphql-relay
+graphene==2.1.9
+graphql-relay==2.0.1
 uvicorn~=0.19.0
 Cython
-graphql-core
+graphql-core==2.3.2
 graphql-relay
 pytimeparse~=1.1.8
 opentracing~=2.4.0
