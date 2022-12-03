@@ -6,7 +6,7 @@ from i18naddress import get_validation_rules
 from ....accounts import models
 
 from ....core.tracing import traced_resolver
-from ....payments import *  # TODO: add gateway
+from ....payments.interface import  PaymentGateway  # TODO: add gateway
 from ....payments.utils import fetch_customer_id
 from ...core.utils import from_global_id_or_error
 from ...meta.resolvers import resolve_metadata
