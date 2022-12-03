@@ -15,6 +15,9 @@ from PIL import Image
 
 Image.init()
 
+ERROR_COULD_NO_RESOLVE_GLOBAL_ID = (
+    "Could not resolve to a node with the global id list of '%s'."
+)
 
 def clean_seo_fields(data):
     """Extract and assign seo fields to given dictionary."""
@@ -205,3 +208,35 @@ def to_global_id_or_none(instance):
         return None
     return graphene.Node.to_global_id(class_name, instance.pk)
 
+
+def resolve_global_ids_to_primary_keys(
+    ids, graphene_type=None, raise_error: bool = False
+):
+    pks = []
+    invalid_ids = []
+    used_type = graphene_type
+
+    for graphql_id in ids:
+        if not graphql_id:
+            invalid_ids.append(graphql_id)
+            continue
+
+        try:
+            node_type, _id = from_global_id_or_error(graphql_id)
+        except Exception:
+            invalid_ids.append(graphql_id)
+            continue
+
+        # Raise GraphQL error if ID of a different type was passed
+        if used_type and str(used_type) != str(node_type):
+            if not raise_error:
+                continue
+            raise GraphQLError(f"Must receive {str(used_type)} id: {graphql_id}.")
+
+        used_type = node_type
+        pks.append(_id)
+
+    if invalid_ids:
+        raise GraphQLError(ERROR_COULD_NO_RESOLVE_GLOBAL_ID % invalid_ids)
+
+    return used_type, pks

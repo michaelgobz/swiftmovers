@@ -10,6 +10,7 @@ from ..enums import (
     LanguageCodeEnum,
     OrderErrorCode,
     PaymentErrorCode,
+    MetadataErrorCode,
     itemsErrorCode,
     ShippingErrorCodes,
     WeightUnitsEnum,
@@ -20,7 +21,18 @@ from ...accounts.enums import AddressTypeEnum
 
 TYPES_WITH_DOUBLE_ID_AVAILABLE = [""]
 
+class Error(graphene.ObjectType):
+    field = graphene.String(
+        description=(
+            "Name of a field that caused the error. A value of `null` indicates that "
+            "the error isn't associated with a particular field."
+        ),
+        required=False,
+    )
+    message = graphene.String(description="The error message.")
 
+    class Meta:
+        description = "Represents an error in the input of a mutation."
 class NonNullList(graphene.List):
     """A list type that automatically adds non-null constraint on contained items."""
 
