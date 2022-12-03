@@ -94,12 +94,3 @@ def get_user_permissions(user: "User") -> "QuerySet":
     pass
 
 
-def get_out_of_scope_permissions(
-    requestor: Union["User", "App"], permissions: List[str]
-) -> List[str]:
-    """Return permissions that the requestor hasn't got."""
-    missing_permissions = []
-    for perm in permissions:
-        if not requestor.has_perm(perm):
-            missing_permissions.append(perm)
-    return missing_permissions

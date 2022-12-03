@@ -1,0 +1,34 @@
+name: Deploy to ECR
+
+on:
+
+  push:
+    branches: [ QA ]
+
+jobs:
+
+  build:
+
+    name: Build Image
+    runs-on: ubuntu-latest
+
+
+    steps:
+
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Login to DockerHub
+        id: login-ecr
+        uses: docker/login@v1
+        with:
+          username: ${{ secrets.DOCKER_USER_NAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build, tag, and push image to Amazon ECR
+        env:
+          USERNAME: ${{secrets.DOCKER_USERNAME }}
+          HUB_REPOSITORY: ${{ secrets.HUB_REPOSITORY }}
+          IMAGE_TAG: oversampling-v1.0
+        run: |
+          docker build -t $USERNAME/$HUB_REPOSITORY:$IMAGE_TAG .
+          docker push $USERNAME/$HUB_REPOSITORY:$IMAGE_TAG

@@ -12,13 +12,11 @@ from ...checkouts.utils import get_user_checkout
 from ...core.tracing import traced_resolver
 from ...orders import OrderStatus
 from ...thumbnail.utils import get_image_or_proxy_url, get_thumbnail_size
-from ..account.utils import check_is_owner_or_has_one_of_perms
-from ..app.dataloaders import AppByIdLoader
-from ..app.types import App
-from ..checkout.dataloaders import CheckoutByUserAndChannelLoader, CheckoutByUserLoader
+from ..accounts.utils import check_is_owner_or_has_one_of_perms
+from ..checkouts.dataloaders import CheckoutByUserAndChannelLoader, CheckoutByUserLoader
 from ..checkouts.types import Checkout
-from ..core.connection import CountableConnection, create_connection_slice
-from ..core.descriptions import DEPRECATED_IN_3X_FIELD
+from ..core.connections import CountableConnection, create_connection_slice
+
 from ..core.enums import LanguageCodeEnum
 from ..core.spec.entities import federated_entity
 from ..core.types.globals import (
