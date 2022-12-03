@@ -43,6 +43,8 @@ COPY --from=build-python /usr/local/bin/ /usr/local/bin/
 COPY .. /app
 WORKDIR /app
 
+# add the required envs
+
 RUN python3 manage.py migrate
 RUN python3 manage.py runserver
 
