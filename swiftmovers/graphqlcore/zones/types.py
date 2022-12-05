@@ -40,7 +40,7 @@ class ZoneContextTypeForObjectType(graphene.ObjectType):
         return resolve_translation(root.node, info, language_code=language_code)
 
 
-class ChannelContextType(ZoneContextTypeForObjectType, ModelObjectType):
+class ZoneContextType(ZoneContextTypeForObjectType, ModelObjectType):
     """A Graphene type that supports resolvers' root as ChannelContext objects."""
 
     class Meta:
@@ -63,7 +63,7 @@ class ChannelContextType(ZoneContextTypeForObjectType, ModelObjectType):
         return model == cls._meta.model
 
 
-class ChannelContextTypeWithMetadataForObjectType(ZoneContextTypeForObjectType):
+class ZoneContextTypeWithMetadataForObjectType(ZoneContextTypeForObjectType):
     """A Graphene type for that uses ChannelContext as root in resolvers.
 
     Same as ChannelContextType, but for types that implement ObjectWithMetadata
@@ -104,7 +104,7 @@ class ChannelContextTypeWithMetadataForObjectType(ZoneContextTypeForObjectType):
         return ObjectWithMetadata.resolve_private_metafields(root.node, info, keys=keys)
 
 
-class ChannelContextTypeWithMetadata(
+class ZoneContextTypeWithMetadata(
     ChannelContextTypeWithMetadataForObjectType, ChannelContextType
 ):
     """A Graphene type for that uses ChannelContext as root in resolvers.
@@ -115,21 +115,6 @@ class ChannelContextTypeWithMetadata(
 
     class Meta:
         abstract = True
-
-
-class StockSettings(ObjectType):
-    allocation_strategy = AllocationStrategyEnum(
-        description=(
-            "Allocation strategy defines the preference of warehouses "
-            "for allocations and reservations."
-        ),
-        required=True,
-    )
-
-    class Meta:
-        description = (
-            "Represents the channel stock settings." + ADDED_IN_37 + PREVIEW_FEATURE
-        )
 
 
 class Zone(ModelObjectType):
@@ -187,17 +172,6 @@ class Zone(ModelObjectType):
             AuthorizationFilters.AUTHENTICATED_STAFF_USER,
         ],
     )
-    warehouses = PermissionsField(
-        NonNullList(Warehouse),
-        description="List of warehouses assigned to this channel."
-        + ADDED_IN_35
-        + PREVIEW_FEATURE,
-        required=True,
-        permissions=[
-            AuthorizationFilters.AUTHENTICATED_APP,
-            AuthorizationFilters.AUTHENTICATED_STAFF_USER,
-        ],
-    )
     countries = NonNullList(
         CountryDisplay,
         description="List of shippable countries for the channel."
@@ -225,16 +199,16 @@ class Zone(ModelObjectType):
     )
 
     class Meta:
-        description = "Represents channel."
-        model = models.Channel
+        description = "Represents zone."
+        model = models.Zone
         interfaces = [graphene.relay.Node]
 
     @staticmethod
-    def resolve_has_orders(root: models.Channel, info):
+    def resolve_has_orders(root: models.Zone, info):
         return (
             ChannelWithHasOrdersByIdLoader(info.context)
             .load(root.id)
-            .then(lambda channel: channel.has_orders)
+            .then(lambda zone: zone.has_orders)
         )
 
     @staticmethod
@@ -263,7 +237,7 @@ class Zone(ModelObjectType):
             ]
 
         return (
-            ShippingZonesByChannelIdLoader(info.context)
+            ShippingZonesByZoneIdLoader(info.context)
             .load(root.id)
             .then(get_countries)
         )
@@ -279,7 +253,7 @@ class Zone(ModelObjectType):
             ShippingZonesByChannelIdLoader,
         )
 
-        shipping_zones_loader = ShippingZonesByChannelIdLoader(info.context).load(
+        shipping_zones_loader = ShippingZonesByZoneIdLoader(info.context).load(
             root.id
         )
         shipping_zone_countries: Dict[int, List[str]] = collections.defaultdict(list)
