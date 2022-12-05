@@ -5,7 +5,7 @@ from django_countries import countries
 from .interface import ShippingMethodData
 
 if TYPE_CHECKING:
-    from .models import ShippingMethod
+    from .models import ShippingMethod, ShippingMethodZoneListing
 
 
 logger = logging.getLogger(__name__)
@@ -28,12 +28,12 @@ def get_countries_without_shipping_zone():
 
 
 def convert_to_shipping_method_data(
-    shipping_method: "ShippingMethod", listing: Optional["ShippingMethodChannelListing"]
+    shipping_method: "ShippingMethod", listing: Optional["ShippingMethodZoneListing"]
 ) -> Optional["ShippingMethodData"]:
     if not listing:
         return None
 
-    price = shipping_method
+    price = listing.price
     minimum_order_price = listing.minimum_order_price
     maximum_order_price = listing.maximum_order_price
 
@@ -57,7 +57,7 @@ def convert_to_shipping_method_data(
 def initialize_shipping_method_active_status(
     shipping_methods: List["ShippingMethodData"],
 ):
+
     for instance in shipping_methods:
         instance.active = True
         instance.message = ""
-
