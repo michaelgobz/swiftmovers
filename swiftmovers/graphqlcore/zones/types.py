@@ -34,11 +34,6 @@ class ZoneContextTypeForObjectType(graphene.ObjectType):
     def resolve_id(root: ZoneContext, _info):
         return root.node.pk
 
-    @staticmethod
-    def resolve_translation(root: ZoneContext, info, *, language_code):
-        # Resolver for TranslationField; needs to be manually specified.
-        return resolve_translation(root.node, info, language_code=language_code)
-
 
 class ZoneContextType(ZoneContextTypeForObjectType, ModelObjectType):
     """A Graphene type that supports resolvers' root as ChannelContext objects."""
@@ -105,11 +100,11 @@ class ZoneContextTypeWithMetadataForObjectType(ZoneContextTypeForObjectType):
 
 
 class ZoneContextTypeWithMetadata(
-    ChannelContextTypeWithMetadataForObjectType, ChannelContextType
+    ZoneContextTypeWithMetadataForObjectType, ZoneContextType
 ):
-    """A Graphene type for that uses ChannelContext as root in resolvers.
+    """A Graphene type for that uses ZoneContext as root in resolvers.
 
-    Same as ChannelContextType, but for types that implement ObjectWithMetadata
+    Same as ZoneContextType, but for types that implement ObjectWithMetadata
     interface.
     """
 
@@ -223,7 +218,7 @@ class Zone(ModelObjectType):
 
     @staticmethod
     def resolve_countries(root: models.Channel, info):
-        from ..shipping.dataloaders import ShippingZonesByChannelIdLoader
+        from ..shipping.dataloaders import ShippingZonesByZoneIdLoader
 
         def get_countries(shipping_zones):
             countries = []
