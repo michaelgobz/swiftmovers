@@ -323,7 +323,3 @@ class Zone(ModelObjectType):
             )
 
         return shipping_zones_loader.then(get_shipping_methods)
-
-    @staticmethod
-    def resolve_stock_settings(root: models.Channel, _info):
-        return StockSettings(allocation_strategy=root.allocation_strategy)
