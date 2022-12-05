@@ -15,7 +15,7 @@ from ...shipping.tasks import drop_invalid_shipping_methods_relations_for_given_
 from ...accounts.enums import CountryCodeEnum
 from ...core.mutations.base import BaseMutation, ModelMutation, ModelDeleteMutation
 from ...core.types import ZoneError, ZoneErrorCode, NonNullList
-from ..core.utils import get_duplicated_values, get_duplicates_items
+from ...core.utils import get_duplicated_values, get_duplicates_items
 from ..utils.validators import check_for_duplicates
 from ..types import Zone
 from .utils import delete_invalid_warehouse_to_shipping_zone_relations
