@@ -10,6 +10,7 @@ from promise import Promise
 
 from ...zones import models
 from ..accounts.enums import CountryCodeEnum
+from ..core.fields import PermissionsField
 
 from ..core.types import CountryDisplay, ModelObjectType, NonNullList
 from ..meta.types import ObjectWithMetadata
@@ -123,19 +124,12 @@ class Zone(ModelObjectType):
         graphene.String,
         description="Name of the channel.",
         required=True,
-        permissions=[
-            AuthorizationFilters.AUTHENTICATED_APP,
-            AuthorizationFilters.AUTHENTICATED_STAFF_USER,
-        ],
     )
     is_active = PermissionsField(
         graphene.Boolean,
         description="Whether the channel is active.",
         required=True,
-        permissions=[
-            AuthorizationFilters.AUTHENTICATED_APP,
-            AuthorizationFilters.AUTHENTICATED_STAFF_USER,
-        ],
+        # TODO: add the active permissions
     )
     currency_code = PermissionsField(
         graphene.String,
@@ -243,9 +237,8 @@ class Zone(ModelObjectType):
     ):
         from ...shipping.utils import convert_to_shipping_method_data
         from ..shipping.dataloaders import (
-            ShippingMethodChannelListingByChannelSlugLoader,
             ShippingMethodsByShippingZoneIdLoader,
-            ShippingZonesByChannelIdLoader,
+            ShippingZonesByZoneIdLoader,
         )
 
         shipping_zones_loader = ShippingZonesByZoneIdLoader(info.context).load(
