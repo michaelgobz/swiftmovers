@@ -13,7 +13,6 @@ from ..utils import filter_by_id, filter_range_field
 from . import types as account_types
 from .enums import StaffMemberStatus
 
-
 def filter_date_joined(qs, _, value):
     return filter_range_field(qs, "date_joined__date", value)
 
