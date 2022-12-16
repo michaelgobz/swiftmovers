@@ -20,7 +20,7 @@ jobs:
 
       - name: Login to DockerHub
         id: login-ecr
-        uses: docker/login@v1
+        uses: docker/login@v2
         with:
           username: ${{ secrets.DOCKER_USER_NAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
