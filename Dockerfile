@@ -46,7 +46,6 @@ WORKDIR /app
 # add the required envs
 
 RUN python3 manage.py migrate
-RUN python3 manage.py runserver
 
 EXPOSE 8000
 ENV PYTHONUNBUFFERED 1
