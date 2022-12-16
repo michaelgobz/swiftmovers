@@ -16,15 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path
 from django.views.decorators.csrf import csrf_exempt
-# from swiftmovers.graphqlcore.views import GraphQLView
-from graphene_django.views import GraphQLView
-from swiftmovers.schema import schema
+from swiftmovers.graphqlcore.views import GraphQLView
+#from graphene_django.views import GraphQLView
+from swiftmovers.graphqlcore.api import schema
 from swiftmovers.core.views import home
 
 urlpatterns = [
     # shall customise the admin route
     # path('admin/', admin.site.urls), ### i dont use this url
-    re_path(r'graphql/', csrf_exempt(GraphQLView.as_view(graphiql=True)), name="graphql"),
+    re_path(r'graphql/', csrf_exempt(GraphQLView.as_view(schema=schema)), name="graphql"),
     re_path(r'^$', home, name='home'),
     re_path(r'^$', home, name='documentation')
 ]
