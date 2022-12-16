@@ -37,7 +37,6 @@ class _Entity(graphene.Union):
 
 class _Service(graphene.ObjectType):
     """_Service manifest as defined by Federation spec."""
-
     sdl = graphene.String()
 
 
@@ -46,7 +45,7 @@ def build_federated_schema(query=None, mutation=None, types=None, subscription=N
     schema = graphene.Schema(
         query=query,
         mutation=mutation,
-        types=list(types) + [_Any, _Entity, _Service],
+        types=list(types) + [_Any,_Entity, _Service],
         subscription=subscription,
     )
 
@@ -72,7 +71,7 @@ def build_federated_schema(query=None, mutation=None, types=None, subscription=N
 
 
 def create_entity_type_resolver(schema):
-    """Create type resolver aware of ChannelContext on _Entity union."""
+    """Create type resolver aware of ZoneContext on _Entity union."""
 
     def resolve_entity_type(instance, info):
         # Use new strategy to resolve GraphQL Type for `ObjectType`
