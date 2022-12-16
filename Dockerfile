@@ -40,7 +40,7 @@ RUN mkdir -p /app/media /app/static \
 
 COPY --from=build-python /usr/local/lib/python3.10/site-packages/ /usr/local/lib/python3.10/site-packages/
 COPY --from=build-python /usr/local/bin/ /usr/local/bin/
-COPY .. /app
+COPY . /app
 WORKDIR /app
 
 # add the required envs
