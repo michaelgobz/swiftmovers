@@ -122,7 +122,7 @@ DATABASE_REPLICA_NAME = 'replica'
 
 DATABASES = {
     DATABASE_DEFAULT_NAME: dj_database_url.config(
-        default='postgres://swiftAdmin:swiftAdmin@localhost:5432/swift',
+        default='postgres://michael:Leahjanelle@0949@swiftmovers.postgres.database.azure.com:5432/swift',
         conn_max_age=800
     )
     # TODO :  add replication user
@@ -176,7 +176,9 @@ GRAPHENE = {
 
 AUTH_USER_MODEL = "accounts.User"
 
-DEFAULT_COUNTRY = os.environ.get("DEFAULT_COUNTRY", "US")
+DEFAULT_COUNTRY = os.environ.get("DEFAULT_COUNTRY", "UG")
 DEFAULT_DECIMAL_PLACES = 3
 DEFAULT_MAX_DIGITS = 12
 DEFAULT_CURRENCY_CODE_LENGTH = 3
+# the spec doesn't have a max this is for security purposes
+FEDERATED_QUERY_MAX_ENTITIES = int(os.environ.get("FEDERATED_QUERY_MAX_ENTITIES", 100))

@@ -8,7 +8,6 @@ from uuid import uuid4
 from django.conf import settings
 from django.core.validators import MinValueValidator
 from django.db import models
-from django.db.models.deletion import SET_NULL
 from django.utils import timezone
 from django.utils.encoding import smart_str
 from django_countries.fields import Country, CountryField
@@ -17,7 +16,7 @@ from prices import Money
 
 from ..core.weight import zero_weight
 from ..core.taxes import zero_money
-from ..shipping.models import ShippingMethod
+# from ..shipping.models import ShippingMethod
 from ..accounts.models import DeliveryAddress
 
 # Create your models here.
@@ -67,7 +66,7 @@ class DeliveryCheckout(models.Model):
         on_delete=models.SET_NULL,
     )
     shipping_method = models.ForeignKey(
-        ShippingMethod,
+        "shipping.ShippingMethod",
         blank=True,
         null=True,
         related_name="checkouts",
@@ -183,11 +182,6 @@ class DeliveryCheckout(models.Model):
             weights += line.variant.get_weight() * line.quantity
         return weights
 
-    def get_line(self, variant: "ProductVariant") -> Optional["CheckoutLine"]:
-        """Return a line matching the given variant and data if any."""
-        matching_lines = (line for line in self if line.variant.pk == variant.pk)
-        return next(matching_lines, None)
-
     def get_last_active_payment(self) -> Optional["Payment"]:
         payments = [payment for payment in self.payments.all() if payment.is_active]
         return max(payments, default=None, key=attrgetter("pk"))
@@ -235,7 +229,7 @@ class CheckoutLine(models.Model):
     )
     item = models.ForeignKey(
         # TODO: add the product items
-        ShippingMethod, related_name="+", on_delete=models.CASCADE
+        "items.Product", related_name="+", on_delete=models.CASCADE
     )
     quantity = models.PositiveIntegerField(validators=[MinValueValidator(1)])
     price_override = models.DecimalField(

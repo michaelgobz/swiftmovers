@@ -1,20 +1,19 @@
 import collections
 import itertools
 from typing import Dict, List, Type, Union, cast
-
 import graphene
 from django.db.models import Model
-from graphene.types.objecttype import ObjectType
 from graphene.types.resolver import get_default_resolver
 from promise import Promise
 
 from ...zones import models
+from ..zones.dataloaders import ZoneWithHasOrdersByIdLoader
 from ..accounts.enums import CountryCodeEnum
+from ..core.fields import PermissionsField
 
 from ..core.types import CountryDisplay, ModelObjectType, NonNullList
 from ..meta.types import ObjectWithMetadata
 from . import ZoneContext
-from .enums import AllocationStrategyEnum
 
 
 class ZoneContextTypeForObjectType(graphene.ObjectType):
@@ -34,13 +33,8 @@ class ZoneContextTypeForObjectType(graphene.ObjectType):
     def resolve_id(root: ZoneContext, _info):
         return root.node.pk
 
-    @staticmethod
-    def resolve_translation(root: ZoneContext, info, *, language_code):
-        # Resolver for TranslationField; needs to be manually specified.
-        return resolve_translation(root.node, info, language_code=language_code)
 
-
-class ChannelContextType(ZoneContextTypeForObjectType, ModelObjectType):
+class ZoneContextType(ZoneContextTypeForObjectType, ModelObjectType):
     """A Graphene type that supports resolvers' root as ChannelContext objects."""
 
     class Meta:
@@ -63,7 +57,7 @@ class ChannelContextType(ZoneContextTypeForObjectType, ModelObjectType):
         return model == cls._meta.model
 
 
-class ChannelContextTypeWithMetadataForObjectType(ZoneContextTypeForObjectType):
+class ZoneContextTypeWithMetadataForObjectType(ZoneContextTypeForObjectType):
     """A Graphene type for that uses ChannelContext as root in resolvers.
 
     Same as ChannelContextType, but for types that implement ObjectWithMetadata
@@ -104,152 +98,89 @@ class ChannelContextTypeWithMetadataForObjectType(ZoneContextTypeForObjectType):
         return ObjectWithMetadata.resolve_private_metafields(root.node, info, keys=keys)
 
 
-class ChannelContextTypeWithMetadata(
-    ChannelContextTypeWithMetadataForObjectType, ChannelContextType
+class ZoneContextTypeWithMetadata(
+    ZoneContextTypeWithMetadataForObjectType, ZoneContextType
 ):
-    """A Graphene type for that uses ChannelContext as root in resolvers.
-
-    Same as ChannelContextType, but for types that implement ObjectWithMetadata
+    """A Graphene type for that uses ZoneContext as root in resolvers.
+    Same as ZoneContextType, but for types that implement ObjectWithMetadata
     interface.
     """
-
     class Meta:
         abstract = True
-
-
-class StockSettings(ObjectType):
-    allocation_strategy = AllocationStrategyEnum(
-        description=(
-            "Allocation strategy defines the preference of warehouses "
-            "for allocations and reservations."
-        ),
-        required=True,
-    )
-
-    class Meta:
-        description = (
-            "Represents the channel stock settings." + ADDED_IN_37 + PREVIEW_FEATURE
-        )
 
 
 class Zone(ModelObjectType):
     id = graphene.GlobalID(required=True)
     slug = graphene.String(
         required=True,
-        description="Slug of the channel.",
+        description="Slug of the zone.",
     )
 
     name = PermissionsField(
         graphene.String,
-        description="Name of the channel.",
+        description="Name of the zone.",
         required=True,
-        permissions=[
-            AuthorizationFilters.AUTHENTICATED_APP,
-            AuthorizationFilters.AUTHENTICATED_STAFF_USER,
-        ],
     )
     is_active = PermissionsField(
         graphene.Boolean,
-        description="Whether the channel is active.",
+        description="Whether the zone is active.",
         required=True,
-        permissions=[
-            AuthorizationFilters.AUTHENTICATED_APP,
-            AuthorizationFilters.AUTHENTICATED_STAFF_USER,
-        ],
+        # TODO: add the active permissions
     )
     currency_code = PermissionsField(
         graphene.String,
-        description="A currency that is assigned to the channel.",
+        description="A currency that is assigned to the zone.",
         required=True,
-        permissions=[
-            AuthorizationFilters.AUTHENTICATED_APP,
-            AuthorizationFilters.AUTHENTICATED_STAFF_USER,
-        ],
     )
     has_orders = PermissionsField(
         graphene.Boolean,
-        description="Whether a channel has associated orders.",
-        permissions=[
-            ChannelPermissions.MANAGE_CHANNELS,
-        ],
+        description="Whether a zone has associated orders.",
         required=True,
     )
     default_country = PermissionsField(
         CountryDisplay,
         description=(
-            "Default country for the channel. Default country can be "
+            "Default country for the zone. Default country can be "
             "used in checkout to determine the stock quantities or calculate taxes "
-            "when the country was not explicitly provided." + ADDED_IN_31
         ),
         required=True,
-        permissions=[
-            AuthorizationFilters.AUTHENTICATED_APP,
-            AuthorizationFilters.AUTHENTICATED_STAFF_USER,
-        ],
-    )
-    warehouses = PermissionsField(
-        NonNullList(Warehouse),
-        description="List of warehouses assigned to this channel."
-        + ADDED_IN_35
-        + PREVIEW_FEATURE,
-        required=True,
-        permissions=[
-            AuthorizationFilters.AUTHENTICATED_APP,
-            AuthorizationFilters.AUTHENTICATED_STAFF_USER,
-        ],
     )
     countries = NonNullList(
         CountryDisplay,
-        description="List of shippable countries for the channel."
-        + ADDED_IN_36
-        + PREVIEW_FEATURE,
+        description="List of shippable countries for the zone."
     )
 
     available_shipping_methods_per_country = graphene.Field(
         NonNullList("saleor.graphql.shipping.types.ShippingMethodsPerCountry"),
         countries=graphene.Argument(NonNullList(CountryCodeEnum)),
-        description="Shipping methods that are available for the channel."
-        + ADDED_IN_36
-        + PREVIEW_FEATURE,
-    )
-    stock_settings = PermissionsField(
-        StockSettings,
-        description=(
-            "Define the stock setting for this channel." + ADDED_IN_37 + PREVIEW_FEATURE
-        ),
-        required=True,
-        permissions=[
-            AuthorizationFilters.AUTHENTICATED_APP,
-            AuthorizationFilters.AUTHENTICATED_STAFF_USER,
-        ],
+        description="Shipping methods that are available for the zone."
+
     )
 
     class Meta:
-        description = "Represents channel."
-        model = models.Channel
+        description = "Represents zone."
+        model = models.Zone
         interfaces = [graphene.relay.Node]
 
     @staticmethod
-    def resolve_has_orders(root: models.Channel, info):
+    def resolve_has_orders(root: models.Zone, info):
         return (
-            ChannelWithHasOrdersByIdLoader(info.context)
+
+            ZoneWithHasOrdersByIdLoader(info.context)
             .load(root.id)
-            .then(lambda channel: channel.has_orders)
+            .then(lambda zone: zone.has_orders)
+
         )
 
     @staticmethod
-    def resolve_default_country(root: models.Channel, _info):
+    def resolve_default_country(root: models.Zone, _info):
         return CountryDisplay(
             code=root.default_country.code, country=root.default_country.name
         )
 
     @staticmethod
-    def resolve_warehouses(root: models.Channel, info):
-        return WarehousesByChannelIdLoader(info.context).load(root.id)
-
-    @staticmethod
-    def resolve_countries(root: models.Channel, info):
-        from ..shipping.dataloaders import ShippingZonesByChannelIdLoader
+    def resolve_countries(root: models.Zone, info):
+        from ..shipping.dataloaders import ShippingZonesByZoneIdLoader
 
         def get_countries(shipping_zones):
             countries = []
@@ -263,7 +194,7 @@ class Zone(ModelObjectType):
             ]
 
         return (
-            ShippingZonesByChannelIdLoader(info.context)
+            ShippingZonesByZoneIdLoader(info.context)
             .load(root.id)
             .then(get_countries)
         )
@@ -274,12 +205,11 @@ class Zone(ModelObjectType):
     ):
         from ...shipping.utils import convert_to_shipping_method_data
         from ..shipping.dataloaders import (
-            ShippingMethodChannelListingByChannelSlugLoader,
             ShippingMethodsByShippingZoneIdLoader,
-            ShippingZonesByChannelIdLoader,
+            ShippingZonesByZoneIdLoader,
         )
 
-        shipping_zones_loader = ShippingZonesByChannelIdLoader(info.context).load(
+        shipping_zones_loader = ShippingZonesByZoneIdLoader(info.context).load(
             root.id
         )
         shipping_zone_countries: Dict[int, List[str]] = collections.defaultdict(list)
@@ -330,10 +260,7 @@ class Zone(ModelObjectType):
 
         def filter_shipping_methods(shipping_methods):
             shipping_methods = list(itertools.chain.from_iterable(shipping_methods))
-            shipping_listings = ShippingMethodChannelListingByChannelSlugLoader(
-                info.context
-            ).load(root.slug)
-            return Promise.all([shipping_methods, shipping_listings]).then(
+            return Promise.all([shipping_methods]).then(
                 _group_shipping_methods_by_country
             )
 
@@ -349,7 +276,3 @@ class Zone(ModelObjectType):
             )
 
         return shipping_zones_loader.then(get_shipping_methods)
-
-    @staticmethod
-    def resolve_stock_settings(root: models.Channel, _info):
-        return StockSettings(allocation_strategy=root.allocation_strategy)

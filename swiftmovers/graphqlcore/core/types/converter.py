@@ -1,5 +1,3 @@
-"""Form fields converter subset from graphene_django for use in Saleor."""
-
 from functools import singledispatch
 
 import graphene

@@ -17,7 +17,6 @@ from ..core.models import ModelWithMetadata
 
 # Create your models here.
 
-from ..shipping.models import ShippingMethod
 from . import (
     FulfillmentStatus,
     OrderAuthorizeStatus,
@@ -87,6 +86,7 @@ def get_order_number():
 
 
 class Order(models.Model):
+
     id = models.UUIDField(primary_key=True, editable=False, unique=True, default=uuid4)
     number = models.IntegerField(unique=True, default=get_order_number, editable=False)
     use_old_id = models.BooleanField(default=False)
@@ -144,7 +144,7 @@ class Order(models.Model):
     )
 
     shipping_method = models.ForeignKey(
-        ShippingMethod,
+        "shipping.ShippingMethod",
         blank=True,
         null=True,
         related_name="orders",

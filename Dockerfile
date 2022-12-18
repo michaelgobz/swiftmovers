@@ -38,15 +38,14 @@ RUN apt-get update \
 RUN mkdir -p /app/media /app/static \
   && chown -R api:api /app/
 
-COPY --from=build-python /usr/local/lib/python3.11/site-packages/ /usr/local/lib/python3.11/site-packages/
+COPY --from=build-python /usr/local/lib/python3.10/site-packages/ /usr/local/lib/python3.10/site-packages/
 COPY --from=build-python /usr/local/bin/ /usr/local/bin/
-COPY .. /app
+COPY . /app
 WORKDIR /app
 
 # add the required envs
 
 RUN python3 manage.py migrate
-RUN python3 manage.py runserver
 
 EXPOSE 8000
 ENV PYTHONUNBUFFERED 1

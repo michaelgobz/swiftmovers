@@ -1,6 +1,6 @@
-django~=4.1.2
+django==3.2.16
 babel==2.10.3
-graphene-django
+graphene-django==2.7.0
 django-prices
 django-filter
 django-graphql-jwt
