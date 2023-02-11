@@ -7,11 +7,8 @@ django-graphql-jwt
 cryptography
 django-phonenumber-field
 mysql-connector-python
-django-mysql==4.7.1
-mysqlclient
 rave
-redis
-django-prices
+redis==4.5.1
 django-countries
 psycopg2
 gunicorn
@@ -22,7 +19,6 @@ graphql-relay==2.0.1
 uvicorn~=0.19.0
 Cython
 graphql-core==2.3.2
-graphql-relay
 pytimeparse~=1.1.8
 opentracing~=2.4.0
 PyJWT~=2.6.0

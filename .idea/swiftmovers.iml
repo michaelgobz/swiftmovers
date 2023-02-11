@@ -17,8 +17,9 @@
       <excludeFolder url="file://$MODULE_DIR$/swift-venv" />
       <excludeFolder url="file://$MODULE_DIR$/meds-venv" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
+      <excludeFolder url="file://$MODULE_DIR$/movers-venv" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.11 (swiftmovers) (2)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.9 (swiftmovers)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PyDocumentationSettings">
