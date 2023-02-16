@@ -44,7 +44,7 @@ def build_federated_schema(query=None, mutation=None, types=None, subscription=N
     schema = graphene.Schema(
         query=query,
         mutation=mutation,
-        types=list(types) + [_Any, _Service],
+        types=list(types) + [_Any, _Service, _Entity],
         subscription=subscription,
     )
 
