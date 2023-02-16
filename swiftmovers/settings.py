@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'swiftmovers.orders',
     'swiftmovers.zones',
     'swiftmovers.items',
+    'swiftmovers.warehouses',
     # external apps
     'django_measurement',
     'django_prices',
