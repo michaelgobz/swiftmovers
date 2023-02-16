@@ -44,7 +44,7 @@ python swiftmovers/manage.py migrate
 python swiftmovers/manage.py runserver
 ```
 The server runs on port 8000 the django's default
-![server splash screen]()
+![server splash screen](https://github.com/michaelgobz/swiftmovers/blob/master/img.png)
 You should be able to access the API server on [here](http://localhost:8000/graphql/). 
 
 # Documentation
