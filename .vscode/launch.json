@@ -14,28 +14,7 @@
             ],
             "django": true,
             "justMyCode": true
-        },
-        {
-            "name": "Python: Django",
-            "type": "python",
-            "request": "launch",
-            "program": "${workspaceFolder}\\manage.py",
-            "args": [
-                "migrate"
-            ],
-            "django": true,
-            "justMyCode": true
-        },
-        {
-            "name": "Python: Django",
-            "type": "python",
-            "request": "launch",
-            "program": "${workspaceFolder}\\manage.py",
-            "args": [
-                "runserver"
-            ],
-            "django": true,
-            "justMyCode": true
         }
+        
     ]
 }
