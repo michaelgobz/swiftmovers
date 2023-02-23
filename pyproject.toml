@@ -5,7 +5,11 @@ description = "This is logistics service built on Django, Graphql and Nextjs"
 authors = ["michael <raniahgobz@outlook.com>"]
 license = "MIT"
 readme = "README.md"
-
+repository = "https://github.com/michaelgobz/swiftmovers"
+homepage = ""
+documentation = ""
+keywords = ["django", "graphql", "nextjs", "swiftmovers", 
+"zone", "logistics", "delivery", "ecommerce", "payment", "payment gateway"]
 [tool.poetry.dependencies]
 python = "^3.11"
 django = "=4.1.7"
