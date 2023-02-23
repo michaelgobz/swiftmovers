@@ -59,6 +59,8 @@ pylint = "^2.8.3"
 pylint-celery = "^0"
 pylint-django = "^2.4.4"
 pylint-plugin-utils = "^0.6"
+tox = "^3.24.4"
+mypy = "^0.910"
 
 [build-system]
 requires = ["poetry-core"]

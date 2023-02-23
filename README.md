@@ -19,14 +19,19 @@ git checkout integration
 cd swiftmovers
 python3.11.0 -m virtualenv venv
 source venv/bin/activate for unix and linux systems
-cd venv/scripts/activate.bat for windows
+run  ./venv/scripts/activate.bat for windows
 ```
+when you using vscode the environment is detected automatically
 
 ## Install the necessary dependencies:
 ```bash
 pip install -r requirements.txt
 ```
-
+or using poetry these commands should get you started
+```bash 
+pip install poetry 
+poetry install
+```
 ## Create the database and run the server:
 - The api used the postgres database v15. to get started with more information is available [here](https://www.postgresql.org/docs/)
 - Firstly, download the database server on machine [here](https://www.postgresql.org/download/) complete the installation process 
