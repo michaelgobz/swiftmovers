@@ -10,6 +10,7 @@ mysql-connector-python
 rave_python==1.2.16
 redis==4.5.1
 django-countries
+flake8==3.9.2
 psycopg2
 gunicorn
 dj-database-url
