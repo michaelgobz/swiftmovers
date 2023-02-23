@@ -25,20 +25,52 @@ __all__ = ["print_schema", "print_introspection_schema", "print_type"]
 
 
 def is_specified_directive(directive: GraphQLDirective) -> bool:
+    """_summary_
+
+    Args:
+        directive (GraphQLDirective): _description_
+
+    Returns:
+        bool: _description_
+    """
     return directive.name in ("skip", "include", "deprecated")
 
 
 def print_schema(schema: GraphQLSchema) -> str:
+    """_summary_
+
+    Args:
+        schema (GraphQLSchema): _description_
+
+    Returns:
+        str: _description_
+    """
     return print_filtered_schema(
         schema, lambda n: not is_specified_directive(n), is_defined_type
     )
 
 
 def is_introspection_type(type_: GraphQLNamedType) -> bool:
+    """_summary_
+
+    Args:
+        type_ (GraphQLNamedType): _description_
+
+    Returns:
+        bool: _description_
+    """
     return type_.name.startswith("__")
 
 
 def print_introspection_schema(schema: GraphQLSchema) -> str:
+    """_summary_
+
+    Args:
+        schema (GraphQLSchema): _description_
+
+    Returns:
+        str: _description_
+    """
     return print_filtered_schema(schema, is_specified_directive, is_introspection_type)
 
 
@@ -46,10 +78,26 @@ _builtin_scalars = frozenset(["String", "Boolean", "Int", "Float", "ID"])
 
 
 def is_specified_scalar_type(type_: GraphQLNamedType) -> bool:
+    """_summary_
+
+    Args:
+        type_ (GraphQLNamedType): _description_
+
+    Returns:
+        bool: _description_
+    """
     return type_.name in _builtin_scalars
 
 
 def is_defined_type(type_: GraphQLNamedType) -> bool:
+    """_summary_
+
+    Args:
+        type_ (GraphQLNamedType): _description_
+
+    Returns:
+        bool: _description_
+    """
     return not is_specified_scalar_type(type_) and not is_introspection_type(type_)
 
 
@@ -58,6 +106,16 @@ def print_filtered_schema(
     directive_filter: Callable[[GraphQLDirective], bool],
     type_filter: Callable[[GraphQLNamedType], bool],
 ) -> str:
+    """_summary_
+
+    Args:
+        schema (GraphQLSchema): _description_
+        directive_filter (Callable[[GraphQLDirective], bool]): _description_
+        type_filter (Callable[[GraphQLNamedType], bool]): _description_
+
+    Returns:
+        str: _description_
+    """
     directives = filter(directive_filter, schema.get_directives())
     types = filter(
         type_filter, cast(List[GraphQLNamedType], schema.get_type_map().values())
@@ -73,6 +131,14 @@ def print_filtered_schema(
 
 
 def print_schema_definition(schema: GraphQLSchema) -> Optional[str]:
+    """Prints the string form of the schema
+
+    Args:
+        schema (GraphQLSchema): schema tokens
+
+    Returns:
+        Optional[str]: returns string schema
+    """
     operation_types = []
 
     query_type = schema.get_query_type()
@@ -118,6 +184,17 @@ def is_schema_of_common_names(schema: GraphQLSchema) -> bool:
 
 
 def print_type(type_: GraphQLNamedType) -> str:
+    """Print graphql Type
+
+    Args:
+        type_ (GraphQLNamedType):name of the type
+
+    Raises:
+        TypeError: Error associated with type miss matches
+
+    Returns:
+        str: string name of the type
+    """
     if isinstance(type_, GraphQLScalarType):
         type_ = cast(GraphQLScalarType, type_)
         return print_scalar(type_)
@@ -142,15 +219,39 @@ def print_type(type_: GraphQLNamedType) -> str:
 
 
 def print_scalar(type_: GraphQLScalarType) -> str:
+    """_summary_
+
+    Args:
+        type_ (GraphQLScalarType): _description_
+
+    Returns:
+        str: _description_
+    """
     return print_description(type_) + f"scalar {type_.name}"
 
 
 def print_implemented_interfaces(type_: GraphQLObjectType) -> str:
+    """_summary_
+
+    Args:
+        type_ (GraphQLObjectType): _description_
+
+    Returns:
+        str: _description_
+    """
     interfaces = type_.interfaces
     return " implements " + " & ".join(i.name for i in interfaces) if interfaces else ""
 
 
 def print_object(type_: GraphQLObjectType) -> str:
+    """_summary_
+
+    Args:
+        type_ (GraphQLObjectType): _description_
+
+    Returns:
+        str: _description_
+    """
     return (
         print_description(type_)
         + f"type {type_.name}"
@@ -160,16 +261,40 @@ def print_object(type_: GraphQLObjectType) -> str:
 
 
 def print_interface(type_: GraphQLInterfaceType) -> str:
+    """_summary_
+
+    Args:
+        type_ (GraphQLInterfaceType): _description_
+
+    Returns:
+        str: _description_
+    """
     return print_description(type_) + f"interface {type_.name}" + print_fields(type_)
 
 
 def print_union(type_: GraphQLUnionType) -> str:
+    """_summary_
+
+    Args:
+        type_ (GraphQLUnionType): _description_
+
+    Returns:
+        str: _description_
+    """
     types = type_.types
     possible_types = " = " + " | ".join(t.name for t in types) if types else ""
     return print_description(type_) + f"union {type_.name}" + possible_types
 
 
 def print_enum(type_: GraphQLEnumType) -> str:
+    """_summary_
+
+    Args:
+        type_ (GraphQLEnumType): _description_
+
+    Returns:
+        str: _description_
+    """
     values = [
         print_description(v, "  ", not i)
         + f"  {v.name}"
@@ -180,6 +305,14 @@ def print_enum(type_: GraphQLEnumType) -> str:
 
 
 def print_input_object(type_: GraphQLInputObjectType) -> str:
+    """_summary_
+
+    Args:
+        type_ (GraphQLInputObjectType): _description_
+
+    Returns:
+        str: _description_
+    """
     fields = [
         print_description(field, "  ", not i) + "  " + print_input_value(name, field)
         for i, (name, field) in enumerate(type_.fields.items())
@@ -188,6 +321,14 @@ def print_input_object(type_: GraphQLInputObjectType) -> str:
 
 
 def print_fields(type_: Union[GraphQLObjectType, GraphQLInterfaceType]) -> str:
+    """_summary_
+
+    Args:
+        type_ (Union[GraphQLObjectType, GraphQLInterfaceType]): _description_
+
+    Returns:
+        str: _description_
+    """
     fields = [
         print_description(field, "  ", not i)
         + f"  {name}"
@@ -200,10 +341,27 @@ def print_fields(type_: Union[GraphQLObjectType, GraphQLInterfaceType]) -> str:
 
 
 def print_block(items: List[str]) -> str:
+    """_summary_
+
+    Args:
+        items (List[str]): _description_
+
+    Returns:
+        str: _description_
+    """
     return " {\n" + "\n".join(items) + "\n}" if items else ""
 
 
 def print_args(args: Dict[str, GraphQLArgument], indentation: str = "") -> str:
+    """_summary_
+
+    Args:
+        args (Dict[str, GraphQLArgument]): _description_
+        indentation (str, optional): _description_. Defaults to "".
+
+    Returns:
+        str: _description_
+    """
     if not args:
         return ""
 
@@ -228,6 +386,15 @@ def print_args(args: Dict[str, GraphQLArgument], indentation: str = "") -> str:
 
 
 def print_input_value(name: str, arg: GraphQLArgument) -> str:
+    """_summary_
+
+    Args:
+        name (str): _description_
+        arg (GraphQLArgument): _description_
+
+    Returns:
+        str: _description_
+    """
     default_ast = ast_from_value(arg.default_value, arg.type)
     arg_decl = f"{name}: {arg.type}"
     if default_ast:
@@ -236,6 +403,14 @@ def print_input_value(name: str, arg: GraphQLArgument) -> str:
 
 
 def print_directive(directive: GraphQLDirective) -> str:
+    """_summary_
+
+    Args:
+        directive (GraphQLDirective): _description_
+
+    Returns:
+        str: _description_
+    """
     return (
         print_description(directive)
         + f"directive @{directive.name}"
@@ -246,6 +421,14 @@ def print_directive(directive: GraphQLDirective) -> str:
 
 
 def print_deprecated(reason: Optional[str]) -> str:
+    """Print the deprecated types 
+
+    Args:
+        reason (Optional[str]): String name
+
+    Returns:
+        str: string representation of the deprecated type
+    """
     if reason is None:
         return ""
     if reason != DEFAULT_DEPRECATION_REASON:
@@ -360,6 +543,19 @@ def print_description(
     indentation: str = "",
     first_in_block: bool = True,
 ) -> str:
+    """_summary_
+
+    Args:
+        def_ (Union[ GraphQLArgument, GraphQLDirective, GraphQLEnumType,
+        GraphQLEnumValue,
+        GraphQLInputObjectType, GraphQLInterfaceType,
+        GraphQLObjectType, GraphQLScalarType, GraphQLUnionType, ]): _description_
+        indentation (str, optional): _description_. Defaults to "".
+        first_in_block (bool, optional): _description_. Defaults to True.
+
+    Returns:
+        str: _description_
+    """
     description = def_.description
     if description is None:
         return ""

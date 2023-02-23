@@ -57,7 +57,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'graphene_django',
     'dj_database_url',
-    'django_mysql',
     # mvp modules
     'swiftmovers.swift',
     'swiftmovers.core',
@@ -70,6 +69,7 @@ INSTALLED_APPS = [
     'swiftmovers.orders',
     'swiftmovers.zones',
     'swiftmovers.items',
+    'swiftmovers.warehouses',
     # external apps
     'django_measurement',
     'django_prices',
@@ -171,7 +171,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 GRAPHENE = {
-    'SCHEMA': 'swiftmovers.graphqlcore.api.schema'
+    
 }
 
 AUTH_USER_MODEL = "accounts.User"

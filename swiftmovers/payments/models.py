@@ -8,7 +8,6 @@ from django.db import models
 from django.db.models import JSONField  # type: ignore
 from prices import Money
 from django_prices.models import MoneyField
-from django_mysql.models.fields import ListCharField
 from ..core.taxes import zero_money
 from ..checkouts.models import DeliveryCheckout
 from . import (
@@ -29,7 +28,7 @@ class TransactionItem(models.Model):
     status = models.CharField(max_length=512, blank=True, default="")
     type = models.CharField(max_length=512, blank=True, default="")
     reference = models.CharField(max_length=512, blank=True, default="")
-    available_actions = ListCharField(models.CharField(max_length=256,choices=TransactionAction.CHOICES,
+    available_actions = models.CharField(models.CharField(max_length=256,choices=TransactionAction.CHOICES,
                                       default=list), name="available_actions", max_length=256,)
 
     currency = models.CharField(max_length=settings.DEFAULT_CURRENCY_CODE_LENGTH)
