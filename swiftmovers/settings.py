@@ -1,3 +1,4 @@
+
 """
 Django settings for swiftmovers project.
 
@@ -10,10 +11,17 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import ast
+import django
+from django.utils.encoding import force_str
+
 from pathlib import Path
 import dj_database_url
 import os
 from .core.languages import LANGUAGES as CORE_LANGUAGES
+
+# force encoding
+
+django.utils.encoding.force_text = force_str
 
 
 # utility functions
