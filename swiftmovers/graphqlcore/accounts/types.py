@@ -27,14 +27,9 @@ from ..core.types.globals import (
 )
 from ..core.types.model import ModelObjectType
 from ..core.utils import from_global_id_or_error, str_to_enum, to_global_id_or_none
-from ..giftcard.dataloaders import GiftCardsByUserLoader
 from ..meta.types import ObjectWithMetadata
-from ..order.dataloaders import OrderLineByIdLoader, OrdersByUserLoader
-from ..utils import format_permissions_for_display, get_user_or_app_from_context
-from .dataloaders import (
-    CustomerEventsByUserLoader,
-    ThumbnailByUserIdSizeAndFormatLoader,
-)
+from ..orders.dataloaders.orders import OrderLineByIdLoader, OrdersByUserLoader
+from ..utils import get_user_or_app_from_context
 from .enums import CountryCodeEnum
 
 
