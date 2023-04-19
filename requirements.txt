@@ -23,6 +23,7 @@ graphql-core==2.3.2
 pytimeparse~=1.1.8
 opentracing~=2.4.0
 PyJWT~=2.6.0
+pymssql==2.2.7
 asgiref~=3.5.2
 phonenumbers
 google-i18n-address==2.5.2

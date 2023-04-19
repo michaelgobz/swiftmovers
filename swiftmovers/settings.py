@@ -74,6 +74,11 @@ INSTALLED_APPS = [
     'swiftmovers.payments',
     'swiftmovers.shipping',
     'swiftmovers.graphqlcore',
+    'swiftmovers.reviews',
+    'swiftmovers.tracking',
+    'swiftmovers.subscriptions',
+    'swiftmovers.mapping',
+    'swiftmovers.webhooks',
     'swiftmovers.orders',
     'swiftmovers.zones',
     'swiftmovers.items',
@@ -130,7 +135,7 @@ DATABASE_REPLICA_NAME = 'replica'
 
 DATABASES = {
     DATABASE_DEFAULT_NAME: dj_database_url.config(
-        default='postgres://postgres:postgres@34.165.40.20:5432/swift',
+        default='mssql+pymssql://swiftmovers:swiftmoversAdmin2023@swifmovers.database.windows.net:1433/swiftmovers',
         conn_max_age=800
     )
     # TODO :  add replication user
