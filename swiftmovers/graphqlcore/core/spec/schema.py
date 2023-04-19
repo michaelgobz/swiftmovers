@@ -31,7 +31,7 @@ class _Any(graphene.Scalar):
 class _Entity(graphene.Union):
     """_Entity union as defined by Federation spec."""
     class Meta:
-        types = tuple(federated_entities.values()) or  None
+        types = tuple(federated_entities.values())
 
 
 class _Service(graphene.ObjectType):

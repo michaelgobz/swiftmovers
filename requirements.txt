@@ -1,4 +1,4 @@
-django==4.1.7
+django==4.0.10
 babel==2.10.3
 graphene-django==2.7.0
 django-prices
@@ -8,7 +8,7 @@ cryptography
 django-phonenumber-field
 mysql-connector-python
 rave_python==1.2.16
-redis==4.5.1
+redis==4.5.4
 django-countries
 flake8==3.9.2
 psycopg2
@@ -24,6 +24,7 @@ pytimeparse~=1.1.8
 opentracing~=2.4.0
 PyJWT~=2.6.0
 pymssql==2.2.7
+mssql-django==1.2.0
 asgiref~=3.5.2
 phonenumbers
 google-i18n-address==2.5.2

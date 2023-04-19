@@ -1,4 +1,3 @@
-
 """
 Django's settings for swiftmovers project.
 
@@ -134,12 +133,23 @@ DATABASE_REPLICA_NAME = 'replica'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    DATABASE_DEFAULT_NAME: dj_database_url.config(
-        default='mssql+pymssql://swiftmovers:swiftmoversAdmin2023@swifmovers.database.windows.net:1433/swiftmovers',
-        conn_max_age=800
-    )
-    # TODO :  add replication user
-
+    DATABASE_DEFAULT_NAME:
+        {
+            'ENGINE': 'mssql',
+            'NAME': 'swiftmovers',
+            'USER': 'swiftmovers',
+            'PASSWORD': 'swiftmoversAdmin2023',
+            'HOST': 'swifmovers.database.windows.net',
+            'PORT': '1433',
+            'OPTIONS':
+                {
+                    'driver': 'ODBC Driver 18 for SQL Server'
+                }
+        },
+    DATABASE_REPLICA_NAME:
+        {
+            # db specifications go here
+        }
 }
 
 # Password validation
@@ -184,7 +194,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 GRAPHENE = {
-    
+
 }
 
 AUTH_USER_MODEL = "accounts.User"
