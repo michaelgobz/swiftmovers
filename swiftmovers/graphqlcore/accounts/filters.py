@@ -13,6 +13,7 @@ from ..utils import filter_by_id, filter_range_field
 from . import types as account_types
 from .enums import StaffMemberStatus
 
+
 def filter_date_joined(qs, _, value):
     return filter_range_field(qs, "date_joined__date", value)
 
@@ -36,7 +37,6 @@ def filter_staff_status(qs, _, value):
     if value == StaffMemberStatus.DEACTIVATED:
         return qs.filter(is_staff=True, is_active=False)
     return qs
-
 
 
 def filter_search(qs, _, value):
@@ -81,6 +81,7 @@ class StaffUserFilter(django_filters.FilterSet):
             account_types.User,
         )
     )
+
     # TODO - Figure out after permission types
     # department = ObjectTypeFilter
 
