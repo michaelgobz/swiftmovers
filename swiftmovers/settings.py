@@ -122,7 +122,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'swiftmovers.wsgi.application'
+WSGI_APPLICATION = 'swift-movers.wsgi.application'
 
 # database names
 
@@ -135,16 +135,12 @@ DATABASE_REPLICA_NAME = 'replica'
 DATABASES = {
     DATABASE_DEFAULT_NAME:
         {
-            'ENGINE': 'mssql',
+            'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'swiftmovers',
-            'USER': 'swiftmovers',
-            'PASSWORD': 'swiftmoversAdmin2023',
-            'HOST': 'swifmovers.database.windows.net',
-            'PORT': '1433',
-            'OPTIONS':
-                {
-                    'driver': 'ODBC Driver 18 for SQL Server'
-                }
+            'USER': 'admin',
+            'PASSWORD': 'swift',
+            'HOST': '127.0.0.1',
+            'PORT': '5432',
         },
     DATABASE_REPLICA_NAME:
         {
