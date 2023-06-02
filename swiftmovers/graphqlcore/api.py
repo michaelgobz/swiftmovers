@@ -13,10 +13,12 @@ class Query(
 ):
     pass
 
-class Mutation (
+
+class Mutation(
     AccountMutations
 ):
     pass
+
 
 schema = build_federated_schema(
     Query,
