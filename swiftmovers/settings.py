@@ -254,7 +254,8 @@ INSTALLED_APPS = [
     'swiftmovers.plugin'
     'swiftmovers.channel',
     'swiftmovers.menu',
-    'swiftmovers.site'
+    'swiftmovers.site',
+    'swiftmovers.seo',
     'swiftmovers.csv',
     'swiftmovers.discount',
     'swiftmovers.permission',
