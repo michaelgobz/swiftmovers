@@ -231,9 +231,6 @@ INSTALLED_APPS = [
     # External apps that need to go before django's
     'storages',
     # Django modules
-    "django.contrib.contenttypes",
-    "django.contrib.sites",
-    "django.contrib.staticfiles",
     "django.contrib.postgres",
     "django_celery_beat",
     # swiftmovers modules
@@ -286,7 +283,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'swiftmovers.urls'
-TEMPLATES_DIR = os.path.join(PROJECT_ROOT, "templates")
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

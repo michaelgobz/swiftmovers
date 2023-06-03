@@ -1,5 +1,5 @@
 ### Build and install packages
-FROM python:3.10.0 as build-python
+FROM python:3.9 as build-python
 
 RUN apt-get -y update \
   && apt-get install -y gettext \
@@ -8,14 +8,14 @@ RUN apt-get -y update \
   && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
-COPY requirements.txt /app/
+COPY requirements_dev.txt /app/
 WORKDIR /app
-RUN pip install -r requirements.txt
+RUN pip install -r requirements_dev.txt
 
 ### Final image
-FROM python:3.10.0-slim
+FROM python:3.9-slim
 
-RUN groupadd -r api && useradd -r -g api api
+RUN groupadd -r saleor && useradd -r -g saleor saleor
 
 RUN apt-get update \
   && apt-get install -y \
@@ -35,19 +35,37 @@ RUN apt-get update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /app/media /app/static \
-  && chown -R api:api /app/
+RUN echo 'image/webp webp' >> /etc/mime.types
+RUN echo 'image/avif avif' >> /etc/mime.types
 
-COPY --from=build-python /usr/local/lib/python3.10/site-packages/ /usr/local/lib/python3.10/site-packages/
+RUN mkdir -p /app/media /app/static \
+  && chown -R saleor:saleor /app/
+
+COPY --from=build-python /usr/local/lib/python3.9/site-packages/ /usr/local/lib/python3.9/site-packages/
 COPY --from=build-python /usr/local/bin/ /usr/local/bin/
 COPY . /app
 WORKDIR /app
 
-# add the required envs
-
-RUN python3 manage.py migrate
+ARG STATIC_URL
+ENV STATIC_URL ${STATIC_URL:-/static/}
+RUN SECRET_KEY=dummy STATIC_URL=${STATIC_URL} python3 manage.py collectstatic --no-input
 
 EXPOSE 8000
 ENV PYTHONUNBUFFERED 1
 
-CMD ["gunicorn", "--bind", ":8000", "--workers", "4", "--worker-class", "swiftmovers.asgi.gunicorn_worker.UvicornWorker", "swiftmovers.asgi:application"]
+ARG COMMIT_ID
+ARG PROJECT_VERSION
+ENV PROJECT_VERSION="${PROJECT_VERSION}"
+
+LABEL org.opencontainers.image.title="mirumee/saleor"                                  \
+      org.opencontainers.image.description="\
+A modular, high performance, headless e-commerce platform built with Python, \
+GraphQL, Django, and ReactJS."                                                         \
+      org.opencontainers.image.url="https://saleor.io/"                                \
+      org.opencontainers.image.source="https://github.com/saleor/saleor"               \
+      org.opencontainers.image.revision="$COMMIT_ID"                                   \
+      org.opencontainers.image.version="$PROJECT_VERSION"                              \
+      org.opencontainers.image.authors="Saleor Commerce (https://saleor.io)"           \
+      org.opencontainers.image.licenses="BSD 3"
+
+CMD ["gunicorn", "--bind", ":8000", "--workers", "4", "--worker-class", "saleor.asgi.gunicorn_worker.UvicornWorker", "saleor.asgi:application"]
