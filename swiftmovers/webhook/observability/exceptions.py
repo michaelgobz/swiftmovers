@@ -1,5 +1,6 @@
-from .payload_schema import ObservabilityEventTypes
 from typing import Optional
+
+from .payload_schema import ObservabilityEventTypes
 
 
 class ObservabilityError(Exception):
