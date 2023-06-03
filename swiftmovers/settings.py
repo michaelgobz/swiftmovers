@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import ast
+import locale
+
 import django
 from django.utils.encoding import force_str
 
@@ -100,7 +102,7 @@ ENABLE_ACCOUNT_CONFIRMATION_BY_EMAIL = get_bool_env("ENABLE_ACCOUNT_CONFIRMATION
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Michael Goboola', 'michael.goboola@admin.com'),
 )
 MANAGERS = ADMINS
 
@@ -173,6 +175,9 @@ if ENABLE_SSL:
     SECURE_SSL_REDIRECT = not DEBUG
 
 DEFAULT_FROM_EMAIL: str = os.environ.get("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 MEDIA_ROOT: str = os.path.join(PROJECT_ROOT, "media")
 MEDIA_URL: str = os.environ.get("MEDIA_URL", "/media/")
@@ -262,9 +267,12 @@ INSTALLED_APPS = [
     'django_measurement',
     'django_prices',
     'django_countries',
+    'django_prices_openexchangerates',
+    'django_prices_vatlayer',
     'django_filters',
+    'mptt',
     'phonenumber_field',
-    'phonenumbers',
+    'phonenumbers'
 ]
 
 MIDDLEWARE = [
@@ -297,6 +305,37 @@ TEMPLATES = [
         },
     },
 ]
+
+ENABLE_DJANGO_EXTENSIONS = get_bool_env("ENABLE_DJANGO_EXTENSIONS", False)
+if ENABLE_DJANGO_EXTENSIONS:
+    INSTALLED_APPS += [
+        "django_extensions",
+    ]
+
+ENABLE_DEBUG_TOOLBAR = get_bool_env("ENABLE_DEBUG_TOOLBAR", False)
+if ENABLE_DEBUG_TOOLBAR:
+    # Ensure the graphiql debug toolbar is actually installed before adding it
+    try:
+        __import__("graphiql_debug_toolbar")
+    except ImportError as exc:
+        msg = (
+            f"{exc} -- Install the missing dependencies by "
+            f"running `pip install -r requirements.txt`"
+        )
+        warnings.warn(msg)
+    else:
+        INSTALLED_APPS += ["django.forms", "debug_toolbar", "graphiql_debug_toolbar"]
+        MIDDLEWARE.append("saleor.graphql.middleware.DebugToolbarMiddleware")
+
+        DEBUG_TOOLBAR_PANELS = [
+            "ddt_request_history.panels.request_history.RequestHistoryPanel",
+            "debug_toolbar.panels.timer.TimerPanel",
+            "debug_toolbar.panels.headers.HeadersPanel",
+            "debug_toolbar.panels.request.RequestPanel",
+            "debug_toolbar.panels.sql.SQLPanel",
+            "debug_toolbar.panels.profiling.ProfilingPanel",
+        ]
+        DEBUG_TOOLBAR_CONFIG = {"RESULTS_CACHE_SIZE": 100}
 
 WSGI_APPLICATION = 'swiftmovers.wsgi.application'
 
@@ -349,6 +388,102 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # LOGGING
 
+# Make the `logging` Python module capture `warnings.warn()` calls
+# This is needed in order to log them as JSON when DEBUG=False
+logging.captureWarnings(True)
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "root": {"level": "INFO", "handlers": ["default"]},
+    "formatters": {
+        "django.server": {
+            "()": "django.utils.log.ServerFormatter",
+            "format": "[{server_time}] {message}",
+            "style": "{",
+        },
+        "json": {
+            "()": "saleor.core.logging.JsonFormatter",
+            "datefmt": "%Y-%m-%dT%H:%M:%SZ",
+            "format": (
+                    "%(asctime)s %(levelname)s %(lineno)s %(message)s %(name)s "
+                    + "%(pathname)s %(process)d %(threadName)s"
+            ),
+        },
+        "celery_json": {
+            "()": "saleor.core.logging.JsonCeleryFormatter",
+            "datefmt": "%Y-%m-%dT%H:%M:%SZ",
+            "format": (
+                "%(asctime)s %(levelname)s %(celeryTaskId)s %(celeryTaskName)s "
+            ),
+        },
+        "celery_task_json": {
+            "()": "saleor.core.logging.JsonCeleryTaskFormatter",
+            "datefmt": "%Y-%m-%dT%H:%M:%SZ",
+            "format": (
+                "%(asctime)s %(levelname)s %(celeryTaskId)s %(celeryTaskName)s "
+                "%(message)s "
+            ),
+        },
+        "verbose": {
+            "format": (
+                "%(asctime)s %(levelname)s %(name)s %(message)s "
+                "[PID:%(process)d:%(threadName)s]"
+            )
+        },
+    },
+    "handlers": {
+        "default": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "verbose" if DEBUG else "json",
+        },
+        "django.server": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "django.server" if DEBUG else "json",
+        },
+        "celery_app": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "verbose" if DEBUG else "celery_json",
+        },
+        "celery_task": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "verbose" if DEBUG else "celery_task_json",
+        },
+        "null": {
+            "class": "logging.NullHandler",
+        },
+    },
+    "loggers": {
+        "django": {"level": "INFO", "propagate": True},
+        "django.server": {
+            "handlers": ["django.server"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "celery.app.trace": {
+            "handlers": ["celery_app"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "celery.task": {
+            "handlers": ["celery_task"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "saleor": {"level": "DEBUG", "propagate": True},
+        "saleor.graphql.errors.handled": {
+            "handlers": ["default"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "graphql.execution.utils": {"propagate": False, "handlers": ["null"]},
+        "graphql.execution.executor": {"propagate": False, "handlers": ["null"]},
+    },
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
@@ -362,11 +497,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
-
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
