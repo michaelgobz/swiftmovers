@@ -13,6 +13,36 @@ import ast
 import django
 from django.utils.encoding import force_str
 
+import ast
+import logging
+import os
+import os.path
+import warnings
+from datetime import timedelta
+from typing import List
+
+import dj_database_url
+import dj_email_url
+import django_cache_url
+import django_stubs_ext
+import jaeger_client.config
+import pkg_resources
+import sentry_sdk
+import sentry_sdk.utils
+from celery.schedules import crontab
+from django.conf import global_settings
+from django.core.exceptions import ImproperlyConfigured
+from django.core.management.utils import get_random_secret_key
+from graphql.execution import executor
+from pytimeparse import parse
+from sentry_sdk.integrations.celery import CeleryIntegration
+from sentry_sdk.integrations.django import DjangoIntegration
+from sentry_sdk.integrations.logging import ignore_logger
+
+from . import PatchedSubscriberExecutionContext, __version__
+from .core.languages import LANGUAGES as CORE_LANGUAGES
+from .core.schedules import initiated_sale_webhook_schedule
+
 from pathlib import Path
 import dj_database_url
 import os
@@ -67,21 +97,25 @@ INSTALLED_APPS = [
     # swiftmovers modules
     'swiftmovers.swift',
     'swiftmovers.core',
+    'swiftmovers.app',
     'swiftmovers.account',
     'swiftmovers.checkout',
     'swiftmovers.invoice',
     'swiftmovers.payment',
+    'swiftmovers.product',
+    'swiftmovers.channel',
+    'swiftmovers.csv',
+    'swiftmovers.discount',
+    'swiftmovers.permission',
+    'swiftmovers.schedulers',
     'swiftmovers.shipping',
     'swiftmovers.graphql',
     'swiftmovers.reviews',
     'swiftmovers.tracking',
     'swiftmovers.subscriptions',
-    'swiftmovers.mapping',
-    'swiftmovers.webhooks',
     'swiftmovers.webhook'
     'swiftmovers.order',
     'swiftmovers.zones',
-    'swiftmovers.items',
     'swiftmovers.warehouses',
     # external apps
     'django_measurement',
