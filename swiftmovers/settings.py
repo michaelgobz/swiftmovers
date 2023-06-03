@@ -131,12 +131,12 @@ INTERNAL_IPS = get_list(os.environ.get("INTERNAL_IPS", "127.0.0.1"))
 # will be closed after each request.
 DB_CONN_MAX_AGE = int(os.environ.get("DB_CONN_MAX_AGE", 600))
 
-DATABASE_ROUTERS = ["saleor.core.db_routers.PrimaryReplicaRouter"]
+DATABASE_ROUTERS = ["swiftmovers.core.db_routers.PrimaryReplicaRouter"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 TIME_ZONE = "UTC"
-LANGUAGE_CODE = "en"
+LANGUAGE_CODE = "en-us"
 LANGUAGES = CORE_LANGUAGES
 LOCALE_PATHS = [os.path.join(PROJECT_ROOT, "locale")]
 USE_I18N = True
@@ -199,7 +199,7 @@ context_processors = [
     "django.template.context_processors.debug",
     "django.template.context_processors.media",
     "django.template.context_processors.static",
-    "saleor.site.context_processors.site",
+    "swiftmovers.site.context_processors.site",
 ]
 
 loaders = [
@@ -325,7 +325,7 @@ if ENABLE_DEBUG_TOOLBAR:
         warnings.warn(msg)
     else:
         INSTALLED_APPS += ["django.forms", "debug_toolbar", "graphiql_debug_toolbar"]
-        MIDDLEWARE.append("saleor.graphql.middleware.DebugToolbarMiddleware")
+        MIDDLEWARE.append("swiftmovers.graphql.middleware.DebugToolbarMiddleware")
 
         DEBUG_TOOLBAR_PANELS = [
             "ddt_request_history.panels.request_history.RequestHistoryPanel",
@@ -403,7 +403,7 @@ LOGGING = {
             "style": "{",
         },
         "json": {
-            "()": "saleor.core.logging.JsonFormatter",
+            "()": "swiftmovers.core.logging.JsonFormatter",
             "datefmt": "%Y-%m-%dT%H:%M:%SZ",
             "format": (
                     "%(asctime)s %(levelname)s %(lineno)s %(message)s %(name)s "
@@ -411,14 +411,14 @@ LOGGING = {
             ),
         },
         "celery_json": {
-            "()": "saleor.core.logging.JsonCeleryFormatter",
+            "()": "swiftmovers.core.logging.JsonCeleryFormatter",
             "datefmt": "%Y-%m-%dT%H:%M:%SZ",
             "format": (
                 "%(asctime)s %(levelname)s %(celeryTaskId)s %(celeryTaskName)s "
             ),
         },
         "celery_task_json": {
-            "()": "saleor.core.logging.JsonCeleryTaskFormatter",
+            "()": "swiftmovers.core.logging.JsonCeleryTaskFormatter",
             "datefmt": "%Y-%m-%dT%H:%M:%SZ",
             "format": (
                 "%(asctime)s %(levelname)s %(celeryTaskId)s %(celeryTaskName)s "
@@ -474,8 +474,8 @@ LOGGING = {
             "level": "INFO",
             "propagate": False,
         },
-        "saleor": {"level": "DEBUG", "propagate": True},
-        "saleor.graphql.errors.handled": {
+        "swiftmovers": {"level": "DEBUG", "propagate": True},
+        "swiftmovers.graphql.errors.handled": {
             "handlers": ["default"],
             "level": "INFO",
             "propagate": False,
@@ -814,7 +814,7 @@ FEDERATED_QUERY_MAX_ENTITIES = int(os.environ.get("FEDERATED_QUERY_MAX_ENTITIES"
 BUILTIN_PLUGINS = []
 
 EXTERNAL_PLUGINS = []
-installed_plugins = pkg_resources.iter_entry_points("saleor.plugins")
+installed_plugins = pkg_resources.iter_entry_points("swiftmovers.plugins")
 for entry_point in installed_plugins:
     plugin_path = "{}.{}".format(entry_point.module_name, entry_point.attrs[0])
     if plugin_path not in BUILTIN_PLUGINS and plugin_path not in EXTERNAL_PLUGINS:
@@ -864,7 +864,7 @@ if "JAEGER_AGENT_HOST" in os.environ:
             },
             "logging": get_bool_env("JAEGER_LOGGING", False),
         },
-        service_name="saleor",
+        service_name="swiftmovers",
         validate=True,
     ).initialize_tracer()
 

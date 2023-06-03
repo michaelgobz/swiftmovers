@@ -9,7 +9,7 @@ from .db.filters import PostgresILike
 
 
 class CoreAppConfig(AppConfig):
-    name = "saleor.core"
+    name = "swiftmovers.core"
 
     def ready(self):
         Field.register_lookup(PostgresILike)

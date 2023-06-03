@@ -3,7 +3,7 @@ from django.db.models.signals import post_delete
 
 
 class AccountAppConfig(AppConfig):
-    name = "saleor.account"
+    name = "swiftmovers.account"
 
     def ready(self):
         from .models import User
