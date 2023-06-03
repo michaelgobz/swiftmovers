@@ -253,6 +253,8 @@ INSTALLED_APPS = [
     'swiftmovers.product',
     'swiftmovers.plugin'
     'swiftmovers.channel',
+    'swiftmovers.menu',
+    'swiftmovers.site'
     'swiftmovers.csv',
     'swiftmovers.discount',
     'swiftmovers.permission',
