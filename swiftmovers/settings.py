@@ -208,18 +208,6 @@ loaders = [
 ]
 
 TEMPLATES_DIR = os.path.join(PROJECT_ROOT, "templates")
-TEMPLATES = [
-    {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [TEMPLATES_DIR],
-        "OPTIONS": {
-            "debug": DEBUG,
-            "context_processors": context_processors,
-            "loaders": loaders,
-            "string_if_invalid": '<< MISSING VARIABLE "%s" >>' if DEBUG else "",
-        },
-    }
-]
 
 # Additional password algorithms that can be used by Saleor.
 # The first algorithm defined by Django is the preferred one; users not using the
@@ -240,8 +228,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'graphene_django',
-    'dj_database_url',
+    # External apps that need to go before django's
+    'storages',
+    # Django modules
+    "django.contrib.contenttypes",
+    "django.contrib.sites",
+    "django.contrib.staticfiles",
+    "django.contrib.postgres",
+    "django_celery_beat",
     # swiftmovers modules
     'swiftmovers.swift',
     'swiftmovers.core',
@@ -251,7 +245,7 @@ INSTALLED_APPS = [
     'swiftmovers.invoice',
     'swiftmovers.payment',
     'swiftmovers.product',
-    'swiftmovers.plugin'
+    'swiftmovers.plugins'
     'swiftmovers.channel',
     'swiftmovers.menu',
     'swiftmovers.site',
