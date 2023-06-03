@@ -104,6 +104,9 @@ ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 ADMINS = (
     ('Michael Goboola', 'michael.goboola@admin.com'),
 )
+
+AUTH_USER_MODEL = "accounts.User"
+
 MANAGERS = ADMINS
 
 APPEND_SLASH = False
@@ -485,6 +488,55 @@ LOGGING = {
     },
 }
 
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "OPTIONS": {"min_length": 8},
+    }
+]
+
+DEFAULT_COUNTRY = os.environ.get("DEFAULT_COUNTRY", "UG")
+DEFAULT_DECIMAL_PLACES = 3
+DEFAULT_MAX_DIGITS = 12
+DEFAULT_CURRENCY_CODE_LENGTH = 3
+
+# The default max length for the display name of the
+# sender email address.
+# Following the recommendation of https://tools.ietf.org/html/rfc5322#section-2.1.1
+DEFAULT_MAX_EMAIL_DISPLAY_NAME_LENGTH = 78
+
+COUNTRIES_OVERRIDE = {"EU": "European Union"}
+
+OPENEXCHANGERATES_API_KEY = os.environ.get("OPENEXCHANGERATES_API_KEY")
+
+GOOGLE_ANALYTICS_TRACKING_ID = os.environ.get("GOOGLE_ANALYTICS_TRACKING_ID")
+
+
+def get_host():
+    from django.contrib.sites.models import Site
+
+    return Site.objects.get_current().domain
+
+
+PAYMENT_HOST = get_host
+
+PAYMENT_MODEL = "order.Payment"
+
+MAX_USER_ADDRESSES = int(os.environ.get("MAX_USER_ADDRESSES", 100))
+
+TEST_RUNNER = "swiftmovers.tests.runner.PytestTestRunner"
+
+
+PLAYGROUND_ENABLED = get_bool_env("PLAYGROUND_ENABLED", True)
+
+ALLOWED_HOSTS = get_list(os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1"))
+ALLOWED_GRAPHQL_ORIGINS: List[str] = get_list(
+    os.environ.get("ALLOWED_GRAPHQL_ORIGINS", "*")
+)
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -503,15 +555,379 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-GRAPHENE = {
+# See https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+AWS_LOCATION = os.environ.get("AWS_LOCATION", "")
+AWS_MEDIA_BUCKET_NAME = os.environ.get("AWS_MEDIA_BUCKET_NAME")
+AWS_MEDIA_CUSTOM_DOMAIN = os.environ.get("AWS_MEDIA_CUSTOM_DOMAIN")
+AWS_QUERYSTRING_AUTH = get_bool_env("AWS_QUERYSTRING_AUTH", False)
+AWS_QUERYSTRING_EXPIRE = get_bool_env("AWS_QUERYSTRING_EXPIRE", 3600)
+AWS_S3_CUSTOM_DOMAIN = os.environ.get("AWS_STATIC_CUSTOM_DOMAIN")
+AWS_S3_ENDPOINT_URL = os.environ.get("AWS_S3_ENDPOINT_URL", None)
+AWS_S3_REGION_NAME = os.environ.get("AWS_S3_REGION_NAME", None)
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
+AWS_DEFAULT_ACL = os.environ.get("AWS_DEFAULT_ACL", None)
+AWS_S3_FILE_OVERWRITE = get_bool_env("AWS_S3_FILE_OVERWRITE", True)
 
+# Google Cloud Storage configuration
+# See https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
+GS_PROJECT_ID = os.environ.get("GS_PROJECT_ID")
+GS_BUCKET_NAME = os.environ.get("GS_BUCKET_NAME")
+GS_LOCATION = os.environ.get("GS_LOCATION", "")
+GS_CUSTOM_ENDPOINT = os.environ.get("GS_CUSTOM_ENDPOINT")
+GS_MEDIA_BUCKET_NAME = os.environ.get("GS_MEDIA_BUCKET_NAME")
+GS_AUTO_CREATE_BUCKET = get_bool_env("GS_AUTO_CREATE_BUCKET", False)
+GS_QUERYSTRING_AUTH = get_bool_env("GS_QUERYSTRING_AUTH", False)
+GS_DEFAULT_ACL = os.environ.get("GS_DEFAULT_ACL", None)
+GS_MEDIA_CUSTOM_ENDPOINT = os.environ.get("GS_MEDIA_CUSTOM_ENDPOINT", None)
+GS_EXPIRATION = timedelta(seconds=parse(os.environ.get("GS_EXPIRATION", "1 day")))
+GS_FILE_OVERWRITE = get_bool_env("GS_FILE_OVERWRITE", True)
+
+# If GOOGLE_APPLICATION_CREDENTIALS is set there is no need to load OAuth token
+# See https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
+if "GOOGLE_APPLICATION_CREDENTIALS" not in os.environ:
+    GS_CREDENTIALS = os.environ.get("GS_CREDENTIALS")
+
+# Azure Storage configuration
+# See https://django-storages.readthedocs.io/en/latest/backends/azure.html
+AZURE_ACCOUNT_NAME = os.environ.get("AZURE_ACCOUNT_NAME")
+AZURE_ACCOUNT_KEY = os.environ.get("AZURE_ACCOUNT_KEY")
+AZURE_CONTAINER = os.environ.get("AZURE_CONTAINER")
+AZURE_SSL = os.environ.get("AZURE_SSL")
+
+if AWS_STORAGE_BUCKET_NAME:
+    STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+elif GS_BUCKET_NAME:
+    STATICFILES_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
+
+if AWS_MEDIA_BUCKET_NAME:
+    DEFAULT_FILE_STORAGE = "swiftmovers.core.storages.S3MediaStorage"
+elif GS_MEDIA_BUCKET_NAME:
+    DEFAULT_FILE_STORAGE = "swiftmovers.core.storages.GCSMediaStorage"
+elif AZURE_CONTAINER:
+    DEFAULT_FILE_STORAGE = "swiftmovers.core.storages.AzureMediaStorage"
+
+PLACEHOLDER_IMAGES = {
+    32: "images/placeholder32.png",
+    64: "images/placeholder64.png",
+    128: "images/placeholder128.png",
+    256: "images/placeholder256.png",
+    512: "images/placeholder512.png",
+    1024: "images/placeholder1024.png",
+    2048: "images/placeholder2048.png",
+    4096: "images/placeholder4096.png",
 }
 
-AUTH_USER_MODEL = "accounts.User"
 
-DEFAULT_COUNTRY = os.environ.get("DEFAULT_COUNTRY", "UG")
-DEFAULT_DECIMAL_PLACES = 3
-DEFAULT_MAX_DIGITS = 12
-DEFAULT_CURRENCY_CODE_LENGTH = 3
-# the spec doesn't have a max this is for security purposes
+AUTHENTICATION_BACKENDS = [
+    "swiftmovers.core.auth_backend.JSONWebTokenBackend",
+    "swiftmovers.core.auth_backend.PluginBackend",
+]
+
+# Expired checkouts settings - defines after what time checkouts will be deleted
+ANONYMOUS_CHECKOUTS_TIMEDELTA = timedelta(
+    seconds=parse(os.environ.get("ANONYMOUS_CHECKOUTS_TIMEDELTA", "30 days"))
+)
+USER_CHECKOUTS_TIMEDELTA = timedelta(
+    seconds=parse(os.environ.get("USER_CHECKOUTS_TIMEDELTA", "90 days"))
+)
+EMPTY_CHECKOUTS_TIMEDELTA = timedelta(
+    seconds=parse(os.environ.get("EMPTY_CHECKOUTS_TIMEDELTA", "6 hours"))
+)
+
+# Exports settings - defines after what time exported files will be deleted
+EXPORT_FILES_TIMEDELTA = timedelta(
+    seconds=parse(os.environ.get("EXPORT_FILES_TIMEDELTA", "30 days"))
+)
+
+# CELERY SETTINGS
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_BROKER_URL = (
+    os.environ.get("CELERY_BROKER_URL", os.environ.get("CLOUDAMQP_URL")) or ""
+)
+CELERY_TASK_ALWAYS_EAGER = not CELERY_BROKER_URL
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND", None)
+CELERY_TASK_ROUTES = {
+    "swiftmovers.plugins.webhook.tasks.observability_reporter_task": {
+        "queue": "observability"
+    },
+    "swiftmovers.plugins.webhook.tasks.observability_send_events": {
+        "queue": "observability"
+    },
+}
+
+# Expire orders task setting
+BEAT_EXPIRE_ORDERS_AFTER_TIMEDELTA = timedelta(
+    seconds=parse(os.environ.get("BEAT_EXPIRE_ORDERS_AFTER_TIMEDELTA", "5 minutes"))
+)
+
+# Defines after how many seconds should the task triggered by the Celery beat
+# entry 'update-products-search-vectors' expire if it wasn't picked up by a worker.
+BEAT_UPDATE_SEARCH_EXPIRE_AFTER_SEC = 20
+
+# Defines the Celery beat scheduler entries.
+#
+# Note: if a Celery task triggered by a Celery beat entry has an expiration
+# @task(expires=...), the Celery beat scheduler entry should also define
+# the expiration value. This makes sure if the task or scheduling is wrapped
+# by custom code (e.g., a Saleor fork), the expiration is still present.
+CELERY_BEAT_SCHEDULE = {
+    "delete-empty-allocations": {
+        "task": "swiftmovers.warehouse.tasks.delete_empty_allocations_task",
+        "schedule": timedelta(days=1),
+    },
+    "deactivate-preorder-for-variants": {
+        "task": "swiftmovers.product.tasks.deactivate_preorder_for_variants_task",
+        "schedule": timedelta(hours=1),
+    },
+    "delete-expired-reservations": {
+        "task": "swiftmovers.warehouse.tasks.delete_expired_reservations_task",
+        "schedule": timedelta(days=1),
+    },
+    "delete-expired-checkouts": {
+        "task": "swiftmovers.checkout.tasks.delete_expired_checkouts",
+        "schedule": crontab(hour=0, minute=0),
+    },
+    "delete-outdated-event-data": {
+        "task": "swiftmovers.core.tasks.delete_event_payloads_task",
+        "schedule": timedelta(days=1),
+    },
+    "deactivate-expired-gift-cards": {
+        "task": "swiftmovers.giftcard.tasks.deactivate_expired_cards_task",
+        "schedule": crontab(hour=0, minute=0),
+    },
+    "update-stocks-quantity-allocated": {
+        "task": "swiftmovers.warehouse.tasks.update_stocks_quantity_allocated_task",
+        "schedule": crontab(hour=0, minute=0),
+    },
+    "delete-old-export-files": {
+        "task": "swiftmovers.csv.tasks.delete_old_export_files",
+        "schedule": crontab(hour=1, minute=0),
+    },
+    "send-sale-toggle-notifications": {
+        "task": "swiftmovers.discount.tasks.send_sale_toggle_notifications",
+        "schedule": initiated_sale_webhook_schedule,
+    },
+    "update-products-search-vectors": {
+        "task": "swiftmovers.product.tasks.update_products_search_vector_task",
+        "schedule": timedelta(seconds=20),
+        "options": {"expires": BEAT_UPDATE_SEARCH_EXPIRE_AFTER_SEC},
+    },
+    "expire-orders": {
+        "task": "swiftmovers.order.tasks.expire_orders_task",
+        "schedule": BEAT_EXPIRE_ORDERS_AFTER_TIMEDELTA,
+    },
+}
+
+# The maximum wait time between each is_due() call on schedulers
+# It needs to be higher than the frequency of the schedulers to avoid unnecessary
+# is_due() calls
+CELERY_BEAT_MAX_LOOP_INTERVAL = 300  # 5 minutes
+
+EVENT_PAYLOAD_DELETE_PERIOD = timedelta(
+    seconds=parse(os.environ.get("EVENT_PAYLOAD_DELETE_PERIOD", "14 days"))
+)
+
+# Observability settings
+OBSERVABILITY_BROKER_URL = os.environ.get("OBSERVABILITY_BROKER_URL")
+OBSERVABILITY_ACTIVE = bool(OBSERVABILITY_BROKER_URL)
+OBSERVABILITY_REPORT_ALL_API_CALLS = get_bool_env(
+    "OBSERVABILITY_REPORT_ALL_API_CALLS", False
+)
+OBSERVABILITY_MAX_PAYLOAD_SIZE = int(
+    os.environ.get("OBSERVABILITY_MAX_PAYLOAD_SIZE", 25 * 1000)
+)
+OBSERVABILITY_BUFFER_SIZE_LIMIT = int(
+    os.environ.get("OBSERVABILITY_BUFFER_SIZE_LIMIT", 1000)
+)
+OBSERVABILITY_BUFFER_BATCH_SIZE = int(
+    os.environ.get("OBSERVABILITY_BUFFER_BATCH_SIZE", 100)
+)
+OBSERVABILITY_REPORT_PERIOD = timedelta(
+    seconds=parse(os.environ.get("OBSERVABILITY_REPORT_PERIOD", "20 seconds"))
+)
+OBSERVABILITY_BUFFER_TIMEOUT = timedelta(
+    seconds=parse(os.environ.get("OBSERVABILITY_BUFFER_TIMEOUT", "5 minutes"))
+)
+if OBSERVABILITY_ACTIVE:
+    CELERY_BEAT_SCHEDULE["observability-reporter"] = {
+        "task": "swiftmovers.plugins.webhook.tasks.observability_reporter_task",
+        "schedule": OBSERVABILITY_REPORT_PERIOD,
+        "options": {"expires": OBSERVABILITY_REPORT_PERIOD.total_seconds()},
+    }
+    if OBSERVABILITY_BUFFER_TIMEOUT < OBSERVABILITY_REPORT_PERIOD * 2:
+        warnings.warn(
+            "OBSERVABILITY_REPORT_PERIOD is too big compared to "
+            "OBSERVABILITY_BUFFER_TIMEOUT. That can lead to a loss of events."
+        )
+
+# Change this value if your application is running behind a proxy,
+# e.g. HTTP_CF_Connecting_IP for Cloudflare or X_FORWARDED_FOR
+REAL_IP_ENVIRON = get_list(os.environ.get("REAL_IP_ENVIRON", "REMOTE_ADDR"))
+
+# Slugs for menus pre-created in Django migrations
+DEFAULT_MENUS = {"top_menu_name": "navbar", "bottom_menu_name": "footer"}
+
+# Slug for channel pre-created in Django migrations
+DEFAULT_CHANNEL_SLUG = os.environ.get("DEFAULT_CHANNEL_SLUG", "default-channel")
+
+# Set this to `True` if you want to create default channel, warehouse, product type and
+# category during migrations. It makes it easier for the users to create their first
+# product.
+POPULATE_DEFAULTS = get_bool_env("POPULATE_DEFAULTS", True)
+
+
+#  Sentry
+sentry_sdk.utils.MAX_STRING_LENGTH = 4096
+SENTRY_DSN = os.environ.get("SENTRY_DSN")
+SENTRY_OPTS = {"integrations": [CeleryIntegration(), DjangoIntegration()]}
+
+
+def SENTRY_INIT(dsn: str, sentry_opts: dict):
+    """Init function for sentry.
+
+    Will only be called if SENTRY_DSN is not None, during core start, can be
+    overriden in separate settings file.
+    """
+    sentry_sdk.init(dsn, release=__version__, **sentry_opts)
+    ignore_logger("graphql.execution.utils")
+    ignore_logger("graphql.execution.executor")
+
+
+GRAPHQL_PAGINATION_LIMIT = 100
+GRAPHQL_MIDDLEWARE: List[str] = []
+
+# Set GRAPHQL_QUERY_MAX_COMPLEXITY=0 in env to disable (not recommended)
+GRAPHQL_QUERY_MAX_COMPLEXITY = int(
+    os.environ.get("GRAPHQL_QUERY_MAX_COMPLEXITY", 50000)
+)
+
+# Max number entities that can be requested in single query by Apollo Federation
+#  protocol implements no securities on its own part - malicious actor
+# may build a query that requests for potentially few thousands of entities.
+# Set FEDERATED_QUERY_MAX_ENTITIES=0 in env to disable (not recommended)
 FEDERATED_QUERY_MAX_ENTITIES = int(os.environ.get("FEDERATED_QUERY_MAX_ENTITIES", 100))
+
+# configuration of the plugins
+
+BUILTIN_PLUGINS = []
+
+EXTERNAL_PLUGINS = []
+installed_plugins = pkg_resources.iter_entry_points("saleor.plugins")
+for entry_point in installed_plugins:
+    plugin_path = "{}.{}".format(entry_point.module_name, entry_point.attrs[0])
+    if plugin_path not in BUILTIN_PLUGINS and plugin_path not in EXTERNAL_PLUGINS:
+        if entry_point.name not in INSTALLED_APPS:
+            INSTALLED_APPS.append(entry_point.name)
+        EXTERNAL_PLUGINS.append(plugin_path)
+
+PLUGINS = BUILTIN_PLUGINS + EXTERNAL_PLUGINS
+
+
+if (
+    not DEBUG
+    and ENABLE_ACCOUNT_CONFIRMATION_BY_EMAIL
+    and ALLOWED_CLIENT_HOSTS == get_list(_DEFAULT_CLIENT_HOSTS)
+):
+    raise ImproperlyConfigured(
+        "Make sure you've added storefront address to ALLOWED_CLIENT_HOSTS "
+        "if ENABLE_ACCOUNT_CONFIRMATION_BY_EMAIL is enabled."
+    )
+
+# Timeouts for webhook requests. Sync webhooks (eg. payment webhook) need more time
+# for getting response from the server.
+WEBHOOK_TIMEOUT = 10
+WEBHOOK_SYNC_TIMEOUT = 20
+
+# Since we split checkout complete logic into two separate transactions, in order to
+# mimic stock lock, we apply short reservation for the stocks. The value represents
+# time of the reservation in seconds.
+RESERVE_DURATION = 45
+
+# Initialize a simple and basic Jaeger Tracing integration
+# for open-tracing if enabled.
+#
+# Refer to our guide on https://docs.saleor.io/docs/next/guides/opentracing-jaeger/.
+#
+# If running locally, set:
+#   JAEGER_AGENT_HOST=localhost
+if "JAEGER_AGENT_HOST" in os.environ:
+    jaeger_client.Config(
+        config={
+            "sampler": {"type": "const", "param": 1},
+            "local_agent": {
+                "reporting_port": os.environ.get(
+                    "JAEGER_AGENT_PORT", jaeger_client.config.DEFAULT_REPORTING_PORT
+                ),
+                "reporting_host": os.environ.get("JAEGER_AGENT_HOST"),
+            },
+            "logging": get_bool_env("JAEGER_LOGGING", False),
+        },
+        service_name="saleor",
+        validate=True,
+    ).initialize_tracer()
+
+
+# Some cloud providers (Heroku) export REDIS_URL variable instead of CACHE_URL
+REDIS_URL = os.environ.get("REDIS_URL")
+if REDIS_URL:
+    CACHE_URL = os.environ.setdefault("CACHE_URL", REDIS_URL)
+CACHES = {"default": django_cache_url.config()}
+CACHES["default"]["TIMEOUT"] = parse(os.environ.get("CACHE_TIMEOUT", "7 days"))
+
+JWT_EXPIRE = True
+JWT_TTL_ACCESS = timedelta(seconds=parse(os.environ.get("JWT_TTL_ACCESS", "5 minutes")))
+JWT_TTL_APP_ACCESS = timedelta(
+    seconds=parse(os.environ.get("JWT_TTL_APP_ACCESS", "5 minutes"))
+)
+JWT_TTL_REFRESH = timedelta(seconds=parse(os.environ.get("JWT_TTL_REFRESH", "30 days")))
+
+
+JWT_TTL_REQUEST_EMAIL_CHANGE = timedelta(
+    seconds=parse(os.environ.get("JWT_TTL_REQUEST_EMAIL_CHANGE", "1 hour")),
+)
+
+CHECKOUT_PRICES_TTL = timedelta(
+    seconds=parse(os.environ.get("CHECKOUT_PRICES_TTL", "1 hour"))
+)
+
+# The maximum SearchVector expression count allowed per index SQL statement
+# If the count is exceeded, the expression list will be truncated
+INDEX_MAXIMUM_EXPR_COUNT = 4000
+
+# Maximum related objects that can be indexed in an order
+SEARCH_ORDERS_MAX_INDEXED_TRANSACTIONS = 20
+SEARCH_ORDERS_MAX_INDEXED_PAYMENTS = 20
+SEARCH_ORDERS_MAX_INDEXED_DISCOUNTS = 20
+SEARCH_ORDERS_MAX_INDEXED_LINES = 100
+
+# Maximum related objects that can be indexed in a product
+PRODUCT_MAX_INDEXED_ATTRIBUTES = 1000
+PRODUCT_MAX_INDEXED_ATTRIBUTE_VALUES = 100
+PRODUCT_MAX_INDEXED_VARIANTS = 1000
+
+
+# Patch SubscriberExecutionContext class from `graphql-core-legacy` package
+# to fix bug causing not returning errors for subscription queries.
+
+executor.SubscriberExecutionContext = PatchedSubscriberExecutionContext  # type: ignore
+
+# Optional queue names for Celery tasks.
+# Set None to route to the default queue, or a string value to use a separate one
+#
+# Queue name for update search vector
+UPDATE_SEARCH_VECTOR_INDEX_QUEUE_NAME = os.environ.get(
+    "UPDATE_SEARCH_VECTOR_INDEX_QUEUE_NAME", None
+)
+# Queue name for "async webhook" events
+WEBHOOK_CELERY_QUEUE_NAME = os.environ.get("WEBHOOK_CELERY_QUEUE_NAME", None)
+
+# Lock time for request password reset mutation per user (seconds)
+RESET_PASSWORD_LOCK_TIME = parse(
+    os.environ.get("RESET_PASSWORD_LOCK_TIME", "15 minutes")
+)
+
