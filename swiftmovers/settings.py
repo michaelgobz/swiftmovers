@@ -52,6 +52,12 @@ from .core.languages import LANGUAGES as CORE_LANGUAGES
 
 django.utils.encoding.force_text = force_str
 
+django_stubs_ext.monkeypatch()
+
+
+def get_list(text):
+    return [item.strip() for item in text.split(",")]
+
 
 # utility functions
 def get_bool_env(name, default_value):
@@ -71,15 +77,149 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#g#us34=x47@=oe&bhs2rwz$d@o-hnyb7aqh*3jz$_+zb%)w@b'
+# Make this unique, and don't share it with anybody.
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = get_bool_env("DEBUG", True)
+
+SECRET_KEY = os.environ.get("SECRET_KEY")
+
+if not SECRET_KEY and DEBUG:
+    warnings.warn("SECRET_KEY not configured, using a random temporary key.")
+    SECRET_KEY = get_random_secret_key()
+
+RSA_PRIVATE_KEY = os.environ.get("RSA_PRIVATE_KEY", None)
+RSA_PRIVATE_PASSWORD = os.environ.get("RSA_PRIVATE_PASSWORD", None)
+JWT_MANAGER_PATH = os.environ.get(
+    "JWT_MANAGER_PATH", "swiftmovers.core.jwt_manager.JWTManager"
+)
 
 PROJECT_ROOT = os.path.normpath(os.path.join(os.path.dirname(__file__), ".."))
 ENABLE_ACCOUNT_CONFIRMATION_BY_EMAIL = get_bool_env("ENABLE_ACCOUNT_CONFIRMATION_BY_EMAIL", False)
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+
+ADMINS = (
+    # ('Your Name', 'your_email@example.com'),
+)
+MANAGERS = ADMINS
+
+APPEND_SLASH = False
+
+_DEFAULT_CLIENT_HOSTS = "localhost,127.0.0.1"
+
+ALLOWED_CLIENT_HOSTS = os.environ.get("ALLOWED_CLIENT_HOSTS")
+if not ALLOWED_CLIENT_HOSTS:
+    if DEBUG:
+        ALLOWED_CLIENT_HOSTS = _DEFAULT_CLIENT_HOSTS
+    else:
+        raise ImproperlyConfigured(
+            "ALLOWED_CLIENT_HOSTS environment variable must be set when DEBUG=False."
+        )
+
+ALLOWED_CLIENT_HOSTS = get_list(ALLOWED_CLIENT_HOSTS)
+
+INTERNAL_IPS = get_list(os.environ.get("INTERNAL_IPS", "127.0.0.1"))
+
+# Maximum time in seconds Django can keep the database connections opened.
+# Set the value to 0 to disable connection persistence, database connections
+# will be closed after each request.
+DB_CONN_MAX_AGE = int(os.environ.get("DB_CONN_MAX_AGE", 600))
+
+DATABASE_ROUTERS = ["saleor.core.db_routers.PrimaryReplicaRouter"]
+
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+TIME_ZONE = "UTC"
+LANGUAGE_CODE = "en"
+LANGUAGES = CORE_LANGUAGES
+LOCALE_PATHS = [os.path.join(PROJECT_ROOT, "locale")]
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
+
+FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
+
+EMAIL_URL = os.environ.get("EMAIL_URL")
+SENDGRID_USERNAME = os.environ.get("SENDGRID_USERNAME")
+SENDGRID_PASSWORD = os.environ.get("SENDGRID_PASSWORD")
+if not EMAIL_URL and SENDGRID_USERNAME and SENDGRID_PASSWORD:
+    EMAIL_URL = (
+        f"smtp://{SENDGRID_USERNAME}"
+        f":{SENDGRID_PASSWORD}@smtp.sendgrid.net:587/?tls=True"
+    )
+
+email_config = dj_email_url.parse(
+    EMAIL_URL or "console://demo@example.com:console@example/"
+)
+
+EMAIL_FILE_PATH: str = email_config["EMAIL_FILE_PATH"]
+EMAIL_HOST_USER: str = email_config["EMAIL_HOST_USER"]
+EMAIL_HOST_PASSWORD: str = email_config["EMAIL_HOST_PASSWORD"]
+EMAIL_HOST: str = email_config["EMAIL_HOST"]
+EMAIL_PORT: int = email_config["EMAIL_PORT"]
+EMAIL_BACKEND: str = email_config["EMAIL_BACKEND"]
+EMAIL_USE_TLS: bool = email_config["EMAIL_USE_TLS"]
+EMAIL_USE_SSL: bool = email_config["EMAIL_USE_SSL"]
+
+# If enabled, make sure you have set proper storefront address in ALLOWED_CLIENT_HOSTS.
+ENABLE_ACCOUNT_CONFIRMATION_BY_EMAIL = get_bool_env(
+    "ENABLE_ACCOUNT_CONFIRMATION_BY_EMAIL", True
+)
+
+ENABLE_SSL = get_bool_env("ENABLE_SSL", False)
+
+if ENABLE_SSL:
+    SECURE_SSL_REDIRECT = not DEBUG
+
+DEFAULT_FROM_EMAIL: str = os.environ.get("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
+
+MEDIA_ROOT: str = os.path.join(PROJECT_ROOT, "media")
+MEDIA_URL: str = os.environ.get("MEDIA_URL", "/media/")
+
+STATIC_ROOT: str = os.path.join(PROJECT_ROOT, "static")
+STATIC_URL: str = os.environ.get("STATIC_URL", "/static/")
+STATICFILES_DIRS = [
+    ("images", os.path.join(PROJECT_ROOT, "swiftmovers", "static", "images"))
+]
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+]
+
+context_processors = [
+    "django.template.context_processors.debug",
+    "django.template.context_processors.media",
+    "django.template.context_processors.static",
+    "saleor.site.context_processors.site",
+]
+
+loaders = [
+    "django.template.loaders.filesystem.Loader",
+    "django.template.loaders.app_directories.Loader",
+]
+
+TEMPLATES_DIR = os.path.join(PROJECT_ROOT, "templates")
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [TEMPLATES_DIR],
+        "OPTIONS": {
+            "debug": DEBUG,
+            "context_processors": context_processors,
+            "loaders": loaders,
+            "string_if_invalid": '<< MISSING VARIABLE "%s" >>' if DEBUG else "",
+        },
+    }
+]
+
+# Additional password algorithms that can be used by Saleor.
+# The first algorithm defined by Django is the preferred one; users not using the
+# first algorithm will automatically be upgraded to it upon login
+PASSWORD_HASHERS = [
+    *global_settings.PASSWORD_HASHERS,
+    "django.contrib.auth.hashers.BCryptPasswordHasher",
+]
 
 # Application definition
 
@@ -103,6 +243,7 @@ INSTALLED_APPS = [
     'swiftmovers.invoice',
     'swiftmovers.payment',
     'swiftmovers.product',
+    'swiftmovers.plugin'
     'swiftmovers.channel',
     'swiftmovers.csv',
     'swiftmovers.discount',
@@ -157,7 +298,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'swift-movers.wsgi.application'
+WSGI_APPLICATION = 'swiftmovers.wsgi.application'
 
 # database names
 
@@ -179,7 +320,12 @@ DATABASES = {
         },
     DATABASE_REPLICA_NAME:
         {
-            # db specifications go here
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'swiftmovers',
+            'USER': 'admin',
+            'PASSWORD': 'swift',
+            'HOST': '127.0.0.1',
+            'PORT': '5432',
         }
 }
 
@@ -200,6 +346,9 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+# LOGGING
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
