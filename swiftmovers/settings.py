@@ -138,7 +138,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 TIME_ZONE = "UTC"
 LANGUAGE_CODE = "en-us"
 LANGUAGES = CORE_LANGUAGES
-LOCALE_PATHS = [os.path.join(PROJECT_ROOT, "locale")]
+LOCALE_PATHS = [os.path.join(PROJECT_ROOT, 'locale')]
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
@@ -220,7 +220,9 @@ PASSWORD_HASHERS = [
 # Application definition
 
 INSTALLED_APPS = [
-    # django modules
+    # Django modules
+    "django.contrib.postgres",
+    "django_celery_beat",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -230,11 +232,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     # External apps that need to go before django's
     'storages',
-    # Django modules
-    "django.contrib.postgres",
-    "django_celery_beat",
     # swiftmovers modules
-    'swiftmovers.swift',
     'swiftmovers.core',
     'swiftmovers.app',
     'swiftmovers.account',
