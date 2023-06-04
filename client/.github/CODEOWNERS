@@ -1,0 +1,3 @@
+* @swiftmovers/dashboard
+.github/workflows/* @swiftmovers/sre
+cypress/* @swiftmovers/qa

@@ -20,7 +20,7 @@ def get_allowed_host_lazy():
     return settings.ALLOWED_HOSTS[0]
 
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "saleor.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "swiftmovers.settings")
 
 application = get_wsgi_application()
 application = health_check(application, "/health/")

@@ -23,7 +23,6 @@ from .payloads import generate_api_call_payload, generate_event_delivery_attempt
 from .tracing import opentracing_trace
 
 if TYPE_CHECKING:
-
     from celery.exceptions import Retry
     from django.http import HttpRequest, HttpResponse
 
@@ -40,7 +39,7 @@ _context = Local()
 @dataclass
 class WebhookData:
     id: int
-    saleor_domain: str
+    swiftmovers_domain: str
     target_url: str
     secret_key: Optional[str] = None
 
@@ -72,7 +71,7 @@ def get_webhooks(timeout=CACHE_TIMEOUT) -> List[WebhookData]:
                     webhooks_data.append(
                         WebhookData(
                             id=webhook.id,
-                            saleor_domain=domain,
+                            swiftmovers_domain=domain,
                             target_url=webhook.target_url,
                             secret_key=webhook.secret_key,
                         )

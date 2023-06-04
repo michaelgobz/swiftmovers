@@ -1,20 +1,13 @@
-# Create your models here
 import datetime
-from typing import Any
+from typing import Any, TypeVar
 
 import pytz
 from django.contrib.postgres.indexes import GinIndex
 from django.db import models, transaction
-from django.db.models import JSONField  # type: ignore
-from django.db.models import F, Max, Q
+from django.db.models import F, JSONField, Max, Q
 
+from . import EventDeliveryStatus, JobStatus
 from .utils.json_serializer import CustomJsonEncoder
-
-
-def get_max_sort_order(qs):
-    existing_max = qs.aggregate(Max("sort_order"))
-    existing_max = existing_max.get("sort_order__max")
-    return existing_max
 
 
 class SortableModel(models.Model):
@@ -26,10 +19,15 @@ class SortableModel(models.Model):
     def get_ordering_queryset(self):
         raise NotImplementedError("Unknown ordering queryset")
 
+    def get_max_sort_order(self, qs):
+        existing_max = qs.aggregate(Max("sort_order"))
+        existing_max = existing_max.get("sort_order__max")
+        return existing_max
+
     def save(self, *args, **kwargs):
         if self.pk is None:
             qs = self.get_ordering_queryset()
-            existing_max = get_max_sort_order(qs)
+            existing_max = self.get_max_sort_order(qs)
             self.sort_order = 0 if existing_max is None else existing_max + 1
         super().save(*args, **kwargs)
 
@@ -43,7 +41,10 @@ class SortableModel(models.Model):
         super().delete(*args, **kwargs)
 
 
-class PublishedQuerySet(models.QuerySet):
+T = TypeVar("T", bound="PublishableModel")
+
+
+class PublishedQuerySet(models.QuerySet[T]):
     def published(self):
         today = datetime.datetime.now(pytz.UTC)
         return self.filter(
@@ -52,11 +53,14 @@ class PublishedQuerySet(models.QuerySet):
         )
 
 
+PublishableManager = models.Manager.from_queryset(PublishedQuerySet)
+
+
 class PublishableModel(models.Model):
     published_at = models.DateTimeField(blank=True, null=True)
     is_published = models.BooleanField(default=False)
 
-    objects = models.Manager.from_queryset(PublishedQuerySet)()
+    objects: Any = PublishableManager()
 
     class Meta:
         abstract = True
@@ -112,3 +116,74 @@ class ModelWithMetadata(models.Model):
         if key in self.metadata:
             del self.metadata[key]
 
+
+class ModelWithExternalReference(models.Model):
+    external_reference = models.CharField(
+        max_length=250,
+        unique=True,
+        blank=True,
+        null=True,
+        db_index=True,
+    )
+
+    class Meta:
+        abstract = True
+
+
+class Job(models.Model):
+    status = models.CharField(
+        max_length=50, choices=JobStatus.CHOICES, default=JobStatus.PENDING
+    )
+    message = models.CharField(max_length=255, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
+class EventPayload(models.Model):
+    payload = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+class EventDelivery(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(
+        max_length=255,
+        choices=EventDeliveryStatus.CHOICES,
+        default=EventDeliveryStatus.PENDING,
+    )
+    event_type = models.CharField(max_length=255)
+    payload = models.ForeignKey(
+        EventPayload, related_name="deliveries", null=True, on_delete=models.CASCADE
+    )
+    webhook = models.ForeignKey("webhook.Webhook", on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ("-created_at",)
+
+
+class EventDeliveryAttempt(models.Model):
+    delivery = models.ForeignKey(
+        EventDelivery, related_name="attempts", null=True, on_delete=models.CASCADE
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    task_id = models.CharField(max_length=255, null=True)
+    duration = models.FloatField(null=True)
+    response = models.TextField(null=True)
+    response_headers = models.TextField(null=True)
+    response_status_code = models.PositiveSmallIntegerField(null=True)
+    request_headers = models.TextField(null=True)
+    status = models.CharField(
+        max_length=255,
+        choices=EventDeliveryStatus.CHOICES,
+        default=EventDeliveryStatus.PENDING,
+    )
+
+    class Meta:
+        ordering = ("-created_at",)
+
+
+class CeleryTask(Job):
+    name = models.CharField(max_length=255, unique=True)

@@ -34,8 +34,7 @@ class BaseBuffer:
         self.connection_timeout = connection_timeout
         self.timeout = timeout
 
-    @staticmethod
-    def decode(value: bytes) -> Any:
+    def decode(self, value: bytes) -> Any:
         return pickle.loads(zlib.decompress(value))
 
     def encode(self, value: Any) -> bytes:
