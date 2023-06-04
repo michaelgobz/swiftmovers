@@ -59,7 +59,7 @@ ENV PROJECT_VERSION="${PROJECT_VERSION}"
 
 LABEL org.opencontainers.image.title="mirumee/swiftmovers"                                  \
       org.opencontainers.image.description="\
-A modular, high performance, headless e-commerce platform built with Python, \
+A modular, high performance, headless logistics Operations Panel platform built with Python, \
 GraphQL, Django, and ReactJS."                                                         \
       org.opencontainers.image.url="https://swiftmovers.io/"                                \
       org.opencontainers.image.source="https://github.com/swiftmovers/swiftmovers"               \

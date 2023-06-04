@@ -5710,9 +5710,9 @@ def description_json():
             {
                 "key": "",
                 "data": {
-                    "text": "E-commerce for the PWA era",
+                    "text": "logistics Operations Panel for the PWA era",
                 },
-                "text": "E-commerce for the PWA era",
+                "text": "logistics Operations Panel for the PWA era",
                 "type": "header-two",
                 "depth": 0,
                 "entityRanges": [],
@@ -5722,7 +5722,7 @@ def description_json():
                 "key": "",
                 "data": {
                     "text": (
-                        "A modular, high performance e-commerce storefront "
+                        "A modular, high performance logistics Operations Panel storefront "
                         "built with GraphQL, Django, and ReactJS."
                     )
                 },
@@ -5744,13 +5744,13 @@ def description_json():
                 "key": "",
                 "data": {
                     "text": (
-                        "swiftmovers is a rapidly-growing open source e-commerce platform "
+                        "swiftmovers is a rapidly-growing open source logistics Operations Panel platform "
                         "that has served high-volume companies from branches "
                         "like publishing and apparel since 2012. Based on Python "
                         "and Django, the latest major update introduces a modular "
                         "front end with a GraphQL API and storefront and dashboard "
                         "written in React to make swiftmovers a full-functionality "
-                        "open source e-commerce."
+                        "open source logistics Operations Panel."
                     ),
                 },
                 "type": "paragraph",

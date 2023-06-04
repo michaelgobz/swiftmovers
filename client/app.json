@@ -5,7 +5,7 @@
   "repository": "https://github.com/mirumee/swiftmovers-dashboard",
   "website": "http://getswiftmovers.com/",
   "logo": "https://mirumee.com/img/opensource_swiftmovers.jpg",
-  "keywords": ["swiftmovers", "e-commerce", "dashboard"],
+  "keywords": ["swiftmovers", "logistics Operations Panel", "dashboard"],
   "env": {
     "API_URI": {
       "description": "URI of a running instance of swiftmovers GraphQL API",
