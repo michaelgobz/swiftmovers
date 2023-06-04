@@ -233,7 +233,7 @@ INSTALLED_APPS = [
     # External apps that need to go before django's
     'storages',
     # swiftmovers modules
-    # 'swiftmovers.core',
+    'swiftmovers.core',
     'swiftmovers.app',
     'swiftmovers.account',
     'swiftmovers.checkout',
