@@ -254,7 +254,7 @@ INSTALLED_APPS = [
     'swiftmovers.reviews',
     'swiftmovers.tracking',
     'swiftmovers.subscriptions',
-    'swiftmovers.webhook'
+    'swiftmovers.webhook',
     'swiftmovers.order',
     'swiftmovers.zones',
     'swiftmovers.warehouses',
