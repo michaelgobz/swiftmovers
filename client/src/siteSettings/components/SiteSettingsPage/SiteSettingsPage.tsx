@@ -15,8 +15,8 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { commonMessages } from "@dashboard/intl";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
-import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui/next";
+import { ConfirmButtonTransitionState, makeStyles } from "@swiftmovers/macaw-ui";
+import { Box } from "@swiftmovers/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 

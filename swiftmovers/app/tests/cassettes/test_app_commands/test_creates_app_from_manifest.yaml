@@ -117,10 +117,10 @@ interactions:
       User-Agent:
       - python-requests/2.23.0
 
-      # X- headers will be deprecated in Saleor 4.0, proper headers are without X-
-      x-saleor-domain:
+      # X- headers will be deprecated in swiftmovers 4.0, proper headers are without X-
+      x-swiftmovers-domain:
       - mirumee.com
-      saleor-domain:
+      swiftmovers-domain:
       - mirumee.com
     method: POST
     uri: http://otherapp:3000/register

@@ -1,7 +1,7 @@
 // DON'T TOUCH THIS
 // These are separate clients and do not share configs between themselves
 import { ApolloClient, ApolloLink, InMemoryCache } from "@apollo/client";
-import { createFetch, createSaleorClient } from "@saleor/sdk";
+import { createFetch, createswiftmoversClient } from "@swiftmovers/sdk";
 import { createUploadLink } from "apollo-upload-client";
 
 import { getApiUrl } from "../config";
@@ -69,7 +69,7 @@ export const apolloClient = new ApolloClient({
   link,
 });
 
-export const saleorClient = createSaleorClient({
+export const swiftmoversClient = createswiftmoversClient({
   apiUrl: getApiUrl(),
   channel: "",
 });

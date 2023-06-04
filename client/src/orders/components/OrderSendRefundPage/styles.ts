@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 
 export const useStyles = makeStyles(
   {
@@ -48,10 +48,10 @@ export const useDataLineSettledStyles = makeStyles(
       fontWeight: 600,
     },
     unsettled: {
-      color: theme.palette.saleor.fail.dark,
+      color: theme.palette.swiftmovers.fail.dark,
     },
     settled: {
-      color: theme.palette.saleor.success.dark,
+      color: theme.palette.swiftmovers.success.dark,
     },
   }),
   {

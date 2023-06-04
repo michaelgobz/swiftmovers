@@ -33,7 +33,7 @@ import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@swiftmovers/macaw-ui";
 import React, { FormEventHandler } from "react";
 
 import ShippingMethodTaxes from "../ShippingMethodTaxes";

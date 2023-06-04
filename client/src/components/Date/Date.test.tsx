@@ -1,4 +1,4 @@
-import { ThemeProvider } from "@saleor/macaw-ui";
+import { ThemeProvider } from "@swiftmovers/macaw-ui";
 import { render, screen } from "@testing-library/react";
 import React from "react";
 

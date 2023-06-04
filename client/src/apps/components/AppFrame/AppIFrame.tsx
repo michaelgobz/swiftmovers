@@ -1,6 +1,6 @@
 import { AppDetailsUrlQueryParams, AppUrls } from "@dashboard/apps/urls";
-import { ThemeType } from "@saleor/app-sdk/app-bridge";
-import { useTheme } from "@saleor/macaw-ui";
+import { ThemeType } from "@swiftmovers/app-sdk/app-bridge";
+import { useTheme } from "@swiftmovers/macaw-ui";
 import isEqualWith from "lodash/isEqualWith";
 import React, { forwardRef, memo, useEffect, useRef } from "react";
 

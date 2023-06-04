@@ -21,33 +21,33 @@ import {
 describe("As an admin I want to create product attribute", () => {
   const startsWith = "AttrCreate";
   const attributesTypes = [
-    { type: "DROPDOWN", testCase: "SALEOR_0501" },
-    { type: "MULTISELECT", testCase: "SALEOR_0502" },
-    { type: "FILE", testCase: "SALEOR_0503" },
-    { type: "RICH_TEXT", testCase: "SALEOR_0504" },
-    { type: "BOOLEAN", testCase: "SALEOR_0505" },
-    { type: "DATE", testCase: "SALEOR_0523" },
-    { type: "DATE_TIME", testCase: "SALEOR_0524" },
+    { type: "DROPDOWN", testCase: "swiftmovers_0501" },
+    { type: "MULTISELECT", testCase: "swiftmovers_0502" },
+    { type: "FILE", testCase: "swiftmovers_0503" },
+    { type: "RICH_TEXT", testCase: "swiftmovers_0504" },
+    { type: "BOOLEAN", testCase: "swiftmovers_0505" },
+    { type: "DATE", testCase: "swiftmovers_0523" },
+    { type: "DATE_TIME", testCase: "swiftmovers_0524" },
   ];
   const attributeReferenceType = [
-    { type: "PRODUCT", testCase: "SALEOR_0506" },
-    { type: "PAGE", testCase: "SALEOR_0507" },
-    { type: "PRODUCT_VARIANT", testCase: "SALEOR_0539" },
+    { type: "PRODUCT", testCase: "swiftmovers_0506" },
+    { type: "PAGE", testCase: "swiftmovers_0507" },
+    { type: "PRODUCT_VARIANT", testCase: "swiftmovers_0539" },
   ];
   const attributeNumericType = [
     {
       unitSystem: "IMPERIAL",
       unitsOf: "DISTANCE",
       unit: "FT",
-      testCase: "SALEOR_0508",
+      testCase: "swiftmovers_0508",
     },
     {
       unitSystem: "METRIC",
       unitsOf: "VOLUME",
       unit: "CUBIC_CENTIMETER",
-      testCase: "SALEOR_0509",
+      testCase: "swiftmovers_0509",
     },
-    { unitSystem: "without selecting unit", testCase: "SALEOR_0510" },
+    { unitSystem: "without selecting unit", testCase: "swiftmovers_0510" },
   ];
 
   before(() => {
@@ -142,7 +142,7 @@ describe("As an admin I want to create product attribute", () => {
   });
 
   it(
-    "should be able to create attribute without require value. TC:SALEOR_0511",
+    "should be able to create attribute without require value. TC:swiftmovers_0511",
     { tags: ["@attribute", "@allEnv", "@stable"] },
     () => {
       const attributeType = "BOOLEAN";
@@ -167,7 +167,7 @@ describe("As an admin I want to create product attribute", () => {
   );
 
   it(
-    "should create swatch attribute. TC:SALEOR_0531",
+    "should create swatch attribute. TC:swiftmovers_0531",
     { tags: ["@attribute", "@allEnv", "@stable"] },
     () => {
       const attributeType = "SWATCH";
@@ -190,12 +190,12 @@ describe("As an admin I want to create product attribute", () => {
   );
 
   it(
-    "should create swatch attribute with image. TC:SALEOR_0532",
+    "should create swatch attribute with image. TC:swiftmovers_0532",
     { tags: ["@attribute", "@allEnv", "@stable"] },
     () => {
       const attributeType = "SWATCH";
       const attributeName = `${startsWith}${faker.datatype.number()}`;
-      const swatchImage = "images/saleorDemoProductSneakers.png";
+      const swatchImage = "images/swiftmoversDemoProductSneakers.png";
       createAttributeWithInputType({
         name: attributeName,
         attributeType,
@@ -212,13 +212,13 @@ describe("As an admin I want to create product attribute", () => {
           });
           cy.get(ATTRIBUTES_DETAILS.swatchValueImage)
             .invoke("attr", "style")
-            .should("include", "saleorDemoProductSneakers");
+            .should("include", "swiftmoversDemoProductSneakers");
         });
     },
   );
 
   it(
-    "should be able delete product attribute. TC:SALEOR_0525",
+    "should be able delete product attribute. TC:swiftmovers_0525",
     { tags: ["@attribute", "@allEnv", "@stable"] },
     () => {
       const attributeName = `${startsWith}${faker.datatype.number()}`;
@@ -239,7 +239,7 @@ describe("As an admin I want to create product attribute", () => {
   );
 
   it(
-    "should be able update product attribute. TC:SALEOR_0526",
+    "should be able update product attribute. TC:swiftmovers_0526",
     { tags: ["@attribute", "@allEnv", "@stable"] },
     () => {
       const attributeName = `${startsWith}${faker.datatype.number()}`;

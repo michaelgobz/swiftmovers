@@ -1,5 +1,5 @@
 import { AppLogo } from "@dashboard/apps/types";
-import { Box, GenericAppIcon } from "@saleor/macaw-ui/next";
+import { Box, GenericAppIcon } from "@swiftmovers/macaw-ui/next";
 import React from "react";
 
 const avatarSize = 11;

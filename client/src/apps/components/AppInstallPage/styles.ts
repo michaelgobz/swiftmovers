@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -51,11 +51,11 @@ export const useStyles = makeStyles(
       color: theme.palette.text.hint,
       marginTop: theme.spacing(1),
     },
-    installSaleorIcon: {
+    installswiftmoversIcon: {
       backgroundColor:
         theme.palette.type === "dark"
-          ? theme.palette.saleor.gray.default
-          : theme.palette.saleor.main[1],
+          ? theme.palette.swiftmovers.gray.default
+          : theme.palette.swiftmovers.main[1],
       border: "none",
     },
     installSpacer: {

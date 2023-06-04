@@ -83,8 +83,8 @@ def test_create_voucher(staff_api_client, permission_manage_discounts):
 
 
 @freeze_time("2022-05-12 12:00:00")
-@patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
-@patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
+@patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
 def test_create_voucher_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -95,7 +95,7 @@ def test_create_voucher_trigger_webhook(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
 
     start_date = timezone.now() - timedelta(days=365)
     end_date = timezone.now() + timedelta(days=365)

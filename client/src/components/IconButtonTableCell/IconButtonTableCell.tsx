@@ -1,5 +1,5 @@
 import { TableCell } from "@material-ui/core";
-import { IconButton, ICONBUTTON_SIZE, makeStyles } from "@saleor/macaw-ui";
+import { IconButton, ICONBUTTON_SIZE, makeStyles } from "@swiftmovers/macaw-ui";
 import clsx from "clsx";
 import React from "react";
 

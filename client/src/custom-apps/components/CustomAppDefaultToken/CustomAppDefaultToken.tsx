@@ -3,7 +3,7 @@ import Link from "@dashboard/components/Link";
 import useClipboard from "@dashboard/hooks/useClipboard";
 import { Card, CardContent, Paper, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import { IconButton } from "@saleor/macaw-ui";
+import { IconButton } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

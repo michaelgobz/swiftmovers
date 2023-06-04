@@ -8,7 +8,7 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { Card, CardContent, TextField } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

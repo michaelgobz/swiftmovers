@@ -3,7 +3,7 @@ import {
   PageDetailsFragment,
   PageFragment,
 } from "@dashboard/graphql";
-import { PageType } from "@saleor/sdk/dist/apollo/types";
+import { PageType } from "@swiftmovers/sdk/dist/apollo/types";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 

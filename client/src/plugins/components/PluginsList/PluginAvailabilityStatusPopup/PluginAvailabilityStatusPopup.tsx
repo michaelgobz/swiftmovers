@@ -2,7 +2,7 @@ import ChannelsAvailabilityMenuContent from "@dashboard/components/ChannelsAvail
 import { PluginBaseFragment } from "@dashboard/graphql";
 import { isPluginGlobal } from "@dashboard/plugins/views/utils";
 import { Card, Popper } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import React from "react";
 
 import { mapPluginsToPills } from "../utils";

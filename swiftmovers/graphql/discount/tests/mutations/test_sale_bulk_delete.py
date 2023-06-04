@@ -47,8 +47,8 @@ def test_delete_sales(staff_api_client, sale_list, permission_manage_discounts):
     assert not Sale.objects.filter(id__in=[sale.id for sale in sale_list]).exists()
 
 
-@mock.patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
-@mock.patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@mock.patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
+@mock.patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
 def test_delete_sales_triggers_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -59,7 +59,7 @@ def test_delete_sales_triggers_webhook(
     settings,
 ):
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
     variables = {
         "ids": [graphene.Node.to_global_id("Sale", sale.id) for sale in sale_list]
     }
@@ -72,8 +72,8 @@ def test_delete_sales_triggers_webhook(
     assert mocked_webhook_trigger.call_count == 3
 
 
-@mock.patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
-@mock.patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@mock.patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
+@mock.patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
 def test_delete_sales_with_variants_triggers_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -106,7 +106,7 @@ def test_delete_sales_with_variants_triggers_webhook(
         )
 
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
     variables = {
         "ids": [graphene.Node.to_global_id("Sale", sale.id) for sale in sale_list]
     }

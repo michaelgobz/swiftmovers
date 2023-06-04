@@ -1,5 +1,5 @@
 import { commonMessages } from "@dashboard/intl";
-import { ConfirmButton } from "@saleor/macaw-ui";
+import { ConfirmButton } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

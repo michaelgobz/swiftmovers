@@ -3,7 +3,7 @@ import {
   CountryCode,
   useAddressValidationRulesQuery,
 } from "@dashboard/graphql";
-import { ChoiceValue } from "@saleor/sdk/dist/apollo/types";
+import { ChoiceValue } from "@swiftmovers/sdk/dist/apollo/types";
 
 interface AreaChoices {
   label: string;

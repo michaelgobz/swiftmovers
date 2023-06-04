@@ -102,7 +102,7 @@ describe("Sales discounts for variant", () => {
   });
 
   it(
-    "should not be able see product variant discount not assigned to channel. TC: SALEOR_1804",
+    "should not be able see product variant discount not assigned to channel. TC: swiftmovers_1804",
     { tags: ["@sales", "@allEnv", "@stable"] },
     () => {
       const saleName = `${startsWith}${faker.datatype.number()}`;
@@ -159,7 +159,7 @@ describe("Sales discounts for variant", () => {
   );
 
   it(
-    "should be able to create percentage discount. TC: SALEOR_1807",
+    "should be able to create percentage discount. TC: swiftmovers_1807",
     { tags: ["@sales", "@allEnv", "@stable"] },
     () => {
       const saleName = `${startsWith}${faker.datatype.number()}`;
@@ -183,7 +183,7 @@ describe("Sales discounts for variant", () => {
   );
 
   it(
-    "should be able to create fixed price discount. TC: SALEOR_1808",
+    "should be able to create fixed price discount. TC: swiftmovers_1808",
     { tags: ["@sales", "@allEnv", "@stable"] },
     () => {
       const saleName = `${startsWith}${faker.datatype.number()}`;

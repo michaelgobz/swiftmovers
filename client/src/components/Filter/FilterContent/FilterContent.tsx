@@ -1,7 +1,7 @@
 import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { makeStyles, Paper, Typography } from "@material-ui/core";
-import { Accordion, AccordionSummary } from "@saleor/macaw-ui";
+import { Accordion, AccordionSummary } from "@swiftmovers/macaw-ui";
 import React, { useState } from "react";
 
 import { FilterAutocompleteDisplayValues } from "../FilterAutocompleteField";

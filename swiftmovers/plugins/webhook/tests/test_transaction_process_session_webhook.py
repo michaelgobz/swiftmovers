@@ -117,7 +117,7 @@ def _assert_fields(payload, webhook, expected_response, response, mock_request):
 
 
 @freeze_time()
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
 def test_transaction_process_checkout_without_request_data_and_static_payload(
     mock_request,
     webhook_plugin,
@@ -184,7 +184,7 @@ def test_transaction_process_checkout_without_request_data_and_static_payload(
 
 
 @freeze_time()
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
 def test_transaction_process_checkout_with_request_data_and_static_payload(
     mock_request,
     webhook_plugin,
@@ -252,7 +252,7 @@ def test_transaction_process_checkout_with_request_data_and_static_payload(
 
 
 @freeze_time()
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
 def test_transaction_process_checkout_without_request_data(
     mock_request,
     webhook_plugin,
@@ -320,7 +320,7 @@ def test_transaction_process_checkout_without_request_data(
 
 
 @freeze_time()
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
 def test_transaction_process_checkout_with_request_data(
     mock_request,
     webhook_plugin,
@@ -389,7 +389,7 @@ def test_transaction_process_checkout_with_request_data(
 
 
 @freeze_time()
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
 def test_transaction_process_session_skips_app_without_identifier(
     mock_request,
     webhook_plugin,
@@ -453,7 +453,7 @@ def test_transaction_process_session_skips_app_without_identifier(
 
 
 @freeze_time()
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
 def test_transaction_process_order_without_request_data_and_static_payload(
     mock_request,
     webhook_plugin,
@@ -520,7 +520,7 @@ def test_transaction_process_order_without_request_data_and_static_payload(
 
 
 @freeze_time()
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
 def test_transaction_process_order_with_request_data_and_static_payload(
     mock_request,
     webhook_plugin,
@@ -588,7 +588,7 @@ def test_transaction_process_order_with_request_data_and_static_payload(
 
 
 @freeze_time()
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
 def test_transaction_process_order_without_request_data(
     mock_request,
     webhook_plugin,
@@ -656,7 +656,7 @@ def test_transaction_process_order_without_request_data(
 
 
 @freeze_time()
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
 def test_transaction_process_order_with_request_data(
     mock_request,
     webhook_plugin,

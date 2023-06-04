@@ -5,8 +5,8 @@ import Skeleton from "@dashboard/components/Skeleton";
 import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
 import { Card, CardContent, TextField, Typography } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui/next";
+import { ConfirmButtonTransitionState } from "@swiftmovers/macaw-ui";
+import { Text } from "@swiftmovers/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

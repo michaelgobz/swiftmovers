@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -13,7 +13,7 @@ export const useStyles = makeStyles(
       [theme.breakpoints.up("md")]: {
         fontSize: theme.spacing(2),
       },
-      color: theme.palette.saleor.main[3],
+      color: theme.palette.swiftmovers.main[3],
       lineHeight: theme.spacing(3.2),
       fontSize: theme.spacing(2),
       marginLeft: theme.spacing(1.5),

@@ -2,7 +2,7 @@ import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import { CollectionFragment } from "@dashboard/graphql";
 import ScrollableContent from "@dashboard/plugins/components/PluginsList/PluginAvailabilityStatusPopup/ScrollableContent";
 import { Typography } from "@material-ui/core";
-import { PillColor } from "@saleor/macaw-ui";
+import { PillColor } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 

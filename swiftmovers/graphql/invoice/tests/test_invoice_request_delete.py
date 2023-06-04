@@ -24,12 +24,12 @@ INVOICE_REQUEST_DELETE_MUTATION = """
 @pytest.fixture(autouse=True)
 def setup_dummy_gateways(settings):
     settings.PLUGINS = [
-        "saleor.payment.gateways.dummy.plugin.DummyGatewayPlugin",
+        "swiftmovers.payment.gateways.dummy.plugin.DummyGatewayPlugin",
     ]
     return settings
 
 
-@patch("saleor.plugins.manager.PluginsManager.invoice_delete")
+@patch("swiftmovers.plugins.manager.PluginsManager.invoice_delete")
 def test_invoice_request_delete(
     plugin_mock, staff_api_client, permission_manage_orders, order
 ):
@@ -47,7 +47,7 @@ def test_invoice_request_delete(
     ).exists()
 
 
-@patch("saleor.plugins.manager.PluginsManager.invoice_delete")
+@patch("swiftmovers.plugins.manager.PluginsManager.invoice_delete")
 def test_invoice_request_delete_invalid_id(
     plugin_mock, staff_api_client, permission_manage_orders
 ):
@@ -61,7 +61,7 @@ def test_invoice_request_delete_invalid_id(
     plugin_mock.assert_not_called()
 
 
-@patch("saleor.plugins.manager.PluginsManager.invoice_delete")
+@patch("swiftmovers.plugins.manager.PluginsManager.invoice_delete")
 def test_invoice_request_delete_no_permission(
     plugin_mock, staff_api_client, permission_manage_orders, order
 ):

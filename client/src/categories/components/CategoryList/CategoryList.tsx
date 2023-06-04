@@ -14,7 +14,7 @@ import { maybe, renderCollection } from "@dashboard/misc";
 import { ListActions, ListProps, SortPage } from "@dashboard/types";
 import { getArrowDirection } from "@dashboard/utils/sort";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

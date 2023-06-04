@@ -7,8 +7,8 @@ import {
   PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
 import { Node, SlugNode } from "@dashboard/types";
-import { ConfirmButtonTransitionState, ThemeType } from "@saleor/macaw-ui";
-import { DefaultTheme, ThemeTokensValues } from "@saleor/macaw-ui/next";
+import { ConfirmButtonTransitionState, ThemeType } from "@swiftmovers/macaw-ui";
+import { DefaultTheme, ThemeTokensValues } from "@swiftmovers/macaw-ui/next";
 import uniqBy from "lodash/uniqBy";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
@@ -238,7 +238,7 @@ export function getMutationState(
   return "default";
 }
 
-export interface SaleorMutationResult {
+export interface swiftmoversMutationResult {
   errors?: any[];
 }
 
@@ -263,7 +263,7 @@ export const hasMutationErrors = (result: FetchResult): boolean => {
     return false;
   }
   return Object.values(result.data).some(
-    ({ errors }: SaleorMutationResult) => errors.length > 0,
+    ({ errors }: swiftmoversMutationResult) => errors.length > 0,
   );
 };
 
@@ -288,7 +288,7 @@ export const getMutationErrors = <
 };
 
 export function getMutationStatus<
-  TData extends Record<string, SaleorMutationResult | any>,
+  TData extends Record<string, swiftmoversMutationResult | any>,
 >(opts: MutationResult<TData>): ConfirmButtonTransitionState {
   const errors = getMutationErrors(opts);
 

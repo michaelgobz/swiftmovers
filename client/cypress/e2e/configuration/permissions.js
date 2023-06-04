@@ -34,7 +34,7 @@ describe("Permissions groups", () => {
   });
 
   it(
-    "should create permission group. TC: SALEOR_1401",
+    "should create permission group. TC: swiftmovers_1401",
     { tags: ["@permissions", "@allEnv", "@stable"] },
     () => {
       const permissionName = `${startsWith}${faker.datatype.number()}`;
@@ -65,7 +65,7 @@ describe("Permissions groups", () => {
   );
 
   it(
-    "should delete permission group. TC: SALEOR_1402",
+    "should delete permission group. TC: swiftmovers_1402",
     { tags: ["@permissions", "@allEnv", "@stable"] },
     () => {
       const permissionName = `${startsWith}${faker.datatype.number()}`;
@@ -106,7 +106,7 @@ describe("Permissions groups", () => {
   );
 
   it(
-    "should add user to permission group. TC: SALEOR_1403",
+    "should add user to permission group. TC: swiftmovers_1403",
     { tags: ["@permissions", "@allEnv", "@stable"] },
     () => {
       const permissionName = `${startsWith}${faker.datatype.number()}`;
@@ -143,7 +143,7 @@ describe("Permissions groups", () => {
   );
 
   it(
-    "should remove user from permission group. TC: SALEOR_1404",
+    "should remove user from permission group. TC: swiftmovers_1404",
     { tags: ["@permissions", "@allEnv", "@stable"] },
     () => {
       const permissionName = `${startsWith}${faker.datatype.number()}`;

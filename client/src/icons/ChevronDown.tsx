@@ -1,4 +1,4 @@
-import { ChevronIcon } from "@saleor/macaw-ui";
+import { ChevronIcon } from "@swiftmovers/macaw-ui";
 import React from "react";
 
 const ChevronDown: React.FC = () => <ChevronIcon />;

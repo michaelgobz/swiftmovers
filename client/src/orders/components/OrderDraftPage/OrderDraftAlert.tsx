@@ -2,7 +2,7 @@ import {
   ChannelUsabilityDataQuery,
   OrderDetailsFragment,
 } from "@dashboard/graphql";
-import { Alert, AlertProps } from "@saleor/macaw-ui";
+import { Alert, AlertProps } from "@swiftmovers/macaw-ui";
 import clsx from "clsx";
 import React from "react";
 import { MessageDescriptor, useIntl } from "react-intl";

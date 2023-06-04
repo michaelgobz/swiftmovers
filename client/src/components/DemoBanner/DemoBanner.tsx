@@ -1,12 +1,12 @@
 import ExternalLink from "@dashboard/components/ExternalLink";
-import { OrdersIcon } from "@saleor/macaw-ui/next";
+import { OrdersIcon } from "@swiftmovers/macaw-ui/next";
 import React, { useState } from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";
 
 import githubLogo from "../../../assets/images/github-logo.svg";
 import graphQl from "../../../assets/images/graphql.svg";
-import { SALEOR_GRAPHQL_URL, SALEOR_STOREFRONT_URL } from "./constants";
+import { swiftmovers_GRAPHQL_URL, swiftmovers_STOREFRONT_URL } from "./constants";
 import styles from "./styles";
 
 export const DemoBanner: React.FC = () => {
@@ -30,7 +30,7 @@ export const DemoBanner: React.FC = () => {
         <ExternalLink
           className={classes.link}
           target={"_blank"}
-          href={SALEOR_STOREFRONT_URL}
+          href={swiftmovers_STOREFRONT_URL}
         >
           <div className={classes.icon}>
             <OrdersIcon />
@@ -41,7 +41,7 @@ export const DemoBanner: React.FC = () => {
         <ExternalLink
           className={classes.link}
           target={"_blank"}
-          href={SALEOR_GRAPHQL_URL}
+          href={swiftmovers_GRAPHQL_URL}
         >
           <SVG src={graphQl} className={classes.icon} />
           <FormattedMessage id="0VkxrS" defaultMessage="GraphQL Playground" />
@@ -50,7 +50,7 @@ export const DemoBanner: React.FC = () => {
         <ExternalLink
           target={"_blank"}
           className={classes.link}
-          href={"https://github.com/saleor/saleor"}
+          href={"https://github.com/swiftmovers/swiftmovers"}
         >
           <SVG src={githubLogo} className={classes.icon} />
           <FormattedMessage id="vSy+II" defaultMessage="Star on Github" />

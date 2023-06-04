@@ -5,7 +5,7 @@ import {
   pendingAppInProgress,
   releasedApp,
 } from "@dashboard/apps/fixtures";
-import { GetV2SaleorAppsResponse } from "@dashboard/apps/marketplace.types";
+import { GetV2swiftmoversAppsResponse } from "@dashboard/apps/marketplace.types";
 import { appInstallationStatusMessages } from "@dashboard/apps/messages";
 import Wrapper from "@test/wrapper";
 import { render, screen, within } from "@testing-library/react";
@@ -127,7 +127,7 @@ describe("Apps AppListRow", () => {
 
   it("displays placeholder initial when no released app logo passed", () => {
     // Arrange
-    const app: GetV2SaleorAppsResponse.ReleasedSaleorApp = {
+    const app: GetV2swiftmoversAppsResponse.ReleasedswiftmoversApp = {
       ...releasedApp,
       logo: {
         ...releasedApp.logo,
@@ -153,7 +153,7 @@ describe("Apps AppListRow", () => {
 
   it("displays placeholder initial when no coming soon app logo passed", () => {
     // Arrange
-    const app: GetV2SaleorAppsResponse.ComingSoonSaleorApp = {
+    const app: GetV2swiftmoversAppsResponse.ComingSoonswiftmoversApp = {
       ...comingSoonApp,
       logo: {
         ...comingSoonApp.logo,

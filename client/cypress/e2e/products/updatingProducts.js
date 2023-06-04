@@ -68,7 +68,7 @@ describe("Update products", () => {
   });
 
   it(
-    "Should update product. TC: SALEOR_2703",
+    "Should update product. TC: swiftmovers_2703",
     { tags: ["@products", "@allEnv", "@stable"] },
     () => {
       const updatedName = `${startsWith}${faker.random.number()}`;
@@ -140,7 +140,7 @@ describe("Update products", () => {
   );
 
   it(
-    "should delete product. TC: SALEOR_2704",
+    "should delete product. TC: swiftmovers_2704",
     { tags: ["@products", "@allEnv", "@stable"] },
     () => {
       cy.clearSessionData()

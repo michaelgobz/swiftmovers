@@ -87,7 +87,7 @@ describe("As an admin I want to manage collections.", () => {
   });
 
   it(
-    "should create hidden collection. TC: SALEOR_0301",
+    "should create hidden collection. TC: swiftmovers_0301",
     { tags: ["@collection", "@allEnv", "@stable"] },
     () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
@@ -111,7 +111,7 @@ describe("As an admin I want to manage collections.", () => {
   );
 
   it(
-    "should create published collection. TC: SALEOR_0302",
+    "should create published collection. TC: swiftmovers_0302",
     { tags: ["@collection", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
@@ -135,7 +135,7 @@ describe("As an admin I want to manage collections.", () => {
   );
 
   it(
-    "should create collection not available for channel. TC: SALEOR_0303",
+    "should create collection not available for channel. TC: swiftmovers_0303",
     { tags: ["@collection", "@allEnv", "@stable"] },
     () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
@@ -165,7 +165,7 @@ describe("As an admin I want to manage collections.", () => {
   );
 
   it(
-    "should create published collection with products hidden in listings. TC: SALEOR_0304",
+    "should create published collection with products hidden in listings. TC: swiftmovers_0304",
     { tags: ["@collection", "@allEnv", "@stable"] },
     () => {
       // Products "hidden in listings" are not displayed in Category listings or search results,
@@ -206,7 +206,7 @@ describe("As an admin I want to manage collections.", () => {
   );
 
   it(
-    "should delete collection. TC: SALEOR_0305",
+    "should delete collection. TC: swiftmovers_0305",
     { tags: ["@collection", "@allEnv", "@stable"] },
     () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
@@ -227,7 +227,7 @@ describe("As an admin I want to manage collections.", () => {
   );
 
   it(
-    "should update collection. TC: SALEOR_0306",
+    "should update collection. TC: swiftmovers_0306",
     { tags: ["@collection", "@allEnv", "@stable"] },
     () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
@@ -259,7 +259,7 @@ describe("As an admin I want to manage collections.", () => {
   );
 
   it(
-    "should assign product to collection. TC: SALEOR_0307",
+    "should assign product to collection. TC: swiftmovers_0307",
     { tags: ["@collection", "@allEnv", "@stable"] },
     () => {
       const collectionName = `Assign-${startsWith}${faker.datatype.number()}`;
@@ -304,7 +304,7 @@ describe("As an admin I want to manage collections.", () => {
   );
 
   it(
-    "should remove product from collection. TC: SALEOR_0308",
+    "should remove product from collection. TC: swiftmovers_0308",
     { tags: ["@collection", "@allEnv", "@stable"] },
     () => {
       const collectionName = `Remove-With-Assigned-Product-${startsWith}${faker.datatype.number()}`;
@@ -360,7 +360,7 @@ describe("As an admin I want to manage collections.", () => {
   );
 
   it(
-    "delete several collections on collections list page. TC: SALEOR_0309",
+    "delete several collections on collections list page. TC: swiftmovers_0309",
     { tags: ["@collection", "@allEnv", "@stable"] },
     () => {
       const deleteSeveral = "delete-several-";

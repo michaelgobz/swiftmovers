@@ -112,7 +112,7 @@ describe("As an admin I want to update sales", () => {
   });
 
   it(
-    "should be able to delete sale. TC: SALEOR_1805",
+    "should be able to delete sale. TC: swiftmovers_1805",
     { tags: ["@sales", "@allEnv", "@stable"] },
     () => {
       const productName = `${startsWith}${faker.datatype.number()}`;
@@ -155,7 +155,7 @@ describe("As an admin I want to update sales", () => {
   );
 
   it(
-    "should be able to remove variant from sale. TC: SALEOR_1806",
+    "should be able to remove variant from sale. TC: swiftmovers_1806",
     { tags: ["@sales", "@allEnv", "@stable"] },
     () => {
       const productName = `${startsWith}${faker.datatype.number()}`;

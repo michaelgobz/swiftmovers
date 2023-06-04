@@ -1,7 +1,7 @@
 import Link from "@dashboard/components/Link";
 import { orderGiftCardBoughtPath } from "@dashboard/orders/urls";
 import { Typography } from "@material-ui/core";
-import { Alert } from "@saleor/macaw-ui";
+import { Alert } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

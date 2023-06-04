@@ -6,8 +6,8 @@ import Savebar from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import { ProductErrorFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui/next";
+import { ConfirmButtonTransitionState } from "@swiftmovers/macaw-ui";
+import { Box } from "@swiftmovers/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 

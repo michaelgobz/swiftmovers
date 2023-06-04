@@ -166,7 +166,7 @@ class Webhook(ModelObjectType[models.Webhook]):
         description="List of asynchronous webhook events.",
         required=True,
     )
-    app = graphene.Field("saleor.graphql.app.types.App", required=True)
+    app = graphene.Field("swiftmovers.graphql.app.types.App", required=True)
     event_deliveries = FilterConnectionField(
         EventDeliveryCountableConnection,
         sort_by=EventDeliverySortingInput(description="Event delivery sorter."),
@@ -180,7 +180,7 @@ class Webhook(ModelObjectType[models.Webhook]):
     secret_key = graphene.String(
         description="Used to create a hash signature for each payload.",
         deprecation_reason=(
-            f"{DEPRECATED_IN_3X_FIELD} As of Saleor 3.5, webhook payloads default to "
+            f"{DEPRECATED_IN_3X_FIELD} As of swiftmovers 3.5, webhook payloads default to "
             "signing using a verifiable JWS."
         ),
     )

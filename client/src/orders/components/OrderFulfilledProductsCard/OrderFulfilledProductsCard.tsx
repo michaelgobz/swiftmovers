@@ -3,8 +3,8 @@ import TrashIcon from "@dashboard/icons/Trash";
 import { orderHasTransactions } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
 import { CardContent } from "@material-ui/core";
-import { IconButton } from "@saleor/macaw-ui";
-import { Box, Divider } from "@saleor/macaw-ui/next";
+import { IconButton } from "@swiftmovers/macaw-ui";
+import { Box, Divider } from "@swiftmovers/macaw-ui/next";
 import React from "react";
 
 import OrderCardTitle from "../OrderCardTitle";

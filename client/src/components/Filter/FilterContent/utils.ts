@@ -1,6 +1,6 @@
 import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import { joinDateTime, splitDateTime } from "@dashboard/misc";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import { IntlShape } from "react-intl";
 
 import { FilterType } from "../types";

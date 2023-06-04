@@ -12,7 +12,7 @@ import {
 } from "@dashboard/graphql";
 import { getFullName } from "@dashboard/misc";
 import { Node, SlugNode, TagNode } from "@dashboard/types";
-import { Choice } from "@saleor/macaw-ui";
+import { Choice } from "@swiftmovers/macaw-ui";
 
 interface Edge<T> {
   node: T;

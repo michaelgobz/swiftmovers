@@ -10,7 +10,7 @@ from ..schema.email import (
 
 
 def test_get_organization(site_settings):
-    example_name = "Saleor Brand Name"
+    example_name = "swiftmovers Brand Name"
     site = site_settings.site
     site.name = example_name
     site.save()

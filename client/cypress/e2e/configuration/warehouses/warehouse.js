@@ -44,7 +44,7 @@ describe("As an admin I want to manage warehouses", () => {
   });
 
   it(
-    "should be able to create warehouse. TC: SALEOR_1101",
+    "should be able to create warehouse. TC: swiftmovers_1101",
     { tags: ["@warehouse", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
@@ -71,7 +71,7 @@ describe("As an admin I want to manage warehouses", () => {
   );
 
   it(
-    "should be able to add warehouse to shipping zone. TC: SALEOR_1102",
+    "should be able to add warehouse to shipping zone. TC: swiftmovers_1102",
     { tags: ["@warehouse", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
@@ -117,7 +117,7 @@ describe("As an admin I want to manage warehouses", () => {
   );
 
   it(
-    "should be able to delete warehouse. TC: SALEOR_1103",
+    "should be able to delete warehouse. TC: swiftmovers_1103",
     { tags: ["@warehouse", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
@@ -138,7 +138,7 @@ describe("As an admin I want to manage warehouses", () => {
   );
 
   it(
-    "should be able to remove warehouse from shipping zone. TC: SALEOR_1104",
+    "should be able to remove warehouse from shipping zone. TC: swiftmovers_1104",
     { tags: ["@warehouse", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
@@ -178,7 +178,7 @@ describe("As an admin I want to manage warehouses", () => {
   );
 
   it(
-    "should be able to update warehouse. TC: SALEOR_1105",
+    "should be able to update warehouse. TC: swiftmovers_1105",
     { tags: ["@warehouse", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;

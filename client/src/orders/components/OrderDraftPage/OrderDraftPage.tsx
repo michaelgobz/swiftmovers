@@ -18,8 +18,8 @@ import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSe
 import { orderDraftListUrl } from "@dashboard/orders/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { Typography } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui/next";
+import { ConfirmButtonTransitionState } from "@swiftmovers/macaw-ui";
+import { Box } from "@swiftmovers/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 

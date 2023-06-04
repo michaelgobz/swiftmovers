@@ -5,7 +5,7 @@ import { taxesMessages } from "@dashboard/taxes/messages";
 import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
 import { isLastElement } from "@dashboard/taxes/utils/utils";
 import { Card, Divider } from "@material-ui/core";
-import { List, ListHeader, ListItem, ListItemCell } from "@saleor/macaw-ui";
+import { List, ListHeader, ListItem, ListItemCell } from "@swiftmovers/macaw-ui";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";

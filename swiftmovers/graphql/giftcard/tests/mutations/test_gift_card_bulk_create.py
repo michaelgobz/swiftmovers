@@ -162,8 +162,8 @@ def test_create_never_expiry_gift_cards(
         assert not card_data["events"][0]["balance"]["oldCurrentBalance"]
 
 
-@mock.patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
-@mock.patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@mock.patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
+@mock.patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
 def test_create_gift_cards_trigger_webhooks(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -176,7 +176,7 @@ def test_create_gift_cards_trigger_webhooks(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
 
     initial_balance = 100
     currency = "USD"

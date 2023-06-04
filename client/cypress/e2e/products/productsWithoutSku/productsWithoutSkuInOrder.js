@@ -11,7 +11,7 @@ const name = `ProductsWithoutSkuInOrder${faker.datatype.number()}`;
 
 describe("As an admin I should be able to create order with variant without SKU", () => {
   it(
-    "should create order with variant product without sku. SALEOR_2801",
+    "should create order with variant product without sku. swiftmovers_2801",
     { tags: ["@products", "@allEnv", "@stable"] },
     () => {
       let variants;

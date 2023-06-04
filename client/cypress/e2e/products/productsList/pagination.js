@@ -13,7 +13,7 @@ describe("As an admin I should be able to manage products table", () => {
   });
 
   it(
-    "should be able go to the next page and back on product list. TC: SALEOR_2605",
+    "should be able go to the next page and back on product list. TC: swiftmovers_2605",
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
       ensureCanvasStatic(PRODUCTS_LIST.dataGridTable).then(() => {
@@ -45,7 +45,7 @@ describe("As an admin I should be able to manage products table", () => {
   );
 
   it(
-    "should see correct amount of products per page. TC: SALEOR_2606",
+    "should see correct amount of products per page. TC: swiftmovers_2606",
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
       cy.addAliasToGraphRequest("ProductList");

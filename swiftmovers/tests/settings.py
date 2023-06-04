@@ -42,7 +42,7 @@ MAX_CHECKOUT_LINE_QUANTITY = 50
 
 AUTH_PASSWORD_VALIDATORS = []
 
-PASSWORD_HASHERS = ["saleor.tests.dummy_password_hasher.DummyHasher"]
+PASSWORD_HASHERS = ["swiftmovers.tests.dummy_password_hasher.DummyHasher"]
 
 PLUGINS = []
 
@@ -50,7 +50,7 @@ PATTERNS_IGNORED_IN_QUERY_CAPTURES: List[Union[Pattern, SimpleLazyObject]] = [
     lazy_re_compile(r"^SET\s+")
 ]
 
-INSTALLED_APPS.append("saleor.tests")  # noqa: F405
+INSTALLED_APPS.append("swiftmovers.tests")  # noqa: F405
 
 JWT_EXPIRE = True
 

@@ -1,14 +1,14 @@
-import { GetV2SaleorAppsResponse } from "@dashboard/apps/marketplace.types";
+import { GetV2swiftmoversAppsResponse } from "@dashboard/apps/marketplace.types";
 import { AppInstallationFragment } from "@dashboard/graphql";
 import { Skeleton } from "@material-ui/lab";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box } from "@swiftmovers/macaw-ui/next";
 import chunk from "lodash/chunk";
 import React from "react";
 
 import AppListRow from "../AppListRow";
 
 interface AllAppListProps {
-  appList?: GetV2SaleorAppsResponse.SaleorApp[];
+  appList?: GetV2swiftmoversAppsResponse.swiftmoversApp[];
   appInstallationList?: AppInstallationFragment[];
   navigateToAppInstallPage?: (manifestUrl: string) => void;
   navigateToGithubForkPage?: (githubForkUrl: string) => void;

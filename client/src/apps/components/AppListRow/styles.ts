@@ -1,5 +1,5 @@
 import { alpha } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 
 export const useStyles = makeStyles(
   () => ({
@@ -41,7 +41,7 @@ export const useDescriptionStyles = makeStyles(
       },
     },
     description: {
-      color: theme.palette.saleor.main[3],
+      color: theme.palette.swiftmovers.main[3],
       margin: theme.spacing(3, 0, 1, 0),
     },
   }),
@@ -68,7 +68,7 @@ export const useIntegrationsStyles = makeStyles(
     listHeader: {
       fontSize: 14,
       fontWeight: 700,
-      color: theme.palette.saleor.main[3],
+      color: theme.palette.swiftmovers.main[3],
       margin: theme.spacing(2, 0),
       textTransform: "uppercase",
     },
@@ -89,7 +89,7 @@ export const useIntegrationsStyles = makeStyles(
       background:
         theme.palette.type === "light"
           ? "transparent"
-          : alpha(theme.palette.saleor.generic.light, 0.3),
+          : alpha(theme.palette.swiftmovers.generic.light, 0.3),
     },
   }),
   { name: "AppListCardIntegrations" },
@@ -116,7 +116,7 @@ export const useActionsStyles = makeStyles(
       gap: theme.spacing(1),
     },
     releaseDate: {
-      color: theme.palette.saleor.main[3],
+      color: theme.palette.swiftmovers.main[3],
     },
   }),
   { name: "AppListCardActions" },

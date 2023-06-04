@@ -4,7 +4,7 @@ import {
   Button,
   ConfirmButtonTransitionState,
   makeStyles,
-} from "@saleor/macaw-ui";
+} from "@swiftmovers/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

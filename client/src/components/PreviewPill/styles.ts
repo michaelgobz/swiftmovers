@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 
 const useStyles = makeStyles(
   theme => ({
@@ -9,13 +9,13 @@ const useStyles = makeStyles(
       // TO-FIX
       // Triangle's position is hard coded
       // "&:before": {
-      //   ...triangle(theme.palette.saleor.warning.mid, 8),
+      //   ...triangle(theme.palette.swiftmovers.warning.mid, 8),
       //   content: "''",
       //   position: "absolute",
       //   left: 17,
       //   top: -8
       // },
-      background: theme.palette.saleor.warning.mid,
+      background: theme.palette.swiftmovers.warning.mid,
       borderRadius: 8,
       marginTop: theme.spacing(1.5),
       padding: theme.spacing(2.5),

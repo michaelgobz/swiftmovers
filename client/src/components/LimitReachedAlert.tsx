@@ -1,5 +1,5 @@
-import { Alert, AlertProps } from "@saleor/macaw-ui";
-import { sprinkles } from "@saleor/macaw-ui/next";
+import { Alert, AlertProps } from "@swiftmovers/macaw-ui";
+import { sprinkles } from "@swiftmovers/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 

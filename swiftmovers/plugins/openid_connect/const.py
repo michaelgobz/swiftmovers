@@ -1,1 +1,1 @@
-SALEOR_STAFF_PERMISSION = "saleor:staff"
+swiftmovers_STAFF_PERMISSION = "swiftmovers:staff"

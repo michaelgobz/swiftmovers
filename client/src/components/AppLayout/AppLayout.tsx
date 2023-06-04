@@ -2,8 +2,8 @@ import useAppState from "@dashboard/hooks/useAppState";
 import { DevModeQuery } from "@dashboard/orders/queries";
 import { getFilterVariables } from "@dashboard/orders/views/OrderList/filters";
 import { LinearProgress } from "@material-ui/core";
-import { useActionBar } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui/next";
+import { useActionBar } from "@swiftmovers/macaw-ui";
+import { Box } from "@swiftmovers/macaw-ui/next";
 import React, { useState } from "react";
 import { useLocation } from "react-router";
 

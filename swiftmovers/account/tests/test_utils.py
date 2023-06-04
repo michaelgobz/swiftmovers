@@ -163,7 +163,7 @@ def test_remove_the_oldest_user_address(customer_user, address):
 
 
 @override_settings(MAX_USER_ADDRESSES=2)
-@patch("saleor.account.utils.remove_the_oldest_user_address")
+@patch("swiftmovers.account.utils.remove_the_oldest_user_address")
 def test_remove_the_oldest_user_address_if_address_limit_is_reached_limit_not_reached(
     remove_the_oldest_user_address_mock, customer_user, address
 ):
@@ -178,7 +178,7 @@ def test_remove_the_oldest_user_address_if_address_limit_is_reached_limit_not_re
 
 
 @override_settings(MAX_USER_ADDRESSES=2)
-@patch("saleor.account.utils.remove_the_oldest_user_address")
+@patch("swiftmovers.account.utils.remove_the_oldest_user_address")
 def test_remove_the_oldest_user_address_if_address_limit_is_reached_limit_reached(
     remove_the_oldest_user_address_mock, customer_user, address
 ):

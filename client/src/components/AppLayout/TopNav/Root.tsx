@@ -1,4 +1,4 @@
-import { Box, Text } from "@saleor/macaw-ui/next";
+import { Box, Text } from "@swiftmovers/macaw-ui/next";
 import React, { PropsWithChildren } from "react";
 
 import useAppChannel from "../AppChannelContext";

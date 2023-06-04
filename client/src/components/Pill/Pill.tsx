@@ -1,6 +1,6 @@
 import { getStatusColor } from "@dashboard/misc";
-import { makeStyles, Pill as MacawuiPill, PillProps } from "@saleor/macaw-ui";
-import { useTheme, vars } from "@saleor/macaw-ui/next";
+import { makeStyles, Pill as MacawuiPill, PillProps } from "@swiftmovers/macaw-ui";
+import { useTheme, vars } from "@swiftmovers/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 

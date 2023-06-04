@@ -4,7 +4,7 @@ interactions:
       "paymentMethod": {"type": "scheme", "encryptedCardNumber": "test_4646464646464644",
       "encryptedExpiryMonth": "test_03", "encryptedExpiryYear": "test_2030", "encryptedSecurityCode":
       "test_737"}, "returnUrl": "http://mirumee.com/plugins/mirumee.payments.adyen/additional-actions?payment=UGF5bWVudDoxMzY1&checkout=4c3b18ff-b18a-43f3-a255-bc3f89607e95",
-      "merchantAccount": "SaleorECOM", "channel": "web", "shopperEmail": "", "applicationInfo":
+      "merchantAccount": "swiftmoversECOM", "channel": "web", "shopperEmail": "", "applicationInfo":
       {"adyenLibrary": {"name": "adyen-python-api-library", "version": "4.0.0"}}}'
     headers:
       Accept:
@@ -48,7 +48,7 @@ interactions:
       code: 200
       message: '200'
 - request:
-    body: '{"merchantAccount": "SaleorECOM", "modificationAmount": {"value": "8000",
+    body: '{"merchantAccount": "swiftmoversECOM", "modificationAmount": {"value": "8000",
       "currency": "USD"}, "originalReference": "853610014786939F", "reference": "UGF5bWVudDoxMzY1",
       "applicationInfo": {"adyenLibrary": {"name": "adyen-python-api-library", "version":
       "4.0.0"}}}'

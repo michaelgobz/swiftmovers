@@ -4,7 +4,7 @@ import CardTitle from "@dashboard/components/CardTitle";
 import Skeleton from "@dashboard/components/Skeleton";
 import { AddressFragment, AddressTypeEnum } from "@dashboard/graphql";
 import { Card, CardContent } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 

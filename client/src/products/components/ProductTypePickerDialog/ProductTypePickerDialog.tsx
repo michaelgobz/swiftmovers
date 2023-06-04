@@ -5,7 +5,7 @@ import SingleAutocompleteSelectField, {
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { FetchMoreProps } from "@dashboard/types";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

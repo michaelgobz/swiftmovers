@@ -1,4 +1,4 @@
-import { BaseListItemProps, ListItem, makeStyles } from "@saleor/macaw-ui";
+import { BaseListItemProps, ListItem, makeStyles } from "@swiftmovers/macaw-ui";
 import clsx from "clsx";
 import React from "react";
 

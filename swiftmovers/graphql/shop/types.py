@@ -298,7 +298,7 @@ class Shop(graphene.ObjectType):
     )
     version = PermissionsField(
         graphene.String,
-        description="Saleor API version.",
+        description="swiftmovers API version.",
         required=True,
         permissions=[
             AuthorizationFilters.AUTHENTICATED_STAFF_USER,
@@ -306,7 +306,7 @@ class Shop(graphene.ObjectType):
         ],
     )
     schema_version = graphene.String(
-        description="Minor Saleor API version." + ADDED_IN_35,
+        description="Minor swiftmovers API version." + ADDED_IN_35,
         required=True,
     )
 

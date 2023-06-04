@@ -12,7 +12,7 @@ import { maybe, renderCollection } from "@dashboard/misc";
 import { shippingZoneAddUrl, shippingZoneUrl } from "@dashboard/shipping/urls";
 import { ListActions, ListProps } from "@dashboard/types";
 import { Card, TableBody, TableCell, TableFooter } from "@material-ui/core";
-import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton, makeStyles } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"merchantAccount": "SaleorECOM", "originalReference": "852610010025849H",
+    body: '{"merchantAccount": "swiftmoversECOM", "originalReference": "852610010025849H",
       "reference": "UGF5bWVudDoxMTY4", "applicationInfo": {"adyenLibrary": {"name":
       "adyen-python-api-library", "version": "4.0.0"}}}'
     headers:

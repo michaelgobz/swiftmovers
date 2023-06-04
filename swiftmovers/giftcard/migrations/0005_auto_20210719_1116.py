@@ -4,7 +4,7 @@ import django.db.models.deletion
 from django.conf import settings
 from django.db import migrations, models
 
-import saleor.core.utils.json_serializer
+import swiftmovers.core.utils.json_serializer
 
 
 class Migration(migrations.Migration):
@@ -83,7 +83,7 @@ class Migration(migrations.Migration):
             field=models.JSONField(
                 blank=True,
                 default=dict,
-                encoder=saleor.core.utils.json_serializer.CustomJsonEncoder,
+                encoder=swiftmovers.core.utils.json_serializer.CustomJsonEncoder,
                 null=True,
             ),
         ),
@@ -93,7 +93,7 @@ class Migration(migrations.Migration):
             field=models.JSONField(
                 blank=True,
                 default=dict,
-                encoder=saleor.core.utils.json_serializer.CustomJsonEncoder,
+                encoder=swiftmovers.core.utils.json_serializer.CustomJsonEncoder,
                 null=True,
             ),
         ),
@@ -211,7 +211,7 @@ class Migration(migrations.Migration):
                     models.JSONField(
                         blank=True,
                         default=dict,
-                        encoder=saleor.core.utils.json_serializer.CustomJsonEncoder,
+                        encoder=swiftmovers.core.utils.json_serializer.CustomJsonEncoder,
                     ),
                 ),
                 (

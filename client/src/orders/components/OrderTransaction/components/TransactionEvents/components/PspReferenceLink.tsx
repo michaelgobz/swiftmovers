@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import React from "react";
 
 interface PspRerefenceLinkProps {
@@ -9,7 +9,7 @@ interface PspRerefenceLinkProps {
 const useStyles = makeStyles(
   theme => ({
     link: {
-      color: theme.palette.saleor.active[1],
+      color: theme.palette.swiftmovers.active[1],
     },
   }),
   { name: "PspReferenceLink" },

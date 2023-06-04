@@ -66,7 +66,7 @@ PRODUCT_VARIANT_BULK_UPDATE_MUTATION = """
 """
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
 def test_product_variant_bulk_update(
     product_variant_created_webhook_mock,
     staff_api_client,

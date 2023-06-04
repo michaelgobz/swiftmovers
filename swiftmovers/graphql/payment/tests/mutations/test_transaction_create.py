@@ -1054,7 +1054,7 @@ def test_transaction_create_for_checkout_by_staff(
     assert transaction.user == staff_api_client.user
 
 
-@patch("saleor.plugins.manager.PluginsManager.checkout_fully_paid")
+@patch("swiftmovers.plugins.manager.PluginsManager.checkout_fully_paid")
 def test_transaction_create_for_checkout_fully_paid(
     mocked_checkout_fully_paid,
     checkout_with_prices,
@@ -1769,8 +1769,8 @@ def test_transaction_create_creates_calculation_events(
     assert cancel_event.amount.amount == canceled_value
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
-@patch("saleor.plugins.manager.PluginsManager.order_fully_paid")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_fully_paid")
 def test_transaction_create_for_order_triggers_webhooks_when_fully_paid(
     mock_order_fully_paid,
     mock_order_updated,
@@ -1809,8 +1809,8 @@ def test_transaction_create_for_order_triggers_webhooks_when_fully_paid(
     mock_order_updated.assert_called_once_with(order_with_lines)
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
-@patch("saleor.plugins.manager.PluginsManager.order_fully_paid")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_fully_paid")
 def test_transaction_create_for_order_triggers_webhook_when_partially_paid(
     mock_order_fully_paid,
     mock_order_updated,
@@ -1849,8 +1849,8 @@ def test_transaction_create_for_order_triggers_webhook_when_partially_paid(
     mock_order_updated.assert_called_once_with(order_with_lines)
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
-@patch("saleor.plugins.manager.PluginsManager.order_fully_paid")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_fully_paid")
 def test_transaction_create_for_order_triggers_webhook_when_authorized(
     mock_order_fully_paid,
     mock_order_updated,

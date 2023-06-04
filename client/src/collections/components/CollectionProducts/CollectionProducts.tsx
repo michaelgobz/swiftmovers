@@ -14,7 +14,7 @@ import { CollectionDetailsQuery } from "@dashboard/graphql";
 import { productUrl } from "@dashboard/products/urls";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Card, TableBody, TableCell, TableFooter } from "@material-ui/core";
-import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton, makeStyles } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

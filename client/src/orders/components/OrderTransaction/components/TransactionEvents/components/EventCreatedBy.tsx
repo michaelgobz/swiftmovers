@@ -5,7 +5,7 @@ import {
 } from "@dashboard/graphql";
 import { getUserInitials, getUserName } from "@dashboard/misc";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
-import { Avatar, makeStyles } from "@saleor/macaw-ui";
+import { Avatar, makeStyles } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { Link } from "react-router-dom";
 

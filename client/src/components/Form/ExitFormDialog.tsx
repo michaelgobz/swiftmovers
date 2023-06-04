@@ -1,6 +1,6 @@
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import { Button, Dialog, DialogContent, makeStyles } from "@material-ui/core";
-import { DialogHeader } from "@saleor/macaw-ui";
+import { DialogHeader } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

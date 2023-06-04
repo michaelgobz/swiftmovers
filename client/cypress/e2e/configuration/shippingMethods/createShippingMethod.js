@@ -111,7 +111,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
   });
 
   it(
-    "should be able to create price based shipping method. TC: SALEOR_0803",
+    "should be able to create price based shipping method. TC: swiftmovers_0803",
     { tags: ["@shipping", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       const shippingName = `${startsWith}${faker.datatype.number()}`;
@@ -161,7 +161,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
   );
 
   it(
-    "should be able to create weight based shipping method. TC: SALEOR_0804",
+    "should be able to create weight based shipping method. TC: swiftmovers_0804",
     { tags: ["@shipping", "@allEnv", "@stable"] },
     () => {
       const shippingName = `${startsWith}${faker.datatype.number()}`;

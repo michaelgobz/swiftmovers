@@ -83,7 +83,7 @@ describe("As an admin I want to manage categories", () => {
   });
 
   it(
-    "should be able to create category. TC: SALEOR_0201",
+    "should be able to create category. TC: swiftmovers_0201",
     { tags: ["@category", "@allEnv", "@oldRelease"] },
     () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
@@ -105,7 +105,7 @@ describe("As an admin I want to manage categories", () => {
   );
 
   it(
-    "should be able to create category as subcategory. TC: SALEOR_0202",
+    "should be able to create category as subcategory. TC: swiftmovers_0202",
     { tags: ["@category", "@allEnv", "@stable"] },
     () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
@@ -125,7 +125,7 @@ describe("As an admin I want to manage categories", () => {
   );
 
   it(
-    "should be able to add product to category. TC: SALEOR_0203",
+    "should be able to add product to category. TC: swiftmovers_0203",
     { tags: ["@category", "@allEnv", "@stable"] },
     () => {
       cy.visit(categoryDetailsUrl(category.id))
@@ -139,7 +139,7 @@ describe("As an admin I want to manage categories", () => {
   );
 
   it(
-    "should be able to remove product from category. TC: SALEOR_0204",
+    "should be able to remove product from category. TC: swiftmovers_0204",
     { tags: ["@category", "@allEnv", "@stable"] },
     () => {
       cy.visit(categoryDetailsUrl(category.id))
@@ -164,7 +164,7 @@ describe("As an admin I want to manage categories", () => {
   );
 
   it(
-    "should be able to enter category details page. TC: SALEOR_0205",
+    "should be able to enter category details page. TC: swiftmovers_0205",
     { tags: ["@category", "@allEnv", "@stable"] },
     () => {
       cy.visit(urlList.categories)
@@ -176,7 +176,7 @@ describe("As an admin I want to manage categories", () => {
   );
 
   it(
-    "should be able to delete category. TC: SALEOR_0206",
+    "should be able to delete category. TC: swiftmovers_0206",
     { tags: ["@category", "@allEnv", "@stable"] },
     () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
@@ -197,7 +197,7 @@ describe("As an admin I want to manage categories", () => {
   );
 
   it(
-    "should be able to update category. TC: SALEOR_0207",
+    "should be able to update category. TC: swiftmovers_0207",
     { tags: ["@category", "@allEnv", "@stable"] },
     () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
@@ -223,7 +223,7 @@ describe("As an admin I want to manage categories", () => {
   );
 
   it(
-    "should be able to delete several categories on categories list page. TC: SALEOR_0209",
+    "should be able to delete several categories on categories list page. TC: swiftmovers_0209",
     { tags: ["@category", "@allEnv", "@stable"] },
     () => {
       const firstCategoryName = `${startsWith}${faker.datatype.number()}`;
@@ -262,7 +262,7 @@ describe("As an admin I want to manage categories", () => {
   );
 
   it(
-    "should be able to remove subcategory from category. TC: SALEOR_0208",
+    "should be able to remove subcategory from category. TC: swiftmovers_0208",
     { tags: ["@category", "@allEnv", "@stable"] },
     () => {
       const subCategoryName = `${startsWith}${faker.datatype.number()}`;

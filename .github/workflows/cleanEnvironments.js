@@ -23,7 +23,7 @@ async function getEnvironmentsForReleaseTesting(token) {
   const environmentsForReleaseTesting = environments.filter(environment => {
     return (
       environment.domain.match(/^v\d*.staging/) ||
-      environment.domain == "master.staging.saleor.cloud"
+      environment.domain == "master.staging.swiftmovers.cloud"
     );
   });
   return environmentsForReleaseTesting;
@@ -31,7 +31,7 @@ async function getEnvironmentsForReleaseTesting(token) {
 
 async function getEnvironments(token) {
   const response = await fetch(
-    `https://staging-cloud.saleor.io/api/organizations/saleor/environments/`,
+    `https://staging-cloud.swiftmovers.io/api/organizations/swiftmovers/environments/`,
     {
       method: "GET",
       headers: {
@@ -46,7 +46,7 @@ async function getEnvironments(token) {
 
 async function cleanEnvironment(environment, snapshot, token) {
   const response = await fetch(
-    `https://staging-cloud.saleor.io/api/organizations/saleor/environments/${environment.key}/restore/`,
+    `https://staging-cloud.swiftmovers.io/api/organizations/swiftmovers/environments/${environment.key}/restore/`,
     {
       method: "PUT",
       body: JSON.stringify({ restore_from: snapshot }),
@@ -82,7 +82,7 @@ async function waitUntilTaskInProgress(taskId, environment) {
 
   while (true) {
     const response = await fetch(
-      `https://staging-cloud.saleor.io/api/service/task-status/${taskId}/`,
+      `https://staging-cloud.swiftmovers.io/api/service/task-status/${taskId}/`,
       {
         method: "GET",
         headers: {

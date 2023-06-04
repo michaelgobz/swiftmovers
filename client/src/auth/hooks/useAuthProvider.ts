@@ -16,7 +16,7 @@ import {
   LoginData,
   useAuth,
   useAuthState,
-} from "@saleor/sdk";
+} from "@swiftmovers/sdk";
 import isEmpty from "lodash/isEmpty";
 import { useEffect, useRef, useState } from "react";
 import { IntlShape } from "react-intl";

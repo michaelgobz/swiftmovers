@@ -15,7 +15,7 @@ from ..tasks import (
 )
 
 
-@mock.patch("saleor.plugins.email_common.send_mail")
+@mock.patch("swiftmovers.plugins.email_common.send_mail")
 def test_send_staff_password_reset_email_task_default_template(
     mocked_send_mail, email_dict_config, customer_user
 ):
@@ -27,7 +27,7 @@ def test_send_staff_password_reset_email_task_default_template(
         "token": token,
         "reset_url": f"http://localhost:8000/redirect{token}",
         "domain": "localhost:8000",
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
     }
 
     send_staff_password_reset_email_task(
@@ -42,7 +42,7 @@ def test_send_staff_password_reset_email_task_default_template(
     assert mocked_send_mail.called
 
 
-@mock.patch("saleor.plugins.admin_email.tasks.send_email")
+@mock.patch("swiftmovers.plugins.admin_email.tasks.send_email")
 def test_send_staff_password_reset_email_task_custom_template(
     mocked_send_email, email_dict_config, admin_email_plugin, customer_user
 ):
@@ -60,7 +60,7 @@ def test_send_staff_password_reset_email_task_custom_template(
         "token": token,
         "reset_url": f"http://localhost:8000/redirect{token}",
         "domain": "localhost:8000",
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
     }
 
     send_staff_password_reset_email_task(
@@ -81,7 +81,7 @@ def test_send_staff_password_reset_email_task_custom_template(
     )
 
 
-@mock.patch("saleor.plugins.email_common.send_mail")
+@mock.patch("swiftmovers.plugins.email_common.send_mail")
 def test_send_set_staff_password_email_task_default_template(
     mocked_send_mail, email_dict_config, customer_user
 ):
@@ -92,7 +92,7 @@ def test_send_set_staff_password_email_task_default_template(
         "recipient_email": recipient_email,
         "token": token,
         "password_set_url": f"http://localhost:8000/redirect{token}",
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
     }
 
@@ -108,7 +108,7 @@ def test_send_set_staff_password_email_task_default_template(
     assert mocked_send_mail.called
 
 
-@mock.patch("saleor.plugins.admin_email.tasks.send_email")
+@mock.patch("swiftmovers.plugins.admin_email.tasks.send_email")
 def test_send_set_staff_password_email_task_custom_template(
     mocked_send_email, email_dict_config, admin_email_plugin, customer_user
 ):
@@ -125,7 +125,7 @@ def test_send_set_staff_password_email_task_custom_template(
         "recipient_email": recipient_email,
         "token": token,
         "password_set_url": f"http://localhost:8000/redirect{token}",
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
     }
 
@@ -147,7 +147,7 @@ def test_send_set_staff_password_email_task_custom_template(
     )
 
 
-@mock.patch("saleor.plugins.email_common.send_mail")
+@mock.patch("swiftmovers.plugins.email_common.send_mail")
 def test_send_email_with_link_to_download_file_task_default_template(
     mocked_send_mail, email_dict_config, customer_user, user_export_file
 ):
@@ -158,7 +158,7 @@ def test_send_email_with_link_to_download_file_task_default_template(
         "export": get_default_export_payload(user_export_file),
         "csv_link": csv_url,
         "recipient_email": user_export_file.user.email,
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
     }
     send_email_with_link_to_download_file_task(
@@ -178,7 +178,7 @@ def test_send_email_with_link_to_download_file_task_default_template(
     ).exists()
 
 
-@mock.patch("saleor.plugins.admin_email.tasks.send_email")
+@mock.patch("swiftmovers.plugins.admin_email.tasks.send_email")
 def test_send_email_with_link_to_download_file_task_custom_template(
     mocked_send_email, email_dict_config, admin_email_plugin, user_export_file
 ):
@@ -195,7 +195,7 @@ def test_send_email_with_link_to_download_file_task_custom_template(
         "export": get_default_export_payload(user_export_file),
         "csv_link": csv_url,
         "recipient_email": user_export_file.user.email,
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
     }
 
@@ -222,7 +222,7 @@ def test_send_email_with_link_to_download_file_task_custom_template(
     ).exists()
 
 
-@mock.patch("saleor.plugins.email_common.send_mail")
+@mock.patch("swiftmovers.plugins.email_common.send_mail")
 def test_send_export_failed_email_task_default_template(
     mocked_send_mail, email_dict_config, user_export_file
 ):
@@ -230,7 +230,7 @@ def test_send_export_failed_email_task_default_template(
     payload = {
         "export": get_default_export_payload(user_export_file),
         "recipient_email": recipient_email,
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
     }
 
@@ -251,7 +251,7 @@ def test_send_export_failed_email_task_default_template(
     )
 
 
-@mock.patch("saleor.plugins.admin_email.tasks.send_email")
+@mock.patch("swiftmovers.plugins.admin_email.tasks.send_email")
 def test_send_export_failed_email_task_custom_template(
     mocked_send_email, email_dict_config, admin_email_plugin, user_export_file
 ):
@@ -265,7 +265,7 @@ def test_send_export_failed_email_task_custom_template(
     payload = {
         "export": get_default_export_payload(user_export_file),
         "recipient_email": recipient_email,
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
     }
 
@@ -292,7 +292,7 @@ def test_send_export_failed_email_task_custom_template(
     )
 
 
-@mock.patch("saleor.plugins.email_common.send_mail")
+@mock.patch("swiftmovers.plugins.email_common.send_mail")
 def test_send_staff_order_confirmation_email_task_default_template(
     mocked_send_mail, email_dict_config, order_with_lines
 ):
@@ -302,7 +302,7 @@ def test_send_staff_order_confirmation_email_task_default_template(
             order_with_lines, "http://localhost:8000/redirect"
         ),
         "recipient_list": [recipient_email],
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
     }
 
@@ -318,7 +318,7 @@ def test_send_staff_order_confirmation_email_task_default_template(
     assert mocked_send_mail.called
 
 
-@mock.patch("saleor.plugins.admin_email.tasks.send_email")
+@mock.patch("swiftmovers.plugins.admin_email.tasks.send_email")
 def test_send_staff_order_confirmation_email_task_custom_template(
     mocked_send_email, order_with_lines, email_dict_config, admin_email_plugin
 ):
@@ -334,7 +334,7 @@ def test_send_staff_order_confirmation_email_task_custom_template(
             order_with_lines, "http://localhost:8000/redirect"
         ),
         "recipient_list": [recipient_email],
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
     }
 

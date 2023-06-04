@@ -10,7 +10,7 @@ import { OrderListQuery } from "@dashboard/graphql";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box } from "@swiftmovers/macaw-ui/next";
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 

@@ -1,5 +1,5 @@
 import { AVATAR_MARGIN } from "@dashboard/components/TableCellAvatar/Avatar";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({

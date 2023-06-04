@@ -9,7 +9,7 @@ import {
   Divider,
   RadioGroup,
   Text,
-} from "@saleor/macaw-ui/next";
+} from "@swiftmovers/macaw-ui/next";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 

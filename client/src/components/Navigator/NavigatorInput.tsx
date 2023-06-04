@@ -1,4 +1,4 @@
-import { makeStyles, SearchLargeIcon } from "@saleor/macaw-ui";
+import { makeStyles, SearchLargeIcon } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -8,7 +8,7 @@ const useStyles = makeStyles(
   theme => {
     const typography = {
       ...theme.typography.body1,
-      color: theme.palette.saleor.main[1],
+      color: theme.palette.swiftmovers.main[1],
       fontWeight: 500,
       letterSpacing: "0.02rem",
     };
@@ -24,7 +24,7 @@ const useStyles = makeStyles(
       },
       input: {
         "&::placeholder": {
-          color: theme.palette.saleor.main[3],
+          color: theme.palette.swiftmovers.main[3],
         },
         ...typography,
         background: "transparent",

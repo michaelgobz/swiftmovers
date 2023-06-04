@@ -76,7 +76,7 @@ def test_event_map():
         NotifyEventType.SEND_GIFT_CARD,
     ],
 )
-@patch("saleor.plugins.user_email.plugin.get_user_event_map")
+@patch("swiftmovers.plugins.user_email.plugin.get_user_event_map")
 def test_notify(mocked_get_event_map, event_type, user_email_plugin):
     payload = {
         "field1": 1,
@@ -91,7 +91,7 @@ def test_notify(mocked_get_event_map, event_type, user_email_plugin):
     mocked_event.assert_called_with(payload, asdict(plugin.config), plugin)
 
 
-@patch("saleor.plugins.user_email.plugin.get_user_event_map")
+@patch("swiftmovers.plugins.user_email.plugin.get_user_event_map")
 def test_notify_event_not_related(mocked_get_event_map, user_email_plugin):
     event_type = NotifyEventType.STAFF_ORDER_CONFIRMATION
     payload = {
@@ -107,7 +107,7 @@ def test_notify_event_not_related(mocked_get_event_map, user_email_plugin):
     assert not mocked_event.called
 
 
-@patch("saleor.plugins.user_email.plugin.get_user_event_map")
+@patch("swiftmovers.plugins.user_email.plugin.get_user_event_map")
 def test_notify_event_missing_handler(mocked_get_event_map, user_email_plugin):
     event_type = NotifyEventType.ORDER_PAYMENT_CONFIRMATION
     payload = {
@@ -123,7 +123,7 @@ def test_notify_event_missing_handler(mocked_get_event_map, user_email_plugin):
     assert not mocked_event_map.__getitem__.called
 
 
-@patch("saleor.plugins.user_email.plugin.get_user_event_map")
+@patch("swiftmovers.plugins.user_email.plugin.get_user_event_map")
 def test_notify_event_plugin_is_not_active(mocked_get_event_map, user_email_plugin):
     event_type = NotifyEventType.ORDER_PAYMENT_CONFIRMATION
     payload = {
@@ -300,7 +300,7 @@ def test_configuration_resolver_returns_email_template_value(
 def test_plugin_manager_doesnt_load_email_templates_from_db(
     user_email_plugin, user_email_template, settings
 ):
-    settings.PLUGINS = ["saleor.plugins.user_email.plugin.UserEmailPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.user_email.plugin.UserEmailPlugin"]
     manager = get_plugins_manager()
     plugin = manager.all_plugins[0]
 

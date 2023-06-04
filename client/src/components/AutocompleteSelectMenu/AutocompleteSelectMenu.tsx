@@ -6,7 +6,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import ArrowBack from "@material-ui/icons/ArrowBack";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import Downshift from "downshift";
 import React from "react";
 import { FormattedMessage } from "react-intl";

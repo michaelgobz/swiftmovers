@@ -1,7 +1,7 @@
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { Divider, Fade, Modal, Paper } from "@material-ui/core";
-import { makeStyles, useTheme } from "@saleor/macaw-ui";
+import { makeStyles, useTheme } from "@swiftmovers/macaw-ui";
 import Downshift from "downshift";
 import hotkeys from "hotkeys-js";
 import React from "react";

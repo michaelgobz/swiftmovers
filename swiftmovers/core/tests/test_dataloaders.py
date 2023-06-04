@@ -4,7 +4,7 @@ from ...graphql.plugins.dataloaders import get_plugin_manager_promise
 
 
 def test_plugins_manager_loader_loads_requestor_in_plugin(rf, customer_user, settings):
-    settings.PLUGINS = ["saleor.plugins.tests.sample_plugins.ActivePlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.tests.sample_plugins.ActivePlugin"]
     request = rf.request()
     request.user = customer_user
     request.app = None
@@ -22,7 +22,7 @@ def test_plugins_manager_loader_loads_requestor_in_plugin(rf, customer_user, set
 def test_plugins_manager_loader_requestor_in_plugin_when_no_app_and_user_in_req_is_none(
     rf, settings
 ):
-    settings.PLUGINS = ["saleor.plugins.tests.sample_plugins.ActivePlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.tests.sample_plugins.ActivePlugin"]
     request = rf.request()
     request.user = None
     request.app = None

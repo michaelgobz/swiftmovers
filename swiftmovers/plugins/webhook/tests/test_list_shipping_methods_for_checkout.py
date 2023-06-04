@@ -9,8 +9,8 @@ from ....webhook.payloads import generate_checkout_payload
 from ..shipping import generate_cache_key_for_shipping_list_methods_for_checkout
 
 
-@mock.patch("saleor.plugins.webhook.plugin.cache.set")
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
+@mock.patch("swiftmovers.plugins.webhook.plugin.cache.set")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
 def test_get_shipping_methods_for_checkout_set_cache(
     mocked_webhook,
     mocked_cache_set,
@@ -37,8 +37,8 @@ def test_get_shipping_methods_for_checkout_set_cache(
     assert mocked_cache_set.called
 
 
-@mock.patch("saleor.plugins.webhook.plugin.cache.set")
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
+@mock.patch("swiftmovers.plugins.webhook.plugin.cache.set")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
 def test_get_shipping_methods_no_webhook_response_does_not_set_cache(
     mocked_webhook,
     mocked_cache_set,
@@ -58,8 +58,8 @@ def test_get_shipping_methods_no_webhook_response_does_not_set_cache(
     assert not mocked_cache_set.called
 
 
-@mock.patch("saleor.plugins.webhook.plugin.cache.get")
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
+@mock.patch("swiftmovers.plugins.webhook.plugin.cache.get")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
 def test_get_shipping_methods_for_checkout_use_cache(
     mocked_webhook,
     mocked_cache_get,
@@ -86,8 +86,8 @@ def test_get_shipping_methods_for_checkout_use_cache(
     assert mocked_cache_get.called
 
 
-@mock.patch("saleor.plugins.webhook.plugin.cache.get")
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
+@mock.patch("swiftmovers.plugins.webhook.plugin.cache.get")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
 def test_get_shipping_methods_for_checkout_use_cache_for_empty_list(
     mocked_webhook,
     mocked_cache_get,

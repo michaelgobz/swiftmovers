@@ -166,8 +166,8 @@ def test_deactivate_inactive_gift_card(
 
 
 @freeze_time("2022-05-12 12:00:00")
-@mock.patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
-@mock.patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@mock.patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
+@mock.patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
 def test_deactivate_gift_card_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -181,7 +181,7 @@ def test_deactivate_gift_card_trigger_webhook(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
 
     assert gift_card.is_active
     variables = {"id": graphene.Node.to_global_id("GiftCard", gift_card.id)}

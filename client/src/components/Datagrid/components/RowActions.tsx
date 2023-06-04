@@ -1,4 +1,4 @@
-import { IconButton, MoreHorizontalIcon } from "@saleor/macaw-ui";
+import { IconButton, MoreHorizontalIcon } from "@swiftmovers/macaw-ui";
 import React from "react";
 
 import CardMenu, { CardMenuItem } from "../../CardMenu";

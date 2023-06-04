@@ -31,7 +31,7 @@ describe("As an admin I want to export gift card", () => {
   });
 
   it(
-    "should be able to export several gift cards to csv file. TC: SALEOR_1010",
+    "should be able to export several gift cards to csv file. TC: swiftmovers_1010",
     { tags: ["@giftCard", "@allEnv", "@stable"] },
     () => {
       const giftCard01 = `${startsWith}${faker.datatype.number()}`;
@@ -89,7 +89,7 @@ describe("As an admin I want to export gift card", () => {
   );
 
   it(
-    "should be able to export several gift cards to xlsx file. TC: SALEOR_1014",
+    "should be able to export several gift cards to xlsx file. TC: swiftmovers_1014",
     { tags: ["@giftCard", "@allEnv", "@stable"] },
     () => {
       const giftCard01 = `${startsWith}${faker.datatype.number()}`;

@@ -94,7 +94,7 @@ class ShippingMethodPostalCodeRule(
 
 
 class ShippingMethodType(ChannelContextTypeWithMetadataForObjectType):
-    """Represents internal shipping method managed within Saleor.
+    """Represents internal shipping method managed within swiftmovers.
 
     Internal and external (fetched by sync webhooks) shipping methods are later
     represented by `ShippingMethod` objects as part of orders and checkouts.
@@ -129,7 +129,7 @@ class ShippingMethodType(ChannelContextTypeWithMetadataForObjectType):
         ),
     )
     excluded_products = ConnectionField(
-        "saleor.graphql.product.types.products.ProductCountableConnection",
+        "swiftmovers.graphql.product.types.products.ProductCountableConnection",
         description="List of excluded products for the shipping method.",
         permissions=[ShippingPermissions.MANAGE_SHIPPING],
     )

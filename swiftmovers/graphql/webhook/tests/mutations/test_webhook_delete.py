@@ -69,7 +69,7 @@ def test_webhook_delete_by_inactive_app(app_api_client, webhook):
     assert_no_permission(response)
 
 
-@patch("saleor.webhook.models.Webhook.delete")
+@patch("swiftmovers.webhook.models.Webhook.delete")
 def test_webhook_delete_deactivates_before_deletion(
     mocked_delete, app_api_client, webhook
 ):
@@ -87,7 +87,7 @@ def test_webhook_delete_deactivates_before_deletion(
     assert webhook.is_active is False
 
 
-@patch("saleor.webhook.models.Webhook.delete")
+@patch("swiftmovers.webhook.models.Webhook.delete")
 def test_webhook_delete_raises_integrity_error(mocked_delete, app_api_client, webhook):
     # given
     query = WEBHOOK_DELETE_BY_APP

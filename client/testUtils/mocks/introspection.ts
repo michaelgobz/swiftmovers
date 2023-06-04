@@ -65,12 +65,12 @@ export const introspectionMocks: MockedResponse[] = [
                 {
                   name: "privateMetafield",
                   description:
-                    "A single key from private metadata. Requires staff permissions to access.\n\nTip: Use GraphQL aliases to fetch multiple keys.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "A single key from private metadata. Requires staff permissions to access.\n\nTip: Use GraphQL aliases to fetch multiple keys.\n\nAdded in swiftmovers 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "privateMetafields",
                   description:
-                    "Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.\n\nAdded in swiftmovers 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "metadata",
@@ -80,12 +80,12 @@ export const introspectionMocks: MockedResponse[] = [
                 {
                   name: "metafield",
                   description:
-                    "A single key from public metadata.\n\nTip: Use GraphQL aliases to fetch multiple keys.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "A single key from public metadata.\n\nTip: Use GraphQL aliases to fetch multiple keys.\n\nAdded in swiftmovers 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "metafields",
                   description:
-                    "Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.\n\nAdded in swiftmovers 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "seoTitle",
@@ -158,7 +158,7 @@ export const introspectionMocks: MockedResponse[] = [
                 {
                   name: "attribute",
                   description:
-                    "Get a single attribute attached to product by attribute slug.\n\nAdded in Saleor 3.9.",
+                    "Get a single attribute attached to product by attribute slug.\n\nAdded in swiftmovers 3.9.",
                 },
                 {
                   name: "attributes",
@@ -208,7 +208,7 @@ export const introspectionMocks: MockedResponse[] = [
                 {
                   name: "externalReference",
                   description:
-                    "External ID of this product. \n\nAdded in Saleor 3.10.",
+                    "External ID of this product. \n\nAdded in swiftmovers 3.10.",
                 },
               ],
             },
@@ -230,12 +230,12 @@ export const introspectionMocks: MockedResponse[] = [
                 {
                   name: "privateMetafield",
                   description:
-                    "A single key from private metadata. Requires staff permissions to access.\n\nTip: Use GraphQL aliases to fetch multiple keys.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "A single key from private metadata. Requires staff permissions to access.\n\nTip: Use GraphQL aliases to fetch multiple keys.\n\nAdded in swiftmovers 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "privateMetafields",
                   description:
-                    "Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.\n\nAdded in swiftmovers 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "metadata",
@@ -245,12 +245,12 @@ export const introspectionMocks: MockedResponse[] = [
                 {
                   name: "metafield",
                   description:
-                    "A single key from public metadata.\n\nTip: Use GraphQL aliases to fetch multiple keys.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "A single key from public metadata.\n\nTip: Use GraphQL aliases to fetch multiple keys.\n\nAdded in swiftmovers 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "metafields",
                   description:
-                    "Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.\n\nAdded in swiftmovers 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "name",
@@ -288,7 +288,7 @@ export const introspectionMocks: MockedResponse[] = [
                 {
                   name: "assignedVariantAttributes",
                   description:
-                    "Variant attributes of that product type with attached variant selection.\n\nAdded in Saleor 3.1.",
+                    "Variant attributes of that product type with attached variant selection.\n\nAdded in swiftmovers 3.1.",
                 },
                 {
                   name: "productAttributes",
@@ -325,12 +325,12 @@ export const introspectionMocks: MockedResponse[] = [
                 {
                   name: "privateMetafield",
                   description:
-                    "A single key from private metadata. Requires staff permissions to access.\n\nTip: Use GraphQL aliases to fetch multiple keys.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "A single key from private metadata. Requires staff permissions to access.\n\nTip: Use GraphQL aliases to fetch multiple keys.\n\nAdded in swiftmovers 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "privateMetafields",
                   description:
-                    "Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.\n\nAdded in swiftmovers 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "metadata",
@@ -340,12 +340,12 @@ export const introspectionMocks: MockedResponse[] = [
                 {
                   name: "metafield",
                   description:
-                    "A single key from public metadata.\n\nTip: Use GraphQL aliases to fetch multiple keys.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "A single key from public metadata.\n\nTip: Use GraphQL aliases to fetch multiple keys.\n\nAdded in swiftmovers 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "metafields",
                   description:
-                    "Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.\n\nAdded in swiftmovers 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "name",
@@ -388,7 +388,7 @@ export const introspectionMocks: MockedResponse[] = [
                 {
                   name: "variants",
                   description:
-                    "List of product variants this sale applies to.\n\nAdded in Saleor 3.1.\n\nRequires one of the following permissions: MANAGE_DISCOUNTS.",
+                    "List of product variants this sale applies to.\n\nAdded in swiftmovers 3.1.\n\nRequires one of the following permissions: MANAGE_DISCOUNTS.",
                 },
                 {
                   name: "translation",
@@ -433,12 +433,12 @@ export const introspectionMocks: MockedResponse[] = [
                 {
                   name: "privateMetafield",
                   description:
-                    "A single key from private metadata. Requires staff permissions to access.\n\nTip: Use GraphQL aliases to fetch multiple keys.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "A single key from private metadata. Requires staff permissions to access.\n\nTip: Use GraphQL aliases to fetch multiple keys.\n\nAdded in swiftmovers 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "privateMetafields",
                   description:
-                    "Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.\n\nAdded in swiftmovers 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "metadata",
@@ -448,12 +448,12 @@ export const introspectionMocks: MockedResponse[] = [
                 {
                   name: "metafield",
                   description:
-                    "A single key from public metadata.\n\nTip: Use GraphQL aliases to fetch multiple keys.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "A single key from public metadata.\n\nTip: Use GraphQL aliases to fetch multiple keys.\n\nAdded in swiftmovers 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "metafields",
                   description:
-                    "Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.\n\nAdded in swiftmovers 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "created",
@@ -470,7 +470,7 @@ export const introspectionMocks: MockedResponse[] = [
                 {
                   name: "user",
                   description:
-                    "User who placed the order. This field is set only for orders placed by authenticated users. Can be fetched for orders created in Saleor 3.2 and later, for other orders requires one of the following permissions: MANAGE_USERS, MANAGE_ORDERS, OWNER.",
+                    "User who placed the order. This field is set only for orders placed by authenticated users. Can be fetched for orders created in swiftmovers 3.2 and later, for other orders requires one of the following permissions: MANAGE_USERS, MANAGE_ORDERS, OWNER.",
                 },
                 {
                   name: "trackingClientId",
@@ -479,12 +479,12 @@ export const introspectionMocks: MockedResponse[] = [
                 {
                   name: "billingAddress",
                   description:
-                    "Billing address. The full data can be access for orders created in Saleor 3.2 and later, for other orders requires one of the following permissions: MANAGE_ORDERS, OWNER.",
+                    "Billing address. The full data can be access for orders created in swiftmovers 3.2 and later, for other orders requires one of the following permissions: MANAGE_ORDERS, OWNER.",
                 },
                 {
                   name: "shippingAddress",
                   description:
-                    "Shipping address. The full data can be access for orders created in Saleor 3.2 and later, for other orders requires one of the following permissions: MANAGE_ORDERS, OWNER.",
+                    "Shipping address. The full data can be access for orders created in swiftmovers 3.2 and later, for other orders requires one of the following permissions: MANAGE_ORDERS, OWNER.",
                 },
                 {
                   name: "shippingMethodName",
@@ -518,12 +518,12 @@ export const introspectionMocks: MockedResponse[] = [
                 {
                   name: "availableCollectionPoints",
                   description:
-                    "Collection points that can be used for this order.\n\nAdded in Saleor 3.1.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "Collection points that can be used for this order.\n\nAdded in swiftmovers 3.1.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "invoices",
                   description:
-                    "List of order invoices. Can be fetched for orders created in Saleor 3.2 and later, for other orders requires one of the following permissions: MANAGE_ORDERS, OWNER.",
+                    "List of order invoices. Can be fetched for orders created in swiftmovers 3.2 and later, for other orders requires one of the following permissions: MANAGE_ORDERS, OWNER.",
                 },
                 {
                   name: "number",
@@ -553,22 +553,22 @@ export const introspectionMocks: MockedResponse[] = [
                 {
                   name: "authorizeStatus",
                   description:
-                    "The authorize status of the order.\n\nAdded in Saleor 3.4.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "The authorize status of the order.\n\nAdded in swiftmovers 3.4.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "chargeStatus",
                   description:
-                    "The charge status of the order.\n\nAdded in Saleor 3.4.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "The charge status of the order.\n\nAdded in swiftmovers 3.4.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "taxExemption",
                   description:
-                    "Returns True if order has to be exempt from taxes.\n\nAdded in Saleor 3.8.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "Returns True if order has to be exempt from taxes.\n\nAdded in swiftmovers 3.8.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "transactions",
                   description:
-                    "List of transactions for the order. Requires one of the following permissions: MANAGE_ORDERS, HANDLE_PAYMENTS.\n\nAdded in Saleor 3.4.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "List of transactions for the order. Requires one of the following permissions: MANAGE_ORDERS, HANDLE_PAYMENTS.\n\nAdded in swiftmovers 3.4.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "payments",
@@ -593,22 +593,22 @@ export const introspectionMocks: MockedResponse[] = [
                 {
                   name: "shippingTaxClass",
                   description:
-                    "Denormalized tax class assigned to the shipping method.\n\nAdded in Saleor 3.9.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.\n\nRequires one of the following permissions: AUTHENTICATED_STAFF_USER.",
+                    "Denormalized tax class assigned to the shipping method.\n\nAdded in swiftmovers 3.9.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.\n\nRequires one of the following permissions: AUTHENTICATED_STAFF_USER.",
                 },
                 {
                   name: "shippingTaxClassName",
                   description:
-                    "Denormalized name of the tax class assigned to the shipping method.\n\nAdded in Saleor 3.9.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "Denormalized name of the tax class assigned to the shipping method.\n\nAdded in swiftmovers 3.9.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "shippingTaxClassMetadata",
                   description:
-                    "Denormalized public metadata of the shipping method's tax class.\n\nAdded in Saleor 3.9.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "Denormalized public metadata of the shipping method's tax class.\n\nAdded in swiftmovers 3.9.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "shippingTaxClassPrivateMetadata",
                   description:
-                    "Denormalized private metadata of the shipping method's tax class. Requires staff permissions to access.\n\nAdded in Saleor 3.9.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "Denormalized private metadata of the shipping method's tax class. Requires staff permissions to access.\n\nAdded in swiftmovers 3.9.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "voucher",
@@ -664,7 +664,7 @@ export const introspectionMocks: MockedResponse[] = [
                 {
                   name: "userEmail",
                   description:
-                    "Email address of the customer. The full data can be access for orders created in Saleor 3.2 and later, for other orders requires one of the following permissions: MANAGE_ORDERS, OWNER.",
+                    "Email address of the customer. The full data can be access for orders created in swiftmovers 3.2 and later, for other orders requires one of the following permissions: MANAGE_ORDERS, OWNER.",
                 },
                 {
                   name: "isShippingRequired",
@@ -673,7 +673,7 @@ export const introspectionMocks: MockedResponse[] = [
                 {
                   name: "deliveryMethod",
                   description:
-                    "The delivery method selected for this order.\n\nAdded in Saleor 3.1.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "The delivery method selected for this order.\n\nAdded in swiftmovers 3.1.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "languageCodeEnum",
@@ -691,17 +691,17 @@ export const introspectionMocks: MockedResponse[] = [
                 {
                   name: "displayGrossPrices",
                   description:
-                    "Determines whether checkout prices should include taxes when displayed in a storefront.\n\nAdded in Saleor 3.9.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "Determines whether checkout prices should include taxes when displayed in a storefront.\n\nAdded in swiftmovers 3.9.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "externalReference",
                   description:
-                    "External ID of this order. \n\nAdded in Saleor 3.10.",
+                    "External ID of this order. \n\nAdded in swiftmovers 3.10.",
                 },
                 {
                   name: "checkoutId",
                   description:
-                    "ID of the checkout that the order was created from. \n\nAdded in Saleor 3.11.",
+                    "ID of the checkout that the order was created from. \n\nAdded in swiftmovers 3.11.",
                 },
               ],
             },
@@ -724,12 +724,12 @@ export const introspectionMocks: MockedResponse[] = [
                 {
                   name: "privateMetafield",
                   description:
-                    "A single key from private metadata. Requires staff permissions to access.\n\nTip: Use GraphQL aliases to fetch multiple keys.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "A single key from private metadata. Requires staff permissions to access.\n\nTip: Use GraphQL aliases to fetch multiple keys.\n\nAdded in swiftmovers 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "privateMetafields",
                   description:
-                    "Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.\n\nAdded in swiftmovers 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "metadata",
@@ -739,12 +739,12 @@ export const introspectionMocks: MockedResponse[] = [
                 {
                   name: "metafield",
                   description:
-                    "A single key from public metadata.\n\nTip: Use GraphQL aliases to fetch multiple keys.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "A single key from public metadata.\n\nTip: Use GraphQL aliases to fetch multiple keys.\n\nAdded in swiftmovers 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "metafields",
                   description:
-                    "Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.\n\nAdded in Saleor 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                    "Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.\n\nAdded in swiftmovers 3.3.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
                 },
                 {
                   name: "status",
@@ -781,7 +781,7 @@ export const introspectionMocks: MockedResponse[] = [
                 {
                   name: "order",
                   description:
-                    "Order related to the invoice.\n\nAdded in Saleor 3.10.",
+                    "Order related to the invoice.\n\nAdded in swiftmovers 3.10.",
                 },
               ],
             },

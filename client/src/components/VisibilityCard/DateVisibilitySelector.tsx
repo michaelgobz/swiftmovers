@@ -1,6 +1,6 @@
 import closeIcon from "@assets/images/close-thin.svg";
 import { Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import React, { useState } from "react";
 
 import FormSpacer from "../FormSpacer";

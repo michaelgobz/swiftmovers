@@ -17,19 +17,19 @@ on:
       environment:
         required: true 
         description: 'Environment to run tests against'
-        default: 'https://automation-dashboard.staging.saleor.cloud/'
+        default: 'https://automation-dashboard.staging.swiftmovers.cloud/'
         type: choice
         options:
-        - https://automation-dashboard.staging.saleor.cloud/
-        - https://master.staging.saleor.cloud/
-        - https://latest.staging.saleor.cloud/
-        - https://qa.staging.saleor.cloud/
+        - https://automation-dashboard.staging.swiftmovers.cloud/
+        - https://master.staging.swiftmovers.cloud/
+        - https://latest.staging.swiftmovers.cloud/
+        - https://qa.staging.swiftmovers.cloud/
         - Other
       otherEnvironment:
         required: false
         description: 'Type env if "Other" option is selected'
         type: string
-        default: 'https://vXX.staging.saleor.cloud/' 
+        default: 'https://vXX.staging.swiftmovers.cloud/'
       browser:
         required: true 
         description: 'Browser'
@@ -60,9 +60,9 @@ jobs:
           # use explicit version as this job does not checkout code
           node-version: '18'
 
-      - name: Install saleor cli
-        id: install-saleor-cli
-        run: npm i -g @saleor/cli
+      - name: Install swiftmovers cli
+        id: install-swiftmovers-cli
+        run: npm i -g @swiftmovers/cli
 
       - name: Cache node modules
         uses: actions/cache@v2
@@ -79,13 +79,13 @@ jobs:
         id: write-config-file
         env:
           ACCESS_TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
-        run: echo '{"token":"Token ${{ secrets.CLOUD_ACCESS_TOKEN }}","telemetry":"false","organization_slug":"qa","organization_name":"QA","environment_id":"lHECN87U"}' > ~/.config/saleor.json
+        run: echo '{"token":"Token ${{ secrets.CLOUD_ACCESS_TOKEN }}","telemetry":"false","organization_slug":"qa","organization_name":"QA","environment_id":"lHECN87U"}' > ~/.config/swiftmovers.json
 
       - name: revert snapshot
         env:
           CI: true
-          SALEOR_CLI_ENV: staging
-        run: npx saleor backup restore vmSD8fo4 --skip-webhooks-update
+          swiftmovers_CLI_ENV: staging
+        run: npx swiftmovers backup restore vmSD8fo4 --skip-webhooks-update
 
       - name: Notify Slack
         if: ${{ failure() }}
@@ -95,7 +95,7 @@ jobs:
           SLACK_USERNAME: RevertSnapshotBot
           SLACK_COLOR: ${{ job.status }}
           SLACK_TITLE: "Revert to snapshot job failed"
-          SLACK_MESSAGE: "https://github.com/saleor/saleor-dashboard/actions/workflows/tests-nightly.yml"
+          SLACK_MESSAGE: "https://github.com/swiftmovers/swiftmovers-dashboard/actions/workflows/tests-nightly.yml"
           MSG_MINIMAL: true
 
   run-tests-in-parallel:
@@ -130,7 +130,7 @@ jobs:
       - name: Get env
         id: get-env-uri
         env:
-          DEFAULT_ENV_URI: 'https://automation-dashboard.staging.saleor.cloud/'
+          DEFAULT_ENV_URI: 'https://automation-dashboard.staging.swiftmovers.cloud/'
           TYPED_ENV_URI: ''
         run: |
           echo "ENV_URI=${{ steps.get-typed-env-uri.outputs.ENV_URI || github.event.inputs.environment || env.DEFAULT_ENV_URI }}" >> $GITHUB_OUTPUT
@@ -423,7 +423,7 @@ jobs:
         env:
           JOB_DEPLOYMENT_KIND: ${{ needs.run-tests-in-parallel.outputs.environment }}
           JOB_STATUS: ${{ job.status }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_SALEOR_QA_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_swiftmovers_QA_WEBHOOK_URL }}
           JOB_TITLE: "A lot of tests failed, something is probably broken - ${{ needs.run-tests-in-parallel.outputs.dashboard_url }}"
           JOB_KIND: "Tests"
         run: |

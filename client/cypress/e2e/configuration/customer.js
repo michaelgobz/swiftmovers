@@ -35,7 +35,7 @@ describe("Tests for customer", () => {
   });
 
   it(
-    "should create customer. TC: SALEOR_1201",
+    "should create customer. TC: swiftmovers_1201",
     { tags: ["@customer", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
@@ -82,7 +82,7 @@ describe("Tests for customer", () => {
   );
 
   it(
-    "should add address to customer. TC: SALEOR_1204",
+    "should add address to customer. TC: swiftmovers_1204",
     { tags: ["@customer", "@allEnv", "@stable"] },
     () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
@@ -106,7 +106,7 @@ describe("Tests for customer", () => {
   );
 
   it(
-    "should remove address from customer. TC: SALEOR_1205",
+    "should remove address from customer. TC: swiftmovers_1205",
     { tags: ["@customer", "@allEnv", "@stable"] },
     () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
@@ -135,7 +135,7 @@ describe("Tests for customer", () => {
   );
 
   it(
-    "should set address as default. TC: SALEOR_1206",
+    "should set address as default. TC: swiftmovers_1206",
     { tags: ["@customer", "@allEnv", "@stable"] },
     () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
@@ -179,7 +179,7 @@ describe("Tests for customer", () => {
   );
 
   it(
-    "should update address. TC: SALEOR_1208",
+    "should update address. TC: swiftmovers_1208",
     { tags: ["@customer", "@allEnv", "@stable"] },
     () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
@@ -211,7 +211,7 @@ describe("Tests for customer", () => {
   );
 
   it(
-    "should delete customer. TC: SALEOR_1203",
+    "should delete customer. TC: swiftmovers_1203",
     { tags: ["@customer", "@allEnv", "@stable"] },
     () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
@@ -231,7 +231,7 @@ describe("Tests for customer", () => {
   );
 
   it(
-    "should deactivate customer. TC: SALEOR_1209",
+    "should deactivate customer. TC: swiftmovers_1209",
     { tags: ["@customer", "@allEnv", "@stable"] },
     () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
@@ -253,7 +253,7 @@ describe("Tests for customer", () => {
   );
 
   it(
-    "should update customer. TC: SALEOR_1202",
+    "should update customer. TC: swiftmovers_1202",
     { tags: ["@customer", "@allEnv", "@stable"] },
     () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;

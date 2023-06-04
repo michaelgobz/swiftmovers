@@ -20,7 +20,7 @@ import SortableChipsField from "@dashboard/components/SortableChipsField";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { TextField } from "@material-ui/core";
-import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui/next";
+import { Box, Checkbox, Input, Text } from "@swiftmovers/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 

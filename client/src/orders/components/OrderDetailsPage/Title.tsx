@@ -4,8 +4,8 @@ import { OrderDetailsFragment } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
 import { Typography } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui/next";
+import { makeStyles } from "@swiftmovers/macaw-ui";
+import { Box } from "@swiftmovers/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 

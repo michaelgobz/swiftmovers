@@ -1,11 +1,11 @@
 import { useAppListContext } from "@dashboard/apps/context";
-import { GetV2SaleorAppsResponse } from "@dashboard/apps/marketplace.types";
+import { GetV2swiftmoversAppsResponse } from "@dashboard/apps/marketplace.types";
 import {
   getAppDetails,
   resolveInstallationOfMarketplaceApp,
 } from "@dashboard/apps/utils";
 import { AppInstallationFragment } from "@dashboard/graphql";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box } from "@swiftmovers/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -15,7 +15,7 @@ import AppListCardIntegrations from "./AppListCardIntegrations";
 import AppListCardLinks from "./AppListCardLinks";
 
 interface AppListRowProps {
-  appPair: GetV2SaleorAppsResponse.SaleorApp[];
+  appPair: GetV2swiftmoversAppsResponse.swiftmoversApp[];
   appInstallationList?: AppInstallationFragment[];
   navigateToAppInstallPage?: (manifestUrl: string) => void;
   navigateToGithubForkPage?: (githubForkUrl: string) => void;
@@ -33,7 +33,7 @@ const AppListRow: React.FC<AppListRowProps> = ({
   const isSingleApp = appPair.length === 1;
 
   const appDetails = React.useCallback(
-    (app: GetV2SaleorAppsResponse.SaleorApp) =>
+    (app: GetV2swiftmoversAppsResponse.swiftmoversApp) =>
       getAppDetails({
         intl,
         app,

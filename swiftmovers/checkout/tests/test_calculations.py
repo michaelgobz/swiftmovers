@@ -128,7 +128,7 @@ def get_taxed_money(
 
 
 @freeze_time("2020-12-12 12:00:00")
-@patch("saleor.checkout.calculations._apply_tax_data")
+@patch("swiftmovers.checkout.calculations._apply_tax_data")
 def test_fetch_checkout_data_plugins(
     _mocked_from_app,
     plugins_manager,
@@ -189,7 +189,7 @@ def test_fetch_checkout_data_plugins(
 
 
 @patch(
-    "saleor.checkout.calculations.update_checkout_prices_with_flat_rates",
+    "swiftmovers.checkout.calculations.update_checkout_prices_with_flat_rates",
     wraps=update_checkout_prices_with_flat_rates,
 )
 @pytest.mark.parametrize("prices_entered_with_tax", [True, False])
@@ -229,7 +229,7 @@ def test_fetch_checkout_data_flat_rates(
 
 
 @patch(
-    "saleor.checkout.calculations.update_checkout_prices_with_flat_rates",
+    "swiftmovers.checkout.calculations.update_checkout_prices_with_flat_rates",
     wraps=update_checkout_prices_with_flat_rates,
 )
 def test_fetch_checkout_data_flat_rates_and_no_tax_calc_strategy(
@@ -381,7 +381,7 @@ def test_fetch_checkout_prices_when_tax_exemption_and_include_taxes_in_prices(
     value = 10
     """
     # given
-    settings.PLUGINS = ["saleor.plugins.tests.sample_plugins.PluginSample"]
+    settings.PLUGINS = ["swiftmovers.plugins.tests.sample_plugins.PluginSample"]
     manager = get_plugins_manager()
 
     checkout = checkout_with_items_and_shipping
@@ -441,7 +441,7 @@ def test_fetch_checkout_prices_when_tax_exemption_and_not_include_taxes_in_price
     tax plugins should be ignored and only net prices should be calculated and returned.
     """
     # given
-    settings.PLUGINS = ["saleor.plugins.tests.sample_plugins.PluginSample"]
+    settings.PLUGINS = ["swiftmovers.plugins.tests.sample_plugins.PluginSample"]
     manager = get_plugins_manager()
 
     checkout = checkout_with_items_and_shipping

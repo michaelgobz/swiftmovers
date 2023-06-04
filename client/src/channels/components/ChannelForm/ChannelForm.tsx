@@ -29,7 +29,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box } from "@swiftmovers/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -243,7 +243,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
                     id="MDOw8D"
                   />{" "}
                   <Link
-                    href="https://docs.saleor.io/docs/3.x/developer/payments#processing-a-payment-with-payment-app"
+                    href="https://docs.swiftmovers.io/docs/3.x/developer/payments#processing-a-payment-with-payment-app"
                     target="_blank"
                     rel="noopener noreferer"
                   >
@@ -265,7 +265,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
                     id="hHv0ih"
                   />{" "}
                   <Link
-                    href="https://docs.saleor.io/docs/3.x/developer/payments#payment-plugin"
+                    href="https://docs.swiftmovers.io/docs/3.x/developer/payments#payment-plugin"
                     target="_blank"
                     rel="noopener noreferer"
                   >

@@ -18,7 +18,7 @@ from ..tasks import (
 )
 
 
-@patch("saleor.csv.tasks.export_products")
+@patch("swiftmovers.csv.tasks.export_products")
 def test_export_products_task(export_products_mock, user_export_file):
     # given
     scope = {"all": ""}
@@ -35,8 +35,8 @@ def test_export_products_task(export_products_mock, user_export_file):
     )
 
 
-@patch("saleor.csv.tasks.send_export_failed_info")
-@patch("saleor.csv.tasks.export_products")
+@patch("swiftmovers.csv.tasks.send_export_failed_info")
+@patch("swiftmovers.csv.tasks.export_products")
 def test_export_products_task_failed(
     export_products_mock, send_export_failed_info_mock, user_export_file
 ):
@@ -58,7 +58,7 @@ def test_export_products_task_failed(
     send_export_failed_info_mock.assert_called_once_with(user_export_file, "products")
 
 
-@patch("saleor.csv.tasks.export_gift_cards")
+@patch("swiftmovers.csv.tasks.export_gift_cards")
 def test_export_gift_cards_task(export_gift_cards_mock, user_export_file):
     # given
     scope = {"all": ""}
@@ -74,8 +74,8 @@ def test_export_gift_cards_task(export_gift_cards_mock, user_export_file):
     )
 
 
-@patch("saleor.csv.tasks.send_export_failed_info")
-@patch("saleor.csv.tasks.export_gift_cards")
+@patch("swiftmovers.csv.tasks.send_export_failed_info")
+@patch("swiftmovers.csv.tasks.export_gift_cards")
 def test_export_gift_cards_task_failed(
     export_gift_cards_mock, send_export_failed_info_mock, user_export_file
 ):
@@ -94,7 +94,7 @@ def test_export_gift_cards_task_failed(
     send_export_failed_info_mock.assert_called_once_with(user_export_file, "gift cards")
 
 
-@patch("saleor.csv.tasks.send_export_failed_info")
+@patch("swiftmovers.csv.tasks.send_export_failed_info")
 def test_on_task_failure(send_export_failed_info_mock, user_export_file):
     # given
     exc = Exception("Test")
@@ -134,7 +134,7 @@ def test_on_task_failure(send_export_failed_info_mock, user_export_file):
     send_export_failed_info_mock.assert_called_once_with(user_export_file, ANY)
 
 
-@patch("saleor.csv.tasks.send_export_failed_info")
+@patch("swiftmovers.csv.tasks.send_export_failed_info")
 def test_on_task_failure_for_app(send_export_failed_info_mock, app_export_file):
     # given
     exc = Exception("Test")

@@ -1,6 +1,6 @@
 import { FilterErrorMessages, IFilter } from "@dashboard/components/Filter";
 import { FilterProps, SearchPageProps } from "@dashboard/types";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box } from "@swiftmovers/macaw-ui/next";
 import React, { ReactNode } from "react";
 
 import { FiltersSelect } from "./components/FiltersSelect";

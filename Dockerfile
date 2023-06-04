@@ -15,7 +15,7 @@ RUN pip install -r requirements_dev.txt
 ### Final image
 FROM python:3.9-slim
 
-RUN groupadd -r saleor && useradd -r -g saleor saleor
+RUN groupadd -r swiftmovers && useradd -r -g swiftmovers swiftmovers
 
 RUN apt-get update \
   && apt-get install -y \
@@ -39,7 +39,7 @@ RUN echo 'image/webp webp' >> /etc/mime.types
 RUN echo 'image/avif avif' >> /etc/mime.types
 
 RUN mkdir -p /app/media /app/static \
-  && chown -R saleor:saleor /app/
+  && chown -R swiftmovers:swiftmovers /app/
 
 COPY --from=build-python /usr/local/lib/python3.9/site-packages/ /usr/local/lib/python3.9/site-packages/
 COPY --from=build-python /usr/local/bin/ /usr/local/bin/
@@ -57,15 +57,15 @@ ARG COMMIT_ID
 ARG PROJECT_VERSION
 ENV PROJECT_VERSION="${PROJECT_VERSION}"
 
-LABEL org.opencontainers.image.title="mirumee/saleor"                                  \
+LABEL org.opencontainers.image.title="mirumee/swiftmovers"                                  \
       org.opencontainers.image.description="\
 A modular, high performance, headless e-commerce platform built with Python, \
 GraphQL, Django, and ReactJS."                                                         \
-      org.opencontainers.image.url="https://saleor.io/"                                \
-      org.opencontainers.image.source="https://github.com/saleor/saleor"               \
+      org.opencontainers.image.url="https://swiftmovers.io/"                                \
+      org.opencontainers.image.source="https://github.com/swiftmovers/swiftmovers"               \
       org.opencontainers.image.revision="$COMMIT_ID"                                   \
       org.opencontainers.image.version="$PROJECT_VERSION"                              \
-      org.opencontainers.image.authors="Saleor Commerce (https://saleor.io)"           \
+      org.opencontainers.image.authors="swiftmovers Commerce (https://swiftmovers.io)"           \
       org.opencontainers.image.licenses="BSD 3"
 
-CMD ["gunicorn", "--bind", ":8000", "--workers", "4", "--worker-class", "saleor.asgi.gunicorn_worker.UvicornWorker", "saleor.asgi:application"]
+CMD ["gunicorn", "--bind", ":8000", "--workers", "4", "--worker-class", "swiftmovers.asgi.gunicorn_worker.UvicornWorker", "swiftmovers.asgi:application"]

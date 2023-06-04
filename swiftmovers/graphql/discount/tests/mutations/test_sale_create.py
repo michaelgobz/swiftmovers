@@ -33,8 +33,8 @@ SALE_CREATE_MUTATION = """
 
 
 @freeze_time("2020-03-18 12:00:00")
-@patch("saleor.plugins.manager.PluginsManager.sale_toggle")
-@patch("saleor.plugins.manager.PluginsManager.sale_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.sale_toggle")
+@patch("swiftmovers.plugins.manager.PluginsManager.sale_created")
 def test_create_sale(
     created_webhook_mock,
     sale_toggle_mock,
@@ -82,8 +82,8 @@ def test_create_sale(
 
 
 @freeze_time("2020-03-18 12:00:00")
-@patch("saleor.plugins.manager.PluginsManager.sale_toggle")
-@patch("saleor.plugins.manager.PluginsManager.sale_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.sale_toggle")
+@patch("swiftmovers.plugins.manager.PluginsManager.sale_created")
 def test_create_sale_only_start_date(
     created_webhook_mock,
     sale_toggle_mock,
@@ -158,8 +158,8 @@ def test_create_sale_with_enddate_before_startdate(
     assert errors[0]["code"] == DiscountErrorCode.INVALID.name
 
 
-@patch("saleor.plugins.manager.PluginsManager.sale_toggle")
-@patch("saleor.plugins.manager.PluginsManager.sale_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.sale_toggle")
+@patch("swiftmovers.plugins.manager.PluginsManager.sale_created")
 def test_create_sale_start_date_and_end_date_before_current_date(
     created_webhook_mock,
     sale_toggle_mock,
@@ -208,8 +208,8 @@ def test_create_sale_start_date_and_end_date_before_current_date(
     sale_toggle_mock.assert_not_called()
 
 
-@patch("saleor.plugins.manager.PluginsManager.sale_toggle")
-@patch("saleor.plugins.manager.PluginsManager.sale_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.sale_toggle")
+@patch("swiftmovers.plugins.manager.PluginsManager.sale_created")
 def test_create_sale_start_date_and_end_date_after_current_date(
     created_webhook_mock,
     sale_toggle_mock,

@@ -20,7 +20,7 @@ export function inviteStaffMemberWithFirstPermission({
 
 /**
  * Function mpGetMailsByRecipient first get all emails from mailpit with a timeout, and after that it finds email from recipient.
- * It cloud happened that invite email from saleor has not been received yet, so in this case the action should be retried.
+ * It cloud happened that invite email from swiftmovers has not been received yet, so in this case the action should be retried.
  */
 export function getMailActivationLinkForUser(email, regex, i = 0) {
   const serverStoredEmail = email.toLowerCase();

@@ -57,7 +57,7 @@ describe("Tests for images", () => {
             .get(PRODUCT_DETAILS.uploadSavedImagesButton)
             .click()
             .get(SHARED_ELEMENTS.fileInput)
-            .attachFile("images/saleorDemoProductSneakers.png")
+            .attachFile("images/swiftmoversDemoProductSneakers.png")
             .get(PRODUCT_DETAILS.productImage)
             .find("img")
             .invoke("attr", "src");

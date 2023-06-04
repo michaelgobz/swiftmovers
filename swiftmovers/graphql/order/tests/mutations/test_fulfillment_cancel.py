@@ -113,7 +113,7 @@ def test_cancel_fulfillment_no_warehouse_id(
     assert error["code"] == OrderErrorCode.REQUIRED.name
 
 
-@patch("saleor.order.actions.restock_fulfillment_lines")
+@patch("swiftmovers.order.actions.restock_fulfillment_lines")
 def test_cancel_fulfillment_awaiting_approval(
     mock_restock_lines, staff_api_client, fulfillment, permission_manage_orders
 ):
@@ -136,7 +136,7 @@ def test_cancel_fulfillment_awaiting_approval(
     assert not Fulfillment.objects.filter(pk=fulfillment.pk).exists()
 
 
-@patch("saleor.order.actions.restock_fulfillment_lines")
+@patch("swiftmovers.order.actions.restock_fulfillment_lines")
 def test_cancel_fulfillment_awaiting_approval_warehouse_specified(
     mock_restock_lines,
     staff_api_client,

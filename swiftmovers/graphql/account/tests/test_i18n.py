@@ -8,7 +8,7 @@ from ..i18n import I18nMixin
 def test_validate_address():
     # given
     address_data = {
-        "first_name": "John Saleor",
+        "first_name": "John swiftmovers",
         "last_name": "Doe Mirumee",
         "company_name": "Mirumee Software",
         "street_address_1": "Tęczowa 7",
@@ -31,7 +31,7 @@ def test_validate_address():
 def test_validate_address_invalid_postal_code():
     # given
     address_data = {
-        "first_name": "John Saleor",
+        "first_name": "John swiftmovers",
         "last_name": "Doe Mirumee",
         "company_name": "Mirumee Software",
         "street_address_1": "Tęczowa 7",
@@ -54,7 +54,7 @@ def test_validate_address_invalid_postal_code():
 def test_validate_address_no_country_code():
     # given
     address_data = {
-        "first_name": "John Saleor",
+        "first_name": "John swiftmovers",
         "last_name": "Doe Mirumee",
         "company_name": "Mirumee Software",
         "street_address_1": "Tęczowa 7",
@@ -77,7 +77,7 @@ def test_validate_address_no_country_code():
 def test_validate_address_no_city():
     # given
     address_data = {
-        "first_name": "John Saleor",
+        "first_name": "John swiftmovers",
         "last_name": "Doe Mirumee",
         "company_name": "Mirumee Software",
         "street_address_1": "Tęczowa 7",

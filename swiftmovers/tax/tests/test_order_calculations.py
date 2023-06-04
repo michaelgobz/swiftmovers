@@ -2,7 +2,7 @@ from decimal import Decimal
 
 from prices import Money, TaxedMoney
 
-from saleor.tax.models import TaxClassCountryRate
+from swiftmovers.tax.models import TaxClassCountryRate
 
 from ...core.prices import quantize_price
 from ...core.taxes import zero_money, zero_taxed_money

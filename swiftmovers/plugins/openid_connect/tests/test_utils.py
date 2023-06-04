@@ -31,8 +31,8 @@ from ..utils import (
     create_tokens_from_oauth_payload,
     fetch_jwks,
     get_or_create_user_from_payload,
-    get_saleor_permission_names,
-    get_saleor_permissions_qs_from_scope,
+    get_swiftmovers_permission_names,
+    get_swiftmovers_permissions_qs_from_scope,
     get_user_from_oauth_access_token_in_jwt_format,
     get_user_from_token,
     get_user_info,
@@ -51,16 +51,16 @@ def test_fetch_jwks_raises_error(monkeypatch, error):
     mocked_get = Mock()
     mocked_get.side_effect = error
     jwks_url = "http://localhost:3000/"
-    monkeypatch.setattr("saleor.plugins.openid_connect.utils.requests.get", mocked_get)
+    monkeypatch.setattr("swiftmovers.plugins.openid_connect.utils.requests.get", mocked_get)
 
     with pytest.raises(AuthenticationError):
         fetch_jwks(jwks_url)
 
 
 @pytest.mark.vcr
-@mock.patch("saleor.plugins.openid_connect.utils.cache.set")
+@mock.patch("swiftmovers.plugins.openid_connect.utils.cache.set")
 def test_fetch_jwks(mocked_cache_set):
-    jwks_url = "https://saleor.io/.well-known/jwks.json"
+    jwks_url = "https://swiftmovers.io/.well-known/jwks.json"
     keys = fetch_jwks(jwks_url)
     assert len(keys) == 2
     mocked_cache_set.assert_called_once_with(JWKS_KEY, keys, JWKS_CACHE_TIME)
@@ -69,14 +69,14 @@ def test_fetch_jwks(mocked_cache_set):
 def test_get_or_create_user_from_token_missing_email(id_payload):
     del id_payload["email"]
     with pytest.raises(AuthenticationError):
-        get_or_create_user_from_payload(id_payload, "https://saleor.io/oauth")
+        get_or_create_user_from_payload(id_payload, "https://swiftmovers.io/oauth")
 
 
 def test_get_or_create_user_from_token_user_not_active(id_payload, admin_user):
     admin_user.is_active = False
     admin_user.save()
     with pytest.raises(AuthenticationError):
-        get_or_create_user_from_payload(id_payload, "https://saleor.io/oauth")
+        get_or_create_user_from_payload(id_payload, "https://swiftmovers.io/oauth")
 
 
 def test_get_user_from_token_missing_email(id_payload):
@@ -104,7 +104,7 @@ def test_create_tokens_from_oauth_payload(monkeypatch, id_token, id_payload):
     mocked_jwt_validator.__getitem__.side_effect = id_payload.__getitem__
 
     monkeypatch.setattr(
-        "saleor.plugins.openid_connect.utils.get_decoded_token",
+        "swiftmovers.plugins.openid_connect.utils.get_decoded_token",
         Mock(return_value=mocked_jwt_validator),
     )
     permissions_from_scope = [
@@ -115,15 +115,15 @@ def test_create_tokens_from_oauth_payload(monkeypatch, id_token, id_payload):
         "refresh_token": "refresh",
         "id_token": id_token,
         "scope": (
-            "openid profile email offline_access saleor:manage_orders saleor:staff"
+            "openid profile email offline_access swiftmovers:manage_orders swiftmovers:staff"
         ),
         "expires_in": 86400,
         "token_type": "Bearer",
         "expires_at": 1600851112,
     }
-    user = get_or_create_user_from_payload(id_payload, "https://saleor.io/oauth")
-    permissions = get_saleor_permissions_qs_from_scope(auth_payload.get("scope"))
-    perms = get_saleor_permission_names(permissions)
+    user = get_or_create_user_from_payload(id_payload, "https://swiftmovers.io/oauth")
+    permissions = get_swiftmovers_permissions_qs_from_scope(auth_payload.get("scope"))
+    perms = get_swiftmovers_permission_names(permissions)
     tokens = create_tokens_from_oauth_payload(
         auth_payload, user, id_payload, perms, "PluginID"
     )
@@ -175,18 +175,18 @@ def test_validate_refresh_token_missing_token():
         validate_refresh_token(refresh_token, {})
 
 
-def test_get_saleor_permissions_from_scope():
+def test_get_swiftmovers_permissions_from_scope():
     auth_payload = {
         "access_token": "FeHkE_QbuU3cYy1a1eQUrCE5jRcUnBK3",
         "refresh_token": "refresh",
         "scope": (
-            "openid profile email offline_access saleor:manage_orders "
-            "saleor:non_existing saleor saleor: saleor:manage_users"
+            "openid profile email offline_access swiftmovers:manage_orders "
+            "swiftmovers:non_existing swiftmovers swiftmovers: swiftmovers:manage_users"
         ),
     }
     expected_permissions = {"MANAGE_USERS", "MANAGE_ORDERS"}
-    permissions = get_saleor_permissions_qs_from_scope(auth_payload.get("scope"))
-    permission_names = get_saleor_permission_names(permissions)
+    permissions = get_swiftmovers_permissions_qs_from_scope(auth_payload.get("scope"))
+    permission_names = get_swiftmovers_permission_names(permissions)
     assert set(permission_names) == expected_permissions
 
 
@@ -194,10 +194,10 @@ def test_get_user_info_raises_decode_error(monkeypatch):
     response = Response()
     response.status_code = 200
     monkeypatch.setattr(
-        "saleor.plugins.openid_connect.utils.requests.get", Mock(return_value=response)
+        "swiftmovers.plugins.openid_connect.utils.requests.get", Mock(return_value=response)
     )
 
-    user_info = get_user_info("https://saleor.io/userinfo", "access_token")
+    user_info = get_user_info("https://swiftmovers.io/userinfo", "access_token")
     assert user_info is None
 
 
@@ -205,15 +205,15 @@ def test_get_user_info_raises_http_error(monkeypatch):
     response = Response()
     response.status_code = 500
     monkeypatch.setattr(
-        "saleor.plugins.openid_connect.utils.requests.get", Mock(return_value=response)
+        "swiftmovers.plugins.openid_connect.utils.requests.get", Mock(return_value=response)
     )
 
-    user_info = get_user_info("https://saleor.io/userinfo", "access_token")
+    user_info = get_user_info("https://swiftmovers.io/userinfo", "access_token")
     assert user_info is None
 
 
 def test_get_or_create_user_from_payload_retrieve_user_by_sub(customer_user):
-    oauth_url = "https://saleor.io/oauth"
+    oauth_url = "https://swiftmovers.io/oauth"
     sub_id = "oauth|1234"
     customer_user.private_metadata = {f"oidc-{oauth_url}": sub_id}
     customer_user.save()
@@ -228,7 +228,7 @@ def test_get_or_create_user_from_payload_retrieve_user_by_sub(customer_user):
 
 
 def test_get_or_create_user_from_payload_updates_sub(customer_user):
-    oauth_url = "https://saleor.io/oauth"
+    oauth_url = "https://swiftmovers.io/oauth"
     sub_id = "oauth|1234"
     customer_user.private_metadata = {f"oidc-{oauth_url}": "old-sub"}
     customer_user.save()
@@ -243,7 +243,7 @@ def test_get_or_create_user_from_payload_updates_sub(customer_user):
 
 
 def test_get_or_create_user_from_payload_assigns_sub(customer_user):
-    oauth_url = "https://saleor.io/oauth"
+    oauth_url = "https://swiftmovers.io/oauth"
     sub_id = "oauth|1234"
 
     user_from_payload = get_or_create_user_from_payload(
@@ -256,7 +256,7 @@ def test_get_or_create_user_from_payload_assigns_sub(customer_user):
 
 
 def test_get_or_create_user_from_payload_creates_user_with_sub():
-    oauth_url = "https://saleor.io/oauth"
+    oauth_url = "https://swiftmovers.io/oauth"
     sub_id = "oauth|1234"
     customer_email = "email.customer@example.com"
 
@@ -271,7 +271,7 @@ def test_get_or_create_user_from_payload_creates_user_with_sub():
 
 
 def test_get_or_create_user_from_payload_multiple_subs(customer_user, admin_user):
-    oauth_url = "https://saleor.io/oauth"
+    oauth_url = "https://swiftmovers.io/oauth"
     sub_id = "oauth|1234"
 
     customer_user.private_metadata = {f"oidc-{oauth_url}": sub_id}
@@ -291,7 +291,7 @@ def test_get_or_create_user_from_payload_multiple_subs(customer_user, admin_user
 
 
 def test_get_or_create_user_from_payload_different_email(customer_user):
-    oauth_url = "https://saleor.io/oauth"
+    oauth_url = "https://swiftmovers.io/oauth"
     sub_id = "oauth|1234"
     new_customer_email = "new.customer@example.com"
 
@@ -314,7 +314,7 @@ def test_get_or_create_user_from_payload_with_last_login(customer_user, settings
     settings.TIME_ZONE = "UTC"
     current_ts = int(time.time())
 
-    oauth_url = "https://saleor.io/oauth"
+    oauth_url = "https://swiftmovers.io/oauth"
     sub_id = "oauth|1234"
 
     customer_user.last_login = make_aware(
@@ -339,7 +339,7 @@ def test_get_or_create_user_from_payload_with_last_login(customer_user, settings
 def test_jwt_token_without_expiration_claim(monkeypatch, decoded_access_token):
     # given
     monkeypatch.setattr(
-        "saleor.plugins.openid_connect.utils.get_user_info_from_cache_or_fetch",
+        "swiftmovers.plugins.openid_connect.utils.get_user_info_from_cache_or_fetch",
         lambda *args, **kwargs: {
             "email": "test@example.org",
             "sub": token_payload["sub"],
@@ -376,7 +376,7 @@ def test_jwt_token_without_expiration_claim_staff_user(
 ):
     # given
     monkeypatch.setattr(
-        "saleor.plugins.openid_connect.utils.get_user_info_from_cache_or_fetch",
+        "swiftmovers.plugins.openid_connect.utils.get_user_info_from_cache_or_fetch",
         lambda *args, **kwargs: {
             "email": "test@example.org",
             "sub": token_payload["sub"],

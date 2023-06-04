@@ -13,7 +13,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -89,7 +89,7 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
               description={intl.formatMessage({
                 id: "flP8Hj",
                 defaultMessage:
-                  "Expand or restrict app permissions to access certain part of Saleor system.",
+                  "Expand or restrict app permissions to access certain part of swiftmovers system.",
                 description: "card description",
               })}
             />

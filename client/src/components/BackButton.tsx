@@ -1,6 +1,6 @@
 import { Button } from "@dashboard/components/Button";
 import { buttonMessages } from "@dashboard/intl";
-import { ButtonProps } from "@saleor/macaw-ui";
+import { ButtonProps } from "@swiftmovers/macaw-ui";
 import React, { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 

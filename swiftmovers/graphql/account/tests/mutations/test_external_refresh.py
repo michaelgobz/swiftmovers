@@ -33,7 +33,7 @@ def test_external_refresh_plugin_not_active(api_client, customer_user):
     assert data["user"] is None
 
 
-@patch("saleor.core.middleware.jwt_decode_with_exception_handler")
+@patch("swiftmovers.core.middleware.jwt_decode_with_exception_handler")
 def test_external_refresh(
     mock_refresh_token_middleware, api_client, customer_user, monkeypatch, rf
 ):
@@ -49,7 +49,7 @@ def test_external_refresh(
     )
     mocked_plugin_fun.return_value = expected_return
     monkeypatch.setattr(
-        "saleor.plugins.manager.PluginsManager.external_refresh", mocked_plugin_fun
+        "swiftmovers.plugins.manager.PluginsManager.external_refresh", mocked_plugin_fun
     )
     variables = {"pluginId": "pluginId1", "input": json.dumps({"refreshToken": "ABCD"})}
     response = api_client.post_graphql(MUTATION_EXTERNAL_REFRESH, variables)

@@ -32,7 +32,7 @@ def test_external_authentication_url(api_client, customer_user, monkeypatch, rf)
     expected_return = {"authorizationUrl": "https://ouath-provider/url"}
     mocked_plugin_fun.return_value = expected_return
     monkeypatch.setattr(
-        "saleor.plugins.manager.PluginsManager.external_authentication_url",
+        "swiftmovers.plugins.manager.PluginsManager.external_authentication_url",
         mocked_plugin_fun,
     )
     variables = {

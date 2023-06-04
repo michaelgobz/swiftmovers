@@ -12,7 +12,7 @@ import {
   List,
   sprinkles,
   Text,
-} from "@saleor/macaw-ui/next";
+} from "@swiftmovers/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";

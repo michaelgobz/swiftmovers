@@ -26,8 +26,8 @@ import {
   TableCell,
   Typography,
 } from "@material-ui/core";
-import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import { Box, Text, vars } from "@saleor/macaw-ui/next";
+import { DeleteIcon, IconButton, makeStyles } from "@swiftmovers/macaw-ui";
+import { Box, Text, vars } from "@swiftmovers/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

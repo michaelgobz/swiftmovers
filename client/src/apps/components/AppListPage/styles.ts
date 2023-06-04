@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -11,7 +11,7 @@ export const useStyles = makeStyles(
     sectionHeader: {
       fontSize: 14,
       fontWeight: 700,
-      color: theme.palette.saleor.main[3],
+      color: theme.palette.swiftmovers.main[3],
       margin: theme.spacing(8, 0, 3, 0),
       textTransform: "uppercase",
     },

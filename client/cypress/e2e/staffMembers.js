@@ -64,7 +64,7 @@ describe("Staff members", () => {
   });
 
   it(
-    "should be able to invite staff user. TC: SALEOR_3501",
+    "should be able to invite staff user. TC: swiftmovers_3501",
     { tags: ["@staffMembers", "@allEnv", "@critical"] },
     () => {
       const firstName = faker.name.firstName();
@@ -84,7 +84,7 @@ describe("Staff members", () => {
   );
 
   it(
-    "should deactivate user. TC: SALEOR_3502",
+    "should deactivate user. TC: swiftmovers_3502",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {
       updateStaffMember({ userId: user.id, isActive: true });
@@ -103,7 +103,7 @@ describe("Staff members", () => {
   );
 
   it(
-    "should activate user. TC: SALEOR_3503",
+    "should activate user. TC: swiftmovers_3503",
     { tags: ["@staffMembers", "@allEnv", "@critical"] },
     () => {
       const serverStoredEmail = email.toLowerCase();
@@ -118,7 +118,7 @@ describe("Staff members", () => {
   );
 
   it(
-    "should remove user permissions. TC: SALEOR_3504",
+    "should remove user permissions. TC: swiftmovers_3504",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {
       const serverStoredEmail = email.toLowerCase();
@@ -142,7 +142,7 @@ describe("Staff members", () => {
   );
 
   it(
-    "should reset password. TC: SALEOR_3505",
+    "should reset password. TC: swiftmovers_3505",
     { tags: ["@staffMembers", "@allEnv", "@critical"] },
     () => {
       const newPassword = faker.random.alphaNumeric(8);
@@ -178,7 +178,7 @@ describe("Staff members", () => {
   );
 
   it(
-    "should not be able to create staff member with not unique email. TC: SALEOR_3508",
+    "should not be able to create staff member with not unique email. TC: swiftmovers_3508",
     { tags: ["@staffMembers", "@allEnv", "@critical"] },
     () => {
       const firstName = faker.name.firstName();
@@ -197,7 +197,7 @@ describe("Staff members", () => {
   );
 
   it(
-    "should not be able to update staff member with not unique email. TC: SALEOR_3509",
+    "should not be able to update staff member with not unique email. TC: swiftmovers_3509",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {
       cy.addAliasToGraphRequest("StaffList");
@@ -220,9 +220,9 @@ describe("Staff members", () => {
     },
   );
 
-  // Test blocked by https://github.com/saleor/saleor-dashboard/issues/2847
+  // Test blocked by https://github.com/swiftmovers/swiftmovers-dashboard/issues/2847
   it.skip(
-    "should update staff member name and email. TC: SALEOR_3507",
+    "should update staff member name and email. TC: swiftmovers_3507",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {
       const newLastName = faker.name.lastName();
@@ -258,7 +258,7 @@ describe("Staff members", () => {
         .clear()
         .type(changedEmail);
 
-      // Test blocked from this point by https://github.com/saleor/saleor-dashboard/issues/2847
+      // Test blocked from this point by https://github.com/swiftmovers/swiftmovers-dashboard/issues/2847
       cy.get(BUTTON_SELECTORS.confirm).confirmationMessageShouldAppear();
       cy.clearSessionData().loginUserViaRequest("auth", {
         email: changedEmail,
@@ -271,7 +271,7 @@ describe("Staff members", () => {
   );
 
   it(
-    "should create new user and successfully change password. TC: SALEOR_3510",
+    "should create new user and successfully change password. TC: swiftmovers_3510",
     { tags: ["@staffMembers", "@allEnv", "@critical"] },
     () => {
       const newPass = "newTestPass";
@@ -299,7 +299,7 @@ describe("Staff members", () => {
       cy.get(STAFF_MEMBER_DETAILS_SELECTORS.changePasswordBtn).should(
         "be.visible",
       );
-      // there is small bug which keep control panel opens and block any interaction via cypress - it does not affect real user - click on body can be removed when this pr is done https://github.com/saleor/saleor-dashboard/issues/3675
+      // there is small bug which keep control panel opens and block any interaction via cypress - it does not affect real user - click on body can be removed when this pr is done https://github.com/swiftmovers/swiftmovers-dashboard/issues/3675
       cy.get(SHARED_ELEMENTS.body).click({ force: true });
       cy.get(STAFF_MEMBER_DETAILS_SELECTORS.changePasswordBtn).click();
       cy.get(

@@ -14,7 +14,7 @@ export default defineMessages({
   deleteNamedApp: {
     id: "EWD/wU",
     defaultMessage:
-      "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?",
+      "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in swiftmovers Marketplace. Are you sure you want to delete the app?",
     description: "delete app",
   },
 });

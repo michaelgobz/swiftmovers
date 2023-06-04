@@ -1,4 +1,4 @@
-import { GetV2SaleorAppsResponse } from "@dashboard/apps/marketplace.types";
+import { GetV2swiftmoversAppsResponse } from "@dashboard/apps/marketplace.types";
 import { AppInstallation, InstalledApp } from "@dashboard/apps/types";
 import {
   AppInstallationFragment,
@@ -24,7 +24,7 @@ export const resolveSectionsAvailability = ({
 
 const findAppInMarketplace = (
   manifestUrl: string | null,
-  installableMarketplaceApps?: GetV2SaleorAppsResponse.ReleasedSaleorApp[],
+  installableMarketplaceApps?: GetV2swiftmoversAppsResponse.ReleasedswiftmoversApp[],
 ) => {
   if (!manifestUrl) {
     return undefined;
@@ -37,7 +37,7 @@ const findAppInMarketplace = (
 
 export const getVerifiedInstalledApps = (
   installedApps?: AppListItemFragment[],
-  installableMarketplaceApps?: GetV2SaleorAppsResponse.ReleasedSaleorApp[],
+  installableMarketplaceApps?: GetV2swiftmoversAppsResponse.ReleasedswiftmoversApp[],
 ): InstalledApp[] | undefined =>
   installedApps?.map(app => {
     const marketplaceApp = findAppInMarketplace(
@@ -54,7 +54,7 @@ export const getVerifiedInstalledApps = (
 
 export const getVerifiedAppsInstallations = (
   appsInstallations?: AppInstallationFragment[],
-  installableMarketplaceApps?: GetV2SaleorAppsResponse.ReleasedSaleorApp[],
+  installableMarketplaceApps?: GetV2swiftmoversAppsResponse.ReleasedswiftmoversApp[],
 ): AppInstallation[] | undefined =>
   appsInstallations?.map(appInstallation => {
     const marketplaceApp = findAppInMarketplace(
@@ -81,8 +81,8 @@ const isAppNotInstalled = (
 
 export const getVerifiedInstallableMarketplaceApps = (
   installedApps?: AppListItemFragment[],
-  installableMarketplaceApps?: GetV2SaleorAppsResponse.ReleasedSaleorApp[],
-): GetV2SaleorAppsResponse.ReleasedSaleorApp[] | undefined =>
+  installableMarketplaceApps?: GetV2swiftmoversAppsResponse.ReleasedswiftmoversApp[],
+): GetV2swiftmoversAppsResponse.ReleasedswiftmoversApp[] | undefined =>
   installableMarketplaceApps?.filter(app =>
     isAppNotInstalled(app.manifestUrl, installedApps),
   );

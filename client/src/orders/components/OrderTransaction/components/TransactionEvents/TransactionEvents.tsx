@@ -2,7 +2,7 @@ import { TransactionEventFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { TransactionFakeEvent } from "@dashboard/orders/types";
 import { TableCell, TableRow } from "@material-ui/core";
-import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
+import { makeStyles, ResponsiveTable } from "@swiftmovers/macaw-ui";
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -27,7 +27,7 @@ const useStyles = makeStyles(
       },
     },
     noEvent: {
-      color: theme.palette.saleor.main[2],
+      color: theme.palette.swiftmovers.main[2],
     },
   }),
   {

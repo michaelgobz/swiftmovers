@@ -15,7 +15,7 @@ import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import getShopErrorMessage from "@dashboard/utils/errors/shop";
 import getWarehouseErrorMessage from "@dashboard/utils/errors/warehouse";
 import { TextField } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 

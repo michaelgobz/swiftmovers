@@ -4,7 +4,7 @@ import {
   AccordionDetails,
   AccordionSummary,
   makeStyles,
-} from "@saleor/macaw-ui";
+} from "@swiftmovers/macaw-ui";
 import React from "react";
 
 import TimelineEventHeader, { TitleElement } from "./TimelineEventHeader";

@@ -33,7 +33,7 @@ describe("As an admin I want to delete and update content attribute", () => {
   });
 
   it(
-    "should be able delete content attribute. TC:SALEOR_0529",
+    "should be able delete content attribute. TC:swiftmovers_0529",
     { tags: ["@attribute", "@allEnv", "@stable"] },
     () => {
       cy.visit(attributeDetailsUrl(attribute.id))
@@ -48,7 +48,7 @@ describe("As an admin I want to delete and update content attribute", () => {
   );
 
   it(
-    "should be able update content attribute. TC:SALEOR_0530",
+    "should be able update content attribute. TC:swiftmovers_0530",
     { tags: ["@attribute", "@allEnv", "@stable"] },
     () => {
       const attributeUpdatedName = `${startsWith}${faker.datatype.number()}`;

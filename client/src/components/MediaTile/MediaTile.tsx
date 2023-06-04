@@ -1,6 +1,6 @@
 import { IconButton } from "@dashboard/components/IconButton";
 import { CircularProgress } from "@material-ui/core";
-import { DeleteIcon, EditIcon, makeStyles } from "@saleor/macaw-ui";
+import { DeleteIcon, EditIcon, makeStyles } from "@swiftmovers/macaw-ui";
 import clsx from "clsx";
 import React from "react";
 
@@ -50,7 +50,7 @@ const useStyles = makeStyles(
       justifyContent: "flex-end",
     },
     controlButton: {
-      color: theme.palette.saleor.main[1],
+      color: theme.palette.swiftmovers.main[1],
       backgroundColor: "transparent",
       border: "none",
       cursor: "pointer",
@@ -58,7 +58,7 @@ const useStyles = makeStyles(
       padding: 0,
 
       "&:hover": {
-        color: theme.palette.saleor.active[1],
+        color: theme.palette.swiftmovers.active[1],
       },
       "&:first-child": {
         marginRight: 0,

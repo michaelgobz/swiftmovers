@@ -22,7 +22,7 @@ FULFILLMENT_UPDATE_TRACKING_QUERY = """
 """
 
 
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_fulfillment_update_tracking(
     send_fulfillment_update_mock,
     staff_api_client,
@@ -43,7 +43,7 @@ def test_fulfillment_update_tracking(
 
 
 @patch(
-    "saleor.graphql.order.mutations.fulfillment_update_tracking.send_fulfillment_update"
+    "swiftmovers.graphql.order.mutations.fulfillment_update_tracking.send_fulfillment_update"
 )
 def test_fulfillment_update_tracking_send_notification_true(
     send_fulfillment_update_mock,
@@ -67,7 +67,7 @@ def test_fulfillment_update_tracking_send_notification_true(
     )
 
 
-@patch("saleor.order.notifications.send_fulfillment_update")
+@patch("swiftmovers.order.notifications.send_fulfillment_update")
 def test_fulfillment_update_tracking_send_notification_false(
     send_fulfillment_update_mock,
     staff_api_client,

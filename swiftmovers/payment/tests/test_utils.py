@@ -202,9 +202,9 @@ def test_get_channel_slug_from_payment_without_checkout_and_order(
     assert not get_channel_slug_from_payment(payment)
 
 
-@patch("saleor.payment.utils.update_payment_charge_status")
-@patch("saleor.payment.utils.get_channel_slug_from_payment")
-@patch("saleor.payment.gateway.payment_refund_or_void")
+@patch("swiftmovers.payment.utils.update_payment_charge_status")
+@patch("swiftmovers.payment.utils.get_channel_slug_from_payment")
+@patch("swiftmovers.payment.gateway.payment_refund_or_void")
 def test_try_void_or_refund_inactive_payment_failed_transaction(
     refund_or_void_mock,
     get_channel_slug_from_payment_mock,
@@ -221,8 +221,8 @@ def test_try_void_or_refund_inactive_payment_failed_transaction(
     assert not refund_or_void_mock.called
 
 
-@patch("saleor.payment.utils.get_channel_slug_from_payment")
-@patch("saleor.payment.gateway.payment_refund_or_void")
+@patch("swiftmovers.payment.utils.get_channel_slug_from_payment")
+@patch("swiftmovers.payment.gateway.payment_refund_or_void")
 def test_try_void_or_refund_inactive_payment_transaction_success(
     refund_or_void_mock,
     get_channel_slug_from_payment_mock,
@@ -499,8 +499,8 @@ def test_create_transaction_event_from_request_updates_order_charge(
     assert order.search_vector
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
-@patch("saleor.plugins.manager.PluginsManager.order_fully_paid")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_fully_paid")
 @freeze_time("2018-05-31 12:00:01")
 def test_create_transaction_event_from_request_triggers_webhooks_when_fully_paid(
     mock_order_fully_paid,
@@ -543,8 +543,8 @@ def test_create_transaction_event_from_request_triggers_webhooks_when_fully_paid
     mock_order_updated.assert_called_once_with(order)
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
-@patch("saleor.plugins.manager.PluginsManager.order_fully_paid")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_fully_paid")
 @freeze_time("2018-05-31 12:00:01")
 def test_create_transaction_event_from_request_triggers_webhooks_when_partially_paid(
     mock_order_fully_paid,
@@ -587,8 +587,8 @@ def test_create_transaction_event_from_request_triggers_webhooks_when_partially_
     mock_order_updated.assert_called_once_with(order_with_lines)
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
-@patch("saleor.plugins.manager.PluginsManager.order_fully_paid")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_fully_paid")
 @freeze_time("2018-05-31 12:00:01")
 def test_create_transaction_event_from_request_triggers_webhooks_when_authorized(
     mock_order_fully_paid,
@@ -1282,8 +1282,8 @@ def test_create_transaction_event_for_transaction_session_missing_reference_with
         TransactionEventType.CHARGE_SUCCESS,
     ],
 )
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
-@patch("saleor.plugins.manager.PluginsManager.order_fully_paid")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_fully_paid")
 def test_create_transaction_event_for_transaction_session_call_webhook_order_updated(
     mock_order_fully_paid,
     mock_order_updated,
@@ -1319,8 +1319,8 @@ def test_create_transaction_event_for_transaction_session_call_webhook_order_upd
     mock_order_updated.assert_called_once_with(order_with_lines)
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
-@patch("saleor.plugins.manager.PluginsManager.order_fully_paid")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_fully_paid")
 def test_create_transaction_event_for_transaction_session_call_webhook_for_fully_paid(
     mock_order_fully_paid,
     mock_order_updated,

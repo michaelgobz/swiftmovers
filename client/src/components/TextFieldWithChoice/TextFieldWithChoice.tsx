@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import { TextFieldProps } from "@material-ui/core/TextField";
 import DropdownIcon from "@material-ui/icons/ArrowDropDown";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import React from "react";
 
 import MenuToggle from "../MenuToggle";

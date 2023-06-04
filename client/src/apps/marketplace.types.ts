@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-namespace
-export namespace GetV2SaleorAppsResponse {
-  export interface SaleorAppBase {
+export namespace GetV2swiftmoversAppsResponse {
+  export interface swiftmoversAppBase {
     name: {
       en: string;
     };
@@ -24,7 +24,7 @@ export namespace GetV2SaleorAppsResponse {
     }>;
   }
 
-  export type ReleasedSaleorApp = SaleorAppBase & {
+  export type ReleasedswiftmoversApp = swiftmoversAppBase & {
     repositoryUrl: string;
     supportUrl: string;
     privacyUrl: string;
@@ -32,9 +32,9 @@ export namespace GetV2SaleorAppsResponse {
     githubForkUrl?: string;
   };
 
-  export type ComingSoonSaleorApp = SaleorAppBase & {
+  export type ComingSoonswiftmoversApp = swiftmoversAppBase & {
     releaseDate: string;
   };
 
-  export type SaleorApp = ReleasedSaleorApp | ComingSoonSaleorApp;
+  export type swiftmoversApp = ReleasedswiftmoversApp | ComingSoonswiftmoversApp;
 }

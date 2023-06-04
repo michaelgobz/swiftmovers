@@ -15,7 +15,7 @@ import { sectionNames } from "@dashboard/intl";
 import { renderCollection, stopPropagation } from "@dashboard/misc";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Card, TableBody, TableCell, TableHead } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

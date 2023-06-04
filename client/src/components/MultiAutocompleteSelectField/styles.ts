@@ -1,5 +1,5 @@
 import { alpha } from "@material-ui/core/styles";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -56,7 +56,7 @@ export const useStyles = makeStyles(
       paddingRight: theme.spacing(1),
     },
     adornment: {
-      color: theme.palette.saleor.main[3],
+      color: theme.palette.swiftmovers.main[3],
       cursor: "pointer",
       userSelect: "none",
       display: "flex",

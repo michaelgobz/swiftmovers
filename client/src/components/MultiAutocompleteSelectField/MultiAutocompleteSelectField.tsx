@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import { ChevronIcon, IconButton } from "@saleor/macaw-ui";
+import { ChevronIcon, IconButton } from "@swiftmovers/macaw-ui";
 import clsx from "clsx";
 import Downshift, { ControllerStateAndHelpers } from "downshift";
 import { filter } from "fuzzaldrin";

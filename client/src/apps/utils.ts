@@ -2,29 +2,29 @@ import { getAppsConfig } from "@dashboard/config";
 import { AppInstallationFragment, JobStatusEnum } from "@dashboard/graphql";
 import { IntlShape } from "react-intl";
 
-import { GetV2SaleorAppsResponse } from "./marketplace.types";
+import { GetV2swiftmoversAppsResponse } from "./marketplace.types";
 import { appsMessages } from "./messages";
 import { AppLink } from "./types";
 
 const getInstallableMarketplaceApps = (
-  marketplaceAppList?: GetV2SaleorAppsResponse.SaleorApp[],
+  marketplaceAppList?: GetV2swiftmoversAppsResponse.swiftmoversApp[],
 ) =>
   marketplaceAppList?.filter(
     app => "manifestUrl" in app || "githubForkUrl" in app,
-  ) as GetV2SaleorAppsResponse.ReleasedSaleorApp[] | undefined;
+  ) as GetV2swiftmoversAppsResponse.ReleasedswiftmoversApp[] | undefined;
 
 const getComingSoonMarketplaceApps = (
-  marketplaceAppList?: GetV2SaleorAppsResponse.SaleorApp[],
+  marketplaceAppList?: GetV2swiftmoversAppsResponse.swiftmoversApp[],
 ) =>
   marketplaceAppList?.filter(
     app =>
       !("manifestUrl" in app) &&
       !("githubForkUrl" in app) &&
       "releaseDate" in app,
-  ) as GetV2SaleorAppsResponse.ComingSoonSaleorApp[] | undefined;
+  ) as GetV2swiftmoversAppsResponse.ComingSoonswiftmoversApp[] | undefined;
 
 const getAppManifestUrl = (
-  marketplaceApp: GetV2SaleorAppsResponse.SaleorApp,
+  marketplaceApp: GetV2swiftmoversAppsResponse.swiftmoversApp,
 ) => {
   if ("manifestUrl" in marketplaceApp) {
     return marketplaceApp.manifestUrl;
@@ -32,7 +32,7 @@ const getAppManifestUrl = (
 };
 
 export const resolveInstallationOfMarketplaceApp = (
-  marketplaceApp: GetV2SaleorAppsResponse.SaleorApp,
+  marketplaceApp: GetV2swiftmoversAppsResponse.swiftmoversApp,
   appInstallations?: AppInstallationFragment[],
 ) => {
   const manifestUrl = getAppManifestUrl(marketplaceApp);
@@ -46,7 +46,7 @@ export const resolveInstallationOfMarketplaceApp = (
 
 export const getMarketplaceAppsLists = (
   isMarketplaceAvailable: boolean,
-  marketplaceAppList?: GetV2SaleorAppsResponse.SaleorApp[],
+  marketplaceAppList?: GetV2swiftmoversAppsResponse.swiftmoversApp[],
 ) => {
   if (!isMarketplaceAvailable) {
     return {
@@ -71,7 +71,7 @@ export const isAppInTunnel = (manifestUrl: string) =>
 
 const prepareAppLinks = (
   intl: IntlShape,
-  app: GetV2SaleorAppsResponse.ReleasedSaleorApp,
+  app: GetV2swiftmoversAppsResponse.ReleasedswiftmoversApp,
 ): AppLink[] => [
   {
     name: intl.formatMessage(appsMessages.repository),
@@ -89,7 +89,7 @@ const prepareAppLinks = (
 
 interface GetAppDetailsOpts {
   intl: IntlShape;
-  app: GetV2SaleorAppsResponse.SaleorApp;
+  app: GetV2swiftmoversAppsResponse.swiftmoversApp;
   appInstallation?: AppInstallationFragment;
   navigateToAppInstallPage?: (url: string) => void;
   navigateToGithubForkPage?: (url?: string) => void;

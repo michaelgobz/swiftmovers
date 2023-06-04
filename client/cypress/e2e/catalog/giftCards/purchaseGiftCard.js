@@ -96,7 +96,7 @@ describe("As a customer I should be able to purchase gift card as a product", ()
   });
 
   it(
-    "should be able to purchase gift card as a product. TC: SALEOR_1008",
+    "should be able to purchase gift card as a product. TC: swiftmovers_1008",
     { tags: ["@giftCard", "@allEnv", "@stable"] },
     () => {
       giftCardData.tag = `${startsWith}${faker.datatype.number()}`;

@@ -7,7 +7,7 @@ license = "BSD-3-Clause"
 readme = "README.md"
 homepage = ""
 repository = "https://github.com/michaelgobz/swiftmovers"
-documentation = "https://docs.saleor.io/ for the saleor based modules"
+documentation = "https://docs.swiftmovers.io/ for the swiftmovers based modules"
 
   [tool.poetry.dependencies]
   python = "~3.9"

@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -29,7 +29,7 @@ export const useStyles = makeStyles(
 export const useMoneyDisplayStyles = makeStyles(
   theme => ({
     wrapper: {
-      color: theme.palette.saleor.main[2],
+      color: theme.palette.swiftmovers.main[2],
       margin: 0,
       textAlign: "left",
     },

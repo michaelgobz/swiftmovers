@@ -1,5 +1,5 @@
 import { alpha } from "@material-ui/core/styles";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({

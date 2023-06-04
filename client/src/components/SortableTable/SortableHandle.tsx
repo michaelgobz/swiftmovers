@@ -1,5 +1,5 @@
 import { TableCell } from "@material-ui/core";
-import { DragIcon, makeStyles } from "@saleor/macaw-ui";
+import { DragIcon, makeStyles } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { SortableHandle as SortableHandleHoc } from "react-sortable-hoc";
 

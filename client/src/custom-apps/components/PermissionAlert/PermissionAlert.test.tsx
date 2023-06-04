@@ -19,7 +19,7 @@ jest.mock("react-intl", () => ({
   defineMessages: jest.fn(x => x),
 }));
 
-jest.mock("@saleor/macaw-ui", () => ({
+jest.mock("@swiftmovers/macaw-ui", () => ({
   useTheme: jest.fn(() => () => ({})),
   useStyles: jest.fn(() => () => ({})),
   makeStyles: jest.fn(() => () => ({})),

@@ -10,8 +10,8 @@ import {
   IconButton,
   makeStyles,
   useTheme,
-} from "@saleor/macaw-ui";
-import { GripIcon, vars } from "@saleor/macaw-ui/next";
+} from "@swiftmovers/macaw-ui";
+import { GripIcon, vars } from "@swiftmovers/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

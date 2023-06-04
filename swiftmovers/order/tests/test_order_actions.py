@@ -83,11 +83,11 @@ def order_with_digital_line(order, digital_content, stock, site_settings):
 
 
 @patch(
-    "saleor.order.actions.send_fulfillment_confirmation_to_customer",
+    "swiftmovers.order.actions.send_fulfillment_confirmation_to_customer",
     wraps=send_fulfillment_confirmation_to_customer,
 )
 @patch(
-    "saleor.order.actions.send_payment_confirmation", wraps=send_payment_confirmation
+    "swiftmovers.order.actions.send_payment_confirmation", wraps=send_payment_confirmation
 )
 def test_handle_fully_paid_order_digital_lines(
     mock_send_payment_confirmation,
@@ -119,7 +119,7 @@ def test_handle_fully_paid_order_digital_lines(
     assert order.status == OrderStatus.FULFILLED
 
 
-@patch("saleor.order.actions.send_payment_confirmation")
+@patch("swiftmovers.order.actions.send_payment_confirmation")
 def test_handle_fully_paid_order(mock_send_payment_confirmation, order):
     manager = get_plugins_manager()
 
@@ -134,7 +134,7 @@ def test_handle_fully_paid_order(mock_send_payment_confirmation, order):
     mock_send_payment_confirmation.assert_called_once_with(order_info, manager)
 
 
-@patch("saleor.order.notifications.send_payment_confirmation")
+@patch("swiftmovers.order.notifications.send_payment_confirmation")
 def test_handle_fully_paid_order_no_email(mock_send_payment_confirmation, order):
     order.user = None
     order.user_email = ""
@@ -147,8 +147,8 @@ def test_handle_fully_paid_order_no_email(mock_send_payment_confirmation, order)
     assert not mock_send_payment_confirmation.called
 
 
-@patch("saleor.giftcard.utils.send_gift_card_notification")
-@patch("saleor.order.actions.send_payment_confirmation")
+@patch("swiftmovers.giftcard.utils.send_gift_card_notification")
+@patch("swiftmovers.order.actions.send_payment_confirmation")
 def test_handle_fully_paid_order_gift_cards_created(
     mock_send_payment_confirmation,
     send_notification_mock,
@@ -219,8 +219,8 @@ def test_handle_fully_paid_order_gift_cards_created(
     )
 
 
-@patch("saleor.giftcard.utils.send_gift_card_notification")
-@patch("saleor.order.actions.send_payment_confirmation")
+@patch("swiftmovers.giftcard.utils.send_gift_card_notification")
+@patch("swiftmovers.order.actions.send_payment_confirmation")
 def test_handle_fully_paid_order_gift_cards_not_created(
     mock_send_payment_confirmation,
     send_notification_mock,
@@ -402,7 +402,7 @@ def test_cancel_fulfillment_variant_witout_inventory_tracking(
     assert stock_quantity_before == line.order_line.variant.stocks.get().quantity
 
 
-@patch("saleor.order.actions.send_order_canceled_confirmation")
+@patch("swiftmovers.order.actions.send_order_canceled_confirmation")
 def test_cancel_order(
     send_order_canceled_confirmation_mock,
     fulfilled_order_with_all_cancelled_fulfillments,
@@ -433,7 +433,7 @@ def test_cancel_order(
     )
 
 
-@patch("saleor.order.actions.send_order_refunded_confirmation")
+@patch("swiftmovers.order.actions.send_order_refunded_confirmation")
 def test_order_refunded_by_user(
     send_order_refunded_confirmation_mock,
     order,
@@ -459,7 +459,7 @@ def test_order_refunded_by_user(
     )
 
 
-@patch("saleor.order.actions.send_order_refunded_confirmation")
+@patch("swiftmovers.order.actions.send_order_refunded_confirmation")
 def test_order_refunded_by_app(
     send_order_refunded_confirmation_mock,
     order,
@@ -597,8 +597,8 @@ def test_fulfill_order_lines_without_inventory_tracking(order_with_lines):
     assert line.quantity_fulfilled == quantity_fulfilled_before + line.quantity
 
 
-@patch("saleor.order.actions.send_fulfillment_confirmation_to_customer")
-@patch("saleor.order.utils.get_default_digital_content_settings")
+@patch("swiftmovers.order.actions.send_fulfillment_confirmation_to_customer")
+@patch("swiftmovers.order.utils.get_default_digital_content_settings")
 def test_fulfill_digital_lines(
     mock_digital_settings, mock_email_fulfillment, order_with_lines, media_root
 ):
@@ -636,8 +636,8 @@ def test_fulfill_digital_lines(
     assert mock_email_fulfillment.called
 
 
-@patch("saleor.order.actions.send_fulfillment_confirmation_to_customer")
-@patch("saleor.order.utils.get_default_digital_content_settings")
+@patch("swiftmovers.order.actions.send_fulfillment_confirmation_to_customer")
+@patch("swiftmovers.order.utils.get_default_digital_content_settings")
 def test_fulfill_digital_lines_no_allocation(
     mock_digital_settings, mock_email_fulfillment, order_with_lines, media_root
 ):
@@ -682,8 +682,8 @@ def test_fulfill_digital_lines_no_allocation(
     assert mock_email_fulfillment.called
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
-@patch("saleor.plugins.manager.PluginsManager.order_fully_paid")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_fully_paid")
 def test_order_transaction_updated_order_fully_paid(
     order_fully_paid, order_updated, order_with_lines, transaction_item_generator
 ):
@@ -714,8 +714,8 @@ def test_order_transaction_updated_order_fully_paid(
     order_updated.assert_called_once_with(order_with_lines)
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
-@patch("saleor.plugins.manager.PluginsManager.order_fully_paid")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_fully_paid")
 def test_order_transaction_updated_order_partially_paid(
     order_fully_paid, order_updated, order_with_lines, transaction_item_generator
 ):
@@ -746,8 +746,8 @@ def test_order_transaction_updated_order_partially_paid(
     order_updated.assert_called_once_with(order_with_lines)
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
-@patch("saleor.plugins.manager.PluginsManager.order_fully_paid")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_fully_paid")
 def test_order_transaction_updated_order_partially_paid_and_multiple_transactions(
     order_fully_paid, order_updated, order_with_lines, transaction_item_generator
 ):
@@ -781,8 +781,8 @@ def test_order_transaction_updated_order_partially_paid_and_multiple_transaction
     order_updated.assert_called_once_with(order_with_lines)
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
-@patch("saleor.plugins.manager.PluginsManager.order_fully_paid")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_fully_paid")
 def test_order_transaction_updated_with_the_same_transaction_charged_amount(
     order_fully_paid, order_updated, order_with_lines, transaction_item_generator
 ):
@@ -815,8 +815,8 @@ def test_order_transaction_updated_with_the_same_transaction_charged_amount(
     assert not order_updated.called
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
-@patch("saleor.plugins.manager.PluginsManager.order_fully_paid")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_fully_paid")
 def test_order_transaction_updated_order_authorized(
     order_fully_paid, order_updated, order_with_lines, transaction_item_generator
 ):
@@ -848,8 +848,8 @@ def test_order_transaction_updated_order_authorized(
     order_updated.assert_called_once_with(order_with_lines)
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
-@patch("saleor.plugins.manager.PluginsManager.order_fully_paid")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_fully_paid")
 def test_order_transaction_updated_order_partially_authorized_and_multiple_transactions(
     order_fully_paid, order_updated, order_with_lines, transaction_item_generator
 ):
@@ -883,8 +883,8 @@ def test_order_transaction_updated_order_partially_authorized_and_multiple_trans
     order_updated.assert_called_once_with(order_with_lines)
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
-@patch("saleor.plugins.manager.PluginsManager.order_fully_paid")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_fully_paid")
 def test_order_transaction_updated_with_the_same_transaction_authorized_amount(
     order_fully_paid, order_updated, order_with_lines, transaction_item_generator
 ):

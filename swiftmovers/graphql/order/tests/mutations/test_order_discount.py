@@ -280,7 +280,7 @@ def test_update_percentage_order_discount_to_order(
     assert discount_data["amount_value"] == str(discount_amount.amount)
 
 
-@patch("saleor.order.calculations.PluginsManager.calculate_order_shipping")
+@patch("swiftmovers.order.calculations.PluginsManager.calculate_order_shipping")
 @pytest.mark.parametrize("status", (OrderStatus.DRAFT, OrderStatus.UNCONFIRMED))
 def test_update_fixed_order_discount_to_order(
     mocked_function,
@@ -730,8 +730,8 @@ mutation OrderLineDiscountRemove($orderLineId: ID!){
 
 
 @pytest.mark.parametrize("status", (OrderStatus.DRAFT, OrderStatus.UNCONFIRMED))
-@patch("saleor.plugins.manager.PluginsManager.calculate_order_line_unit")
-@patch("saleor.plugins.manager.PluginsManager.calculate_order_line_total")
+@patch("swiftmovers.plugins.manager.PluginsManager.calculate_order_line_unit")
+@patch("swiftmovers.plugins.manager.PluginsManager.calculate_order_line_total")
 def test_delete_discount_from_order_line(
     mocked_calculate_order_line_total,
     mocked_calculate_order_line_unit,

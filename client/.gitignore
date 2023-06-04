@@ -41,7 +41,7 @@ dist/
 cypress/screenshots
 cypress/videos
 /results/
-/saleor/static/assets/
+/swiftmovers/static/assets/
 webpack-bundle.json
 /templates/templated_email/compiled/*
 !/templates/templated_email/compiled/.gitkeep

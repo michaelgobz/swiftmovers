@@ -28,7 +28,7 @@ def test_get_default_user_payload(customer_user):
 
 
 @freeze_time("2018-05-31 12:00:01")
-@mock.patch("saleor.plugins.manager.PluginsManager.notify")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_send_email_request_change(
     mocked_notify, site_settings, customer_user, channel_PLN
 ):
@@ -64,7 +64,7 @@ def test_send_email_request_change(
     )
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.notify")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_send_email_changed_notification(
     mocked_notify, site_settings, customer_user, channel_PLN
 ):
@@ -91,8 +91,8 @@ def test_send_email_changed_notification(
 
 
 @pytest.mark.parametrize("is_staff", [True, False])
-@mock.patch("saleor.account.notifications.default_token_generator.make_token")
-@mock.patch("saleor.plugins.manager.PluginsManager.notify")
+@mock.patch("swiftmovers.account.notifications.default_token_generator.make_token")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_send_password_reset_notification(
     mocked_notify, mocked_generator, is_staff, site_settings, customer_user, channel_PLN
 ):

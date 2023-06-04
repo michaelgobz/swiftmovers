@@ -3,7 +3,7 @@ import {
   GetExternalAccessTokenData,
   GetExternalAuthUrlData,
   LoginData,
-} from "@saleor/sdk";
+} from "@swiftmovers/sdk";
 
 export interface RequestExternalLoginInput {
   redirectUri: string;

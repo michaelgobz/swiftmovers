@@ -596,7 +596,7 @@ def test_fetch_order_prices_if_expired_plugins(
 
 
 @patch(
-    "saleor.order.calculations.update_order_prices_with_flat_rates",
+    "swiftmovers.order.calculations.update_order_prices_with_flat_rates",
     wraps=update_order_prices_with_flat_rates,
 )
 @pytest.mark.parametrize("prices_entered_with_tax", [True, False])
@@ -927,7 +927,7 @@ def test_fetch_order_prices_if_expired_flat_rates_and_no_tax_calc_strategy(
     assert order.shipping_tax_rate == Decimal("0.2300")
 
 
-@patch("saleor.order.calculations.fetch_order_prices_if_expired")
+@patch("swiftmovers.order.calculations.fetch_order_prices_if_expired")
 def test_order_line_unit(mocked_fetch_order_prices_if_expired):
     # given
     expected_line_unit_price = create_taxed_money(
@@ -955,7 +955,7 @@ def test_order_line_unit(mocked_fetch_order_prices_if_expired):
     )
 
 
-@patch("saleor.order.calculations.fetch_order_prices_if_expired")
+@patch("swiftmovers.order.calculations.fetch_order_prices_if_expired")
 def test_order_line_total(mocked_fetch_order_prices_if_expired):
     # given
     expected_line_total_price = create_taxed_money(
@@ -983,7 +983,7 @@ def test_order_line_total(mocked_fetch_order_prices_if_expired):
     )
 
 
-@patch("saleor.order.calculations.fetch_order_prices_if_expired")
+@patch("swiftmovers.order.calculations.fetch_order_prices_if_expired")
 def test_order_line_tax_rate(mocked_fetch_order_prices_if_expired):
     # given
     expected_line_tax_rate = sentinel.TAX_RATE
@@ -998,7 +998,7 @@ def test_order_line_tax_rate(mocked_fetch_order_prices_if_expired):
     assert line_tax_rate == expected_line_tax_rate
 
 
-@patch("saleor.order.calculations.fetch_order_prices_if_expired")
+@patch("swiftmovers.order.calculations.fetch_order_prices_if_expired")
 def test_order_shipping(mocked_fetch_order_prices_if_expired):
     # given
     expected_shipping_price = Decimal("1234.0000")
@@ -1013,7 +1013,7 @@ def test_order_shipping(mocked_fetch_order_prices_if_expired):
     assert shipping_price == quantize_price(expected_shipping_price, order.currency)
 
 
-@patch("saleor.order.calculations.fetch_order_prices_if_expired")
+@patch("swiftmovers.order.calculations.fetch_order_prices_if_expired")
 def test_order_shipping_tax_rate(mocked_fetch_order_prices_if_expired):
     # given
     expected_shipping_tax_rate = sentinel.SHIPPING_TAX_RATE
@@ -1028,7 +1028,7 @@ def test_order_shipping_tax_rate(mocked_fetch_order_prices_if_expired):
     assert shipping_tax_rate == expected_shipping_tax_rate
 
 
-@patch("saleor.order.calculations.fetch_order_prices_if_expired")
+@patch("swiftmovers.order.calculations.fetch_order_prices_if_expired")
 def test_order_total(mocked_fetch_order_prices_if_expired):
     # given
     expected_total = Decimal("1234.0000")
@@ -1043,7 +1043,7 @@ def test_order_total(mocked_fetch_order_prices_if_expired):
     assert total == quantize_price(expected_total, order.currency)
 
 
-@patch("saleor.order.calculations.fetch_order_prices_if_expired")
+@patch("swiftmovers.order.calculations.fetch_order_prices_if_expired")
 def test_order_subtotal(mocked_fetch_order_prices_if_expired):
     # given
     currency = "USD"
@@ -1071,7 +1071,7 @@ def test_order_subtotal(mocked_fetch_order_prices_if_expired):
     assert subtotal == expected_subtotal
 
 
-@patch("saleor.order.calculations.fetch_order_prices_if_expired")
+@patch("swiftmovers.order.calculations.fetch_order_prices_if_expired")
 def test_order_undiscounted_total(mocked_fetch_order_prices_if_expired):
     # given
     expected_undiscounted_total = Decimal("1234.0000")

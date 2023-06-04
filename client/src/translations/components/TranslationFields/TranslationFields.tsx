@@ -18,7 +18,7 @@ import {
   ConfirmButtonTransitionState,
   IconButton,
   makeStyles,
-} from "@saleor/macaw-ui";
+} from "@swiftmovers/macaw-ui";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";

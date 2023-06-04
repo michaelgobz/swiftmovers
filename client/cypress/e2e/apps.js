@@ -103,7 +103,7 @@ describe("As a staff user I want to manage apps", () => {
   });
 
   it(
-    "should be able to create app. TC: SALEOR_3001",
+    "should be able to create app. TC: swiftmovers_3001",
     { tags: ["@app", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       const randomAppName = `${startsWith}${faker.datatype.number()}`;
@@ -133,7 +133,7 @@ describe("As a staff user I want to manage apps", () => {
   );
 
   it(
-    "should be able to create webhook. TC: SALEOR_3002",
+    "should be able to create webhook. TC: swiftmovers_3002",
     { tags: ["@app", "@allEnv", "@stable"] },
     () => {
       const randomWebhookName = `${startsWith}${faker.datatype.number()}`;
@@ -157,7 +157,7 @@ describe("As a staff user I want to manage apps", () => {
   );
 
   it(
-    "should be able to create token. TC: SALEOR_3003",
+    "should be able to create token. TC: swiftmovers_3003",
     { tags: ["@app", "@allEnv", "@stable"] },
     () => {
       const randomTokenName = `${startsWith}${faker.datatype.number()}`;
@@ -191,7 +191,7 @@ describe("As a staff user I want to manage apps", () => {
   );
 
   it(
-    "should be able to use app only to manage giftCards. TC: SALEOR_3004",
+    "should be able to use app only to manage giftCards. TC: swiftmovers_3004",
     { tags: ["@app", "@allEnv", "@stable"] },
     () => {
       const startsWith = "AppPermission-";
@@ -223,7 +223,7 @@ describe("As a staff user I want to manage apps", () => {
   );
 
   it(
-    "should be able to use app to create order from checkout. TC: SALEOR_3005",
+    "should be able to use app to create order from checkout. TC: swiftmovers_3005",
     { tags: ["@app", "@allEnv", "@stable"] },
     () => {
       const token = createdApp.authToken;

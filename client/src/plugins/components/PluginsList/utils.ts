@@ -1,6 +1,6 @@
 import { Pill } from "@dashboard/components/ChannelsAvailabilityMenuContent";
 import { PluginConfigurationBaseFragment } from "@dashboard/graphql";
-import { PillColor } from "@saleor/macaw-ui";
+import { PillColor } from "@swiftmovers/macaw-ui";
 import { MessageDescriptor } from "react-intl";
 
 import { pluginStatusMessages } from "./messages";

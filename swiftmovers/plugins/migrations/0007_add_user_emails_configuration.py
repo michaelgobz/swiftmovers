@@ -7,7 +7,7 @@ from django.utils.module_loading import import_string
 
 
 def populate_email_config_in_user_email_plugin(apps, schema):
-    user_email_path = "saleor.plugins.user_email.plugin.UserEmailPlugin"
+    user_email_path = "swiftmovers.plugins.user_email.plugin.UserEmailPlugin"
     if user_email_path not in settings.PLUGINS:
         return
 

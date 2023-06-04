@@ -112,7 +112,7 @@ describe("As an admin I want to manage stock reservation", () => {
   });
 
   it(
-    "should be able to set stock reservation for authenticated customer in checkout. TC: SALEOR_0415",
+    "should be able to set stock reservation for authenticated customer in checkout. TC: swiftmovers_0415",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       dataForCheckout.auth = customerType.authenticated;
@@ -132,7 +132,7 @@ describe("As an admin I want to manage stock reservation", () => {
   );
 
   it(
-    "should be able to set stock reservation for anonymous customer in checkout. TC: SALEOR_0416",
+    "should be able to set stock reservation for anonymous customer in checkout. TC: swiftmovers_0416",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       dataForCheckout.auth = customerType.anonymous;
@@ -152,7 +152,7 @@ describe("As an admin I want to manage stock reservation", () => {
   );
 
   it(
-    "should be able to leave empty stock reservation for authenticated customer in checkout. TC: SALEOR_0417",
+    "should be able to leave empty stock reservation for authenticated customer in checkout. TC: swiftmovers_0417",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       dataForCheckout.auth = customerType.authenticated;
@@ -170,7 +170,7 @@ describe("As an admin I want to manage stock reservation", () => {
   );
 
   it(
-    "should be able to leave empty stock reservation for anonymous customer in checkout. TC: SALEOR_0418",
+    "should be able to leave empty stock reservation for anonymous customer in checkout. TC: swiftmovers_0418",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       dataForCheckout.auth = customerType.anonymous;

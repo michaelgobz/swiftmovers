@@ -2,7 +2,7 @@ import { isDarkTheme } from "@dashboard/misc";
 import { alpha } from "@material-ui/core/styles";
 import ArrowLeft from "@material-ui/icons/ArrowLeft";
 import ArrowRight from "@material-ui/icons/ArrowRight";
-import { IconButton, makeStyles, useTheme } from "@saleor/macaw-ui";
+import { IconButton, makeStyles, useTheme } from "@swiftmovers/macaw-ui";
 import clsx from "clsx";
 import React from "react";
 

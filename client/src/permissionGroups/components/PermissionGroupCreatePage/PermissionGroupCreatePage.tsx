@@ -14,7 +14,7 @@ import { sectionNames } from "@dashboard/intl";
 import { permissionGroupListUrl } from "@dashboard/permissionGroups/urls";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -96,7 +96,7 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
               description={intl.formatMessage({
                 id: "CYZse9",
                 defaultMessage:
-                  "Expand or restrict group's permissions to access certain part of saleor system.",
+                  "Expand or restrict group's permissions to access certain part of swiftmovers system.",
                 description: "card description",
               })}
             />

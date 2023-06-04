@@ -2,7 +2,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { removeAtIndex, updateAtIndex } from "@dashboard/utils/lists";
 import { TableBody, TableCell, TextField } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton } from "@swiftmovers/macaw-ui";
 import clsx from "clsx";
 import React, { ChangeEvent } from "react";
 import { useIntl } from "react-intl";

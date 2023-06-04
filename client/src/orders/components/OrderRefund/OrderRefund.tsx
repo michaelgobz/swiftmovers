@@ -1,7 +1,7 @@
 import CardTitle from "@dashboard/components/CardTitle";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
 import { Card, CardContent } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 

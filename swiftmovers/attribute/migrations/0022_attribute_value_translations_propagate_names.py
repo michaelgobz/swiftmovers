@@ -9,7 +9,7 @@ from django.template.defaultfilters import truncatechars
 from django.utils.html import strip_tags
 from urllib3.util import parse_url
 
-# Start copy of /saleor/core/utils/editorjs.py
+# Start copy of /swiftmovers/core/utils/editorjs.py
 BLACKLISTED_URL_SCHEMES = ("javascript",)
 HYPERLINK_TAG_WITH_URL_PATTERN = r"(.*?<a\s+href=\\?\")(\w+://\S+[^\\])(\\?\">)"
 
@@ -93,7 +93,7 @@ def clean_text_data(text: str):
     return new_text if new_text else text
 
 
-# End copy of /saleor/core/utils/editorjs.py
+# End copy of /swiftmovers/core/utils/editorjs.py
 
 
 def queryset_in_batches(queryset):

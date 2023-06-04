@@ -6,7 +6,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { OrderDetailsFragment, OrderLineFragment } from "@dashboard/graphql";
 import { maybe } from "@dashboard/misc";
 import { TableCell } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import React from "react";
 
 const useStyles = makeStyles(

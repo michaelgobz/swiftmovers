@@ -26,7 +26,7 @@ mutation AppFetchManifest($manifest_url: String!){
         code
       }
       audience
-      requiredSaleorVersion{
+      requiredswiftmoversVersion{
         constraint
         satisfied
       }
@@ -83,7 +83,7 @@ def test_app_fetch_manifest(staff_api_client, staff_user, permission_manage_apps
         "MANAGE_ORDERS",
         "MANAGE_USERS",
     }
-    assert manifest["requiredSaleorVersion"] is None
+    assert manifest["requiredswiftmoversVersion"] is None
 
 
 @pytest.mark.vcr
@@ -177,7 +177,7 @@ def test_app_fetch_manifest_timeout(
     mocked_request = Mock()
     mocked_request.side_effect = requests.Timeout()
     monkeypatch.setattr(
-        "saleor.graphql.app.mutations.app_fetch_manifest.requests.get", mocked_request
+        "swiftmovers.graphql.app.mutations.app_fetch_manifest.requests.get", mocked_request
     )
     manifest_url = "http://localhost:3000/manifest-doesnt-exist"
     query = APP_FETCH_MANIFEST_MUTATION
@@ -636,12 +636,12 @@ def test_app_fetch_manifest_with_extensions(
     assert extension["target"] == AppExtensionTargetEnum.POPUP.name
 
 
-def test_app_fetch_manifest_with_required_saleor_version(
+def test_app_fetch_manifest_with_required_swiftmovers_version(
     staff_api_client, app_manifest, permission_manage_apps, monkeypatch
 ):
     # given
-    required_saleor_version = "<3.11"
-    app_manifest["requiredSaleorVersion"] = required_saleor_version
+    required_swiftmovers_version = "<3.11"
+    app_manifest["requiredswiftmoversVersion"] = required_swiftmovers_version
     mocked_get_response = Mock()
     mocked_get_response.json.return_value = app_manifest
     monkeypatch.setattr(requests, "get", Mock(return_value=mocked_get_response))
@@ -657,18 +657,18 @@ def test_app_fetch_manifest_with_required_saleor_version(
     content = get_graphql_content(response)
     manifest = content["data"]["appFetchManifest"]["manifest"]
     assert len(content["data"]["appFetchManifest"]["errors"]) == 0
-    assert manifest["requiredSaleorVersion"] == {
-        "constraint": required_saleor_version,
+    assert manifest["requiredswiftmoversVersion"] == {
+        "constraint": required_swiftmovers_version,
         "satisfied": False,
     }
 
 
-def test_app_fetch_manifest_with_invalid_required_saleor_version(
+def test_app_fetch_manifest_with_invalid_required_swiftmovers_version(
     staff_api_client, app_manifest, permission_manage_apps, monkeypatch
 ):
     # given
-    required_saleor_version = "3.wrong.1"
-    app_manifest["requiredSaleorVersion"] = required_saleor_version
+    required_swiftmovers_version = "3.wrong.1"
+    app_manifest["requiredswiftmoversVersion"] = required_swiftmovers_version
     mocked_get_response = Mock()
     mocked_get_response.json.return_value = app_manifest
     monkeypatch.setattr(requests, "get", Mock(return_value=mocked_get_response))
@@ -684,7 +684,7 @@ def test_app_fetch_manifest_with_invalid_required_saleor_version(
     content = get_graphql_content(response)
     errors = content["data"]["appFetchManifest"]["errors"]
     assert len(errors) == 1
-    assert errors[0]["field"] == "requiredSaleorVersion"
+    assert errors[0]["field"] == "requiredswiftmoversVersion"
     assert errors[0]["code"] == AppErrorCode.INVALID.name
 
 

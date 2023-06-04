@@ -17,8 +17,8 @@ from ..availability import (
 from ..models import PreorderReservation
 
 
-@patch("saleor.warehouse.availability.check_preorder_threshold_in_orders")
-@patch("saleor.warehouse.availability.check_stock_quantity")
+@patch("swiftmovers.warehouse.availability.check_preorder_threshold_in_orders")
+@patch("swiftmovers.warehouse.availability.check_stock_quantity")
 def test_check_stock_and_preorder_quantity(
     mock_check_stock_quantity,
     mock_check_preorder_threshold,
@@ -41,8 +41,8 @@ def test_check_stock_and_preorder_quantity(
     assert mock_check_preorder_threshold.call_args[0][1] == 1
 
 
-@patch("saleor.warehouse.availability.check_preorder_threshold_bulk")
-@patch("saleor.warehouse.availability.check_stock_quantity_bulk")
+@patch("swiftmovers.warehouse.availability.check_preorder_threshold_bulk")
+@patch("swiftmovers.warehouse.availability.check_stock_quantity_bulk")
 def test_check_stock_and_preorder_quantity_bulk(
     mock_check_stock_quantity_bulk,
     mock_check_preorder_threshold_bulk,

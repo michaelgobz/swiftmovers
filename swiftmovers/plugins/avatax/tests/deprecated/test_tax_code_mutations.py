@@ -29,7 +29,7 @@ PRODUCT_TYPE_CREATE_MUTATION_TAX_CODE = """
 """
 
 
-@override_settings(PLUGINS=["saleor.plugins.avatax.plugin.AvataxPlugin"])
+@override_settings(PLUGINS=["swiftmovers.plugins.avatax.plugin.AvataxPlugin"])
 def test_product_type_create_tax_code_creates_new_tax_class(
     staff_api_client,
     permission_manage_product_types_and_attributes,
@@ -40,7 +40,7 @@ def test_product_type_create_tax_code_creates_new_tax_class(
     plugin_configuration()
     tax_code = "P0000000"
     monkeypatch.setattr(
-        "saleor.plugins.avatax.plugin.get_cached_tax_codes_or_fetch",
+        "swiftmovers.plugins.avatax.plugin.get_cached_tax_codes_or_fetch",
         lambda _: {tax_code: "desc"},
     )
     variables = {"name": "New product type", "taxCode": tax_code}
@@ -90,7 +90,7 @@ PRODUCT_TYPE_UPDATE_MUTATION_TAX_CODE = """
 """
 
 
-@override_settings(PLUGINS=["saleor.plugins.avatax.plugin.AvataxPlugin"])
+@override_settings(PLUGINS=["swiftmovers.plugins.avatax.plugin.AvataxPlugin"])
 def test_product_type_update_tax_code_creates_new_tax_class(
     staff_api_client,
     product_type,
@@ -102,7 +102,7 @@ def test_product_type_update_tax_code_creates_new_tax_class(
     plugin_configuration()
     tax_code = "P0000000"
     monkeypatch.setattr(
-        "saleor.plugins.avatax.plugin.get_cached_tax_codes_or_fetch",
+        "swiftmovers.plugins.avatax.plugin.get_cached_tax_codes_or_fetch",
         lambda _: {tax_code: "desc"},
     )
     variables = {
@@ -154,7 +154,7 @@ PRODUCT_CREATE_MUTATION_TAX_CODE = """
 """
 
 
-@override_settings(PLUGINS=["saleor.plugins.avatax.plugin.AvataxPlugin"])
+@override_settings(PLUGINS=["swiftmovers.plugins.avatax.plugin.AvataxPlugin"])
 def test_product_create_tax_code_creates_new_tax_class(
     staff_api_client,
     product_type,
@@ -166,7 +166,7 @@ def test_product_create_tax_code_creates_new_tax_class(
     plugin_configuration()
     tax_code = "P0000000"
     monkeypatch.setattr(
-        "saleor.plugins.avatax.plugin.get_cached_tax_codes_or_fetch",
+        "swiftmovers.plugins.avatax.plugin.get_cached_tax_codes_or_fetch",
         lambda _: {tax_code: "desc"},
     )
     variables = {
@@ -219,7 +219,7 @@ PRODUCT_UPDATE_MUTATION_TAX_CODE = """
 """
 
 
-@override_settings(PLUGINS=["saleor.plugins.avatax.plugin.AvataxPlugin"])
+@override_settings(PLUGINS=["swiftmovers.plugins.avatax.plugin.AvataxPlugin"])
 def test_product_update_tax_code_creates_new_tax_class(
     staff_api_client,
     permission_manage_products,
@@ -231,7 +231,7 @@ def test_product_update_tax_code_creates_new_tax_class(
     plugin_configuration()
     tax_code = "P0000000"
     monkeypatch.setattr(
-        "saleor.plugins.avatax.plugin.get_cached_tax_codes_or_fetch",
+        "swiftmovers.plugins.avatax.plugin.get_cached_tax_codes_or_fetch",
         lambda _: {tax_code: "desc"},
     )
     variables = {

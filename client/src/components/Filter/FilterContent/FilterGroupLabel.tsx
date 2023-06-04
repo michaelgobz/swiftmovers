@@ -1,5 +1,5 @@
 import { Checkbox, FormControlLabel } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import React from "react";
 
 import { FilterFieldBaseProps } from "../types";

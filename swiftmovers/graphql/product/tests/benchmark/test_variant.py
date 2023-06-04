@@ -236,7 +236,7 @@ def test_product_variant_create(
         }
     }
     """
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
     product = product_available_in_many_channels
     product_id = graphene.Node.to_global_id("Product", product.pk)
     sku = "1"
@@ -324,7 +324,7 @@ def test_update_product_variant(
         }
     }
     """
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
     product = product_available_in_many_channels
     variant = product.variants.first()
     product_image = ProductMedia.objects.create(product=product, image=image)

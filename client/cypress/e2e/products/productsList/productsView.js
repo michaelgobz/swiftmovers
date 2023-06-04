@@ -19,7 +19,7 @@ describe("As an user I should be able switch between product views", () => {
   });
 
   it(
-    "should be able to switch between products view TC: SALEOR_2610",
+    "should be able to switch between products view TC: swiftmovers_2610",
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
       cy.get(PRODUCTS_LIST.datagridViewButton)

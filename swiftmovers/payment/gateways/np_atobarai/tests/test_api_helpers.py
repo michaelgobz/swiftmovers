@@ -44,10 +44,10 @@ def format_address_side_effect(config, address):
 
 
 @patch(
-    "saleor.payment.gateways.np_atobarai.api_helpers.format_address",
+    "swiftmovers.payment.gateways.np_atobarai.api_helpers.format_address",
     new=Mock(side_effect=format_address_side_effect),
 )
-@patch("saleor.payment.gateways.np_atobarai.api_helpers._request", new=Mock())
+@patch("swiftmovers.payment.gateways.np_atobarai.api_helpers._request", new=Mock())
 def test_register_invalid_billing_address(config, np_payment_data):
     # given
     np_payment_data.billing = INVALID
@@ -61,10 +61,10 @@ def test_register_invalid_billing_address(config, np_payment_data):
 
 
 @patch(
-    "saleor.payment.gateways.np_atobarai.api_helpers.format_address",
+    "swiftmovers.payment.gateways.np_atobarai.api_helpers.format_address",
     new=Mock(side_effect=format_address_side_effect),
 )
-@patch("saleor.payment.gateways.np_atobarai.api_helpers._request", new=Mock())
+@patch("swiftmovers.payment.gateways.np_atobarai.api_helpers._request", new=Mock())
 def test_register_invalid_shipping_address(config, np_payment_data):
     # given
     np_payment_data.shipping = INVALID

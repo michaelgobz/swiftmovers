@@ -69,8 +69,8 @@ mutation TransactionRequestAction(
         (Decimal("100"), Decimal("10.00")),
     ],
 )
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_action_request")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_action_request")
 def test_transaction_request_charge_action_for_order(
     mocked_payment_action_request,
     mocked_is_active,
@@ -146,8 +146,8 @@ def test_transaction_request_charge_action_for_order(
         (Decimal("100"), Decimal("10.00")),
     ],
 )
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_action_request")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_action_request")
 def test_transaction_request_refund_action_for_order(
     mocked_payment_action_request,
     mocked_is_active,
@@ -215,8 +215,8 @@ def test_transaction_request_refund_action_for_order(
     )
 
 
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_action_request")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_action_request")
 def test_transaction_request_void_action_for_order(
     mocked_payment_action_request,
     mocked_is_active,
@@ -278,8 +278,8 @@ def test_transaction_request_void_action_for_order(
     )
 
 
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_action_request")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_action_request")
 def test_transaction_request_void_action_for_checkout(
     mocked_payment_action_request,
     mocked_is_active,
@@ -346,8 +346,8 @@ def test_transaction_request_void_action_for_checkout(
         (Decimal("100"), Decimal("10.00")),
     ],
 )
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_action_request")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_action_request")
 def test_transaction_request_charge_action_for_checkout(
     mocked_payment_action_request,
     mocked_is_active,
@@ -418,8 +418,8 @@ def test_transaction_request_charge_action_for_checkout(
         (Decimal("100"), Decimal("10.00")),
     ],
 )
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_action_request")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_action_request")
 def test_transaction_request_refund_action_for_checkout(
     mocked_payment_action_request,
     mocked_is_active,
@@ -482,8 +482,8 @@ def test_transaction_request_refund_action_for_checkout(
     )
 
 
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_action_request")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_action_request")
 def test_transaction_action_request_uses_handle_payment_permission(
     mocked_payment_action_request,
     mocked_is_active,
@@ -566,7 +566,7 @@ def test_transaction_request_action_missing_permission(
     assert_no_permission(response)
 
 
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
 def test_transaction_request_action_missing_event(
     mocked_is_active, staff_api_client, permission_manage_payments, order
 ):
@@ -617,7 +617,7 @@ def transaction_request_webhook(permission_manage_payments):
     app = App.objects.create(
         name="Sample app objects",
         is_active=True,
-        identifier="saleor.app.payment",
+        identifier="swiftmovers.app.payment",
     )
     app.permissions.set([permission_manage_payments])
     webhook = app.webhooks.create(
@@ -635,8 +635,8 @@ def transaction_request_webhook(permission_manage_payments):
         (Decimal("100"), Decimal("10.00")),
     ],
 )
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_charge_requested")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_charge_requested")
 def test_transaction_request_charge_for_order(
     mocked_payment_action_request,
     mocked_is_active,
@@ -719,8 +719,8 @@ def test_transaction_request_charge_for_order(
         (Decimal("100"), Decimal("10.00")),
     ],
 )
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_refund_requested")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_refund_requested")
 def test_transaction_request_refund_for_order(
     mocked_payment_action_request,
     mocked_is_active,
@@ -793,8 +793,8 @@ def test_transaction_request_refund_for_order(
     )
 
 
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_cancelation_requested")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_cancelation_requested")
 def test_transaction_request_cancelation_for_order(
     mocked_payment_action_request,
     mocked_is_active,
@@ -864,8 +864,8 @@ def test_transaction_request_cancelation_for_order(
     )
 
 
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_cancelation_requested")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_cancelation_requested")
 def test_transaction_request_cancelation_for_checkout(
     mocked_payment_action_request,
     mocked_is_active,
@@ -939,8 +939,8 @@ def test_transaction_request_cancelation_for_checkout(
         (Decimal("100"), Decimal("10.00")),
     ],
 )
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_charge_requested")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_charge_requested")
 def test_transaction_request_charge_for_checkout(
     mocked_payment_action_request,
     mocked_is_active,
@@ -1017,8 +1017,8 @@ def test_transaction_request_charge_for_checkout(
         (Decimal("100"), Decimal("10.00")),
     ],
 )
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_refund_requested")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_refund_requested")
 def test_transaction_request_refund_for_checkout(
     mocked_payment_action_request,
     mocked_is_active,
@@ -1087,8 +1087,8 @@ def test_transaction_request_refund_for_checkout(
     )
 
 
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_refund_requested")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_refund_requested")
 def test_transaction_request_refund_when_app_reinstalled(
     mocked_payment_action_request,
     mocked_is_active,
@@ -1157,8 +1157,8 @@ def test_transaction_request_refund_when_app_reinstalled(
     )
 
 
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_refund_requested")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_refund_requested")
 def test_transaction_request_uses_handle_payment_permission(
     mocked_payment_action_request,
     mocked_is_active,
@@ -1254,8 +1254,8 @@ def test_transaction_request_missing_permission(
     assert_no_permission(response)
 
 
-@patch("saleor.payment.gateway.get_webhooks_for_event")
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.payment.gateway.get_webhooks_for_event")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
 def test_transaction_request_missing_event(
     mocked_is_active,
     mocked_get_webhooks,

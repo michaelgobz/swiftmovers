@@ -19,7 +19,7 @@ WEBHOOK_DELIVERY_RETRY_MUTATION = """
 """
 
 
-@patch("saleor.plugins.manager.PluginsManager.event_delivery_retry")
+@patch("swiftmovers.plugins.manager.PluginsManager.event_delivery_retry")
 def test_delivery_retry_mutation(
     mocked_send_request_async,
     app_api_client,

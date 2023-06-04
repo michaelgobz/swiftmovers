@@ -77,7 +77,7 @@ describe("As a user I should be able to update and delete shipping method", () =
   });
 
   it(
-    "should be able to update shipping rate. TC: SALEOR_0806",
+    "should be able to update shipping rate. TC: swiftmovers_0806",
     { tags: ["@shipping", "@allEnv", "@stable"] },
     () => {
       const updatedRateName = `${startsWith}Updated`;
@@ -106,7 +106,7 @@ describe("As a user I should be able to update and delete shipping method", () =
   );
 
   it(
-    "should be able to delete shipping rate. TC: SALEOR_0807",
+    "should be able to delete shipping rate. TC: swiftmovers_0807",
     { tags: ["@shipping", "@allEnv", "@stable"] },
     () => {
       cy.visit(

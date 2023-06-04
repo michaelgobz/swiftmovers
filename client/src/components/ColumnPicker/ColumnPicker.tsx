@@ -7,8 +7,8 @@ import {
   IconButton,
   IconButtonProps,
   makeStyles,
-} from "@saleor/macaw-ui";
-import { TableEditIcon } from "@saleor/macaw-ui/next";
+} from "@swiftmovers/macaw-ui";
+import { TableEditIcon } from "@swiftmovers/macaw-ui/next";
 import { score } from "fuzzaldrin";
 import sortBy from "lodash/sortBy";
 import React from "react";

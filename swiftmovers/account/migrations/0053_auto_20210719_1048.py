@@ -3,7 +3,7 @@
 import django.contrib.postgres.indexes
 from django.db import migrations
 
-import saleor.account.models
+import swiftmovers.account.models
 
 
 class Migration(migrations.Migration):
@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="address",
             name="phone",
-            field=saleor.account.models.PossiblePhoneNumberField(
+            field=swiftmovers.account.models.PossiblePhoneNumberField(
                 blank=True, db_index=True, default="", max_length=128, region=None
             ),
         ),

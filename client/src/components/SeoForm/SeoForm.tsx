@@ -6,8 +6,8 @@ import {
 import { getFieldError, getProductErrorMessage } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
 import { TextField } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Button, Input, Text } from "@saleor/macaw-ui/next";
+import { makeStyles } from "@swiftmovers/macaw-ui";
+import { Box, Button, Input, Text } from "@swiftmovers/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

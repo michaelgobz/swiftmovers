@@ -60,7 +60,7 @@ describe("As a user I should be able to update and delete shipping zone", () => 
   });
 
   it(
-    "should be able to update shipping zone. TC: SALEOR_0808",
+    "should be able to update shipping zone. TC: swiftmovers_0808",
     { tags: ["@shipping", "@allEnv", "@stable"] },
     () => {
       const updatedName = `${startsWith}Updated`;
@@ -83,7 +83,7 @@ describe("As a user I should be able to update and delete shipping zone", () => 
   );
 
   it(
-    "should be able to delete shipping zone. TC: SALEOR_0809",
+    "should be able to delete shipping zone. TC: swiftmovers_0809",
     { tags: ["@shipping", "@allEnv", "@stable"] },
     () => {
       cy.visit(
@@ -94,7 +94,7 @@ describe("As a user I should be able to update and delete shipping zone", () => 
   );
 
   it(
-    "should be able to delete several shipping zones on shipping zones list page. TC: SALEOR_0810",
+    "should be able to delete several shipping zones on shipping zones list page. TC: swiftmovers_0810",
     { tags: ["@shipping", "@allEnv", "@stable"] },
     () => {
       let secondShippingZone;

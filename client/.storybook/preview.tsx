@@ -1,4 +1,4 @@
-import "@saleor/macaw-ui/next/style";
+import "@swiftmovers/macaw-ui/next/style";
 
 import type { Decorator, Preview } from "@storybook/react";
 import React from "react";

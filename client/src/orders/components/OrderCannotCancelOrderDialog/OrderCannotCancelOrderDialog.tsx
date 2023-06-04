@@ -8,7 +8,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -34,7 +34,7 @@ const OrderCannotCancelOrderDialog: React.FC<DialogProps> = ({
       <DialogTitle disableTypography>
         <FormattedMessage
           id="NhQboB"
-          defaultMessage="Saleor couldn’t cancel order"
+          defaultMessage="swiftmovers couldn’t cancel order"
           description="dialog header"
         />
       </DialogTitle>

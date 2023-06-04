@@ -12,7 +12,7 @@ import {
 } from "@dashboard/productTypes/fixtures";
 import { taxClasses } from "@dashboard/taxes/fixtures";
 import { warehouseList } from "@dashboard/warehouses/fixtures";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@swiftmovers/macaw-ui";
 import React from "react";
 
 import { product as productFixture } from "../../fixtures";

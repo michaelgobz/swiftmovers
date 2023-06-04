@@ -2,8 +2,8 @@ from django.contrib.auth import validators
 from django.db import migrations, models
 from django.utils import timezone
 
-from saleor.permission.models import PermissionManager
-from saleor.account.models import GroupManager, UserManager
+from swiftmovers.permission.models import PermissionManager
+from swiftmovers.account.models import GroupManager, UserManager
 
 
 class Migration(migrations.Migration):

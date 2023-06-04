@@ -11,7 +11,7 @@ import {
   NotifyReady,
   RedirectAction,
   UpdateRouting,
-} from "@saleor/app-sdk/app-bridge";
+} from "@swiftmovers/app-sdk/app-bridge";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
 

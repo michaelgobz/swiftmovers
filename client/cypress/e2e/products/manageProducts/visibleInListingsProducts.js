@@ -54,7 +54,7 @@ describe("Products displayed in listings", () => {
   });
 
   it(
-    "should update product to be visible in listings. TC: SALEOR_2505",
+    "should update product to be visible in listings. TC: swiftmovers_2505",
     { tags: ["@products", "@allEnv"] },
     () => {
       const productName = `${startsWith}${faker.datatype.number()}`;
@@ -87,7 +87,7 @@ describe("Products displayed in listings", () => {
   );
 
   it(
-    "should update product to not be visible in listings. TC: SALEOR_2506",
+    "should update product to not be visible in listings. TC: swiftmovers_2506",
     { tags: ["@products", "@allEnv"] },
     () => {
       const productName = `${startsWith}${faker.datatype.number()}`;

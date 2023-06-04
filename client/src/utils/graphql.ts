@@ -37,7 +37,7 @@ export const encodeGraphQLStatement = (editorContent: EditorContent) => {
       ? ""
       : LzString.compressToEncodedURIComponent(stringifiedContent);
 
-  return `saleor/${editorContentToSaveInUrl}`;
+  return `swiftmovers/${editorContentToSaveInUrl}`;
 };
 
 interface PlaygroundOpenHandlerInput {

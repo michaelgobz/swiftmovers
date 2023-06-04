@@ -1,4 +1,4 @@
-import "@saleor/macaw-ui/next/style";
+import "@swiftmovers/macaw-ui/next/style";
 import "./index.css";
 
 import { ApolloProvider } from "@apollo/client";
@@ -6,8 +6,8 @@ import DemoBanner from "@dashboard/components/DemoBanner";
 import { PermissionEnum } from "@dashboard/graphql";
 import useAppState from "@dashboard/hooks/useAppState";
 import { ThemeProvider } from "@dashboard/theme";
-import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
-import { SaleorProvider } from "@saleor/sdk";
+import { ThemeProvider as LegacyThemeProvider } from "@swiftmovers/macaw-ui";
+import { swiftmoversProvider } from "@swiftmovers/sdk";
 import React from "react";
 import { render } from "react-dom";
 import { ErrorBoundary } from "react-error-boundary";
@@ -53,7 +53,7 @@ import { CustomerSection } from "./customers";
 import DiscountSection from "./discounts";
 import GiftCardSection from "./giftCards";
 import { giftCardsSectionUrlName } from "./giftCards/urls";
-import { apolloClient, saleorClient } from "./graphql/client";
+import { apolloClient, swiftmoversClient } from "./graphql/client";
 import HomePage from "./home";
 import { FlagsServiceProvider } from "./hooks/useFlags/flagsService";
 import { useLocationState } from "./hooks/useLocationState";
@@ -102,7 +102,7 @@ const handleLegacyTheming = () => {
 handleLegacyTheming();
 
 const App: React.FC = () => (
-  <SaleorProvider client={saleorClient}>
+  <swiftmoversProvider client={swiftmoversClient}>
     <ApolloProvider client={apolloClient}>
       <BrowserRouter basename={getAppMountUri()}>
         <LegacyThemeProvider
@@ -140,7 +140,7 @@ const App: React.FC = () => (
         </LegacyThemeProvider>
       </BrowserRouter>
     </ApolloProvider>
-  </SaleorProvider>
+  </swiftmoversProvider>
 );
 
 const Routes: React.FC = () => {

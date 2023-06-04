@@ -702,7 +702,7 @@
   },
   "2rJcFa": {
     "context": "delete app",
-    "string": "Deleting this app, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace."
+    "string": "Deleting this app, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in swiftmovers Marketplace."
   },
   "2x9ZgK": {
     "context": "card title",
@@ -860,7 +860,7 @@
   },
   "45aV8u": {
     "context": "gift card bulk create modal bottom explanation",
-    "string": "After creation Saleor will create a list of gift card codes that you will be able to download."
+    "string": "After creation swiftmovers will create a list of gift card codes that you will be able to download."
   },
   "45zP+r": {
     "context": "voucher discount",
@@ -969,7 +969,7 @@
   },
   "4yRwN+": {
     "context": "content",
-    "string": "Saleor couldn’t fetch crucial information regarding installation. Without those System can’t install the app in your Saleor. Please use the button below to get back to system’s dashboard."
+    "string": "swiftmovers couldn’t fetch crucial information regarding installation. Without those System can’t install the app in your swiftmovers. Please use the button below to get back to system’s dashboard."
   },
   "50lR2F": {
     "string": "- used by Payment Plugins"
@@ -1412,7 +1412,7 @@
   },
   "8aV98y": {
     "context": "new version notification content",
-    "string": "You need to update Saleor to the newest version. Before doing so - save all changes to prevent loss of data. To update use the button below."
+    "string": "You need to update swiftmovers to the newest version. Before doing so - save all changes to prevent loss of data. To update use the button below."
   },
   "8cUEPV": {
     "context": "page title",
@@ -1655,7 +1655,7 @@
   },
   "ARfw53": {
     "context": "description",
-    "string": "Install apps created by Saleor team or install external apps."
+    "string": "Install apps created by swiftmovers team or install external apps."
   },
   "AVF5T5": {
     "context": "voucher end date, switch button",
@@ -1961,7 +1961,7 @@
   },
   "CYZse9": {
     "context": "card description",
-    "string": "Expand or restrict group's permissions to access certain part of saleor system."
+    "string": "Expand or restrict group's permissions to access certain part of swiftmovers system."
   },
   "CZmloB": {
     "string": "Fulfillment successfully updated"
@@ -1976,7 +1976,7 @@
   },
   "ChGI4V": {
     "context": "error message",
-    "string": "Saleor is unavailable, please check your network connection and try again."
+    "string": "swiftmovers is unavailable, please check your network connection and try again."
   },
   "CjSRT1": {
     "context": "button",
@@ -2221,7 +2221,7 @@
   },
   "EWD/wU": {
     "context": "delete app",
-    "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
+    "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in swiftmovers Marketplace. Are you sure you want to delete the app?"
   },
   "EYkW1J": {
     "context": "checkbox label",
@@ -2255,7 +2255,7 @@
     "string": "Warehouses A to Z"
   },
   "ErNH3D": {
-    "string": "Define where this attribute should be used in Saleor system"
+    "string": "Define where this attribute should be used in swiftmovers system"
   },
   "ErvPaM": {
     "context": "header",
@@ -2787,7 +2787,7 @@
   },
   "IEpmGQ": {
     "context": "description",
-    "string": "Use Saleor Cloud to access Saleor Apps"
+    "string": "Use swiftmovers Cloud to access swiftmovers Apps"
   },
   "IFWHn0": {
     "context": "error message",
@@ -3195,7 +3195,7 @@
     "string": "Authorized Amount"
   },
   "L/sNGY": {
-    "string": "Local apps are custom webhooks & token pairs that can be used to connect apps and access Saleor API."
+    "string": "Local apps are custom webhooks & token pairs that can be used to connect apps and access swiftmovers API."
   },
   "L5io1l": {
     "context": "returned products list title",
@@ -3254,7 +3254,7 @@
     "string": "This password is too short"
   },
   "LVa5ew": {
-    "string": "Saleor ran into an unexpected problem"
+    "string": "swiftmovers ran into an unexpected problem"
   },
   "LWmYSU": {
     "string": "Completed Translations"
@@ -3519,7 +3519,7 @@
   },
   "NhQboB": {
     "context": "dialog header",
-    "string": "Saleor couldn’t cancel order"
+    "string": "swiftmovers couldn’t cancel order"
   },
   "NivJal": {
     "context": "section header",
@@ -5998,7 +5998,7 @@
   },
   "flP8Hj": {
     "context": "card description",
-    "string": "Expand or restrict app permissions to access certain part of Saleor system."
+    "string": "Expand or restrict app permissions to access certain part of swiftmovers system."
   },
   "flnL3R": {
     "context": "sum of pending amount (any status) in order's transactions",
@@ -6585,7 +6585,7 @@
     "string": "You have reached your warehouse limit, you will be no longer able to add warehouses to your store. If you would like to up your limit, contact your administration staff about raising your limits."
   },
   "kFYlu2": {
-    "string": "Saleor runs in read-only mode. Changes not saved."
+    "string": "swiftmovers runs in read-only mode. Changes not saved."
   },
   "kFkMoG": {
     "context": "set balance dialog subtitle",
@@ -6647,7 +6647,7 @@
   },
   "kYtxJ1": {
     "context": "delete app",
-    "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace."
+    "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in swiftmovers Marketplace."
   },
   "kZfIl/": {
     "string": "These are general information about this Content Type."

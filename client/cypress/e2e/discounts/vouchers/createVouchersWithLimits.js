@@ -56,7 +56,7 @@ describe("As an admin I want to create voucher", () => {
   });
 
   it(
-    "should be able to create voucher with limited number of times discount can be used in total. TC: SALEOR_1907",
+    "should be able to create voucher with limited number of times discount can be used in total. TC: swiftmovers_1907",
     { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
@@ -87,7 +87,7 @@ describe("As an admin I want to create voucher", () => {
   );
 
   it(
-    "should be able to create voucher with limit to one use per customer. TC: SALEOR_1908",
+    "should be able to create voucher with limit to one use per customer. TC: swiftmovers_1908",
     { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
@@ -129,7 +129,7 @@ describe("As an admin I want to create voucher", () => {
   );
 
   it(
-    "should be able to create voucher with limit to staff only. TC: SALEOR_1909",
+    "should be able to create voucher with limit to staff only. TC: swiftmovers_1909",
     { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
@@ -168,7 +168,7 @@ describe("As an admin I want to create voucher", () => {
   );
 
   it(
-    "should be able to create voucher with minimum value of order. TC: SALEOR_1910",
+    "should be able to create voucher with minimum value of order. TC: swiftmovers_1910",
     { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
@@ -198,7 +198,7 @@ describe("As an admin I want to create voucher", () => {
   );
 
   it(
-    "should create voucher with min product quantity. TC: SALEOR_1911",
+    "should create voucher with min product quantity. TC: swiftmovers_1911",
     { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;

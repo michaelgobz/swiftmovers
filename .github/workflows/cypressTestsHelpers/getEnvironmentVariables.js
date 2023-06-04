@@ -47,7 +47,7 @@ program
         "url",
         `https://v${getFormattedVersion(
           options.version,
-        )}.staging.saleor.cloud/`,
+        )}.staging.swiftmovers.cloud/`,
       );
     }
 
@@ -58,7 +58,7 @@ program
 
 async function createEnvironment(version, token, versionBefore, snapshot) {
   const response = await fetch(
-    `https://staging-cloud.saleor.io/api/organizations/saleor/environments/`,
+    `https://staging-cloud.swiftmovers.io/api/organizations/swiftmovers/environments/`,
     {
       method: "POST",
       body: `{ 
@@ -96,13 +96,13 @@ async function createEnvironment(version, token, versionBefore, snapshot) {
 
 async function updateEnvironment(environmentId, version, token) {
   console.log(
-    `{ "service": "saleor-staging-v${getFormattedVersion(version)}" }`,
+    `{ "service": "swiftmovers-staging-v${getFormattedVersion(version)}" }`,
   );
   const response = await fetch(
-    `https://staging-cloud.saleor.io/api/organizations/saleor/environments/${environmentId}/upgrade/`,
+    `https://staging-cloud.swiftmovers.io/api/organizations/swiftmovers/environments/${environmentId}/upgrade/`,
     {
       method: "PUT",
-      body: `{ "service": "saleor-staging-v${getFormattedVersion(version)}" }`,
+      body: `{ "service": "swiftmovers-staging-v${getFormattedVersion(version)}" }`,
       headers: {
         Authorization: `Token ${token}`,
         Accept: "application/json",
@@ -128,7 +128,7 @@ async function updateEnvironment(environmentId, version, token) {
 
 async function waitUntilTaskInProgress(taskId, token) {
   const response = await fetch(
-    `https://staging-cloud.saleor.io/api/service/task-status/${taskId}/`,
+    `https://staging-cloud.swiftmovers.io/api/service/task-status/${taskId}/`,
     {
       method: "GET",
       headers: {
@@ -171,7 +171,7 @@ function getFormattedVersion(version) {
 
 async function getDomainForUpdatedEnvironment(environmentId, token) {
   const response = await fetch(
-    `https://staging-cloud.saleor.io/api/organizations/saleor/environments/${environmentId}`,
+    `https://staging-cloud.swiftmovers.io/api/organizations/swiftmovers/environments/${environmentId}`,
     {
       method: "GET",
       json: true,
@@ -201,8 +201,8 @@ async function getTheNewestVersion(token) {
   const response = await octokit.request(
     "GET /repos/{owner}/{repo}/releases/latest",
     {
-      owner: "saleor",
-      repo: "saleor-dashboard",
+      owner: "swiftmovers",
+      repo: "swiftmovers-dashboard",
     },
   );
   return response.data["tag_name"];
@@ -211,7 +211,7 @@ async function getTheNewestVersion(token) {
 async function getServices(token) {
   // us-east-1
   const response = await fetch(
-    `https://staging-cloud.saleor.io/api/regions/us-east-1/services`,
+    `https://staging-cloud.swiftmovers.io/api/regions/us-east-1/services`,
     {
       method: "GET",
       headers: {
@@ -232,7 +232,7 @@ async function getServiceWithVersionOneBeforeVersion(version, token) {
   );
   const sortedServices = sortServicesByVersion(sandboxServices);
   const currentService = sortedServices.find(service => {
-    return service.name === `saleor-staging-v${getFormattedVersion(version)}`;
+    return service.name === `swiftmovers-staging-v${getFormattedVersion(version)}`;
   });
   const serviceBeforeCurrent =
     sortedServices[sortedServices.indexOf(currentService) + 1];
@@ -280,8 +280,8 @@ async function getBranch(token, version) {
     const response = await octokit.request(
       `GET /repos/{owner}/{repo}/branches/${formattedVersion}`,
       {
-        owner: "saleor",
-        repo: "saleor-dashboard",
+        owner: "swiftmovers",
+        repo: "swiftmovers-dashboard",
         headers: {
           "X-GitHub-Api-Version": "2022-11-28",
         },

@@ -1,10 +1,10 @@
-import { GetV2SaleorAppsResponse } from "@dashboard/apps/marketplace.types";
-import { useTheme } from "@saleor/macaw-ui";
-import { Box, Text } from "@saleor/macaw-ui/next";
+import { GetV2swiftmoversAppsResponse } from "@dashboard/apps/marketplace.types";
+import { useTheme } from "@swiftmovers/macaw-ui";
+import { Box, Text } from "@swiftmovers/macaw-ui/next";
 import React from "react";
 
 interface AppListCardIntegrationsProps {
-  integrations: GetV2SaleorAppsResponse.SaleorApp["integrations"];
+  integrations: GetV2swiftmoversAppsResponse.swiftmoversApp["integrations"];
 }
 
 const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({

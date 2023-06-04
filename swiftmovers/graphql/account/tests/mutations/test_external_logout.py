@@ -32,7 +32,7 @@ def test_external_logout(api_client, customer_user, monkeypatch, rf):
     expected_return = {"logoutRedirectParam": "AVC"}
     mocked_plugin_fun.return_value = expected_return
     monkeypatch.setattr(
-        "saleor.plugins.manager.PluginsManager.external_logout", mocked_plugin_fun
+        "swiftmovers.plugins.manager.PluginsManager.external_logout", mocked_plugin_fun
     )
     variables = {"pluginId": "pluginID1", "input": json.dumps({"logoutParam": "ABCD"})}
     response = api_client.post_graphql(MUTATION_EXTERNAL_LOGOUT, variables)

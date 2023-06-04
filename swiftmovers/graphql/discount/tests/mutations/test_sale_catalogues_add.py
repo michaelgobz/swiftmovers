@@ -23,7 +23,7 @@ SALE_CATALOGUES_ADD_MUTATION = """
 """
 
 
-@patch("saleor.plugins.manager.PluginsManager.sale_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.sale_updated")
 def test_sale_add_catalogues(
     updated_webhook_mock,
     staff_api_client,

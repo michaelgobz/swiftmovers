@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -21,10 +21,10 @@ export const useStyles = makeStyles(
     },
     pendingGrid: {
       marginTop: theme.spacing(1),
-      color: theme.palette.saleor.main[2],
+      color: theme.palette.swiftmovers.main[2],
     },
     explainText: {
-      color: theme.palette.saleor.main[3],
+      color: theme.palette.swiftmovers.main[3],
     },
     paymentStatus: {
       alignSelf: "flex-end",
@@ -38,7 +38,7 @@ export const useStyles = makeStyles(
       gap: theme.spacing(4),
     },
     noPaymentTitle: {
-      color: theme.palette.saleor.main[3],
+      color: theme.palette.swiftmovers.main[3],
       fontWeight: 400,
     },
     actions: {

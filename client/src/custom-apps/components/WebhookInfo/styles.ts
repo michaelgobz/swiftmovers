@@ -1,10 +1,10 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
     toolbar: {
       padding: theme.spacing(2),
-      backgroundColor: theme.palette.saleor.fail.mid,
+      backgroundColor: theme.palette.swiftmovers.fail.mid,
       color: theme.palette.common.black,
       marginBottom: theme.spacing(2),
     },

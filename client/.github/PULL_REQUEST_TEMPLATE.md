@@ -21,8 +21,8 @@ greatly reduce the amount of work needed to review your work. -->
 <!-- Do not remove this section. It is required to properly setup test deployment instance.
 Modify API_URI if you want test instance to use custom backend. CYPRESS_API_URI is optional, use when necessary. -->
 
-API_URI=https://automation-dashboard.staging.saleor.cloud/graphql/
-APPS_MARKETPLACE_API_URI=https://apps.staging.saleor.io/api/v2/saleor-apps
+API_URI=https://automation-dashboard.staging.swiftmovers.cloud/graphql/
+APPS_MARKETPLACE_API_URI=https://apps.staging.swiftmovers.io/api/v2/swiftmovers-apps
 
 ### Do you want to run more stable tests?
 

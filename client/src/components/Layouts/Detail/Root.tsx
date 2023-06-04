@@ -3,7 +3,7 @@ import {
   contentMaxWidth,
   savebarHeight,
 } from "@dashboard/components/AppLayout/consts";
-import { Box, Sprinkles } from "@saleor/macaw-ui/next";
+import { Box, Sprinkles } from "@swiftmovers/macaw-ui/next";
 import React from "react";
 
 interface DetailPageLayoutProps {

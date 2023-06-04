@@ -1,4 +1,4 @@
-import saleorDarkLogoSmall from "@assets/images/logo-dark-small.svg";
+import swiftmoversDarkLogoSmall from "@assets/images/logo-dark-small.svg";
 import plusIcon from "@assets/images/plus-icon.svg";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CardTitle from "@dashboard/components/CardTitle";
@@ -14,7 +14,7 @@ import {
   CircularProgress,
   Typography,
 } from "@material-ui/core";
-import { Box, Button, GenericAppIcon } from "@saleor/macaw-ui/next";
+import { Box, Button, GenericAppIcon } from "@swiftmovers/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -65,10 +65,10 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
                   <div
                     className={clsx(
                       classes.installIcon,
-                      classes.installSaleorIcon,
+                      classes.installswiftmoversIcon,
                     )}
                   >
-                    <img src={saleorDarkLogoSmall} alt="" />
+                    <img src={swiftmoversDarkLogoSmall} alt="" />
                   </div>
                   <img src={plusIcon} alt="" />
                   <div className={classes.installIcon}>

@@ -1,7 +1,7 @@
 import CardTitle from "@dashboard/components/CardTitle";
 import { OrderDetailsFragment, OrderDiscountType } from "@dashboard/graphql";
 import { Card, CardContent } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -25,7 +25,7 @@ const useStyles = makeStyles(
         paddingBottom: theme.spacing(1),
       },
       "& li:last-of-type": {
-        borderTop: `1px solid ${theme.palette.saleor.main[5]}`,
+        borderTop: `1px solid ${theme.palette.swiftmovers.main[5]}`,
         paddingTop: theme.spacing(1),
         marginTop: "auto",
       },

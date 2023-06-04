@@ -14,12 +14,12 @@ jobs:
       API_URI: /graphql/
       APP_MOUNT_URI: /dashboard/
       STATIC_URL: /dashboard/static/
-      SENTRY_ORG: saleor
+      SENTRY_ORG: swiftmovers
       SENTRY_PROJECT: dashboard
       SENTRY_URL_PREFIX: "~/dashboard/static"
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
+      APPS_MARKETPLACE_API_URI: "https://apps.staging.swiftmovers.io/api/v2/swiftmovers-apps"
       ENVIRONMENT: demo-staging
       DEMO_MODE: true
       NOTIFY: true
@@ -33,7 +33,7 @@ jobs:
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
           )
           version=${{ github.event.inputs.git_ref || github.ref_name }}
-          latest_version=$(gh api -H "Accept: application/vnd.github+json" --jq .name /repos/saleor/saleor-dashboard/releases/latest)
+          latest_version=$(gh api -H "Accept: application/vnd.github+json" --jq .name /repos/swiftmovers/swiftmovers-dashboard/releases/latest)
           if [[ $version != $latest_version ]]; then
               echo "Unsupported version: $version"
               echo "NOTIFY=false" >> $GITHUB_ENV
@@ -66,7 +66,7 @@ jobs:
           export GITHUB_TOKEN=$( \
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
           )
-          gh api /repos/saleor/saleor-cloud-deployments/dispatches \
+          gh api /repos/swiftmovers/swiftmovers-cloud-deployments/dispatches \
             --input - <<< '{
               "event_type": "open-release-pull-request",
               "client_payload": {

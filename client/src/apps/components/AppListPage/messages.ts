@@ -4,7 +4,7 @@ export const messages = defineMessages({
   installAppDescription: {
     id: "ARfw53",
     defaultMessage:
-      "Install apps created by Saleor team or install external apps.",
+      "Install apps created by swiftmovers team or install external apps.",
     description: "description",
   },
   installedApps: {

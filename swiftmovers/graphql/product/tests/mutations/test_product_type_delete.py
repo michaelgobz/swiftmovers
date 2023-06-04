@@ -35,7 +35,7 @@ def test_product_type_delete_mutation(
         product_type.refresh_from_db()
 
 
-@patch("saleor.product.signals.delete_from_storage_task.delay")
+@patch("swiftmovers.product.signals.delete_from_storage_task.delay")
 def test_product_type_delete_mutation_deletes_also_images(
     delete_from_storage_task_mock,
     staff_api_client,

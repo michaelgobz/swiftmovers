@@ -170,10 +170,10 @@ class CustomerEvent(ModelObjectType[models.CustomerEvent]):
     message = graphene.String(description="Content of the event.")
     count = graphene.Int(description="Number of objects concerned by the event.")
     order = graphene.Field(
-        "saleor.graphql.order.types.Order", description="The concerned order."
+        "swiftmovers.graphql.order.types.Order", description="The concerned order."
     )
     order_line = graphene.Field(
-        "saleor.graphql.order.types.OrderLine", description="The concerned order line."
+        "swiftmovers.graphql.order.types.OrderLine", description="The concerned order line."
     )
 
     class Meta:
@@ -227,7 +227,7 @@ class CustomerEvent(ModelObjectType[models.CustomerEvent]):
 
 class UserPermission(Permission):
     source_permission_groups = NonNullList(
-        "saleor.graphql.account.types.Group",
+        "swiftmovers.graphql.account.types.Group",
         description="List of user permission groups which contains this permission.",
         user_id=graphene.Argument(
             graphene.ID,
@@ -294,7 +294,7 @@ class User(ModelObjectType[models.User]):
         ),
     )
     gift_cards = ConnectionField(
-        "saleor.graphql.giftcard.types.GiftCardCountableConnection",
+        "swiftmovers.graphql.giftcard.types.GiftCardCountableConnection",
         description="List of the user gift cards.",
     )
     note = PermissionsField(
@@ -303,7 +303,7 @@ class User(ModelObjectType[models.User]):
         permissions=[AccountPermissions.MANAGE_USERS, AccountPermissions.MANAGE_STAFF],
     )
     orders = ConnectionField(
-        "saleor.graphql.order.types.OrderCountableConnection",
+        "swiftmovers.graphql.order.types.OrderCountableConnection",
         description=(
             "List of user's orders. Requires one of the following permissions: "
             f"{AccountPermissions.MANAGE_STAFF.name}, "
@@ -314,11 +314,11 @@ class User(ModelObjectType[models.User]):
         UserPermission, description="List of user's permissions."
     )
     permission_groups = NonNullList(
-        "saleor.graphql.account.types.Group",
+        "swiftmovers.graphql.account.types.Group",
         description="List of user's permission groups.",
     )
     editable_groups = NonNullList(
-        "saleor.graphql.account.types.Group",
+        "swiftmovers.graphql.account.types.Group",
         description="List of user's permission groups which user can manage.",
     )
     avatar = ThumbnailField()
@@ -328,7 +328,7 @@ class User(ModelObjectType[models.User]):
         permissions=[AccountPermissions.MANAGE_USERS, AccountPermissions.MANAGE_STAFF],
     )
     stored_payment_sources = NonNullList(
-        "saleor.graphql.payment.types.PaymentSource",
+        "swiftmovers.graphql.payment.types.PaymentSource",
         description="List of stored payment sources.",
         channel=graphene.String(
             description="Slug of a channel for which the data should be returned."
@@ -610,7 +610,7 @@ class StaffNotificationRecipient(graphene.ObjectType):
 
     class Meta:
         description = (
-            "Represents a recipient of email notifications send by Saleor, "
+            "Represents a recipient of email notifications send by swiftmovers, "
             "such as notifications about new orders. Notifications can be "
             "assigned to staff users or arbitrary email addresses."
         )

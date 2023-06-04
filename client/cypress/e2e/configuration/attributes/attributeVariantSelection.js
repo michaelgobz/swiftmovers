@@ -18,10 +18,10 @@ describe("As an admin I want to use attributes in variant selection", () => {
   const startsWith = "VarSel";
 
   const attributesTypes = [
-    { key: "DROPDOWN", TC: "SALEOR_0534" },
-    { key: "BOOLEAN", TC: "SALEOR_0536" },
-    { key: "NUMERIC", TC: "SALEOR_0537" },
-    { key: "SWATCH", TC: "SALEOR_0538" },
+    { key: "DROPDOWN", TC: "swiftmovers_0534" },
+    { key: "BOOLEAN", TC: "swiftmovers_0536" },
+    { key: "NUMERIC", TC: "swiftmovers_0537" },
+    { key: "SWATCH", TC: "swiftmovers_0538" },
   ];
   let channel;
   let category;

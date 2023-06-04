@@ -32,7 +32,7 @@ logger = logging.getLogger(__name__)
 def _generate_response(
     payment_information: PaymentData, kind: str, data: Dict
 ) -> GatewayResponse:
-    """Generate Saleor transaction information from the payload or from passed data."""
+    """Generate swiftmovers transaction information from the payload or from passed data."""
     return GatewayResponse(
         transaction_id=data.get("id", payment_information.token),
         action_required=False,

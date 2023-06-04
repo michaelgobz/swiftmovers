@@ -5,7 +5,7 @@ import {
 } from "@dashboard/graphql";
 import { FakeTransaction } from "@dashboard/orders/types";
 import { IconButton } from "@material-ui/core";
-import { Button, LinkIcon } from "@saleor/macaw-ui";
+import { Button, LinkIcon } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

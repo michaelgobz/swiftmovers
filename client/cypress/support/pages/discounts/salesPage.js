@@ -97,7 +97,7 @@ export function createSaleWithNewProduct({
     taxClassId,
   }).then(({ product: productResp }) => {
     const product = productResp;
-    /* Uncomment after fixing SALEOR-3367 bug
+    /* Uncomment after fixing swiftmovers-3367 bug
        cy.clearSessionData()
       .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
       */
@@ -136,7 +136,7 @@ export function createSaleWithNewVariant({
     price,
   }).then(({ variantsList: variantsListResp, product }) => {
     const variant = variantsListResp[0];
-    /* Uncomment after fixing SALEOR-3367 bug
+    /* Uncomment after fixing swiftmovers-3367 bug
        cy.clearSessionData()
       .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
       */

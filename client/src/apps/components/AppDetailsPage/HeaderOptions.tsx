@@ -3,7 +3,7 @@ import Skeleton from "@dashboard/components/Skeleton";
 import { AppQuery } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { ButtonBase } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box } from "@swiftmovers/macaw-ui/next";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";

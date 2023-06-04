@@ -27,7 +27,7 @@ import {
   StorefrontIcon,
   TranslationsIcon,
   VouchersIcon,
-} from "@saleor/macaw-ui/next";
+} from "@swiftmovers/macaw-ui/next";
 import isEmpty from "lodash/isEmpty";
 import React from "react";
 import { useIntl } from "react-intl";

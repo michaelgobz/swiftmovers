@@ -10,7 +10,7 @@ from ...permission.auth_filters import AuthorizationFilters
 from ...permission.enums import AppPermission
 from ...permission.utils import message_one_of_permissions_required
 from ..account.utils import is_owner_or_has_one_of_perms
-from ..core import ResolveInfo, SaleorContext
+from ..core import ResolveInfo, swiftmoversContext
 from ..core.connection import CountableConnection
 from ..core.descriptions import (
     ADDED_IN_31,
@@ -43,7 +43,7 @@ from .resolvers import (
 )
 
 
-def has_required_permission(app: models.App, context: SaleorContext):
+def has_required_permission(app: models.App, context: swiftmoversContext):
     requester = get_user_or_app_from_context(context)
     if not is_owner_or_has_one_of_perms(requester, app, AppPermission.MANAGE_APPS):
         raise PermissionDenied(
@@ -109,7 +109,7 @@ class AppManifestExtension(BaseObjectType):
 
 class AppExtension(AppManifestExtension, ModelObjectType[models.AppExtension]):
     id = graphene.GlobalID(required=True)
-    app = graphene.Field("saleor.graphql.app.types.App", required=True)
+    app = graphene.Field("swiftmovers.graphql.app.types.App", required=True)
     access_token = graphene.String(
         description="JWT token used to authenticate by thridparty app extension."
     )
@@ -207,17 +207,17 @@ class AppManifestWebhook(BaseObjectType):
         return root["targetUrl"]
 
 
-class AppManifestRequiredSaleorVersion(BaseObjectType):
+class AppManifestRequiredswiftmoversVersion(BaseObjectType):
     constraint = graphene.String(
         required=True,
         description=(
-            "Required Saleor version as semver range." + ADDED_IN_313 + PREVIEW_FEATURE
+            "Required swiftmovers version as semver range." + ADDED_IN_313 + PREVIEW_FEATURE
         ),
     )
     satisfied = graphene.Boolean(
         required=True,
         description=(
-            "Informs if the Saleor version matches the required one."
+            "Informs if the swiftmovers version matches the required one."
             + ADDED_IN_313
             + PREVIEW_FEATURE
         ),
@@ -258,10 +258,10 @@ class Manifest(BaseObjectType):
             + ADDED_IN_38
         )
     )
-    required_saleor_version = graphene.Field(
-        AppManifestRequiredSaleorVersion,
+    required_swiftmovers_version = graphene.Field(
+        AppManifestRequiredswiftmoversVersion,
         description=(
-            "Determines the app's required Saleor version as semver range."
+            "Determines the app's required swiftmovers version as semver range."
             + ADDED_IN_313
             + PREVIEW_FEATURE
         ),

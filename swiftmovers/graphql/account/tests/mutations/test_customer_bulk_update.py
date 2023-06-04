@@ -80,7 +80,7 @@ def test_customers_bulk_update_using_ids(
     assert customer_2.first_name == customer_2_new_name
 
 
-@patch("saleor.plugins.manager.PluginsManager.customer_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.customer_updated")
 def test_stocks_bulk_update_send_stock_updated_event(
     customer_updated_webhook,
     staff_api_client,

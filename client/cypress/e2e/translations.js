@@ -31,7 +31,7 @@ describe("As an admin I want to manage translations", () => {
   });
 
   it(
-    "should be able to create new translation. TC:SALEOR_1701",
+    "should be able to create new translation. TC:swiftmovers_1701",
     { tags: ["@translations", "@allEnv", "@stable"] },
     () => {
       const translatedName = `TranslatedName${randomNumber}`;
@@ -57,7 +57,7 @@ describe("As an admin I want to manage translations", () => {
   );
 
   it(
-    "should be able to update translation. TC:SALEOR_1702",
+    "should be able to update translation. TC:swiftmovers_1702",
     { tags: ["@translations", "@allEnv", "@stable"] },
     () => {
       const startWithUpdate = `Translations_Update_${randomNumber}`;

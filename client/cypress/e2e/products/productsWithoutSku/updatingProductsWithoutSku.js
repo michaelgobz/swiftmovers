@@ -93,7 +93,7 @@ describe("Updating products without sku", () => {
     cy.clearSessionData().loginUserViaRequest();
   });
   it(
-    "should be able to add SKU to simple product TC: SALEOR_2802",
+    "should be able to add SKU to simple product TC: swiftmovers_2802",
     { tags: ["@products", "@allEnv"] },
     () => {
       const productName = `${startsWith}${faker.datatype.number()}`;
@@ -136,7 +136,7 @@ describe("Updating products without sku", () => {
   );
 
   it(
-    "should add sku to variant TC: SALEOR_2803",
+    "should add sku to variant TC: swiftmovers_2803",
     { tags: ["@products", "@allEnv", "@stable"] },
     () => {
       const sku = "NewSku";
@@ -171,7 +171,7 @@ describe("Updating products without sku", () => {
   );
 
   it(
-    "should remove sku from variant TC: SALEOR_2805",
+    "should remove sku from variant TC: swiftmovers_2805",
     { tags: ["@products", "@allEnv", "@stable"] },
     () => {
       let variant;

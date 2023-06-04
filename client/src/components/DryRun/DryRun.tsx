@@ -21,7 +21,7 @@ import {
   ListHeader,
   ListItem,
   ListItemCell,
-} from "@saleor/macaw-ui";
+} from "@swiftmovers/macaw-ui";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { useIntl } from "react-intl";
 

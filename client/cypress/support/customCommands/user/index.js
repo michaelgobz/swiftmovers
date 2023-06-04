@@ -44,7 +44,7 @@ Cypress.Commands.add(
   }`;
     return cy.sendRequestWithQuery(mutation, null).then(resp => {
       window.localStorage.setItem(
-        "_saleorRefreshToken",
+        "_swiftmoversRefreshToken",
         resp.body.data.tokenCreate.refreshToken,
       );
       window.sessionStorage.setItem(

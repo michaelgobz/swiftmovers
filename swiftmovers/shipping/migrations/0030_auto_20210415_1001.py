@@ -2,8 +2,8 @@
 
 from django.db import migrations
 
-import saleor.core.db.fields
-import saleor.core.utils.editorjs
+import swiftmovers.core.db.fields
+import swiftmovers.core.utils.editorjs
 
 
 class Migration(migrations.Migration):
@@ -15,19 +15,19 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="shippingmethod",
             name="description",
-            field=saleor.core.db.fields.SanitizedJSONField(
+            field=swiftmovers.core.db.fields.SanitizedJSONField(
                 blank=True,
                 null=True,
-                sanitizer=saleor.core.utils.editorjs.clean_editor_js,
+                sanitizer=swiftmovers.core.utils.editorjs.clean_editor_js,
             ),
         ),
         migrations.AddField(
             model_name="shippingmethodtranslation",
             name="description",
-            field=saleor.core.db.fields.SanitizedJSONField(
+            field=swiftmovers.core.db.fields.SanitizedJSONField(
                 blank=True,
                 null=True,
-                sanitizer=saleor.core.utils.editorjs.clean_editor_js,
+                sanitizer=swiftmovers.core.utils.editorjs.clean_editor_js,
             ),
         ),
     ]

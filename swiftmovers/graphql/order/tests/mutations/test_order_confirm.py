@@ -30,9 +30,9 @@ ORDER_CONFIRM_MUTATION = """
 """
 
 
-@patch("saleor.order.actions.handle_fully_paid_order")
-@patch("saleor.plugins.manager.PluginsManager.notify")
-@patch("saleor.payment.gateway.capture")
+@patch("swiftmovers.order.actions.handle_fully_paid_order")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.payment.gateway.capture")
 def test_order_confirm(
     capture_mock,
     mocked_notify,
@@ -103,8 +103,8 @@ def test_order_confirm(
     )
 
 
-@patch("saleor.plugins.manager.PluginsManager.notify")
-@patch("saleor.payment.gateway.capture")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.payment.gateway.capture")
 def test_order_confirm_without_sku(
     capture_mock,
     mocked_notify,
@@ -197,7 +197,7 @@ def test_order_confirm_no_products_in_order(
     assert errors[0]["code"] == OrderErrorCode.INVALID.name
 
 
-@patch("saleor.payment.gateway.capture")
+@patch("swiftmovers.payment.gateway.capture")
 def test_order_confirm_wont_call_capture_for_non_active_payment(
     capture_mock,
     staff_api_client,

@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -22,7 +22,7 @@ export const useStyles = makeStyles(
         left: 0,
         width: "4px",
         height: "100%",
-        backgroundColor: theme.palette.saleor.active[1],
+        backgroundColor: theme.palette.swiftmovers.active[1],
       },
     },
   }),

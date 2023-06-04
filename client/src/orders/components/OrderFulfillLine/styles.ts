@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -23,15 +23,15 @@ export const useStyles = makeStyles(
       textAlign: "right",
     },
     warningIcon: {
-      color: theme.palette.saleor.warning.mid,
+      color: theme.palette.swiftmovers.warning.mid,
       marginRight: theme.spacing(2),
     },
     error: {
       color: theme.palette.error.main,
     },
     warning: {
-      borderColor: theme.palette.saleor.warning.dark + " !important",
-      boxShadow: `0 0 0 3px ${theme.palette.saleor.warning.light}`,
+      borderColor: theme.palette.swiftmovers.warning.dark + " !important",
+      boxShadow: `0 0 0 3px ${theme.palette.swiftmovers.warning.light}`,
     },
     quantityInnerInput: {
       paddingBottom: theme.spacing(2),

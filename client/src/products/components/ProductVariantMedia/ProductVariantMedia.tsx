@@ -3,8 +3,8 @@ import CardTitle from "@dashboard/components/CardTitle";
 import Skeleton from "@dashboard/components/Skeleton";
 import { ProductMediaFragment } from "@dashboard/graphql";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui/next";
+import { makeStyles } from "@swiftmovers/macaw-ui";
+import { vars } from "@swiftmovers/macaw-ui/next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 

@@ -233,8 +233,8 @@ def assert_max_num_queries(capture_queries):
 @pytest.fixture(autouse=True)
 def setup_dummy_gateways(settings):
     settings.PLUGINS = [
-        "saleor.payment.gateways.dummy.plugin.DummyGatewayPlugin",
-        "saleor.payment.gateways.dummy_credit_card.plugin.DummyCreditCardGatewayPlugin",
+        "swiftmovers.payment.gateways.dummy.plugin.DummyGatewayPlugin",
+        "swiftmovers.payment.gateways.dummy_credit_card.plugin.DummyCreditCardGatewayPlugin",
     ]
     return settings
 
@@ -242,7 +242,7 @@ def setup_dummy_gateways(settings):
 @pytest.fixture
 def sample_gateway(settings):
     settings.PLUGINS += [
-        "saleor.plugins.tests.sample_plugins.ActiveDummyPaymentGateway"
+        "swiftmovers.plugins.tests.sample_plugins.ActiveDummyPaymentGateway"
     ]
 
 
@@ -251,7 +251,7 @@ def site_settings(db, settings) -> SiteSettings:
     """Create a site and matching site settings.
 
     This fixture is autouse because django.contrib.sites.models.Site and
-    saleor.site.models.SiteSettings have a one-to-one relationship and a site
+    swiftmovers.site.models.SiteSettings have a one-to-one relationship and a site
     should never exist without a matching settings object.
     """
     site = Site.objects.get_or_create(name="mirumee.com", domain="mirumee.com")[0]
@@ -819,7 +819,7 @@ def address_usa():
 @pytest.fixture
 def graphql_address_data():
     return {
-        "firstName": "John Saleor",
+        "firstName": "John swiftmovers",
         "lastName": "Doe Mirumee",
         "companyName": "Mirumee Software",
         "streetAddress1": "Tęczowa 7",
@@ -3463,7 +3463,7 @@ def voucher_with_many_channels(voucher, channel_PLN):
 @pytest.fixture
 def voucher_percentage(channel_USD):
     voucher = Voucher.objects.create(
-        code="saleor",
+        code="swiftmovers",
         discount_value_type=DiscountValueType.PERCENTAGE,
     )
     VoucherChannelListing.objects.create(
@@ -5744,12 +5744,12 @@ def description_json():
                 "key": "",
                 "data": {
                     "text": (
-                        "Saleor is a rapidly-growing open source e-commerce platform "
+                        "swiftmovers is a rapidly-growing open source e-commerce platform "
                         "that has served high-volume companies from branches "
                         "like publishing and apparel since 2012. Based on Python "
                         "and Django, the latest major update introduces a modular "
                         "front end with a GraphQL API and storefront and dashboard "
-                        "written in React to make Saleor a full-functionality "
+                        "written in React to make swiftmovers a full-functionality "
                         "open source e-commerce."
                     ),
                 },
@@ -5769,7 +5769,7 @@ def description_json():
             {
                 "key": "",
                 "data": {
-                    "text": "Get Saleor today!",
+                    "text": "Get swiftmovers today!",
                 },
                 "type": "paragraph",
                 "depth": 0,
@@ -5779,7 +5779,7 @@ def description_json():
         ],
         "entityMap": {
             "0": {
-                "data": {"href": "https://github.com/mirumee/saleor"},
+                "data": {"href": "https://github.com/mirumee/swiftmovers"},
                 "type": "LINK",
                 "mutability": "MUTABLE",
             }
@@ -5808,7 +5808,7 @@ def other_description_json():
                 "key": "",
                 "data": {
                     "text": (
-                        "Saleor is powered by a GraphQL server running on "
+                        "swiftmovers is powered by a GraphQL server running on "
                         "top of Python 3 and a Django 2 framework."
                     ),
                 },
@@ -5827,7 +5827,7 @@ def app(db):
     app = App.objects.create(
         name="Sample app objects",
         is_active=True,
-        identifier="saleor.app.test",
+        identifier="swiftmovers.app.test",
     )
     return app
 
@@ -5887,7 +5887,7 @@ def app_with_extensions(app_with_token, permission_manage_products):
 @pytest.fixture
 def payment_app(db, permission_manage_payments):
     app = App.objects.create(
-        name="Payment App", is_active=True, identifier="saleor.payment.test.app"
+        name="Payment App", is_active=True, identifier="swiftmovers.payment.test.app"
     )
     app.tokens.create(name="Default")
     app.permissions.add(permission_manage_payments)
@@ -5909,7 +5909,7 @@ def payment_app(db, permission_manage_payments):
 @pytest.fixture
 def payment_app_with_subscription_webhooks(db, permission_manage_payments):
     app = App.objects.create(
-        name="Payment App", is_active=True, identifier="saleor.payment.test.app"
+        name="Payment App", is_active=True, identifier="swiftmovers.payment.test.app"
     )
     app.tokens.create(name="Default")
     app.permissions.add(permission_manage_payments)
@@ -5993,7 +5993,7 @@ def observability_webhook(db, permission_manage_observability):
 def observability_webhook_data(observability_webhook):
     return WebhookData(
         id=observability_webhook.id,
-        saleor_domain="mirumee.com",
+        swiftmovers_domain="mirumee.com",
         target_url=observability_webhook.target_url,
         secret_key=observability_webhook.secret_key,
     )
@@ -6609,14 +6609,14 @@ def app_export_event(app_export_file):
 @pytest.fixture
 def app_manifest():
     return {
-        "name": "Sample Saleor App",
+        "name": "Sample swiftmovers App",
         "version": "0.1",
-        "about": "Sample Saleor App serving as an example.",
+        "about": "Sample swiftmovers App serving as an example.",
         "dataPrivacy": "",
         "dataPrivacyUrl": "",
         "homepageUrl": "http://172.17.0.1:5000/homepageUrl",
         "supportUrl": "http://172.17.0.1:5000/supportUrl",
-        "id": "saleor-complex-sample",
+        "id": "swiftmovers-complex-sample",
         "permissions": ["MANAGE_PRODUCTS", "MANAGE_USERS"],
         "appUrl": "",
         "configurationUrl": "http://127.0.0.1:5000/configuration/",

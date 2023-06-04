@@ -30,7 +30,7 @@ describe("As an admin I want to create gift card", () => {
   });
 
   it(
-    "should be able to create never expire gift card. TC: SALEOR_1001",
+    "should be able to create never expire gift card. TC: swiftmovers_1001",
     { tags: ["@giftCard", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
@@ -56,7 +56,7 @@ describe("As an admin I want to create gift card", () => {
   );
 
   it(
-    "should be able to create gift card with two moths expiry. TC: SALEOR_1002",
+    "should be able to create gift card with two moths expiry. TC: swiftmovers_1002",
     { tags: ["@giftCard", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
@@ -85,7 +85,7 @@ describe("As an admin I want to create gift card", () => {
   );
 
   it(
-    "should be able to create gift card with date expiry. TC: SALEOR_1003",
+    "should be able to create gift card with date expiry. TC: swiftmovers_1003",
     { tags: ["@giftCard", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;

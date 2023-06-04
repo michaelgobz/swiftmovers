@@ -68,7 +68,7 @@ describe("As an admin I want to update vouchers", () => {
     });
   });
   it(
-    "should delete voucher. TC: SALEOR_1905",
+    "should delete voucher. TC: swiftmovers_1905",
     { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
@@ -103,7 +103,7 @@ describe("As an admin I want to update vouchers", () => {
   );
 
   it(
-    "should update voucher. TC: SALEOR_1906",
+    "should update voucher. TC: swiftmovers_1906",
     { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
@@ -144,7 +144,7 @@ describe("As an admin I want to update vouchers", () => {
   );
 
   it(
-    "should set date on voucher. TC: SALEOR_1912",
+    "should set date on voucher. TC: swiftmovers_1912",
     { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
@@ -187,7 +187,7 @@ describe("As an admin I want to update vouchers", () => {
   );
 
   it(
-    "should set end date on voucher. TC: SALEOR_1913",
+    "should set end date on voucher. TC: swiftmovers_1913",
     { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
@@ -232,7 +232,7 @@ describe("As an admin I want to update vouchers", () => {
   );
 
   it(
-    "should set country on voucher. TC: SALEOR_1914",
+    "should set country on voucher. TC: swiftmovers_1914",
     { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;

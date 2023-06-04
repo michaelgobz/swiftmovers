@@ -25,7 +25,7 @@ import {
   FormControlLabel,
   Typography,
 } from "@material-ui/core";
-import { ConfirmButtonTransitionState, DialogHeader } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState, DialogHeader } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 

@@ -35,7 +35,7 @@ describe("Tests for menu navigation", () => {
   });
 
   it(
-    "should create a menu. TC: SALEOR_1301",
+    "should create a menu. TC: swiftmovers_1301",
     { tags: ["@menuNavigation", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
@@ -53,7 +53,7 @@ describe("Tests for menu navigation", () => {
   ["category", "collection", "page"].forEach(itemType => {
     testCase += 1;
     it(
-      `should add new ${itemType} item to menu. TC: SALEOR_${testCase}`,
+      `should add new ${itemType} item to menu. TC: swiftmovers_${testCase}`,
       { tags: ["@menuNavigation", "@allEnv", "@stable"] },
       () => {
         const itemName = `${startsWith}${faker.datatype.number()}`;

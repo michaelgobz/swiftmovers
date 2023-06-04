@@ -46,7 +46,7 @@ xdescribe("Tests for using attributes in filters", () => {
   });
 
   it(
-    "should use attribute as filter. TC: SALEOR_0601",
+    "should use attribute as filter. TC: swiftmovers_0601",
     { tags: ["@attribute", "@allEnv"] },
     () => {
       updateAttribute({
@@ -63,7 +63,7 @@ xdescribe("Tests for using attributes in filters", () => {
   );
 
   it(
-    "should remove attribute from filters. TC: SALEOR_0602",
+    "should remove attribute from filters. TC: swiftmovers_0602",
     { tags: ["@attribute", "@allEnv"] },
     () => {
       updateAttribute({

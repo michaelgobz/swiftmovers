@@ -1418,8 +1418,8 @@ ACCOUNT_REGISTER_MUTATION = """
 @override_settings(
     ENABLE_ACCOUNT_CONFIRMATION_BY_EMAIL=True, ALLOWED_CLIENT_HOSTS=["localhost"]
 )
-@patch("saleor.account.notifications.default_token_generator.make_token")
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.account.notifications.default_token_generator.make_token")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_customer_register(
     mocked_notify,
     mocked_generator,
@@ -1436,7 +1436,7 @@ def test_customer_register(
         "email": email,
         "password": "Password",
         "redirectUrl": redirect_url,
-        "firstName": "saleor",
+        "firstName": "swiftmovers",
         "lastName": "rocks",
         "languageCode": "PL",
         "metadata": [{"key": "meta", "value": "data"}],
@@ -1488,7 +1488,7 @@ def test_customer_register(
 
 
 @override_settings(ENABLE_ACCOUNT_CONFIRMATION_BY_EMAIL=False)
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_customer_register_disabled_email_confirmation(mocked_notify, api_client):
     email = "customer@example.com"
     variables = {"email": email, "password": "Password"}
@@ -1504,7 +1504,7 @@ def test_customer_register_disabled_email_confirmation(mocked_notify, api_client
 
 
 @override_settings(ENABLE_ACCOUNT_CONFIRMATION_BY_EMAIL=True)
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_customer_register_no_redirect_url(mocked_notify, api_client):
     variables = {"email": "customer@example.com", "password": "Password"}
     response = api_client.post_graphql(ACCOUNT_REGISTER_MUTATION, variables)
@@ -1575,8 +1575,8 @@ CUSTOMER_CREATE_MUTATION = """
 """
 
 
-@patch("saleor.account.notifications.default_token_generator.make_token")
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.account.notifications.default_token_generator.make_token")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_customer_create(
     mocked_notify,
     mocked_generator,
@@ -1663,8 +1663,8 @@ def test_customer_create(
     assert customer_creation_event.user == new_customer
 
 
-@patch("saleor.account.notifications.default_token_generator.make_token")
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.account.notifications.default_token_generator.make_token")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_customer_create_send_password_with_url(
     mocked_notify,
     mocked_generator,
@@ -2459,8 +2459,8 @@ ACCOUNT_REQUEST_DELETION_MUTATION = """
 """
 
 
-@patch("saleor.account.notifications.account_delete_token_generator.make_token")
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.account.notifications.account_delete_token_generator.make_token")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_account_request_deletion(
     mocked_notify, mocked_token, user_api_client, channel_PLN, site_settings
 ):
@@ -2493,7 +2493,7 @@ def test_account_request_deletion(
 
 
 @freeze_time("2018-05-31 12:00:01")
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_account_request_deletion_token_validation(
     mocked_notify, user_api_client, channel_PLN, site_settings
 ):
@@ -2525,7 +2525,7 @@ def test_account_request_deletion_token_validation(
     )
 
 
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_account_request_deletion_anonymous_user(mocked_notify, api_client):
     variables = {"redirectUrl": "https://www.example.com"}
     response = api_client.post_graphql(ACCOUNT_REQUEST_DELETION_MUTATION, variables)
@@ -2533,7 +2533,7 @@ def test_account_request_deletion_anonymous_user(mocked_notify, api_client):
     mocked_notify.assert_not_called()
 
 
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_account_request_deletion_storefront_hosts_not_allowed(
     mocked_notify, user_api_client
 ):
@@ -2553,7 +2553,7 @@ def test_account_request_deletion_storefront_hosts_not_allowed(
 
 
 @freeze_time("2018-05-31 12:00:01")
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_account_request_deletion_all_storefront_hosts_allowed(
     mocked_notify, user_api_client, settings, channel_PLN, site_settings
 ):
@@ -2591,7 +2591,7 @@ def test_account_request_deletion_all_storefront_hosts_allowed(
 
 
 @freeze_time("2018-05-31 12:00:01")
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_account_request_deletion_subdomain(
     mocked_notify, user_api_client, settings, channel_PLN, site_settings
 ):
@@ -2636,7 +2636,7 @@ ACCOUNT_DELETE_MUTATION = """
 """
 
 
-@patch("saleor.core.tasks.delete_from_storage_task.delay")
+@patch("swiftmovers.core.tasks.delete_from_storage_task.delay")
 @freeze_time("2018-05-31 12:00:01")
 def test_account_delete(delete_from_storage_task_mock, user_api_client, media_root):
     # given
@@ -2767,8 +2767,8 @@ CUSTOMER_DELETE_MUTATION = """
 """
 
 
-@patch("saleor.account.signals.delete_from_storage_task.delay")
-@patch("saleor.graphql.account.utils.account_events.customer_deleted_event")
+@patch("swiftmovers.account.signals.delete_from_storage_task.delay")
+@patch("swiftmovers.graphql.account.utils.account_events.customer_deleted_event")
 def test_customer_delete(
     mocked_deletion_event,
     delete_from_storage_task_mock,
@@ -2804,8 +2804,8 @@ def test_customer_delete(
 
 
 @freeze_time("2018-05-31 12:00:01")
-@patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
-@patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
+@patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
 def test_customer_delete_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -2817,7 +2817,7 @@ def test_customer_delete_trigger_webhook(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
 
     customer_id = graphene.Node.to_global_id("User", customer_user.pk)
     variables = {"id": customer_id}
@@ -2841,8 +2841,8 @@ def test_customer_delete_trigger_webhook(
     )
 
 
-@patch("saleor.account.signals.delete_from_storage_task.delay")
-@patch("saleor.graphql.account.utils.account_events.customer_deleted_event")
+@patch("swiftmovers.account.signals.delete_from_storage_task.delay")
+@patch("swiftmovers.graphql.account.utils.account_events.customer_deleted_event")
 def test_customer_delete_by_app(
     mocked_deletion_event,
     delete_from_storage_task_mock,
@@ -2994,7 +2994,7 @@ STAFF_CREATE_MUTATION = """
 
 
 @freeze_time("2018-05-31 12:00:01")
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_staff_create(
     mocked_notify,
     staff_api_client,
@@ -3064,7 +3064,7 @@ def test_staff_create(
 
 
 @freeze_time("2018-05-31 12:00:01")
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_promote_customer_to_staff_user(
     mocked_notify,
     staff_api_client,
@@ -3117,8 +3117,8 @@ def test_promote_customer_to_staff_user(
 
 
 @freeze_time("2018-05-31 12:00:01")
-@patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
-@patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
+@patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
 def test_staff_create_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -3133,7 +3133,7 @@ def test_staff_create_trigger_webhook(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
 
     staff_user.user_permissions.add(permission_manage_users)
     email = "api_user@example.com"
@@ -3206,7 +3206,7 @@ def test_staff_create_app_no_permission(
 
 
 @freeze_time("2018-05-31 12:00:01")
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_staff_create_out_of_scope_group(
     mocked_notify,
     staff_api_client,
@@ -3309,7 +3309,7 @@ def test_staff_create_out_of_scope_group(
 
 
 @freeze_time("2018-05-31 12:00:01")
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_staff_create_send_password_with_url(
     mocked_notify, staff_api_client, media_root, permission_manage_staff, site_settings
 ):
@@ -3468,8 +3468,8 @@ def test_staff_update(staff_api_client, permission_manage_staff, media_root):
 
 
 @freeze_time("2018-05-31 12:00:01")
-@patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
-@patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
+@patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
 def test_staff_update_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -3481,7 +3481,7 @@ def test_staff_update_trigger_webhook(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
 
     staff_user = User.objects.create(email="staffuser@example.com", is_staff=True)
     assert not staff_user.search_document
@@ -4003,8 +4003,8 @@ def test_staff_delete(staff_api_client, permission_manage_staff):
 
 
 @freeze_time("2018-05-31 12:00:01")
-@patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
-@patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
+@patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
 def test_staff_delete_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -4015,7 +4015,7 @@ def test_staff_delete_trigger_webhook(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
     staff_user = User.objects.create(email="staffuser@example.com", is_staff=True)
     user_id = graphene.Node.to_global_id("User", staff_user.id)
     variables = {"id": user_id}
@@ -4050,7 +4050,7 @@ def test_staff_delete_trigger_webhook(
     )
 
 
-@patch("saleor.account.signals.delete_from_storage_task.delay")
+@patch("swiftmovers.account.signals.delete_from_storage_task.delay")
 def test_staff_delete_with_avatar(
     delete_from_storage_task_mock,
     staff_api_client,
@@ -4563,8 +4563,8 @@ def test_create_address_mutation(
 
 
 @freeze_time("2022-05-12 12:00:00")
-@patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
-@patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
+@patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
 def test_create_address_mutation_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -4577,7 +4577,7 @@ def test_create_address_mutation_trigger_webhook(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
 
     user_id = graphene.Node.to_global_id("User", customer_user.id)
     variables = {"user": user_id, "address": graphql_address_data}
@@ -4710,8 +4710,8 @@ def test_address_update_mutation(
 
 
 @freeze_time("2022-05-12 12:00:00")
-@patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
-@patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
+@patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
 def test_address_update_mutation_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -4724,7 +4724,7 @@ def test_address_update_mutation_trigger_webhook(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
 
     address = customer_user.addresses.first()
     assert staff_api_client.user not in address.user_addresses.all()
@@ -4752,7 +4752,7 @@ def test_address_update_mutation_trigger_webhook(
     )
 
 
-@patch("saleor.graphql.account.mutations.base.prepare_user_search_document_value")
+@patch("swiftmovers.graphql.account.mutations.base.prepare_user_search_document_value")
 def test_address_update_mutation_no_user_assigned(
     prepare_user_search_document_value_mock,
     staff_api_client,
@@ -4819,8 +4819,8 @@ def test_customer_update_own_address(
 
 
 @freeze_time("2022-05-12 12:00:00")
-@patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
-@patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
+@patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
 def test_customer_address_update_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -4832,7 +4832,7 @@ def test_customer_address_update_trigger_webhook(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
 
     address = customer_user.addresses.first()
     address_data = graphql_address_data
@@ -4951,8 +4951,8 @@ def test_address_delete_mutation(
 
 
 @freeze_time("2022-05-12 12:00:00")
-@patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
-@patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
+@patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
 def test_address_delete_mutation_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -4964,7 +4964,7 @@ def test_address_delete_mutation_trigger_webhook(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
 
     address = customer_user.addresses.first()
     variables = {"id": graphene.Node.to_global_id("Address", address.id)}
@@ -5036,8 +5036,8 @@ def test_customer_delete_own_address(user_api_client, customer_user):
 
 
 @freeze_time("2022-05-12 12:00:00")
-@patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
-@patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
+@patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
 def test_customer_delete_address_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -5048,7 +5048,7 @@ def test_customer_delete_address_trigger_webhook(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
 
     address = customer_user.addresses.first()
     variables = {"id": graphene.Node.to_global_id("Address", address.id)}
@@ -5301,7 +5301,7 @@ CONFIRM_ACCOUNT_MUTATION = """
 
 
 @freeze_time("2018-05-31 12:00:01")
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_account_reset_password(
     mocked_notify,
     user_api_client,
@@ -5343,7 +5343,7 @@ def test_account_reset_password(
 
 
 @freeze_time("2018-05-31 12:00:01")
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_account_reset_password_on_cooldown(
     mocked_notify, user_api_client, customer_user, channel_PLN
 ):
@@ -5390,7 +5390,7 @@ def test_account_reset_password_after_cooldown(
 
 
 @freeze_time("2018-05-31 12:00:01")
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_account_reset_password_with_upper_case_email(
     mocked_notify,
     user_api_client,
@@ -5429,8 +5429,8 @@ def test_account_reset_password_with_upper_case_email(
 
 
 @freeze_time("2018-05-31 12:00:01")
-@patch("saleor.graphql.account.mutations.base.assign_user_gift_cards")
-@patch("saleor.graphql.account.mutations.base.match_orders_with_new_user")
+@patch("swiftmovers.graphql.account.mutations.base.assign_user_gift_cards")
+@patch("swiftmovers.graphql.account.mutations.base.match_orders_with_new_user")
 def test_account_confirmation(
     match_orders_with_new_user_mock,
     assign_gift_cards_mock,
@@ -5457,8 +5457,8 @@ def test_account_confirmation(
 
 
 @freeze_time("2018-05-31 12:00:01")
-@patch("saleor.graphql.account.mutations.base.assign_user_gift_cards")
-@patch("saleor.graphql.account.mutations.base.match_orders_with_new_user")
+@patch("swiftmovers.graphql.account.mutations.base.assign_user_gift_cards")
+@patch("swiftmovers.graphql.account.mutations.base.match_orders_with_new_user")
 def test_account_confirmation_invalid_user(
     match_orders_with_new_user_mock,
     assign_gift_cards_mock,
@@ -5482,8 +5482,8 @@ def test_account_confirmation_invalid_user(
     assign_gift_cards_mock.assert_not_called()
 
 
-@patch("saleor.graphql.account.mutations.base.assign_user_gift_cards")
-@patch("saleor.graphql.account.mutations.base.match_orders_with_new_user")
+@patch("swiftmovers.graphql.account.mutations.base.assign_user_gift_cards")
+@patch("swiftmovers.graphql.account.mutations.base.match_orders_with_new_user")
 def test_account_confirmation_invalid_token(
     match_orders_with_new_user_mock,
     assign_gift_cards_mock,
@@ -5508,7 +5508,7 @@ def test_account_confirmation_invalid_token(
 
 
 @freeze_time("2018-05-31 12:00:01")
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_request_password_reset_email_for_staff(
     mocked_notify, staff_api_client, channel_USD, site_settings
 ):
@@ -5537,7 +5537,7 @@ def test_request_password_reset_email_for_staff(
     )
 
 
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_account_reset_password_invalid_email(
     mocked_notify, user_api_client, channel_USD
 ):
@@ -5553,7 +5553,7 @@ def test_account_reset_password_invalid_email(
     mocked_notify.assert_not_called()
 
 
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_account_reset_password_user_is_inactive(
     mocked_notify, user_api_client, customer_user, channel_USD
 ):
@@ -5576,7 +5576,7 @@ def test_account_reset_password_user_is_inactive(
     assert not mocked_notify.called
 
 
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_account_reset_password_storefront_hosts_not_allowed(
     mocked_notify, user_api_client, customer_user, channel_USD
 ):
@@ -5594,7 +5594,7 @@ def test_account_reset_password_storefront_hosts_not_allowed(
 
 
 @freeze_time("2018-05-31 12:00:01")
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_account_reset_password_all_storefront_hosts_allowed(
     mocked_notify,
     user_api_client,
@@ -5636,7 +5636,7 @@ def test_account_reset_password_all_storefront_hosts_allowed(
 
 
 @freeze_time("2018-05-31 12:00:01")
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_account_reset_password_subdomain(
     mocked_notify, user_api_client, customer_user, settings, channel_PLN, site_settings
 ):
@@ -5714,8 +5714,8 @@ def test_customer_create_address(user_api_client, graphql_address_data):
 
 
 @freeze_time("2022-05-12 12:00:00")
-@patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
-@patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
+@patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
 def test_customer_create_address_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -5726,7 +5726,7 @@ def test_customer_create_address_trigger_webhook(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
 
     variables = {"addressInput": graphql_address_data}
 
@@ -6897,7 +6897,7 @@ mutation requestEmailChange(
 
 
 @freeze_time("2018-05-31 12:00:01")
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_account_request_email_change_with_upper_case_email(
     mocked_notify,
     user_api_client,
@@ -7037,8 +7037,8 @@ mutation emailUpdate($token: String!, $channel: String) {
 """
 
 
-@patch("saleor.graphql.account.mutations.account.match_orders_with_new_user")
-@patch("saleor.graphql.account.mutations.account.assign_user_gift_cards")
+@patch("swiftmovers.graphql.account.mutations.account.match_orders_with_new_user")
+@patch("swiftmovers.graphql.account.mutations.account.assign_user_gift_cards")
 def test_email_update(
     assign_gift_cards_mock,
     assign_orders_mock,

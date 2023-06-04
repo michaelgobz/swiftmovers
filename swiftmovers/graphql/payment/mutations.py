@@ -760,7 +760,7 @@ class TransactionEventInput(BaseInputObjectType):
         required=False,
         description="Current status of the payment transaction."
         + PREVIEW_FEATURE_DEPRECATED_IN_313_INPUT
-        + " Status will be calculated by Saleor.",
+        + " Status will be calculated by swiftmovers.",
     )
     reference = graphene.String(
         description=(

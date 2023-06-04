@@ -163,8 +163,8 @@ def test_shipping_method_channel_listing_update_allow_to_set_null_for_limit_fiel
 
 
 @freeze_time("2022-05-12 12:00:00")
-@patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
-@patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
+@patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
 def test_shipping_method_channel_listing_create_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -177,7 +177,7 @@ def test_shipping_method_channel_listing_create_trigger_webhook(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
 
     shipping_method.shipping_zone.channels.add(channel_PLN)
     shipping_method_id = graphene.Node.to_global_id(
@@ -694,7 +694,7 @@ def test_shipping_method_channel_listing_create_channel_not_valid(
 
 
 @patch(
-    "saleor.graphql.shipping.mutations.channels."
+    "swiftmovers.graphql.shipping.mutations.channels."
     "drop_invalid_shipping_methods_relations_for_given_channels.delay"
 )
 def test_shipping_method_channel_listing_update_remove_channels(

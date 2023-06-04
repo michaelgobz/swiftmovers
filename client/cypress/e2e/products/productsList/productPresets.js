@@ -18,7 +18,7 @@ describe("As a user I should be able to save selected filters with search querie
   });
 
   it(
-    "should be able to add preset. TC: SALEOR_3802",
+    "should be able to add preset. TC: swiftmovers_3802",
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
       ensureCanvasStatic(PRODUCTS_LIST.dataGridTable).then(() => {

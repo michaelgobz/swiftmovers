@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import clsx from "clsx";
 import { GetItemPropsOptions } from "downshift";
 import React, { ReactNode } from "react";

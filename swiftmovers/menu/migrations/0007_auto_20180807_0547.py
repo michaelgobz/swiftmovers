@@ -4,8 +4,8 @@ import json
 from django.contrib.postgres import fields
 from django.db import migrations
 
-from saleor.page.models import Page
-from saleor.product.models import Category, Collection
+from swiftmovers.page.models import Page
+from swiftmovers.product.models import Category, Collection
 
 
 def get_linked_object_kwargs(object):

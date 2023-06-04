@@ -13,7 +13,7 @@ import {
   OrderFulfillStockFormsetData,
 } from "@dashboard/orders/utils/data";
 import { TableBody, TableCell, TableHead, Typography } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

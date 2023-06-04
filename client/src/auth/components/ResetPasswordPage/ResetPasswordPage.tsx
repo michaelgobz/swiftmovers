@@ -7,7 +7,7 @@ import { RequestPasswordResetMutation } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { TextField, Typography } from "@material-ui/core";
-import { ArrowRightIcon } from "@saleor/macaw-ui";
+import { ArrowRightIcon } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

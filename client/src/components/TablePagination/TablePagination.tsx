@@ -4,7 +4,7 @@ import {
   Pagination,
   PaginationProps as MacawPaginationProps,
   PaginationRowNumberSelectLabels,
-} from "@saleor/macaw-ui";
+} from "@swiftmovers/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Link, LinkProps } from "react-router-dom";

@@ -1,46 +1,46 @@
-![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)
+![swiftmovers Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)
 
 <div align="center">
-  <h1>Saleor Dashboard</h1>
+  <h1>swiftmovers Dashboard</h1>
 </div>
 
 <div align="center">
-  <p>A GraphQL-powered, single-page dashboard application for <a href="https://github.com/saleor/saleor">Saleor</a>.</p>
+  <p>A GraphQL-powered, single-page dashboard application for <a href="https://github.com/swiftmovers/swiftmovers">swiftmovers</a>.</p>
 </div>
 
 <div align="center">
-  <a href="https://saleor.io/">🏠 Website</a>
+  <a href="https://swiftmovers.io/">🏠 Website</a>
   <span> • </span>
-  <a href="https://docs.saleor.io/docs/3.x/">📚 Docs</a>
+  <a href="https://docs.swiftmovers.io/docs/3.x/">📚 Docs</a>
   <span> • </span>
-  <a href="https://saleor.io/blog/">📰 Blog</a>
+  <a href="https://swiftmovers.io/blog/">📰 Blog</a>
   <span> • </span>
-  <a href="https://twitter.com/getsaleor">🐦 Twitter</a>
+  <a href="https://twitter.com/getswiftmovers">🐦 Twitter</a>
 </div>
 
 <div align="center">
-  <a href="https://demo.saleor.io/dashboard">▶️ Demo</a>
+  <a href="https://demo.swiftmovers.io/dashboard">▶️ Demo</a>
    <span> • </span>
-  <a href="https://githubbox.com/saleor/saleor-dashboard">🔎 Explore Code</a>
+  <a href="https://githubbox.com/swiftmovers/swiftmovers-dashboard">🔎 Explore Code</a>
 </div>
 
 ## Prerequisites
 
 - Node.js v18+
-- A running instance of [Saleor](https://github.com/saleor/saleor/)
+- A running instance of [swiftmovers](https://github.com/swiftmovers/swiftmovers/)
 
 ## Development
 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/saleor/saleor-dashboard.git
+git clone https://github.com/swiftmovers/swiftmovers-dashboard.git
 ```
 
 2. Enter the project directory:
 
 ```bash
-cd saleor-dashboard
+cd swiftmovers-dashboard
 ```
 
 3. Install the dependencies:
@@ -58,7 +58,7 @@ npm run dev
 ```
 
 > Note:
-> If you see CORS errors, check [CORS configuration](https://docs.saleor.io/docs/3.x/developer/running-saleor/configuration#allowed_client_hosts) of your Saleor instance or CORS settings in the Cloud Console.
+> If you see CORS errors, check [CORS configuration](https://docs.swiftmovers.io/docs/3.x/developer/running-swiftmovers/configuration#allowed_client_hosts) of your swiftmovers instance or CORS settings in the Cloud Console.
 
 ## Docs
 

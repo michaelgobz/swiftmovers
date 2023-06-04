@@ -24,7 +24,7 @@ SALE_DELETE_MUTATION = """
 """
 
 
-@patch("saleor.plugins.manager.PluginsManager.sale_deleted")
+@patch("swiftmovers.plugins.manager.PluginsManager.sale_deleted")
 def test_sale_delete_mutation(
     deleted_webhook_mock, staff_api_client, sale, permission_manage_discounts
 ):

@@ -636,7 +636,7 @@ def test_shop_domain_update(staff_api_client, permission_manage_settings):
             }
         }
     """
-    new_name = "saleor test store"
+    new_name = "swiftmovers test store"
     variables = {"input": {"domain": "lorem-ipsum.com", "name": new_name}}
     site = Site.objects.get_current()
     assert site.domain != "lorem-ipsum.com"
@@ -762,7 +762,7 @@ def test_query_available_external_authentications(
     external_auths, user_api_client, monkeypatch
 ):
     monkeypatch.setattr(
-        "saleor.plugins.manager.PluginsManager.list_external_authentications",
+        "swiftmovers.plugins.manager.PluginsManager.list_external_authentications",
         lambda self, active_only: external_auths,
     )
     query = AVAILABLE_EXTERNAL_AUTHENTICATIONS_QUERY

@@ -5,7 +5,7 @@ import { useCommonStyles } from "@dashboard/components/Filter/FilterContent/util
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import Skeleton from "@dashboard/components/Skeleton";
 import { FormControlLabel, Radio, TextField } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import clsx from "clsx";
 import React from "react";
 

@@ -1,7 +1,7 @@
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import Skeleton from "@dashboard/components/Skeleton";
 import { Typography } from "@material-ui/core";
-import { AccordionSummary } from "@saleor/macaw-ui";
+import { AccordionSummary } from "@swiftmovers/macaw-ui";
 import React from "react";
 
 import { useHeaderStyles } from "./styles";

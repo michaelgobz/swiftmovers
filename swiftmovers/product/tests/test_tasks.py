@@ -13,7 +13,7 @@ from ..tasks import (
 )
 
 
-@patch("saleor.product.tasks.update_products_discounted_prices_of_discount")
+@patch("swiftmovers.product.tasks.update_products_discounted_prices_of_discount")
 def test_update_products_discounted_prices_of_discount_task(
     update_product_prices_mock, sale
 ):
@@ -24,7 +24,7 @@ def test_update_products_discounted_prices_of_discount_task(
     update_product_prices_mock.assert_called_once_with(sale)
 
 
-@patch("saleor.product.tasks.update_products_discounted_prices_of_discount")
+@patch("swiftmovers.product.tasks.update_products_discounted_prices_of_discount")
 def test_update_products_discounted_prices_of_discount_task_discount_does_not_exist(
     update_product_prices_mock, caplog
 ):
@@ -40,7 +40,7 @@ def test_update_products_discounted_prices_of_discount_task_discount_does_not_ex
     assert f"Cannot find discount with id: {discount_id}" in caplog.text
 
 
-@patch("saleor.product.tasks.update_product_discounted_price")
+@patch("swiftmovers.product.tasks.update_product_discounted_price")
 def test_update_product_discounted_price_task(update_product_price_mock, product):
     # when
     update_product_discounted_price_task(product.id)
@@ -49,7 +49,7 @@ def test_update_product_discounted_price_task(update_product_price_mock, product
     update_product_price_mock.assert_called_once_with(product)
 
 
-@patch("saleor.product.tasks.update_product_discounted_price")
+@patch("swiftmovers.product.tasks.update_product_discounted_price")
 def test_update_product_discounted_price_task_product_does_not_exist(
     update_product_price_mock, caplog
 ):
@@ -65,7 +65,7 @@ def test_update_product_discounted_price_task_product_does_not_exist(
     assert f"Cannot find product with id: {product_id}" in caplog.text
 
 
-@patch("saleor.product.tasks._update_variants_names")
+@patch("swiftmovers.product.tasks._update_variants_names")
 def test_update_variants_names(
     update_variants_names_mock, product_type, size_attribute
 ):
@@ -78,7 +78,7 @@ def test_update_variants_names(
     assert {arg.pk for arg in args[1]} == {size_attribute.pk}
 
 
-@patch("saleor.product.tasks.update_products_discounted_prices_of_discount")
+@patch("swiftmovers.product.tasks.update_products_discounted_prices_of_discount")
 def test_update_variants_names_product_type_does_not_exist(
     update_variants_names_mock, caplog
 ):

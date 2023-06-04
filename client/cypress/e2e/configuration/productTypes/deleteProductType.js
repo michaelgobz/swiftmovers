@@ -40,7 +40,7 @@ describe("As an admin I want to manage product types", () => {
   });
 
   it(
-    "should be able to delete product type. TC: SALEOR_1505",
+    "should be able to delete product type. TC: swiftmovers_1505",
     { tags: ["@productType", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
@@ -61,7 +61,7 @@ describe("As an admin I want to manage product types", () => {
   );
 
   it(
-    "should be able to delete product type with assigned product. TC: SALEOR_1509",
+    "should be able to delete product type with assigned product. TC: swiftmovers_1509",
     { tags: ["@productType", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;

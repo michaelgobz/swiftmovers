@@ -9,7 +9,7 @@ from promise import Promise
 from ...app.models import App, AppExtension, AppToken
 from ...core.auth import get_token_from_request
 from ...core.utils.lazyobjects import unwrap_lazy
-from ..core import SaleorContext
+from ..core import swiftmoversContext
 from ..core.dataloaders import DataLoader
 
 
@@ -102,14 +102,14 @@ class AppByTokenLoader(DataLoader):
         return [apps.get(authed_apps.get(key)) for key in keys]
 
 
-def promise_app(context: SaleorContext) -> Promise[Optional[App]]:
+def promise_app(context: swiftmoversContext) -> Promise[Optional[App]]:
     auth_token = get_token_from_request(context)
     if not auth_token or len(auth_token) != 30:
         return Promise.resolve(None)
     return AppByTokenLoader(context).load(auth_token)
 
 
-def get_app_promise(context: SaleorContext) -> Promise[Optional[App]]:
+def get_app_promise(context: swiftmoversContext) -> Promise[Optional[App]]:
     if hasattr(context, "app"):
         app = context.app
         if isinstance(app, LazyObject):

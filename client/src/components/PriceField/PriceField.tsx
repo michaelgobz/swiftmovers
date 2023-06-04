@@ -1,6 +1,6 @@
 import { InputAdornment, InputLabelProps, TextField } from "@material-ui/core";
 import { InputProps } from "@material-ui/core/Input";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import React from "react";
 
 import { usePriceField } from "./usePriceField";

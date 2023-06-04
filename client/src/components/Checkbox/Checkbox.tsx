@@ -2,7 +2,7 @@ import MuiCheckbox, {
   CheckboxProps as MuiCheckboxProps,
 } from "@material-ui/core/Checkbox";
 import FormHelperText from "@material-ui/core/FormHelperText";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import React from "react";
 
 const useStyles = makeStyles(

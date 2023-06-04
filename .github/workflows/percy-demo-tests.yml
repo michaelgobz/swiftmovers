@@ -6,11 +6,11 @@ on:
       dashboardUrl:
         description: 'Environment to run tests against'
         required: true
-        default: 'https://staging-demo.saleor.io/'
+        default: 'https://staging-demo.swiftmovers.io/'
       apiUrl:
         required: true 
         description: 'Environment api to run tests against'
-        default: 'https://staging-demo.saleor.io/graphql/'
+        default: 'https://staging-demo.swiftmovers.io/graphql/'
       testsKind:
         required: true 
         description: 'What kind of tests'
@@ -39,8 +39,8 @@ jobs:
       - name: Get environments urls
         id: get-env-urls
         env:
-          DEFAULT_DASHBOARD_URL: 'https://staging-demo.saleor.io/'
-          DEFAULT_API_URL: 'https://staging-demo.saleor.io/graphql/'
+          DEFAULT_DASHBOARD_URL: 'https://staging-demo.swiftmovers.io/'
+          DEFAULT_API_URL: 'https://staging-demo.swiftmovers.io/graphql/'
         run: |
           echo "DASHBOARD_URL=${{ github.event.inputs.dashboardUrl || env.DEFAULT_DASHBOARD_URL }}" >> $GITHUB_OUTPUT
           echo "API_URL=${{ github.event.inputs.apiUrl || env.DEFAULT_API_URL }}" >> $GITHUB_OUTPUT

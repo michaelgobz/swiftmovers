@@ -23,7 +23,7 @@ import {
   TableHead,
 } from "@material-ui/core";
 import { CSSProperties } from "@material-ui/styles";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

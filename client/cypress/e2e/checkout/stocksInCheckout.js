@@ -68,7 +68,7 @@ describe("Manage products stocks in checkout", () => {
   });
 
   it(
-    "should not be possible to add product with quantity greater than stock to checkout. TC: SALEOR_0405",
+    "should not be possible to add product with quantity greater than stock to checkout. TC: swiftmovers_0405",
     { tags: ["@checkout", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       createCheckout({
@@ -92,7 +92,7 @@ describe("Manage products stocks in checkout", () => {
   );
 
   it(
-    "should buy product with no quantity if tracking is not set. TC: SALEOR_0406",
+    "should buy product with no quantity if tracking is not set. TC: swiftmovers_0406",
     { tags: ["@checkout", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       createWaitingForCaptureOrder({
@@ -108,7 +108,7 @@ describe("Manage products stocks in checkout", () => {
   );
 
   it(
-    "should create checkout with last product in stock. TC: SALEOR_0419",
+    "should create checkout with last product in stock. TC: swiftmovers_0419",
     { tags: ["@checkout", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       createWaitingForCaptureOrder({

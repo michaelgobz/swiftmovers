@@ -1,4 +1,4 @@
-import { Events } from "@saleor/app-sdk/app-bridge";
+import { Events } from "@swiftmovers/app-sdk/app-bridge";
 import { useCallback } from "react";
 
 export const usePostToExtension = (

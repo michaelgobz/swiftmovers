@@ -121,8 +121,8 @@ class Payment(ModelObjectType[models.Payment]):
     created = graphene.DateTime(required=True)
     modified = graphene.DateTime(required=True)
     token = graphene.String(required=True)
-    checkout = graphene.Field("saleor.graphql.checkout.types.Checkout")
-    order = graphene.Field("saleor.graphql.order.types.Order")
+    checkout = graphene.Field("swiftmovers.graphql.checkout.types.Checkout")
+    order = graphene.Field("swiftmovers.graphql.order.types.Order")
     payment_method_type = graphene.String(required=True)
     customer_ip_address = PermissionsField(
         graphene.String,
@@ -315,7 +315,7 @@ class TransactionEvent(ModelObjectType[models.TransactionEvent]):
     )
 
     created_by = graphene.Field(
-        "saleor.graphql.core.types.user_or_app.UserOrApp",
+        "swiftmovers.graphql.core.types.user_or_app.UserOrApp",
         description=("User or App that created the transaction event." + ADDED_IN_313),
     )
 
@@ -474,14 +474,14 @@ class TransactionItem(ModelObjectType[models.TransactionItem]):
         description="PSP reference of transaction." + ADDED_IN_313, required=True
     )
     order = graphene.Field(
-        "saleor.graphql.order.types.Order",
+        "swiftmovers.graphql.order.types.Order",
         description="The related order." + ADDED_IN_36,
     )
     events = NonNullList(
         TransactionEvent, required=True, description="List of all transaction's events."
     )
     created_by = graphene.Field(
-        "saleor.graphql.core.types.user_or_app.UserOrApp",
+        "swiftmovers.graphql.core.types.user_or_app.UserOrApp",
         description=("User or App that created the transaction." + ADDED_IN_313),
     )
     external_url = graphene.String(

@@ -1,7 +1,7 @@
 import { getApiUrl } from "@dashboard/config";
 import { FlagWithName } from "@dashboard/hooks/useFlags/types";
 import { stringifyQs } from "@dashboard/utils/urls";
-import { ThemeType } from "@saleor/app-sdk/app-bridge";
+import { ThemeType } from "@swiftmovers/app-sdk/app-bridge";
 import urlJoin from "url-join";
 
 import { Dialog, SingleAction } from "../types";
@@ -127,21 +127,21 @@ export const AppUrls = {
   ) => {
     const apiUrl = new URL(getApiUrl(), window.location.origin).href;
     /**
-     * Use host to preserve port, in case of multiple Saleors running on localhost
+     * Use host to preserve port, in case of multiple swiftmoverss running on localhost
      */
     const apiUrlHost = new URL(apiUrl).host;
 
     const iframeContextQueryString = `?${stringifyQs(
       {
         /**
-         * @deprecated - domain will be removed in favor of saleorApiUrl.
+         * @deprecated - domain will be removed in favor of swiftmoversApiUrl.
          * Current hostname (used as domain) can be extracted from full URL
          *
          * Difference will be:
-         * shop.saleor.cloud -> https://shop.saleor.cloud/graphql/
+         * shop.swiftmovers.cloud -> https://shop.swiftmovers.cloud/graphql/
          */
         domain: apiUrlHost,
-        saleorApiUrl: apiUrl,
+        swiftmoversApiUrl: apiUrl,
         id: appId,
         ...params,
       },

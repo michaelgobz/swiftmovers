@@ -3,7 +3,7 @@ import { AppUrls } from "@dashboard/apps/urls";
 import { TopNavLink, TopNavWrapper } from "@dashboard/components/AppLayout";
 import { LinkState } from "@dashboard/components/Link";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { Box, Button, Text } from "@saleor/macaw-ui/next";
+import { Box, Button, Text } from "@swiftmovers/macaw-ui/next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { useLocation } from "react-router";

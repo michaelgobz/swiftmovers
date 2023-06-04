@@ -9,7 +9,7 @@ import {
 } from "@dashboard/graphql";
 import { Typography } from "@material-ui/core";
 import { useId } from "@reach/auto-id";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

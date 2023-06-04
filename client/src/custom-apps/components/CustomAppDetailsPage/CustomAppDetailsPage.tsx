@@ -16,7 +16,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
-import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Button, ConfirmButtonTransitionState } from "@swiftmovers/macaw-ui";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -173,7 +173,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
               description={intl.formatMessage({
                 id: "flP8Hj",
                 defaultMessage:
-                  "Expand or restrict app permissions to access certain part of Saleor system.",
+                  "Expand or restrict app permissions to access certain part of swiftmovers system.",
                 description: "card description",
               })}
             />

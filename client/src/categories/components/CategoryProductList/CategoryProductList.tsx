@@ -11,7 +11,7 @@ import { maybe, renderCollection } from "@dashboard/misc";
 import { productUrl } from "@dashboard/products/urls";
 import { ListActions, ListProps, RelayToFlat } from "@dashboard/types";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

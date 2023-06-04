@@ -36,7 +36,7 @@ def tax_checkout_webhooks(tax_app):
     )
 
 
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
 def test_trigger_tax_webhook_sync(
     mock_request,
     tax_checkout_webhook,
@@ -62,7 +62,7 @@ def test_trigger_tax_webhook_sync(
     assert tax_data == parse_tax_data(tax_data_response)
 
 
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
 def test_trigger_tax_webhook_sync_multiple_webhooks_first(
     mock_request,
     tax_checkout_webhooks,
@@ -90,7 +90,7 @@ def test_trigger_tax_webhook_sync_multiple_webhooks_first(
     assert tax_data == parse_tax_data(tax_data_response)
 
 
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
 def test_trigger_tax_webhook_sync_multiple_webhooks_last(
     mock_request,
     tax_checkout_webhooks,
@@ -122,7 +122,7 @@ def test_trigger_tax_webhook_sync_multiple_webhooks_last(
     assert tax_data == parse_tax_data(tax_data_response)
 
 
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
 def test_trigger_tax_webhook_sync_invalid_webhooks(
     mock_request,
     tax_checkout_webhooks,

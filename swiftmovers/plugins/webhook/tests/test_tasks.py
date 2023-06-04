@@ -32,7 +32,7 @@ def mocked_webhook_response():
 
 
 @freeze_time("2022-06-11 12:50")
-@mock.patch("saleor.plugins.webhook.tasks.handle_transaction_request_task.delay")
+@mock.patch("swiftmovers.plugins.webhook.tasks.handle_transaction_request_task.delay")
 def test_trigger_transaction_request(
     mocked_task,
     transaction_item_created_by_app,
@@ -84,7 +84,7 @@ def test_trigger_transaction_request(
 
 
 @freeze_time("2022-06-11 12:50")
-@mock.patch("saleor.plugins.webhook.tasks.handle_transaction_request_task.delay")
+@mock.patch("swiftmovers.plugins.webhook.tasks.handle_transaction_request_task.delay")
 def test_trigger_transaction_request_with_webhook_subscription(
     mocked_task,
     transaction_item_created_by_app,
@@ -162,7 +162,7 @@ def test_trigger_transaction_request_with_webhook_subscription(
 
 
 @freeze_time("2022-06-11 12:50")
-@mock.patch("saleor.plugins.webhook.tasks.requests.post")
+@mock.patch("swiftmovers.plugins.webhook.tasks.requests.post")
 def test_handle_transaction_request_task_with_only_psp_reference(
     mocked_post_request,
     transaction_item_generator,
@@ -227,8 +227,8 @@ def test_handle_transaction_request_task_with_only_psp_reference(
 
 @pytest.mark.parametrize("status_code", [500, 501, 510])
 @freeze_time("2022-06-11 12:50")
-@mock.patch("saleor.plugins.webhook.tasks.handle_webhook_retry")
-@mock.patch("saleor.plugins.webhook.tasks.requests.post")
+@mock.patch("swiftmovers.plugins.webhook.tasks.handle_webhook_retry")
+@mock.patch("swiftmovers.plugins.webhook.tasks.requests.post")
 def test_handle_transaction_request_task_with_server_error(
     mocked_post_request,
     mocked_webhook_retry,
@@ -284,7 +284,7 @@ def test_handle_transaction_request_task_with_server_error(
 
 
 @freeze_time("2022-06-11 12:50")
-@mock.patch("saleor.plugins.webhook.tasks.requests.post")
+@mock.patch("swiftmovers.plugins.webhook.tasks.requests.post")
 def test_handle_transaction_request_task_with_missing_psp_reference(
     mocked_post_request,
     transaction_item_created_by_app,
@@ -362,7 +362,7 @@ def test_handle_transaction_request_task_with_missing_psp_reference(
 
 
 @freeze_time("2022-06-11 12:50")
-@mock.patch("saleor.plugins.webhook.tasks.requests.post")
+@mock.patch("swiftmovers.plugins.webhook.tasks.requests.post")
 def test_handle_transaction_request_task_with_missing_required_event_field(
     mocked_post_request,
     transaction_item_created_by_app,
@@ -445,7 +445,7 @@ def test_handle_transaction_request_task_with_missing_required_event_field(
 
 
 @freeze_time("2022-06-11 12:50")
-@mock.patch("saleor.plugins.webhook.tasks.requests.post")
+@mock.patch("swiftmovers.plugins.webhook.tasks.requests.post")
 def test_handle_transaction_request_task_with_result_event(
     mocked_post_request,
     transaction_item_generator,
@@ -543,7 +543,7 @@ def test_handle_transaction_request_task_with_result_event(
 
 
 @freeze_time("2022-06-11T17:50:00+00:00")
-@mock.patch("saleor.plugins.webhook.tasks.requests.post")
+@mock.patch("swiftmovers.plugins.webhook.tasks.requests.post")
 def test_handle_transaction_request_task_with_only_required_fields_for_result_event(
     mocked_post_request,
     transaction_item_generator,
@@ -636,10 +636,10 @@ def test_handle_transaction_request_task_with_only_required_fields_for_result_ev
 
 @freeze_time("2022-06-11 12:50")
 @mock.patch(
-    "saleor.payment.utils.recalculate_transaction_amounts",
+    "swiftmovers.payment.utils.recalculate_transaction_amounts",
     wraps=recalculate_transaction_amounts,
 )
-@mock.patch("saleor.plugins.webhook.tasks.requests.post")
+@mock.patch("swiftmovers.plugins.webhook.tasks.requests.post")
 def test_handle_transaction_request_task_calls_recalculation_of_amounts(
     mocked_post_request,
     mocked_recalculation,

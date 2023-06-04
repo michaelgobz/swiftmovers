@@ -61,10 +61,10 @@ describe("As a staff user I want to change shop default weight unit", () => {
   });
 
   xit(
-    "should recalculate weight after changing shipping weight unit. TC: SALEOR_0901",
+    "should recalculate weight after changing shipping weight unit. TC: swiftmovers_0901",
     { tags: ["@shipping", "@allEnv"] },
     () => {
-      // Enable this test after fixing SALEOR-4898
+      // Enable this test after fixing swiftmovers-4898
 
       const rateName = `${startsWith}${faker.datatype.number()}`;
       const minWeightInKg = 1;

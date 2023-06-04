@@ -1,5 +1,5 @@
 import { CardContent, Typography } from "@material-ui/core";
-import { Accordion, AccordionSummary } from "@saleor/macaw-ui";
+import { Accordion, AccordionSummary } from "@swiftmovers/macaw-ui";
 import React from "react";
 
 import {

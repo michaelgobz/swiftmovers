@@ -249,7 +249,7 @@ export function addAdyenPayment(checkoutId, amount) {
 export function addStripePayment(checkoutId, amount, token) {
   return checkoutRequest.addPayment({
     checkoutId,
-    gateway: "saleor.payments.stripe",
+    gateway: "swiftmovers.payments.stripe",
     amount,
     token,
   });

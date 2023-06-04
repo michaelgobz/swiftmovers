@@ -11,7 +11,7 @@ import {
   submitFilters,
 } from "../../../support/pages/catalog/products/productsListPage";
 
-// waiting for canvas fix https://github.com/saleor/saleor-dashboard/issues/3410
+// waiting for canvas fix https://github.com/swiftmovers/swiftmovers-dashboard/issues/3410
 describe.skip("As an admin I should be able to sort products", () => {
   let defaultChannel;
 
@@ -32,7 +32,7 @@ describe.skip("As an admin I should be able to sort products", () => {
   });
 
   it(
-    "should be able to sort products by price. TC: SALEOR_2607",
+    "should be able to sort products by price. TC: swiftmovers_2607",
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
       selectChannel(defaultChannel.slug);
@@ -45,7 +45,7 @@ describe.skip("As an admin I should be able to sort products", () => {
   );
 
   it(
-    "should be able to sort products by type. TC: SALEOR_2608",
+    "should be able to sort products by type. TC: swiftmovers_2608",
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
       cy.get(PRODUCTS_LIST.tableHeaders.type)
@@ -56,7 +56,7 @@ describe.skip("As an admin I should be able to sort products", () => {
   );
 
   it(
-    "should be able to sort products by name. TC: SALEOR_2609",
+    "should be able to sort products by name. TC: swiftmovers_2609",
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
       sortProductsBy("name");

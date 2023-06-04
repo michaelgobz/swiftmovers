@@ -209,7 +209,7 @@ loaders = [
 
 TEMPLATES_DIR = os.path.join(PROJECT_ROOT, "templates")
 
-# Additional password algorithms that can be used by Saleor.
+# Additional password algorithms that can be used by swiftmovers.
 # The first algorithm defined by Django is the preferred one; users not using the
 # first algorithm will automatically be upgraded to it upon login
 PASSWORD_HASHERS = [
@@ -669,7 +669,7 @@ BEAT_UPDATE_SEARCH_EXPIRE_AFTER_SEC = 20
 # Note: if a Celery task triggered by a Celery beat entry has an expiration
 # @task(expires=...), the Celery beat scheduler entry should also define
 # the expiration value. This makes sure if the task or scheduling is wrapped
-# by custom code (e.g., a Saleor fork), the expiration is still present.
+# by custom code (e.g., a swiftmovers fork), the expiration is still present.
 CELERY_BEAT_SCHEDULE = {
     "delete-empty-allocations": {
         "task": "swiftmovers.warehouse.tasks.delete_empty_allocations_task",
@@ -846,7 +846,7 @@ RESERVE_DURATION = 45
 # Initialize a simple and basic Jaeger Tracing integration
 # for open-tracing if enabled.
 #
-# Refer to our guide on https://docs.saleor.io/docs/next/guides/opentracing-jaeger/.
+# Refer to our guide on https://docs.swiftmovers.io/docs/next/guides/opentracing-jaeger/.
 #
 # If running locally, set:
 #   JAEGER_AGENT_HOST=localhost

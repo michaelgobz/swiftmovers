@@ -10,8 +10,8 @@ import {
   OrderFulfillLineFormData,
 } from "@dashboard/orders/utils/data";
 import { TableCell, TextField, Typography } from "@material-ui/core";
-import { ChevronIcon, IconButton, WarningIcon } from "@saleor/macaw-ui";
-import { Box, Tooltip } from "@saleor/macaw-ui/next";
+import { ChevronIcon, IconButton, WarningIcon } from "@swiftmovers/macaw-ui";
+import { Box, Tooltip } from "@swiftmovers/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 import { useIntl } from "react-intl";

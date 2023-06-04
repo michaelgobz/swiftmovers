@@ -9,8 +9,8 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { productUrl } from "@dashboard/products/urls";
 import { Card, CardContent, TextField } from "@material-ui/core";
-import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui/next";
+import { ConfirmButtonTransitionState, makeStyles } from "@swiftmovers/macaw-ui";
+import { vars } from "@swiftmovers/macaw-ui/next";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 

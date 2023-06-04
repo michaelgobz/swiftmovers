@@ -12,7 +12,7 @@ import {
   TableHead,
   Typography,
 } from "@material-ui/core";
-import { ExpandIcon, IconButton } from "@saleor/macaw-ui";
+import { ExpandIcon, IconButton } from "@swiftmovers/macaw-ui";
 import clsx from "clsx";
 import React, { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";

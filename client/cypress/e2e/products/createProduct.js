@@ -63,7 +63,7 @@ describe("As an admin I should be able to create product", () => {
   });
 
   it(
-    "should be able to create product with variants as an admin. SALEOR_2701",
+    "should be able to create product with variants as an admin. swiftmovers_2701",
     { tags: ["@products", "@allEnv", "@critical", "@stable", "@oldRelease"] },
     () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
@@ -101,7 +101,7 @@ describe("As an admin I should be able to create product", () => {
   );
 
   it(
-    "should be able to create product without variants as an admin. SALEOR_2702",
+    "should be able to create product without variants as an admin. swiftmovers_2702",
     { tags: ["@products", "@allEnv", "@critical", "@stable", "@oldRelease"] },
     () => {
       const prices = { sellingPrice: 6, costPrice: 3 };

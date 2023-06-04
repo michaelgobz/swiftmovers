@@ -1,7 +1,7 @@
 import { getById } from "@dashboard/misc";
 import ModalTitle from "@dashboard/orders/components/OrderDiscountCommonModal/ModalTitle";
 import { Card, CardContent, CircularProgress, Modal } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -36,7 +36,7 @@ export interface TypeDeleteWarningDialogProps<T extends TypeBaseData>
   assignedItemsCount: number | undefined;
   isLoading?: boolean;
   typesData: T[];
-  // temporary, until we add filters to pages list - SALEOR-3279
+  // temporary, until we add filters to pages list - swiftmovers-3279
   showViewAssignedItemsButton?: boolean;
 }
 

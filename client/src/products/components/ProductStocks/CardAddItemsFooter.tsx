@@ -1,6 +1,6 @@
 import Link from "@dashboard/components/Link";
 import AddIcon from "@material-ui/icons/Add";
-import { IconButton, makeStyles } from "@saleor/macaw-ui";
+import { IconButton, makeStyles } from "@swiftmovers/macaw-ui";
 import React, { MutableRefObject } from "react";
 
 const useStyles = makeStyles(

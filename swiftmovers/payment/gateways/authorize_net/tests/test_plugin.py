@@ -48,7 +48,7 @@ def test_get_payment_gateway_for_checkout_inactive(
     assert not response
 
 
-@mock.patch("saleor.payment.gateways.authorize_net.plugin.authenticate_test")
+@mock.patch("swiftmovers.payment.gateways.authorize_net.plugin.authenticate_test")
 def test_payment_gateway_validate(mocked_authenticate_test, authorize_net_plugin):
     mocked_authenticate_test.return_value = (True, "")
     response = AuthorizeNetGatewayPlugin.validate_plugin_configuration(
@@ -78,7 +78,7 @@ def test_payment_gateway_process_payment_production_failure(
     assert not response.is_success
 
 
-@mock.patch("saleor.payment.gateways.authorize_net.plugin.authenticate_test")
+@mock.patch("swiftmovers.payment.gateways.authorize_net.plugin.authenticate_test")
 def test_payment_gateway_validate_failure(
     mocked_authenticate_test, authorize_net_plugin
 ):
@@ -87,7 +87,7 @@ def test_payment_gateway_validate_failure(
         AuthorizeNetGatewayPlugin.validate_plugin_configuration(authorize_net_plugin)
 
 
-@mock.patch("saleor.payment.gateways.authorize_net.plugin.refund")
+@mock.patch("swiftmovers.payment.gateways.authorize_net.plugin.refund")
 def test_payment_gateway_refund_payment(
     mocked_refund, authorize_net_plugin, dummy_payment_data
 ):
@@ -107,7 +107,7 @@ def test_payment_gateway_refund_payment_no_payment(
         authorize_net_plugin.refund_payment(dummy_payment_data, None)
 
 
-@mock.patch("saleor.payment.gateways.authorize_net.plugin.authorize")
+@mock.patch("swiftmovers.payment.gateways.authorize_net.plugin.authorize")
 def test_payment_gateway_authorize_payment(
     mocked_authorize, authorize_net_plugin, dummy_payment_data
 ):
@@ -118,7 +118,7 @@ def test_payment_gateway_authorize_payment(
     )
 
 
-@mock.patch("saleor.payment.gateways.authorize_net.plugin.capture")
+@mock.patch("swiftmovers.payment.gateways.authorize_net.plugin.capture")
 def test_payment_gateway_capture_payment(
     mocked_capture, authorize_net_plugin, dummy_payment_data
 ):
@@ -129,7 +129,7 @@ def test_payment_gateway_capture_payment(
     )
 
 
-@mock.patch("saleor.payment.gateways.authorize_net.plugin.process_payment")
+@mock.patch("swiftmovers.payment.gateways.authorize_net.plugin.process_payment")
 def test_payment_gateway_process_payment(
     mocked_process_payment, authorize_net_plugin, dummy_payment_data
 ):
@@ -140,7 +140,7 @@ def test_payment_gateway_process_payment(
     )
 
 
-@mock.patch("saleor.payment.gateways.authorize_net.plugin.list_client_sources")
+@mock.patch("swiftmovers.payment.gateways.authorize_net.plugin.list_client_sources")
 def test_payment_gateway_list_payment_sources(
     mocked_list_client_sources, authorize_net_plugin
 ):

@@ -312,7 +312,7 @@ class TaxableObject(BaseObjectType):
         Money, required=True, description="The price of shipping method."
     )
     address = graphene.Field(
-        "saleor.graphql.account.types.Address",
+        "swiftmovers.graphql.account.types.Address",
         description="The address data.",
     )
     discounts = NonNullList(

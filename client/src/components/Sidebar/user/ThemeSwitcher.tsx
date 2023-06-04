@@ -3,7 +3,7 @@ import {
   DefaultTheme,
   LightModeIcon,
   Text,
-} from "@saleor/macaw-ui/next";
+} from "@swiftmovers/macaw-ui/next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

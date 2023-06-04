@@ -4,7 +4,7 @@ import SingleSelectField from "@dashboard/components/SingleSelectField";
 import { MeasurementUnitsEnum } from "@dashboard/graphql";
 import { UseFormResult } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import React, { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 

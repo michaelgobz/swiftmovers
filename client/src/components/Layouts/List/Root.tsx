@@ -1,5 +1,5 @@
 import { contentMaxWidth } from "@dashboard/components/AppLayout/consts";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box } from "@swiftmovers/macaw-ui/next";
 import React from "react";
 
 interface ListPageLayoutProps {

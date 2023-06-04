@@ -77,7 +77,7 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
   });
 
   it(
-    "should be able to enable gift card and use it in checkout. TC: SALEOR_1006",
+    "should be able to enable gift card and use it in checkout. TC: swiftmovers_1006",
     { tags: ["@giftCard", "@allEnv", "@stable"] },
     () => {
       const expectedGiftCardBalance =
@@ -113,7 +113,7 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
   );
 
   it(
-    "should not be able to disable gift card and use it in checkout. TC: SALEOR_1007",
+    "should not be able to disable gift card and use it in checkout. TC: swiftmovers_1007",
     { tags: ["@giftCard", "@allEnv", "@stable"] },
     () => {
       giftCardData.tag = `${startsWith}${faker.datatype.number()}`;
@@ -143,7 +143,7 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
   );
 
   it(
-    "should not be able to disable several gift cards on gift card list page and use it in checkout. TC: SALEOR_1013",
+    "should not be able to disable several gift cards on gift card list page and use it in checkout. TC: swiftmovers_1013",
     { tags: ["@giftCard", "@allEnv", "@stable"] },
     () => {
       const firstGiftCardName = `${startsWith}${faker.datatype.number()}`;
@@ -197,7 +197,7 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
   );
 
   it(
-    "should be able to enable several gift cards on gift card list page and use it in checkout. TC: SALEOR_1012",
+    "should be able to enable several gift cards on gift card list page and use it in checkout. TC: swiftmovers_1012",
     { tags: ["@giftCard", "@allEnv"] },
     () => {
       const firstGiftCardName = `${startsWith}${faker.datatype.number()}`;

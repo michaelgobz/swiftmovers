@@ -96,9 +96,9 @@ describe("As an admin I should be able to filter products", () => {
   });
 
   const filterProductsBy = [
-    { type: "category", testCase: "SALEOR_2601" },
-    { type: "productType", testCase: "SALEOR_2602" },
-    { type: "collection", testCase: "SALEOR_2603" },
+    { type: "category", testCase: "swiftmovers_2601" },
+    { type: "productType", testCase: "swiftmovers_2602" },
+    { type: "collection", testCase: "swiftmovers_2603" },
   ];
   filterProductsBy.forEach(filterBy => {
     it(
@@ -112,7 +112,7 @@ describe("As an admin I should be able to filter products", () => {
   });
 
   it(
-    "should filter products out of stock. TC: SALEOR_2604",
+    "should filter products out of stock. TC: swiftmovers_2604",
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
       const productOutOfStock = `${startsWith}${faker.datatype.number()}`;

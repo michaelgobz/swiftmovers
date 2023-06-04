@@ -33,7 +33,7 @@ ORDER_UPDATE_MUTATION = """
 """
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
 def test_order_update(
     order_updated_webhook_mock,
     staff_api_client,
@@ -83,7 +83,7 @@ def test_order_update(
     order_updated_webhook_mock.assert_called_once_with(order)
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
 def test_order_update_with_draft_order(
     order_updated_webhook_mock,
     staff_api_client,
@@ -107,7 +107,7 @@ def test_order_update_with_draft_order(
     order_updated_webhook_mock.assert_not_called()
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
 def test_order_update_without_sku(
     plugin_mock,
     staff_api_client,

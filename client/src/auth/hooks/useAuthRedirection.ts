@@ -8,7 +8,7 @@ import { useUser } from "..";
 import { loginCallbackPath } from "../urls";
 import { useAuthParameters } from "./useAuthParameters";
 
-const PLUGIN_ID_PARAM = "saleorPluginId";
+const PLUGIN_ID_PARAM = "swiftmoversPluginId";
 
 export const useAuthRedirection = () => {
   const router = useRouter();

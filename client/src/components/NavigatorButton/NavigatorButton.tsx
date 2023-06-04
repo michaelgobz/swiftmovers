@@ -1,7 +1,7 @@
 import { triangle } from "@dashboard/styles/mixins";
 import { Grow, Paper, Popper } from "@material-ui/core";
 import { IconButtonProps } from "@material-ui/core/IconButton";
-import { LayoutButton, makeStyles, NavigatorIcon } from "@saleor/macaw-ui";
+import { LayoutButton, makeStyles, NavigatorIcon } from "@swiftmovers/macaw-ui";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";

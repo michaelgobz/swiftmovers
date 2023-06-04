@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -10,7 +10,7 @@ export const useStyles = makeStyles(
       padding: theme.spacing(2, 0),
     },
     adornment: {
-      color: theme.palette.saleor.main[3],
+      color: theme.palette.swiftmovers.main[3],
       cursor: "pointer",
       userSelect: "none",
       "& svg": {

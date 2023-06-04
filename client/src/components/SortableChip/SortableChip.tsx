@@ -1,6 +1,6 @@
 import { Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import clsx from "clsx";
 import React from "react";
 import { SortableElement, SortableElementProps } from "react-sortable-hoc";

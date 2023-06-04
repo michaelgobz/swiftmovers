@@ -4,7 +4,7 @@ import {
   Savebar as MacawSavebar,
   SavebarLabels,
   SavebarProps as MacawSavebarProps,
-} from "@saleor/macaw-ui";
+} from "@swiftmovers/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

@@ -50,7 +50,7 @@ GIFT_CARD_RESEND_MUTATION = """
 """
 
 
-@mock.patch("saleor.graphql.giftcard.mutations.send_gift_card_notification")
+@mock.patch("swiftmovers.graphql.giftcard.mutations.send_gift_card_notification")
 def test_resend_gift_card(
     send_notification_mock,
     staff_api_client,
@@ -101,7 +101,7 @@ def test_resend_gift_card(
     )
 
 
-@mock.patch("saleor.graphql.giftcard.mutations.send_gift_card_notification")
+@mock.patch("swiftmovers.graphql.giftcard.mutations.send_gift_card_notification")
 def test_resend_gift_card_as_app(
     send_notification_mock,
     app_api_client,
@@ -149,7 +149,7 @@ def test_resend_gift_card_as_app(
     )
 
 
-@mock.patch("saleor.graphql.giftcard.mutations.send_gift_card_notification")
+@mock.patch("swiftmovers.graphql.giftcard.mutations.send_gift_card_notification")
 def test_update_gift_card_no_permission(
     send_notification_mock,
     staff_api_client,
@@ -177,7 +177,7 @@ def test_update_gift_card_no_permission(
     send_notification_mock.assert_not_called()
 
 
-@mock.patch("saleor.graphql.giftcard.mutations.send_gift_card_notification")
+@mock.patch("swiftmovers.graphql.giftcard.mutations.send_gift_card_notification")
 def test_resend_gift_card_malformed_email(
     send_notification_mock,
     staff_api_client,
@@ -223,8 +223,8 @@ def test_resend_gift_card_malformed_email(
 
 
 @freeze_time("2022-05-12 12:00:00")
-@mock.patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
-@mock.patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@mock.patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
+@mock.patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
 def test_resend_gift_card_triggers_gift_card_sent_event(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -239,7 +239,7 @@ def test_resend_gift_card_triggers_gift_card_sent_event(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
 
     email = "gift_card_receiver@example.com"
     variables = {

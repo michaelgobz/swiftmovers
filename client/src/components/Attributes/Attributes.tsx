@@ -11,7 +11,7 @@ import {
 import { FormsetAtomicData } from "@dashboard/hooks/useFormset";
 import { FetchMoreProps } from "@dashboard/types";
 import { RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
-import { Accordion, Box, Divider, Text } from "@saleor/macaw-ui/next";
+import { Accordion, Box, Divider, Text } from "@swiftmovers/macaw-ui/next";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 

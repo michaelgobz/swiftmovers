@@ -11,7 +11,7 @@ declare const FLAGS: Record<string, string>;
 
 declare interface Window {
   PasswordCredential: PasswordCredential;
-  __SALEOR_CONFIG__: {
+  __swiftmovers_CONFIG__: {
     API_URL: string;
     APP_MOUNT_URI: string;
     APPS_MARKETPLACE_API_URI?: string;

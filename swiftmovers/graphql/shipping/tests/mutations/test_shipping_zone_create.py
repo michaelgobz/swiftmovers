@@ -96,8 +96,8 @@ def test_create_shipping_zone(
 
 
 @freeze_time("2022-05-12 12:00:00")
-@mock.patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
-@mock.patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@mock.patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
+@mock.patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
 def test_create_shipping_zone_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -110,7 +110,7 @@ def test_create_shipping_zone_trigger_webhook(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
 
     warehouse_id = graphene.Node.to_global_id("Warehouse", warehouse.id)
     channel_id = graphene.Node.to_global_id("Channel", channel_USD.id)
@@ -205,7 +205,7 @@ TEST_COUNTRIES_LIST = ["DZ", "AX", "BY"]
 
 
 @mock.patch(
-    "saleor.graphql.shipping.mutations.shippings.get_countries_without_shipping_zone",
+    "swiftmovers.graphql.shipping.mutations.shippings.get_countries_without_shipping_zone",
     return_value=TEST_COUNTRIES_LIST,
 )
 def test_create_default_shipping_zone(

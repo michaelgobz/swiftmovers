@@ -3,7 +3,7 @@ import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import { FulfillmentStatus } from "@dashboard/graphql";
 import { StatusType } from "@dashboard/types";
 import { Typography } from "@material-ui/core";
-import { CircleIndicator } from "@saleor/macaw-ui";
+import { CircleIndicator } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

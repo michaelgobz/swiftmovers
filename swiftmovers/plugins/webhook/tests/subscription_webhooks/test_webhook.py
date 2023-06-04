@@ -24,7 +24,7 @@ class FakeDelivery:
     id = TEST_ID
 
 
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_async.delay")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_async.delay")
 def test_trigger_webhooks_async(
     mocked_send_webhook_request,
     webhook,
@@ -44,8 +44,8 @@ def test_trigger_webhooks_async(
     assert mocked_send_webhook_request.mock_calls == calls
 
 
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_async.delay")
-@mock.patch("saleor.plugins.webhook.tasks.create_deliveries_for_subscriptions")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_async.delay")
+@mock.patch("swiftmovers.plugins.webhook.tasks.create_deliveries_for_subscriptions")
 def test_trigger_webhooks_async_no_subscription_webhooks(
     mocked_create_deliveries_for_subscriptions,
     mocked_send_webhook_request,
@@ -59,7 +59,7 @@ def test_trigger_webhooks_async_no_subscription_webhooks(
     mocked_create_deliveries_for_subscriptions.assert_not_called()
 
 
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
 def test_trigger_webhook_sync_with_subscription(
     mock_request, payment_app_with_subscription_webhooks, payment
 ):
@@ -81,9 +81,9 @@ def test_trigger_webhook_sync_with_subscription(
     mock_request.assert_called_once_with(payment_app.name, event_delivery)
 
 
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
-@mock.patch("saleor.plugins.webhook.tasks.get_webhooks_for_event")
-@mock.patch("saleor.plugins.webhook.tasks.generate_payload_from_subscription")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
+@mock.patch("swiftmovers.plugins.webhook.tasks.get_webhooks_for_event")
+@mock.patch("swiftmovers.plugins.webhook.tasks.generate_payload_from_subscription")
 def test_trigger_webhook_sync_with_subscription_within_mutation_use_default_db(
     mocked_generate_payload,
     mocked_get_webhooks_for_event,
@@ -96,7 +96,7 @@ def test_trigger_webhook_sync_with_subscription_within_mutation_use_default_db(
 ):
     # given
     webhook = subscription_calculate_taxes_for_order
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
     mocked_get_webhooks_for_event.return_value = [webhook]
     variables = {
         "orderId": graphene.Node.to_global_id("Order", draft_order.pk),
@@ -115,9 +115,9 @@ def test_trigger_webhook_sync_with_subscription_within_mutation_use_default_db(
     assert not mocked_generate_payload.call_args[1]["request"].allow_replica
 
 
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_async")
-@mock.patch("saleor.plugins.webhook.tasks.get_webhooks_for_event")
-@mock.patch("saleor.plugins.webhook.tasks.generate_payload_from_subscription")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_async")
+@mock.patch("swiftmovers.plugins.webhook.tasks.get_webhooks_for_event")
+@mock.patch("swiftmovers.plugins.webhook.tasks.generate_payload_from_subscription")
 def test_trigger_webhook_async_with_subscription_use_replica_db(
     mocked_generate_payload,
     mocked_get_webhooks_for_event,
@@ -131,7 +131,7 @@ def test_trigger_webhook_async_with_subscription_use_replica_db(
 ):
     # given
     webhook = subscription_product_created_webhook
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
     mocked_get_webhooks_for_event.return_value = [webhook]
 
     product_type_id = graphene.Node.to_global_id("ProductType", product_type.pk)

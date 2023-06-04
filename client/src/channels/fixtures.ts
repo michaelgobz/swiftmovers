@@ -6,7 +6,7 @@ import {
   MarkAsPaidStrategyEnum,
   ProductFragment,
 } from "@dashboard/graphql";
-import { Money } from "@saleor/sdk/dist/apollo/types";
+import { Money } from "@swiftmovers/sdk/dist/apollo/types";
 
 export const channelCreateErrors: ChannelErrorFragment[] = [
   {

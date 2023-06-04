@@ -1,5 +1,5 @@
 import { commonMessages } from "@dashboard/intl";
-import { makeStyles, Pagination } from "@saleor/macaw-ui";
+import { makeStyles, Pagination } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

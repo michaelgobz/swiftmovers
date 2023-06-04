@@ -30,7 +30,7 @@ describe("As an admin I want to manage attributes in product types", () => {
   });
 
   it(
-    "should be able to update product type with product attribute. TC: SALEOR_1503",
+    "should be able to update product type with product attribute. TC: swiftmovers_1503",
     { tags: ["@productType", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
@@ -55,7 +55,7 @@ describe("As an admin I want to manage attributes in product types", () => {
   );
 
   it(
-    "should be able to update product type with variant attribute. TC: SALEOR_1504",
+    "should be able to update product type with variant attribute. TC: swiftmovers_1504",
     { tags: ["@productType", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
@@ -85,7 +85,7 @@ describe("As an admin I want to manage attributes in product types", () => {
   );
 
   it(
-    "should be able to remove variant attribute from product type. TC: SALEOR_1506",
+    "should be able to remove variant attribute from product type. TC: swiftmovers_1506",
     { tags: ["@productType", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
@@ -118,7 +118,7 @@ describe("As an admin I want to manage attributes in product types", () => {
   );
 
   it(
-    "should be able to remove product attribute from product type. TC: SALEOR_1507",
+    "should be able to remove product attribute from product type. TC: swiftmovers_1507",
     { tags: ["@productType", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
@@ -151,7 +151,7 @@ describe("As an admin I want to manage attributes in product types", () => {
   );
 
   it(
-    "should be able to select attribute as variant selection. TC: SALEOR_1508",
+    "should be able to select attribute as variant selection. TC: swiftmovers_1508",
     { tags: ["@productType", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;

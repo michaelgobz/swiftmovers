@@ -1,4 +1,4 @@
-"""List of all languages supported in Saleor.
+"""List of all languages supported in swiftmovers.
 
 Generated with Babel:
 

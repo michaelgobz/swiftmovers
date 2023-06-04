@@ -1,7 +1,7 @@
 import OverflowTooltip from "@dashboard/components/OverflowTooltip";
 import useClipboard from "@dashboard/hooks/useClipboard";
 import { commonMessages } from "@dashboard/intl";
-import { CheckIcon, CopyIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { CheckIcon, CopyIcon, IconButton, makeStyles } from "@swiftmovers/macaw-ui";
 import clsx from "clsx";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -40,8 +40,8 @@ const useStyles = makeStyles(
       },
 
       "&&.copied": {
-        background: theme.palette.saleor.success.mid,
-        color: theme.palette.saleor.main[1],
+        background: theme.palette.swiftmovers.success.mid,
+        color: theme.palette.swiftmovers.main[1],
       },
     },
   }),

@@ -57,11 +57,11 @@ MUTATION_UPDATE_DELIVERY_METHOD = """
     indirect=("delivery_method",),
 )
 @patch(
-    "saleor.graphql.checkout.mutations.checkout_delivery_method_update."
+    "swiftmovers.graphql.checkout.mutations.checkout_delivery_method_update."
     "clean_delivery_method"
 )
 @patch(
-    "saleor.graphql.checkout.mutations.checkout_delivery_method_update."
+    "swiftmovers.graphql.checkout.mutations.checkout_delivery_method_update."
     "invalidate_checkout_prices",
     wraps=invalidate_checkout_prices,
 )
@@ -128,11 +128,11 @@ def test_checkout_delivery_method_update(
     indirect=("delivery_method",),
 )
 @patch(
-    "saleor.graphql.checkout.mutations.checkout_delivery_method_update."
+    "swiftmovers.graphql.checkout.mutations.checkout_delivery_method_update."
     "clean_delivery_method"
 )
 @patch(
-    "saleor.graphql.checkout.mutations.checkout_delivery_method_update."
+    "swiftmovers.graphql.checkout.mutations.checkout_delivery_method_update."
     "invalidate_checkout_prices",
     wraps=invalidate_checkout_prices,
 )
@@ -194,9 +194,9 @@ def test_checkout_delivery_method_update_no_checkout_metadata(
 
 
 @pytest.mark.parametrize("is_valid_delivery_method", (True, False))
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
 @patch(
-    "saleor.graphql.checkout.mutations.checkout_delivery_method_update."
+    "swiftmovers.graphql.checkout.mutations.checkout_delivery_method_update."
     "clean_delivery_method"
 )
 def test_checkout_delivery_method_update_external_shipping(
@@ -213,7 +213,7 @@ def test_checkout_delivery_method_update_external_shipping(
     query = MUTATION_UPDATE_DELIVERY_METHOD
     mock_clean_delivery.return_value = is_valid_delivery_method
 
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
     response_method_id = "abcd"
     mock_json_response = [
         {
@@ -256,7 +256,7 @@ def test_checkout_delivery_method_update_external_shipping(
 
 
 @patch(
-    "saleor.graphql.checkout.mutations.checkout_shipping_method_update."
+    "swiftmovers.graphql.checkout.mutations.checkout_shipping_method_update."
     "clean_delivery_method"
 )
 def test_checkout_delivery_method_update_with_id_of_different_type_causes_and_error(
@@ -291,7 +291,7 @@ def test_checkout_delivery_method_update_with_id_of_different_type_causes_and_er
 
 
 @patch(
-    "saleor.graphql.checkout.mutations.checkout_shipping_method_update."
+    "swiftmovers.graphql.checkout.mutations.checkout_shipping_method_update."
     "clean_delivery_method"
 )
 def test_checkout_delivery_method_with_nonexistant_id_results_not_found(
@@ -326,7 +326,7 @@ def test_checkout_delivery_method_with_nonexistant_id_results_not_found(
 
 
 @patch(
-    "saleor.graphql.checkout.mutations.checkout_shipping_method_update."
+    "swiftmovers.graphql.checkout.mutations.checkout_shipping_method_update."
     "clean_delivery_method"
 )
 def test_checkout_delivery_method_with_empty_fields_results_None(
@@ -357,7 +357,7 @@ def test_checkout_delivery_method_with_empty_fields_results_None(
     assert checkout.collection_point is None
 
 
-@patch("saleor.shipping.postal_codes.is_shipping_method_applicable_for_postal_code")
+@patch("swiftmovers.shipping.postal_codes.is_shipping_method_applicable_for_postal_code")
 def test_checkout_delivery_method_update_excluded_postal_code(
     mock_is_shipping_method_available,
     staff_api_client,
@@ -457,7 +457,7 @@ def test_checkout_delivery_method_update_shipping_zone_with_channel(
     indirect=("delivery_method",),
 )
 @patch(
-    "saleor.graphql.checkout.mutations.checkout_delivery_method_update."
+    "swiftmovers.graphql.checkout.mutations.checkout_delivery_method_update."
     "clean_delivery_method"
 )
 def test_checkout_delivery_method_update_with_not_all_required_shipping_address_data(
@@ -526,7 +526,7 @@ def test_checkout_delivery_method_update_with_not_all_required_shipping_address_
     indirect=("delivery_method",),
 )
 @patch(
-    "saleor.graphql.checkout.mutations.checkout_delivery_method_update."
+    "swiftmovers.graphql.checkout.mutations.checkout_delivery_method_update."
     "clean_delivery_method"
 )
 def test_checkout_delivery_method_update_with_not_valid_address_data(

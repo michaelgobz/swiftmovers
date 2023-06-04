@@ -4,7 +4,7 @@ import {
 } from "@dashboard/components/AppLayout/consts";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { AppQuery } from "@dashboard/graphql";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box } from "@swiftmovers/macaw-ui/next";
 import React from "react";
 
 import { AppFrame } from "../AppFrame";

@@ -20,7 +20,7 @@ jest.mock("react-intl", () => ({
   FormattedMessage: jest.fn(({ defaultMessage }) => defaultMessage),
 }));
 
-jest.mock("@saleor/macaw-ui", () => ({
+jest.mock("@swiftmovers/macaw-ui", () => ({
   useTheme: jest.fn(() => () => ({})),
   useStyles: jest.fn(() => () => ({})),
   makeStyles: jest.fn(() => () => ({})),
@@ -29,7 +29,7 @@ jest.mock("@saleor/macaw-ui", () => ({
   ResponsiveTable: jest.fn(() => <></>),
 }));
 
-jest.mock("@saleor/macaw-ui/next", () => ({
+jest.mock("@swiftmovers/macaw-ui/next", () => ({
   useTheme: jest.fn(() => () => ({})),
   Divider: jest.fn(() => <></>),
   vars: {

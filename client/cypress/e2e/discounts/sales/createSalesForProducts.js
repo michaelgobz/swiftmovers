@@ -98,7 +98,7 @@ describe("As an admin I want to create sale for products", () => {
   });
 
   it(
-    "should be able to create percentage discount. TC: SALEOR_1801",
+    "should be able to create percentage discount. TC: swiftmovers_1801",
     { tags: ["@sales", "@allEnv", "@stable"] },
     () => {
       const saleName = `${startsWith}${faker.datatype.number()}`;
@@ -120,7 +120,7 @@ describe("As an admin I want to create sale for products", () => {
   );
 
   it(
-    "should be able to create fixed price discount. TC: SALEOR_1802",
+    "should be able to create fixed price discount. TC: swiftmovers_1802",
     { tags: ["@sales", "@allEnv", "@stable"] },
     () => {
       const saleName = `${startsWith}${faker.datatype.number()}`;
@@ -141,7 +141,7 @@ describe("As an admin I want to create sale for products", () => {
   );
 
   it(
-    "should not be able to see product discount not assign to channel. TC: SALEOR_1803",
+    "should not be able to see product discount not assign to channel. TC: swiftmovers_1803",
     { tags: ["@sales", "@allEnv", "@stable"] },
     () => {
       const saleName = `${startsWith}${faker.datatype.number()}`;
@@ -170,7 +170,7 @@ describe("As an admin I want to create sale for products", () => {
             productId: product.id,
             channelId: channel.id,
           });
-          /* Uncomment after fixing SALEOR-3367 bug 
+          /* Uncomment after fixing swiftmovers-3367 bug
            cy.clearSessionData()
           .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
           */

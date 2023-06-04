@@ -728,7 +728,7 @@ def test_checkout_available_shipping_methods_excluded_postal_codes(
     assert data["availableShippingMethods"] == []
 
 
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
 def test_checkout_available_shipping_methods_with_price_displayed(
     send_webhook_request_sync,
     monkeypatch,
@@ -1153,7 +1153,7 @@ def test_checkout_reservation_date_for_disabled_reservations(
 # @pytest.fixture
 # def mock_get_manager(mocker, fake_manager):
 #     manager = mocker.patch(
-#         "saleor.payment.gateway.get_plugins_manager",
+#         "swiftmovers.payment.gateway.get_plugins_manager",
 #         autospec=True,
 #         return_value=fake_manager,
 #     )

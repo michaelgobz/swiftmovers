@@ -8,7 +8,7 @@ import { renderCollection } from "@dashboard/misc";
 import { PluginListUrlSortField, pluginUrl } from "@dashboard/plugins/urls";
 import { ListProps, SortPage } from "@dashboard/types";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
-import { EditIcon, makeStyles } from "@saleor/macaw-ui";
+import { EditIcon, makeStyles } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

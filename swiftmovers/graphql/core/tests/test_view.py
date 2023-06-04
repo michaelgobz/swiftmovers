@@ -5,7 +5,7 @@ import pytest
 from django.test import override_settings
 from graphql.execution.base import ExecutionResult
 
-from .... import __version__ as saleor_version
+from .... import __version__ as swiftmovers_version
 from ....demo.views import EXAMPLE_QUERY
 from ....graphql.utils import INTERNAL_ERROR_MESSAGE
 from ...tests.fixtures import API_PATH
@@ -155,7 +155,7 @@ def test_invalid_query_graphql_errors_are_logged_in_another_logger(
     response = api_client.post_graphql("{ shop }")
     assert response.status_code == 400
     assert graphql_log_handler.messages == [
-        "saleor.graphql.errors.handled[INFO].GraphQLError"
+        "swiftmovers.graphql.errors.handled[INFO].GraphQLError"
     ]
 
 
@@ -165,7 +165,7 @@ def test_invalid_syntax_graphql_errors_are_logged_in_another_logger(
     response = api_client.post_graphql("{ }")
     assert response.status_code == 400
     assert graphql_log_handler.messages == [
-        "saleor.graphql.errors.handled[INFO].GraphQLSyntaxError"
+        "swiftmovers.graphql.errors.handled[INFO].GraphQLSyntaxError"
     ]
 
 
@@ -185,7 +185,7 @@ def test_permission_denied_query_graphql_errors_are_logged_in_another_logger(
     )
     assert response.status_code == 200
     assert graphql_log_handler.messages == [
-        "saleor.graphql.errors.handled[INFO].PermissionDenied"
+        "swiftmovers.graphql.errors.handled[INFO].PermissionDenied"
     ]
 
 
@@ -208,7 +208,7 @@ def test_validation_errors_query_do_not_get_logged(
     assert graphql_log_handler.messages == []
 
 
-@mock.patch("saleor.graphql.product.schema.resolve_collection_by_id")
+@mock.patch("swiftmovers.graphql.product.schema.resolve_collection_by_id")
 def test_unexpected_exceptions_are_logged_in_their_own_logger(
     mocked_resolve_collection_by_id,
     staff_api_client,
@@ -239,7 +239,7 @@ def test_unexpected_exceptions_are_logged_in_their_own_logger(
 
     assert response.status_code == 200
     assert graphql_log_handler.messages == [
-        "saleor.graphql.errors.unhandled[ERROR].NotImplementedError"
+        "swiftmovers.graphql.errors.unhandled[ERROR].NotImplementedError"
     ]
 
 
@@ -269,7 +269,7 @@ def test_query_contains_not_only_schema_raise_error(
     response = api_client.post_graphql(query % {"other_query": other_query})
     assert response.status_code == 400
     assert graphql_log_handler.messages == [
-        "saleor.graphql.errors.handled[INFO].GraphQLError"
+        "swiftmovers.graphql.errors.handled[INFO].GraphQLError"
     ]
 
 
@@ -286,8 +286,8 @@ query IntrospectionQuery {
 INTROSPECTION_RESULT = {"__schema": {"queryType": {"name": "Query"}}}
 
 
-@mock.patch("saleor.graphql.views.cache.set")
-@mock.patch("saleor.graphql.views.cache.get")
+@mock.patch("swiftmovers.graphql.views.cache.set")
+@mock.patch("swiftmovers.graphql.views.cache.get")
 @override_settings(DEBUG=False)
 def test_introspection_query_is_cached(cache_get_mock, cache_set_mock, api_client):
     cache_get_mock.return_value = None
@@ -301,8 +301,8 @@ def test_introspection_query_is_cached(cache_get_mock, cache_set_mock, api_clien
     )
 
 
-@mock.patch("saleor.graphql.views.cache.set")
-@mock.patch("saleor.graphql.views.cache.get")
+@mock.patch("swiftmovers.graphql.views.cache.set")
+@mock.patch("swiftmovers.graphql.views.cache.get")
 @override_settings(DEBUG=False)
 def test_introspection_query_is_cached_only_once(
     cache_get_mock, cache_set_mock, api_client
@@ -316,8 +316,8 @@ def test_introspection_query_is_cached_only_once(
     cache_set_mock.assert_not_called()
 
 
-@mock.patch("saleor.graphql.views.cache.set")
-@mock.patch("saleor.graphql.views.cache.get")
+@mock.patch("swiftmovers.graphql.views.cache.set")
+@mock.patch("swiftmovers.graphql.views.cache.get")
 @override_settings(DEBUG=True)
 def test_introspection_query_is_not_cached_in_debug_mode(
     cache_get_mock, cache_set_mock, api_client
@@ -329,6 +329,6 @@ def test_introspection_query_is_not_cached_in_debug_mode(
     cache_set_mock.assert_not_called()
 
 
-def test_generate_cache_key_use_saleor_version():
+def test_generate_cache_key_use_swiftmovers_version():
     cache_key = generate_cache_key(INTROSPECTION_QUERY)
-    assert saleor_version in cache_key
+    assert swiftmovers_version in cache_key

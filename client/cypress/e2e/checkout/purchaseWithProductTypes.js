@@ -58,7 +58,7 @@ describe("As an unlogged customer I want to order physical and digital products"
   });
 
   it(
-    "should purchase digital product as unlogged customer. TC: SALEOR_0402",
+    "should purchase digital product as unlogged customer. TC: swiftmovers_0402",
     { tags: ["@checkout", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       createAndCompleteCheckoutWithoutShipping({
@@ -82,7 +82,7 @@ describe("As an unlogged customer I want to order physical and digital products"
   );
 
   it(
-    "should purchase physical product as unlogged customer. TC: SALEOR_0403",
+    "should purchase physical product as unlogged customer. TC: swiftmovers_0403",
     { tags: ["@checkout", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       createWaitingForCaptureOrder({
@@ -106,7 +106,7 @@ describe("As an unlogged customer I want to order physical and digital products"
   );
 
   it(
-    "should purchase multiple products with all product types as unlogged customer. TC: SALEOR_0404",
+    "should purchase multiple products with all product types as unlogged customer. TC: swiftmovers_0404",
     { tags: ["@checkout", "@allEnv", "@stable"] },
     () => {
       let checkout;

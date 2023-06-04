@@ -29,7 +29,7 @@ SALE_UPDATE_MUTATION = """
 """
 
 
-@patch("saleor.plugins.manager.PluginsManager.sale_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.sale_updated")
 def test_update_sale(
     updated_webhook_mock,
     staff_api_client,
@@ -74,8 +74,8 @@ def test_update_sale(
 
 
 @freeze_time("2020-03-18 12:00:00")
-@patch("saleor.plugins.manager.PluginsManager.sale_toggle")
-@patch("saleor.plugins.manager.PluginsManager.sale_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.sale_toggle")
+@patch("swiftmovers.plugins.manager.PluginsManager.sale_updated")
 def test_update_sale_start_date_after_current_date_notification_not_sent(
     updated_webhook_mock,
     sale_toggle_mock,
@@ -125,8 +125,8 @@ def test_update_sale_start_date_after_current_date_notification_not_sent(
 
 
 @freeze_time("2020-03-18 12:00:00")
-@patch("saleor.plugins.manager.PluginsManager.sale_toggle")
-@patch("saleor.plugins.manager.PluginsManager.sale_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.sale_toggle")
+@patch("swiftmovers.plugins.manager.PluginsManager.sale_updated")
 def test_update_sale_start_date_before_current_date_notification_already_sent(
     updated_webhook_mock,
     sale_toggle_mock,
@@ -177,8 +177,8 @@ def test_update_sale_start_date_before_current_date_notification_already_sent(
 
 
 @freeze_time("2020-03-18 12:00:00")
-@patch("saleor.plugins.manager.PluginsManager.sale_toggle")
-@patch("saleor.plugins.manager.PluginsManager.sale_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.sale_toggle")
+@patch("swiftmovers.plugins.manager.PluginsManager.sale_updated")
 def test_update_sale_start_date_before_current_date_notification_sent(
     updated_webhook_mock,
     sale_toggle_mock,
@@ -227,8 +227,8 @@ def test_update_sale_start_date_before_current_date_notification_sent(
 
 
 @freeze_time("2020-03-18 12:00:00")
-@patch("saleor.plugins.manager.PluginsManager.sale_toggle")
-@patch("saleor.plugins.manager.PluginsManager.sale_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.sale_toggle")
+@patch("swiftmovers.plugins.manager.PluginsManager.sale_updated")
 def test_update_sale_end_date_after_current_date_notification_not_sent(
     updated_webhook_mock,
     sale_toggle_mock,
@@ -275,8 +275,8 @@ def test_update_sale_end_date_after_current_date_notification_not_sent(
 
 
 @freeze_time("2020-03-18 12:00:00")
-@patch("saleor.plugins.manager.PluginsManager.sale_toggle")
-@patch("saleor.plugins.manager.PluginsManager.sale_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.sale_toggle")
+@patch("swiftmovers.plugins.manager.PluginsManager.sale_updated")
 def test_update_sale_end_date_before_current_date_notification_already_sent(
     updated_webhook_mock,
     sale_toggle_mock,
@@ -329,8 +329,8 @@ def test_update_sale_end_date_before_current_date_notification_already_sent(
 
 
 @freeze_time("2020-03-18 12:00:00")
-@patch("saleor.plugins.manager.PluginsManager.sale_toggle")
-@patch("saleor.plugins.manager.PluginsManager.sale_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.sale_toggle")
+@patch("swiftmovers.plugins.manager.PluginsManager.sale_updated")
 def test_update_sale_end_date_before_current_date_notification_sent(
     updated_webhook_mock,
     sale_toggle_mock,

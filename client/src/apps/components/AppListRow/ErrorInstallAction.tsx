@@ -2,8 +2,8 @@ import { appInstallationStatusMessages } from "@dashboard/apps/messages";
 import { AppInstallationFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { Typography } from "@material-ui/core";
-import { Button, Indicator, TooltipMountWrapper } from "@saleor/macaw-ui";
-import { Tooltip } from "@saleor/macaw-ui/next";
+import { Button, Indicator, TooltipMountWrapper } from "@swiftmovers/macaw-ui";
+import { Tooltip } from "@swiftmovers/macaw-ui/next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

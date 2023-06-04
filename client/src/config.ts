@@ -4,17 +4,17 @@ import { ListSettings, ListViews, Pagination } from "./types";
 
 export const getAppDefaultUri = () => "/";
 export const getAppMountUri = () =>
-  window?.__SALEOR_CONFIG__?.APP_MOUNT_URI || getAppDefaultUri();
-export const getApiUrl = () => window.__SALEOR_CONFIG__.API_URL;
+  window?.__swiftmovers_CONFIG__?.APP_MOUNT_URI || getAppDefaultUri();
+export const getApiUrl = () => window.__swiftmovers_CONFIG__.API_URL;
 export const SW_INTERVAL = parseInt(process.env.SW_INTERVAL, 10) || 300;
 export const IS_CLOUD_INSTANCE =
-  window.__SALEOR_CONFIG__.IS_CLOUD_INSTANCE === "true";
+  window.__swiftmovers_CONFIG__.IS_CLOUD_INSTANCE === "true";
 
 export const getAppsConfig = () => ({
-  marketplaceApiUri: window.__SALEOR_CONFIG__.APPS_MARKETPLACE_API_URI,
-  tunnelUrlKeywords: window.__SALEOR_CONFIG__.APPS_TUNNEL_URL_KEYWORDS?.split(
+  marketplaceApiUri: window.__swiftmovers_CONFIG__.APPS_MARKETPLACE_API_URI,
+  tunnelUrlKeywords: window.__swiftmovers_CONFIG__.APPS_TUNNEL_URL_KEYWORDS?.split(
     ";",
-  ) || [".ngrok.io", ".saleor.live", ".trycloudflare.com"],
+  ) || [".ngrok.io", ".swiftmovers.live", ".trycloudflare.com"],
 });
 
 export const DEFAULT_INITIAL_SEARCH_DATA: SearchVariables = {

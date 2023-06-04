@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -38,7 +38,7 @@ export const useStyles = makeStyles(
     },
     supportHeader: {
       textTransform: "uppercase",
-      color: theme.palette.saleor.main[3],
+      color: theme.palette.swiftmovers.main[3],
       fontWeight: 500,
       letterSpacing: "0.1em",
       fontSize: "12px",

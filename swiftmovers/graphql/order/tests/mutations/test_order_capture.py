@@ -35,8 +35,8 @@ ORDER_CAPTURE_MUTATION = """
 """
 
 
-@patch("saleor.giftcard.utils.fulfill_non_shippable_gift_cards")
-@patch("saleor.plugins.manager.PluginsManager.notify")
+@patch("swiftmovers.giftcard.utils.fulfill_non_shippable_gift_cards")
+@patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_order_capture(
     mocked_notify,
     fulfill_non_shippable_gift_cards_mock,

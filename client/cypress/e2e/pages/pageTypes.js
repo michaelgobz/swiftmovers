@@ -22,7 +22,7 @@ describe("Tests for page types", () => {
   });
 
   it(
-    "should create page type. TC: SALEOR_2301",
+    "should create page type. TC: swiftmovers_2301",
     { tags: ["@pages", "@allEnv", "@stable"] },
     () => {
       const randomName = startsWith + faker.datatype.number();
@@ -48,7 +48,7 @@ describe("Tests for page types", () => {
   );
 
   it(
-    "should assign attribute. TC: SALEOR_2302",
+    "should assign attribute. TC: swiftmovers_2302",
     { tags: ["@pages", "@allEnv"] },
     () => {
       const randomName = startsWith + faker.datatype.number();

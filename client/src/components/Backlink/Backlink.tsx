@@ -1,5 +1,5 @@
 import { isExternalURL } from "@dashboard/utils/urls";
-import { Backlink as MacawBacklink, BacklinkProps } from "@saleor/macaw-ui";
+import { Backlink as MacawBacklink, BacklinkProps } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { Link, LinkProps } from "react-router-dom";
 

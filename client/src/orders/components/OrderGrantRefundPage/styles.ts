@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -80,7 +80,7 @@ export const useProductsCardStyles = makeStyles(
         display: "flex",
         flexDirection: "column",
         "& $productVariantName": {
-          color: theme.palette.saleor.main[3],
+          color: theme.palette.swiftmovers.main[3],
           fontSize: "1.25rem",
         },
       },

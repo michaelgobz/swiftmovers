@@ -4,7 +4,7 @@ from django.apps import apps as registry
 from django.db import migrations
 from django.db.models.signals import post_migrate
 
-from .tasks.saleor3_13 import (
+from .tasks.swiftmovers3_13 import (
     update_app_installation_uuid_field_task,
     update_app_uuid_field_task,
 )

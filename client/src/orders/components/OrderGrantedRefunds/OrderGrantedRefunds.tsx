@@ -11,7 +11,7 @@ import { buttonMessages } from "@dashboard/intl";
 import { getUserInitials, renderCollection } from "@dashboard/misc";
 import { orderGrantRefundEditUrl } from "@dashboard/orders/urls";
 import { Card, TableCell, TableRow } from "@material-ui/core";
-import { Avatar } from "@saleor/macaw-ui";
+import { Avatar } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

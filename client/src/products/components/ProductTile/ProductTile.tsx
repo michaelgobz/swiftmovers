@@ -7,7 +7,7 @@ import {
   sprinkles,
   Text,
   vars,
-} from "@saleor/macaw-ui/next";
+} from "@swiftmovers/macaw-ui/next";
 import React from "react";
 
 import { getTileStatus } from "./utils";

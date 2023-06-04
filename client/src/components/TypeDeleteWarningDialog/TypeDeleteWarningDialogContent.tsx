@@ -19,7 +19,7 @@ interface TypeDeleteWarningDialogContentProps {
   hasAssignedItems: boolean;
   assignedItemsCount: number | undefined;
   onDelete: () => void;
-  // temporary, until we add filters to pages list - SALEOR-3279
+  // temporary, until we add filters to pages list - swiftmovers-3279
   showViewAssignedItemsButton?: boolean;
 }
 

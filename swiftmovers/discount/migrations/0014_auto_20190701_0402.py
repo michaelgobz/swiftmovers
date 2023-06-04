@@ -2,7 +2,7 @@
 
 from django.db import migrations, models
 
-from saleor.discount import VoucherType
+from swiftmovers.discount import VoucherType
 
 
 def replace_value_vocucher_type(apps, schema_editor):

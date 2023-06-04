@@ -151,7 +151,7 @@ describe("Orders", () => {
   });
 
   it(
-    "should create order with selected channel. TC: SALEOR_2104",
+    "should create order with selected channel. TC: swiftmovers_2104",
     { tags: ["@orders", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       cy.visit(urlList.orders).get(ORDERS_SELECTORS.createOrderButton).click();
@@ -161,7 +161,7 @@ describe("Orders", () => {
   );
 
   it(
-    "should not be possible to change channel in order. TC: SALEOR_2105",
+    "should not be possible to change channel in order. TC: swiftmovers_2105",
     { tags: ["@orders", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       createOrder({
@@ -180,7 +180,7 @@ describe("Orders", () => {
   );
 
   it(
-    "should cancel fulfillment. TC: SALEOR_2106",
+    "should cancel fulfillment. TC: swiftmovers_2106",
     { tags: ["@orders", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       let order;
@@ -250,7 +250,7 @@ describe("Orders", () => {
   );
 
   it(
-    "should add line item discount (for single product in order) . TC: SALEOR_2125",
+    "should add line item discount (for single product in order) . TC: swiftmovers_2125",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       const totalPrice = variantPrice + shippingPrice;
@@ -282,7 +282,7 @@ describe("Orders", () => {
   );
 
   it(
-    "should remove product from unconfirmed order . TC: SALEOR_2126",
+    "should remove product from unconfirmed order . TC: swiftmovers_2126",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       createUnconfirmedOrder({
@@ -300,7 +300,7 @@ describe("Orders", () => {
     },
   );
   it(
-    "should change quantity of products on order detail view . TC: SALEOR_2127",
+    "should change quantity of products on order detail view . TC: swiftmovers_2127",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       createUnconfirmedOrder({
@@ -326,7 +326,7 @@ describe("Orders", () => {
     },
   );
   it(
-    "should add new product on order detail view . TC: SALEOR_2128",
+    "should add new product on order detail view . TC: swiftmovers_2128",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       createUnconfirmedOrder({
@@ -349,7 +349,7 @@ describe("Orders", () => {
   );
 
   it(
-    "should create metadata and private metadata for fulfilled order . TC: SALEOR_2129",
+    "should create metadata and private metadata for fulfilled order . TC: swiftmovers_2129",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       let order;
@@ -404,7 +404,7 @@ describe("Orders", () => {
     },
   );
   it(
-    "should update metadata and private metadata for fulfilled order .  TC: SALEOR_2130",
+    "should update metadata and private metadata for fulfilled order .  TC: swiftmovers_2130",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       cy.addAliasToGraphRequest("UpdateMetadata");
@@ -469,7 +469,7 @@ describe("Orders", () => {
     },
   );
   it(
-    "should delete metadata and private metadata for fulfilled order .  TC: SALEOR_2131",
+    "should delete metadata and private metadata for fulfilled order .  TC: swiftmovers_2131",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       cy.addAliasToGraphRequest("UpdateMetadata");

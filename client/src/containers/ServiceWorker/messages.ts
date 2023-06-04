@@ -9,7 +9,7 @@ const messages = defineMessages({
   newVersionContent: {
     id: "8aV98y",
     defaultMessage:
-      "You need to update Saleor to the newest version. Before doing so - save all changes to prevent loss of data. To update use the button below.",
+      "You need to update swiftmovers to the newest version. Before doing so - save all changes to prevent loss of data. To update use the button below.",
     description: "new version notification content",
   },
   refresh: {

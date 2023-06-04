@@ -1,4 +1,4 @@
-"""Settings file to run Saleor in "demo" mode.
+"""Settings file to run swiftmovers in "demo" mode.
 
 Behavior specific to the demo mode:
 - block API mutations that require admin permission (read-only mode for the dashboard
@@ -6,7 +6,7 @@ app)
 - turn on anonymization plugin to anonymize data provided by customers in the public
 checkout mutations
 - configure Braintree payment gateway in sandbox mode if necessary environment
-variables are set (see the `saleor.core.utils.random_data.configure_braintree` function
+variables are set (see the `swiftmovers.core.utils.random_data.configure_braintree` function
 for more details)
 - use DemoGraphQLView to render modified version of Playground that includes an example
 GraphQL query
@@ -27,12 +27,12 @@ logger = logging.getLogger(__name__)
 
 
 # Override urls to use different GraphQL view on demo
-ROOT_URLCONF = "saleor.demo.urls"
+ROOT_URLCONF = "swiftmovers.demo.urls"
 
-PLUGINS += ["saleor.plugins.anonymize.plugin.AnonymizePlugin"]  # noqa: F405
+PLUGINS += ["swiftmovers.plugins.anonymize.plugin.AnonymizePlugin"]  # noqa: F405
 
 GRAPHQL_MIDDLEWARE.insert(  # noqa: F405
-    0, "saleor.graphql.middleware.ReadOnlyMiddleware"
+    0, "swiftmovers.graphql.middleware.ReadOnlyMiddleware"
 )
 
 BRAINTREE_API_KEY = os.environ.get("BRAINTREE_API_KEY")
@@ -45,16 +45,16 @@ if not (BRAINTREE_API_KEY and BRAINTREE_MERCHANT_ID and BRAINTREE_SECRET_API_KEY
         "sandbox configuration in the demo mode with `populatedb` command."
     )
 
-PWA_ORIGINS = get_list(os.environ.get("PWA_ORIGINS", "demo.saleor.io"))  # noqa: F405
+PWA_ORIGINS = get_list(os.environ.get("PWA_ORIGINS", "demo.swiftmovers.io"))  # noqa: F405
 PWA_DASHBOARD_URL_RE = re.compile("^https?://[^/]+/dashboard/.*")
 
 ROOT_EMAIL = os.environ.get("ROOT_EMAIL")
 
-# Remove "saleor.core" and add it after adding "saleor.demo", to have "populatedb"
+# Remove "swiftmovers.core" and add it after adding "swiftmovers.demo", to have "populatedb"
 # command overridden when using demo settings
-# (see saleor.demo.management.commands.populatedb).
-INSTALLED_APPS.remove("saleor.core")  # noqa: F405
-INSTALLED_APPS += ["saleor.demo", "saleor.core"]  # noqa: F405
+# (see swiftmovers.demo.management.commands.populatedb).
+INSTALLED_APPS.remove("swiftmovers.core")  # noqa: F405
+INSTALLED_APPS += ["swiftmovers.demo", "swiftmovers.core"]  # noqa: F405
 ENABLE_ACCOUNT_CONFIRMATION_BY_EMAIL = False
 
 
@@ -74,7 +74,7 @@ def before_send(event: dict, _hint: dict):
     event["tags"] = {"project": _get_project_name_from_url(referer_url)}
     ev_logger_name: str = event.get("logger", "")
 
-    if ev_logger_name != "saleor.graphql.errors.handled":
+    if ev_logger_name != "swiftmovers.graphql.errors.handled":
         return event
 
     # RFC6454, origin is the triple: uri-scheme, uri-host[, uri-port]

@@ -2,7 +2,7 @@ import CardTitle from "@dashboard/components/CardTitle";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
 import { AttributeTypeEnum } from "@dashboard/graphql";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -82,7 +82,7 @@ const AttributeOrganization: React.FC<AttributeOrganizationProps> = props => {
                 <Typography variant="caption">
                   <FormattedMessage
                     id="ErNH3D"
-                    defaultMessage="Define where this attribute should be used in Saleor system"
+                    defaultMessage="Define where this attribute should be used in swiftmovers system"
                   />
                 </Typography>
               </>

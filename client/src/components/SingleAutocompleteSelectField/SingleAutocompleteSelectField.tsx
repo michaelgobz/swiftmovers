@@ -8,7 +8,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { InputProps } from "@material-ui/core/Input";
-import { ChevronIcon } from "@saleor/macaw-ui";
+import { ChevronIcon } from "@swiftmovers/macaw-ui";
 import clsx from "clsx";
 import Downshift from "downshift";
 import Fuse from "fuse.js";

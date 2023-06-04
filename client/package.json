@@ -1,17 +1,17 @@
 {
-  "name": "saleor-dashboard",
+  "name": "swiftmovers-dashboard",
   "version": "3.13.3",
   "main": "src/index.tsx",
   "repository": {
     "type": "git",
-    "url": "git://github.com/saleor/saleor-dashboard.git"
+    "url": "git://github.com/swiftmovers/swiftmovers-dashboard.git"
   },
-  "author": "Saleor Commerce",
+  "author": "swiftmovers Commerce",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/saleor/saleor-dashboard/issues"
+    "url": "https://github.com/swiftmovers/swiftmovers-dashboard/issues"
   },
-  "homepage": "https://saleor.io/",
+  "homepage": "https://swiftmovers.io/",
   "engines": {
     "node": ">=18 <19",
     "npm": ">=7"
@@ -34,8 +34,8 @@
     "@material-ui/lab": "^4.0.0-alpha.61",
     "@material-ui/styles": "^4.11.4",
     "@reach/auto-id": "^0.16.0",
-    "@saleor/macaw-ui": "0.8.0-pre.81",
-    "@saleor/sdk": "0.6.0",
+    "@swiftmovers/macaw-ui": "0.8.0-pre.81",
+    "@swiftmovers/sdk": "0.6.0",
     "@sentry/react": "^6.0.0",
     "@types/faker": "^5.1.6",
     "@uiw/react-color-hue": "0.0.34",
@@ -123,7 +123,7 @@
     "@percy/cli": "^1.21.0",
     "@percy/cypress": "^3.1.2",
     "@release-it/bumper": "^2.0.0",
-    "@saleor/app-sdk": "0.37.3",
+    "@swiftmovers/app-sdk": "0.37.3",
     "@types/apollo-upload-client": "^17.0.2",
     "@types/color-convert": "^2.0.0",
     "@types/debug": "^4.1.7",
@@ -273,7 +273,7 @@
       "^@material-ui/core$": "<rootDir>/node_modules/@material-ui/core",
       "^@material-ui/icons$": "<rootDir>/node_modules/@material-ui/icons",
       "^@material-ui/styles$": "<rootDir>/node_modules/@material-ui/styles",
-      "^@saleor/macaw-ui/next$": "<rootDir>/node_modules/@saleor/macaw-ui/dist/macaw-ui.cjs",
+      "^@swiftmovers/macaw-ui/next$": "<rootDir>/node_modules/@swiftmovers/macaw-ui/dist/macaw-ui.cjs",
       "^react$": "<rootDir>/node_modules/react",
       "^react-dom$": "<rootDir>/node_modules/react-dom"
     }
@@ -328,5 +328,5 @@
     "dep-status": "depcruise --config .dependency-cruiser.js src",
     "chromatic": "chromatic --exit-zero-on-changes"
   },
-  "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)"
+  "description": "![swiftmovers Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)"
 }

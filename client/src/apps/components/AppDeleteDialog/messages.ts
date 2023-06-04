@@ -9,7 +9,7 @@ export default defineMessages({
   deleteApp: {
     id: "2rJcFa",
     defaultMessage:
-      "Deleting this app, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace.",
+      "Deleting this app, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in swiftmovers Marketplace.",
     description: "delete app",
   },
   deleteLocalApp: {
@@ -21,7 +21,7 @@ export default defineMessages({
   deleteNamedApp: {
     id: "kYtxJ1",
     defaultMessage:
-      "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace.",
+      "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in swiftmovers Marketplace.",
     description: "delete app",
   },
   deleteLocalNamedApp: {

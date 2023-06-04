@@ -3,8 +3,8 @@ import {
   usePluginContext,
   useTheme as useGraphiQLTheme,
 } from "@graphiql/react";
-import { makeStyles } from "@saleor/macaw-ui";
-import { useTheme, vars } from "@saleor/macaw-ui/next";
+import { makeStyles } from "@swiftmovers/macaw-ui";
+import { useTheme, vars } from "@swiftmovers/macaw-ui/next";
 import { useEffect } from "react";
 
 export const useStyles = makeStyles(

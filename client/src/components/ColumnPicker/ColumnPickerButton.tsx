@@ -1,7 +1,7 @@
 import { Button } from "@dashboard/components/Button";
 import { alpha } from "@material-ui/core/styles";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";

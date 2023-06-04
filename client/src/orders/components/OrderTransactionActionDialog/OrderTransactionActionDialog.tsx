@@ -8,7 +8,7 @@ import {
   DialogProps,
   DialogTitle,
 } from "@material-ui/core";
-import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Button, ConfirmButtonTransitionState } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

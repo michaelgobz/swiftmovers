@@ -90,7 +90,7 @@ PRODUCT_VARIANT_BULK_CREATE_MUTATION = """
 """
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
 def test_product_variant_bulk_create_by_name(
     product_variant_created_webhook_mock,
     staff_api_client,
@@ -146,7 +146,7 @@ def test_product_variant_bulk_create_by_name(
     assert product_variant_created_webhook_mock.call_count == data["count"]
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
 def test_product_variant_bulk_create_by_attribute_id(
     product_variant_created_webhook_mock,
     staff_api_client,

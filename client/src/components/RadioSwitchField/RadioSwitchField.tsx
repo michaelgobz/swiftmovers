@@ -4,7 +4,7 @@ import {
   Radio,
   RadioGroup,
 } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import clsx from "clsx";
 import React from "react";
 

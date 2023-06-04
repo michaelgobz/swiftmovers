@@ -3,7 +3,7 @@
 import django_countries.fields
 from django.db import migrations
 
-import saleor.checkout.models
+import swiftmovers.checkout.models
 
 
 class Migration(migrations.Migration):
@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             model_name="checkout",
             name="country",
             field=django_countries.fields.CountryField(
-                default=saleor.checkout.models.get_default_country, max_length=2
+                default=swiftmovers.checkout.models.get_default_country, max_length=2
             ),
         ),
     ]

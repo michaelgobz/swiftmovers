@@ -13,7 +13,7 @@ def _get_graphql_spans(spans):
     return filter(lambda item: item.tags.get("graphql.query_fingerprint"), spans)
 
 
-@patch("saleor.graphql.views.opentracing.global_tracer")
+@patch("swiftmovers.graphql.views.opentracing.global_tracer")
 def test_tracing_query_hashing(
     tracing_mock,
     staff_api_client,
@@ -40,7 +40,7 @@ def test_tracing_query_hashing(
     assert span.tags["graphql.query_fingerprint"] == f"query:test:{hash}"
 
 
-@patch("saleor.graphql.views.opentracing.global_tracer")
+@patch("swiftmovers.graphql.views.opentracing.global_tracer")
 def test_tracing_query_hashing_with_fragment(
     tracing_mock,
     staff_api_client,
@@ -73,7 +73,7 @@ def test_tracing_query_hashing_with_fragment(
     assert span.tags["graphql.query_fingerprint"] == f"query:test:{hash}"
 
 
-@patch("saleor.graphql.views.opentracing.global_tracer")
+@patch("swiftmovers.graphql.views.opentracing.global_tracer")
 def test_tracing_query_hashing_different_vars_same_checksum(
     tracing_mock,
     staff_api_client,
@@ -107,7 +107,7 @@ def test_tracing_query_hashing_different_vars_same_checksum(
     assert len(set(fingerprints)) == 1
 
 
-@patch("saleor.graphql.views.opentracing.global_tracer")
+@patch("swiftmovers.graphql.views.opentracing.global_tracer")
 def test_tracing_query_hashing_unnamed_query(
     tracing_mock,
     staff_api_client,
@@ -134,7 +134,7 @@ def test_tracing_query_hashing_unnamed_query(
     assert span.tags["graphql.query_fingerprint"] == f"query:{hash}"
 
 
-@patch("saleor.graphql.views.opentracing.global_tracer")
+@patch("swiftmovers.graphql.views.opentracing.global_tracer")
 def test_tracing_query_hashing_unnamed_query_no_query_spec(
     tracing_mock,
     staff_api_client,
@@ -161,7 +161,7 @@ def test_tracing_query_hashing_unnamed_query_no_query_spec(
     assert span.tags["graphql.query_fingerprint"] == f"query:{hash}"
 
 
-@patch("saleor.graphql.views.opentracing.global_tracer")
+@patch("swiftmovers.graphql.views.opentracing.global_tracer")
 def test_tracing_mutation_hashing(
     tracing_mock,
     staff_api_client,
@@ -194,7 +194,7 @@ def test_tracing_mutation_hashing(
     assert span.tags["graphql.query_fingerprint"] == f"mutation:cancelOrder:{hash}"
 
 
-@patch("saleor.graphql.views.opentracing.global_tracer")
+@patch("swiftmovers.graphql.views.opentracing.global_tracer")
 def test_tracing_query_identifier_for_query(
     tracing_mock,
     staff_api_client,
@@ -229,7 +229,7 @@ def test_tracing_query_identifier_for_query(
     assert span.tags["graphql.query_identifier"] == "me, products"
 
 
-@patch("saleor.graphql.views.opentracing.global_tracer")
+@patch("swiftmovers.graphql.views.opentracing.global_tracer")
 def test_tracing_query_identifier_with_fragment(
     tracing_mock,
     staff_api_client,
@@ -261,7 +261,7 @@ def test_tracing_query_identifier_with_fragment(
     assert span.tags["graphql.query_identifier"] == "products"
 
 
-@patch("saleor.graphql.views.opentracing.global_tracer")
+@patch("swiftmovers.graphql.views.opentracing.global_tracer")
 def test_tracing_query_identifier_for_unnamed_mutation(
     tracing_mock,
     staff_api_client,
@@ -280,7 +280,7 @@ def test_tracing_query_identifier_for_unnamed_mutation(
     assert span.tags["graphql.query_identifier"] == "tokenCreate"
 
 
-@patch("saleor.graphql.views.opentracing.global_tracer")
+@patch("swiftmovers.graphql.views.opentracing.global_tracer")
 def test_tracing_query_identifier_for_named_mutation(
     tracing_mock,
     staff_api_client,
@@ -299,7 +299,7 @@ def test_tracing_query_identifier_for_named_mutation(
     assert span.tags["graphql.query_identifier"] == "tokenCreate"
 
 
-@patch("saleor.graphql.views.opentracing.global_tracer")
+@patch("swiftmovers.graphql.views.opentracing.global_tracer")
 def test_tracing_query_identifier_for_many_mutations(
     tracing_mock,
     staff_api_client,
@@ -325,7 +325,7 @@ def test_tracing_query_identifier_for_many_mutations(
     assert span.tags["graphql.query_identifier"] == "deleteWarehouse, tokenCreate"
 
 
-@patch("saleor.graphql.views.opentracing.global_tracer")
+@patch("swiftmovers.graphql.views.opentracing.global_tracer")
 def test_tracing_query_identifier_undefined(
     tracing_mock,
     staff_api_client,

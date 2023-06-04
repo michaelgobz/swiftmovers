@@ -10,7 +10,7 @@ import {
   ListItem,
   ListItemCell,
   useListWidths,
-} from "@saleor/macaw-ui";
+} from "@swiftmovers/macaw-ui";
 import camelCase from "lodash/camelCase";
 import React from "react";
 import { useIntl } from "react-intl";

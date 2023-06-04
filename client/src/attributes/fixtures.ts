@@ -292,9 +292,9 @@ export const attributes: Array<
             __typename: "AttributeValue" as "AttributeValue",
             file: null,
             id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjY=",
-            name: "Saleor",
+            name: "swiftmovers",
             reference: null,
-            slug: "saleor",
+            slug: "swiftmovers",
 
             value: "",
             plainText: null,
@@ -948,9 +948,9 @@ export const attributes: Array<
             __typename: "AttributeValue" as "AttributeValue",
             file: null,
             id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI3",
-            name: "Saleor Publishing",
+            name: "swiftmovers Publishing",
             reference: null,
-            slug: "saleor-publishing",
+            slug: "swiftmovers-publishing",
 
             value: "",
             plainText: null,

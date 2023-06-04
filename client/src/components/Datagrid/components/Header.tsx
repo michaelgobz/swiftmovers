@@ -1,5 +1,5 @@
 import FullScreenIcon from "@dashboard/icons/FullScreenIcon";
-import { Button, makeStyles, PlusSmallIcon } from "@saleor/macaw-ui";
+import { Button, makeStyles, PlusSmallIcon } from "@swiftmovers/macaw-ui";
 import clsx from "clsx";
 import React, { FC, PropsWithChildren } from "react";
 

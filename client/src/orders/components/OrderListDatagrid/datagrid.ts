@@ -24,7 +24,7 @@ import {
   DefaultTheme,
   ThemeTokensValues,
   useTheme,
-} from "@saleor/macaw-ui/next";
+} from "@swiftmovers/macaw-ui/next";
 import moment from "moment-timezone";
 import { useMemo } from "react";
 import { IntlShape, useIntl } from "react-intl";

@@ -113,7 +113,7 @@ describe("Creating variants", () => {
   });
 
   it(
-    "should create variant without sku TC: SALEOR_2807",
+    "should create variant without sku TC: swiftmovers_2807",
     { tags: ["@products", "@allEnv"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
@@ -168,7 +168,7 @@ describe("Creating variants", () => {
   );
 
   it(
-    "should create simple product without sku SALEOR_2808",
+    "should create simple product without sku swiftmovers_2808",
     { tags: ["@products", "@allEnv"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;

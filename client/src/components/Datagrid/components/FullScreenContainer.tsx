@@ -1,4 +1,4 @@
-import { useTheme } from "@saleor/macaw-ui";
+import { useTheme } from "@swiftmovers/macaw-ui";
 import React, { CSSProperties, FC, PropsWithChildren } from "react";
 import ReactDOM from "react-dom";
 

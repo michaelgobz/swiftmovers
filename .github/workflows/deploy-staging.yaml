@@ -25,12 +25,12 @@ jobs:
       API_URI: /graphql/
       APP_MOUNT_URI: /dashboard/
       STATIC_URL: /dashboard/static/
-      SENTRY_ORG: saleor
+      SENTRY_ORG: swiftmovers
       SENTRY_PROJECT: dashboard
       SENTRY_URL_PREFIX: "~/dashboard/static"
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
+      APPS_MARKETPLACE_API_URI: "https://apps.staging.swiftmovers.io/api/v2/swiftmovers-apps"
       VERSION: ${{ github.event.inputs.git_ref || github.ref_name }}
       IS_CLOUD_INSTANCE: true
     steps:
@@ -39,10 +39,10 @@ jobs:
           ref: ${{ env.VERSION }}
 
       - name: Set environment
-        # Convert version into staging deployment name (e.g 3.3.0 -> saleor-staging-v33)
+        # Convert version into staging deployment name (e.g 3.3.0 -> swiftmovers-staging-v33)
         run: |
           set -x
-          environment=$(echo $VERSION | sed -n 's#\([0-9]\+\).\([0-9]\+\).*#saleor-staging-v\1\2#p')
+          environment=$(echo $VERSION | sed -n 's#\([0-9]\+\).\([0-9]\+\).*#swiftmovers-staging-v\1\2#p')
           echo "ENVIRONMENT=${environment}" >> $GITHUB_ENV
       
       - name: Set custom version
@@ -86,7 +86,7 @@ jobs:
           export GITHUB_TOKEN=$( \
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
           )
-          gh api /repos/saleor/saleor-cloud-deployments/dispatches \
+          gh api /repos/swiftmovers/swiftmovers-cloud-deployments/dispatches \
             --input - <<< '{
               "event_type": "open-release-pull-request",
               "client_payload": {

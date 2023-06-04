@@ -1,4 +1,4 @@
-import { useTheme } from "@saleor/macaw-ui/next";
+import { useTheme } from "@swiftmovers/macaw-ui/next";
 
 export const useEmptyColumn = () => {
   const { themeValues } = useTheme();

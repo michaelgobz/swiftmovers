@@ -36,8 +36,8 @@ import {
   PageTab,
   PageTabs,
   SearchIcon,
-} from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui/next";
+} from "@swiftmovers/macaw-ui";
+import { Box } from "@swiftmovers/macaw-ui/next";
 import React, { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

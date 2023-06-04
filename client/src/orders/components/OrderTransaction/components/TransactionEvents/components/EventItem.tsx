@@ -2,7 +2,7 @@ import Money from "@dashboard/components/Money";
 import { TransactionEventFragment } from "@dashboard/graphql";
 import { TransactionFakeEvent } from "@dashboard/orders/types";
 import { TableCell, TableRow } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import clsx from "clsx";
 import React from "react";
 
@@ -28,11 +28,11 @@ const useStyles = makeStyles(
     },
     row: {
       "&&:hover": {
-        backgroundColor: theme.palette.saleor.active[5],
+        backgroundColor: theme.palette.swiftmovers.active[5],
       },
     },
     hover: {
-      backgroundColor: theme.palette.saleor.active[5],
+      backgroundColor: theme.palette.swiftmovers.active[5],
     },
     colSmall: {
       [theme.breakpoints.down("md")]: {

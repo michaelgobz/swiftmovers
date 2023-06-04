@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 
 export const useSummaryLineStyles = makeStyles(
   theme => ({
@@ -6,7 +6,7 @@ export const useSummaryLineStyles = makeStyles(
       display: "flex",
     },
     subText: {
-      color: theme.palette.saleor.main[3],
+      color: theme.palette.swiftmovers.main[3],
       marginLeft: theme.spacing(1),
     },
     bold: {

@@ -101,7 +101,7 @@ describe("As a user I want to create shipping method with postal codes", () => {
   });
 
   it(
-    "should be able to create shipping method with included postal codes. TC: SALEOR_0801",
+    "should be able to create shipping method with included postal codes. TC: swiftmovers_0801",
     { tags: ["@shipping", "@allEnv", "@stable"] },
     () => {
       const rateName = `${startsWith}${faker.datatype.number()}`;
@@ -123,7 +123,7 @@ describe("As a user I want to create shipping method with postal codes", () => {
   );
 
   it(
-    "should be able to create shipping method with excluded postal codes. TC: SALEOR_0802",
+    "should be able to create shipping method with excluded postal codes. TC: swiftmovers_0802",
     { tags: ["@shipping", "@allEnv", "@stable"] },
     () => {
       const rateName = `${startsWith}${faker.datatype.number()}`;

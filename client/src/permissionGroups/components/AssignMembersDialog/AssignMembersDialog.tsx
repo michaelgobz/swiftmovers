@@ -33,8 +33,8 @@ import {
   TableCell,
   TextField,
 } from "@material-ui/core";
-import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
-import { Box, Text } from "@saleor/macaw-ui/next";
+import { ConfirmButtonTransitionState, makeStyles } from "@swiftmovers/macaw-ui";
+import { Box, Text } from "@swiftmovers/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";

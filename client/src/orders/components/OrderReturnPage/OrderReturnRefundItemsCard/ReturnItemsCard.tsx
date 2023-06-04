@@ -18,7 +18,7 @@ import {
   TableHead,
   TextField,
 } from "@material-ui/core";
-import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
+import { makeStyles, ResponsiveTable } from "@swiftmovers/macaw-ui";
 import React, { CSSProperties } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 

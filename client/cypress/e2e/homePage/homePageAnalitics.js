@@ -150,7 +150,7 @@ describe("As an admin I want to see correct information on dashboard home page",
   });
 
   it(
-    "should display correct information on dashboard home page. SALEOR_2004",
+    "should display correct information on dashboard home page. swiftmovers_2004",
     { tags: ["@homePage", "@allEnv"] },
     () => {
       cy.visit(urlList.homePage);

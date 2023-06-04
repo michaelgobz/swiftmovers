@@ -2,7 +2,7 @@ import { commonMessages } from "@dashboard/intl";
 import { DateTime, joinDateTime, splitDateTime } from "@dashboard/misc";
 import { TextField } from "@material-ui/core";
 import { TextFieldProps } from "@material-ui/core/TextField";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 

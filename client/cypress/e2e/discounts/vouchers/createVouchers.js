@@ -74,7 +74,7 @@ describe("As an admin I want to create voucher", () => {
     });
   });
   it(
-    "should be able to create fixed price voucher. TC: SALEOR_1901",
+    "should be able to create fixed price voucher. TC: swiftmovers_1901",
     { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
@@ -103,7 +103,7 @@ describe("As an admin I want to create voucher", () => {
   );
 
   it(
-    "should be able to create percentage voucher. TC: SALEOR_1902",
+    "should be able to create percentage voucher. TC: swiftmovers_1902",
     { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
@@ -133,7 +133,7 @@ describe("As an admin I want to create voucher", () => {
   );
 
   it(
-    "should be able to create free shipping voucher. TC: SALEOR_1903",
+    "should be able to create free shipping voucher. TC: swiftmovers_1903",
     { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
@@ -161,7 +161,7 @@ describe("As an admin I want to create voucher", () => {
   );
 
   it(
-    "should be able to create voucher not available for selected channel. TC: SALEOR_1904",
+    "should be able to create voucher not available for selected channel. TC: swiftmovers_1904",
     { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;

@@ -23,8 +23,8 @@ import {
   TableFooter,
   TableHead,
 } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Text } from "@saleor/macaw-ui/next";
+import { makeStyles } from "@swiftmovers/macaw-ui";
+import { Box, Text } from "@swiftmovers/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

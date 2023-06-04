@@ -8,7 +8,7 @@ import {
   Popper,
   Typography,
 } from "@material-ui/core";
-import { IconButtonProps, makeStyles, SettingsIcon } from "@saleor/macaw-ui";
+import { IconButtonProps, makeStyles, SettingsIcon } from "@swiftmovers/macaw-ui";
 import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
@@ -67,7 +67,7 @@ const useStyles = makeStyles(
 );
 
 /**
- * @deprecated use [`TopNavMenu`](https://github.com/saleor/saleor-dashboard/blob/main/src/components/TopNavMenu/TopNavMenu.tsx) instead
+ * @deprecated use [`TopNavMenu`](https://github.com/swiftmovers/swiftmovers-dashboard/blob/main/src/components/TopNavMenu/TopNavMenu.tsx) instead
  */
 const CardMenu: React.FC<CardMenuProps> = props => {
   const {

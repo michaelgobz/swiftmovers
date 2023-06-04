@@ -15,7 +15,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { renderCollection } from "@dashboard/misc";
 import { productUrl } from "@dashboard/products/urls";
 import { Card, TableBody, TableCell, Typography } from "@material-ui/core";
-import { PillLink } from "@saleor/macaw-ui";
+import { PillLink } from "@swiftmovers/macaw-ui";
 import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link as RouterLink } from "react-router-dom";

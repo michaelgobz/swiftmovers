@@ -37,7 +37,7 @@ def send_app_token(target_url: str, token: str):
     domain = Site.objects.get_current().domain
     headers = {
         "Content-Type": "application/json",
-        # X- headers will be deprecated in Saleor 4.0, proper headers are without X-
+        # X- headers will be deprecated in swiftmovers 4.0, proper headers are without X-
         DeprecatedAppHeaders.DOMAIN: domain,
         AppHeaders.DOMAIN: domain,
         AppHeaders.API_URL: build_absolute_uri(reverse("api"), domain),
@@ -63,7 +63,7 @@ def install_app(app_installation: AppInstallation, activate: bool = False):
 
     manifest_data["permissions"] = get_permission_names(assigned_permissions)
 
-    clean_manifest_data(manifest_data, raise_for_saleor_version=True)
+    clean_manifest_data(manifest_data, raise_for_swiftmovers_version=True)
 
     app = App.objects.create(
         uuid=uuid.uuid4(),

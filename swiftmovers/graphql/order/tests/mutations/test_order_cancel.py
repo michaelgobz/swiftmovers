@@ -22,8 +22,8 @@ mutation cancelOrder($id: ID!) {
 """
 
 
-@patch("saleor.graphql.order.mutations.order_cancel.cancel_order")
-@patch("saleor.graphql.order.mutations.order_cancel.clean_order_cancel")
+@patch("swiftmovers.graphql.order.mutations.order_cancel.cancel_order")
+@patch("swiftmovers.graphql.order.mutations.order_cancel.clean_order_cancel")
 def test_order_cancel(
     mock_clean_order_cancel,
     mock_cancel_order,
@@ -48,8 +48,8 @@ def test_order_cancel(
     )
 
 
-@patch("saleor.graphql.order.mutations.order_cancel.cancel_order")
-@patch("saleor.graphql.order.mutations.order_cancel.clean_order_cancel")
+@patch("swiftmovers.graphql.order.mutations.order_cancel.cancel_order")
+@patch("swiftmovers.graphql.order.mutations.order_cancel.clean_order_cancel")
 def test_order_cancel_as_app(
     mock_clean_order_cancel,
     mock_cancel_order,
@@ -74,8 +74,8 @@ def test_order_cancel_as_app(
     )
 
 
-@patch("saleor.graphql.order.mutations.order_cancel.cancel_order")
-@patch("saleor.graphql.order.mutations.order_cancel.clean_order_cancel")
+@patch("swiftmovers.graphql.order.mutations.order_cancel.cancel_order")
+@patch("swiftmovers.graphql.order.mutations.order_cancel.clean_order_cancel")
 def test_order_cancel_with_bought_gift_cards(
     mock_clean_order_cancel,
     mock_cancel_order,

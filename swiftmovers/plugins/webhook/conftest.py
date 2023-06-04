@@ -69,7 +69,7 @@ def tax_app_with_webhooks(tax_app, tax_checkout_webhook, tax_order_webhook):
 @pytest.fixture
 def webhook_plugin(settings):
     def factory():
-        settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+        settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
         manager = get_plugins_manager()
         return manager.global_plugins[0]
 

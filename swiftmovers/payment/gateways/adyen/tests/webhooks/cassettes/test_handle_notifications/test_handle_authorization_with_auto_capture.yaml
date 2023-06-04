@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"merchantAccount": "SaleorECOM", "modificationAmount": {"value": "8000",
+    body: '{"merchantAccount": "swiftmoversECOM", "modificationAmount": {"value": "8000",
       "currency": "USD"}, "originalReference": "853596537720508F", "reference": "UGF5bWVudDoxMTk5",
       "applicationInfo": {"adyenLibrary": {"name": "adyen-python-api-library", "version":
       "4.0.0"}}}'

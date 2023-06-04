@@ -31,7 +31,7 @@ import {
 } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Card } from "@material-ui/core";
-import { Box, Button, ChevronRightIcon, Text } from "@saleor/macaw-ui/next";
+import { Box, Button, ChevronRightIcon, Text } from "@swiftmovers/macaw-ui/next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

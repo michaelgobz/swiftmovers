@@ -1,4 +1,4 @@
-import { Button, Tooltip, TrashBinIcon } from "@saleor/macaw-ui/next";
+import { Button, Tooltip, TrashBinIcon } from "@swiftmovers/macaw-ui/next";
 import React, { forwardRef } from "react";
 import { FormattedMessage } from "react-intl";
 

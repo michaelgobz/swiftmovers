@@ -1,6 +1,6 @@
 import { Theme } from "@glideapps/glide-data-grid";
-import { makeStyles } from "@saleor/macaw-ui";
-import { useTheme, vars } from "@saleor/macaw-ui/next";
+import { makeStyles } from "@swiftmovers/macaw-ui";
+import { useTheme, vars } from "@swiftmovers/macaw-ui/next";
 import { useMemo } from "react";
 
 export const cellHeight = 40;

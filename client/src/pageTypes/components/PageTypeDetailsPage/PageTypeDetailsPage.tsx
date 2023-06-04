@@ -19,8 +19,8 @@ import { ListActions, ReorderEvent } from "@dashboard/types";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Typography } from "@material-ui/core";
-import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
-import { Box, sprinkles } from "@saleor/macaw-ui/next";
+import { ConfirmButtonTransitionState, makeStyles } from "@swiftmovers/macaw-ui";
+import { Box, sprinkles } from "@swiftmovers/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

@@ -30,7 +30,7 @@ def test_use_authorization_bearer_header_when_authorization_is_provided(
     assert user == staff_user
 
 
-def test_use_saleor_header_as_a_first_try(rf, staff_user, customer_user):
+def test_use_swiftmovers_header_as_a_first_try(rf, staff_user, customer_user):
     staff_access_token = create_access_token(staff_user)
     customer_access_token = create_access_token(customer_user)
 
@@ -69,7 +69,7 @@ def test_incorect_type_of_token(rf, staff_user):
         backend.authenticate(request)
 
 
-def test_saleor_is_not_owner_of_token(rf, staff_user, settings):
+def test_swiftmovers_is_not_owner_of_token(rf, staff_user, settings):
     payload = jwt_user_payload(
         staff_user,
         JWT_ACCESS_TYPE,

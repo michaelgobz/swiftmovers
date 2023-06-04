@@ -1,6 +1,6 @@
 import { Theme } from "@material-ui/core/styles";
-import { dark, light, Themes } from "@saleor/macaw-ui";
-import { themes, vars } from "@saleor/macaw-ui/next";
+import { dark, light, Themes } from "@swiftmovers/macaw-ui";
+import { themes, vars } from "@swiftmovers/macaw-ui/next";
 
 const breakpoints = {
   keys: ["xs", "sm", "md", "lg", "xl"],

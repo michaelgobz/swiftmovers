@@ -9,8 +9,8 @@ import { AppListItemFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { renderCollection } from "@dashboard/misc";
 import { TableBody, TableCell, Typography } from "@material-ui/core";
-import { DeleteIcon, IconButton, ResponsiveTable } from "@saleor/macaw-ui";
-import { Box, Text } from "@saleor/macaw-ui/next";
+import { DeleteIcon, IconButton, ResponsiveTable } from "@swiftmovers/macaw-ui";
+import { Box, Text } from "@swiftmovers/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -51,7 +51,7 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
           <Text as="p">
             <FormattedMessage
               defaultMessage="Local apps are custom webhooks & token pairs that can be used to
-            connect apps and access Saleor API."
+            connect apps and access swiftmovers API."
               id="L/sNGY"
             />
           </Text>

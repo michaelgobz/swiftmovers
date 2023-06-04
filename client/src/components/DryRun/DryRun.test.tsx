@@ -1,6 +1,6 @@
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { WebhookEventTypeSyncEnum } from "@dashboard/graphql";
-import { ThemeProvider } from "@saleor/macaw-ui";
+import { ThemeProvider } from "@swiftmovers/macaw-ui";
 import productsMocks from "@test/mocks/products";
 import { render, screen } from "@testing-library/react";
 import React from "react";

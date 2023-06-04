@@ -1,7 +1,7 @@
 import { Typography } from "@material-ui/core";
 import { alpha } from "@material-ui/core/styles";
 import CloseIcon from "@material-ui/icons/Close";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import clsx from "clsx";
 import React from "react";
 

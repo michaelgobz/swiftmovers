@@ -40,7 +40,7 @@ import { MessageDescriptor } from "react-intl";
 
 import { transformOrderStatus, transformPaymentStatus } from "../misc";
 
-export const MOCK_PAYMENT_GATEWAY_ID = "saleor.dummy.payment";
+export const MOCK_PAYMENT_GATEWAY_ID = "swiftmovers.dummy.payment";
 
 export const prepareMoney = (
   amount?: number,
@@ -59,7 +59,7 @@ export const countries: CountryWithCodeFragment[] = [
 ];
 
 const paymentGateways: PaymentGatewayFragment[] = [
-  { __typename: "PaymentGateway", id: "app.saleor.adyen", name: "Adyen" },
+  { __typename: "PaymentGateway", id: "app.swiftmovers.adyen", name: "Adyen" },
   {
     id: MOCK_PAYMENT_GATEWAY_ID,
     name: "Mock Payment Gateway",
@@ -3329,7 +3329,7 @@ export const grantedRefunds: OrderGrantedRefundFragment[] = [
     id: "1234",
     amount: prepareMoney(),
     reason: "Products returned",
-    app: { id: "123", name: "Saleor Checkout", __typename: "App" },
+    app: { id: "123", name: "swiftmovers Checkout", __typename: "App" },
     user: null,
     createdAt: "2022-08-22T10:40:22.226875+00:00",
     __typename: "OrderGrantedRefund",

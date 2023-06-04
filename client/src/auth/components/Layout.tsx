@@ -1,7 +1,7 @@
 import backgroundArt from "@assets/images/login-background.svg";
-import saleorDarkLogo from "@assets/images/logo-dark.svg";
-import saleorLightLogo from "@assets/images/logo-light.svg";
-import { makeStyles, useTheme } from "@saleor/macaw-ui";
+import swiftmoversDarkLogo from "@assets/images/logo-dark.svg";
+import swiftmoversLightLogo from "@assets/images/logo-light.svg";
+import { makeStyles, useTheme } from "@swiftmovers/macaw-ui";
 import React from "react";
 import SVG from "react-inlinesvg";
 
@@ -91,7 +91,7 @@ const Layout: React.FC = props => {
       <div className={classes.mainPanel}>
         <SVG
           className={classes.logo}
-          src={themeType === "dark" ? saleorDarkLogo : saleorLightLogo}
+          src={themeType === "dark" ? swiftmoversDarkLogo : swiftmoversLightLogo}
         />
         <div className={classes.mainPanelContent}>{children}</div>
       </div>

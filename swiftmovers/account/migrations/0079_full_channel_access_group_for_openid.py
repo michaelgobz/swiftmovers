@@ -4,7 +4,7 @@ from django.db import migrations
 from django.apps import apps as registry
 from django.db.models.signals import post_migrate
 
-from .tasks.saleor3_13 import create_full_channel_access_group_task
+from .tasks.swiftmovers3_13 import create_full_channel_access_group_task
 
 OPENID_ID = "mirumee.authentication.openidconnect"
 

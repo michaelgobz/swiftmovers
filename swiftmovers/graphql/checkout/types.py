@@ -138,7 +138,7 @@ class PaymentGateway(BaseObjectType):
 class CheckoutLine(ModelObjectType[models.CheckoutLine]):
     id = graphene.GlobalID(required=True)
     variant = graphene.Field(
-        "saleor.graphql.product.types.ProductVariant", required=True
+        "swiftmovers.graphql.product.types.ProductVariant", required=True
     )
     quantity = graphene.Int(required=True)
     unit_price = graphene.Field(
@@ -387,10 +387,10 @@ class Checkout(ModelObjectType[models.Checkout]):
         required=True,
         deprecation_reason=(f"{DEPRECATED_IN_3X_FIELD} Use `updatedAt` instead."),
     )
-    user = graphene.Field("saleor.graphql.account.types.User")
+    user = graphene.Field("swiftmovers.graphql.account.types.User")
     channel = graphene.Field(Channel, required=True)
-    billing_address = graphene.Field("saleor.graphql.account.types.Address")
-    shipping_address = graphene.Field("saleor.graphql.account.types.Address")
+    billing_address = graphene.Field("swiftmovers.graphql.account.types.Address")
+    shipping_address = graphene.Field("swiftmovers.graphql.account.types.Address")
     note = graphene.String(required=True)
     discount = graphene.Field(Money)
     discount_name = graphene.String()

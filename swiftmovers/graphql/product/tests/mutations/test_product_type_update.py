@@ -173,7 +173,7 @@ UPDATE_PRODUCT_TYPE_SLUG_MUTATION = """
         (None, "", "Slug value cannot be blank."),
     ],
 )
-@patch("saleor.product.search.update_products_search_vector")
+@patch("swiftmovers.product.search.update_products_search_vector")
 def test_update_product_type_slug(
     update_products_search_vector_mock,
     staff_api_client,
@@ -413,7 +413,7 @@ def test_update_product_type_kind_omitted(
     assert data["productType"]["name"] == name
 
 
-@patch("saleor.product.tasks.update_variants_names.delay")
+@patch("swiftmovers.product.tasks.update_variants_names.delay")
 def test_product_type_update_changes_variant_name(
     mock_update_variants_names,
     staff_api_client,

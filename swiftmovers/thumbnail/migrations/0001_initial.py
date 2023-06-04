@@ -3,7 +3,7 @@
 from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
-import saleor.thumbnail.models
+import swiftmovers.thumbnail.models
 
 
 class Migration(migrations.Migration):
@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
                 (
                     "size",
                     models.PositiveIntegerField(
-                        validators=[saleor.thumbnail.models.validate_thumbnail_size]
+                        validators=[swiftmovers.thumbnail.models.validate_thumbnail_size]
                     ),
                 ),
                 (

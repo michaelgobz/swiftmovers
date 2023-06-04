@@ -60,10 +60,10 @@ def admin_email_plugin(settings):
         staff_password_reset_template=DEFAULT_EMAIL_VALUE,
         staff_password_reset_subject=STAFF_PASSWORD_RESET_DEFAULT_SUBJECT,
     ):
-        settings.PLUGINS = ["saleor.plugins.admin_email.plugin.AdminEmailPlugin"]
+        settings.PLUGINS = ["swiftmovers.plugins.admin_email.plugin.AdminEmailPlugin"]
         manager = get_plugins_manager()
         with patch(
-            "saleor.plugins.admin_email.plugin.validate_default_email_configuration"
+            "swiftmovers.plugins.admin_email.plugin.validate_default_email_configuration"
         ):
             manager.save_plugin_configuration(
                 AdminEmailPlugin.PLUGIN_ID,

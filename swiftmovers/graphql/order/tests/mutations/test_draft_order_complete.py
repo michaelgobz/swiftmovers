@@ -36,7 +36,7 @@ DRAFT_ORDER_COMPLETE_MUTATION = """
 """
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_out_of_stock")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_out_of_stock")
 def test_draft_order_complete(
     product_variant_out_of_stock_webhook_mock,
     staff_api_client,
@@ -86,7 +86,7 @@ def test_draft_order_complete(
     )
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_out_of_stock")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_out_of_stock")
 def test_draft_order_complete_0_total(
     product_variant_out_of_stock_webhook_mock,
     staff_api_client,
@@ -150,7 +150,7 @@ def test_draft_order_complete_0_total(
     )
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_out_of_stock")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_out_of_stock")
 def test_draft_order_complete_without_sku(
     product_variant_out_of_stock_webhook_mock,
     staff_api_client,
@@ -202,7 +202,7 @@ def test_draft_order_complete_without_sku(
     )
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_out_of_stock")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_out_of_stock")
 def test_draft_order_complete_with_out_of_stock_webhook(
     product_variant_out_of_stock_webhook_mock,
     staff_api_client,
@@ -440,7 +440,7 @@ def test_draft_order_complete_not_available_shipping_method(
     assert {error["field"] for error in data["errors"]} == {"shipping", "lines"}
 
 
-@patch("saleor.plugins.manager.PluginsManager.excluded_shipping_methods_for_order")
+@patch("swiftmovers.plugins.manager.PluginsManager.excluded_shipping_methods_for_order")
 def test_draft_order_complete_with_excluded_shipping_method(
     mocked_webhook,
     draft_order,
@@ -449,7 +449,7 @@ def test_draft_order_complete_with_excluded_shipping_method(
     permission_manage_orders,
     settings,
 ):
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
     webhook_reason = "archives-are-incomplete"
     mocked_webhook.return_value = [
         ExcludedShippingMethod(str(shipping_method.id), webhook_reason)
@@ -472,7 +472,7 @@ def test_draft_order_complete_with_excluded_shipping_method(
     assert data["errors"][0]["field"] == "shipping"
 
 
-@patch("saleor.plugins.manager.PluginsManager.excluded_shipping_methods_for_order")
+@patch("swiftmovers.plugins.manager.PluginsManager.excluded_shipping_methods_for_order")
 def test_draft_order_complete_with_not_excluded_shipping_method(
     mocked_webhook,
     draft_order,
@@ -481,7 +481,7 @@ def test_draft_order_complete_with_not_excluded_shipping_method(
     permission_manage_orders,
     settings,
 ):
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
     webhook_reason = "archives-are-incomplete"
     other_shipping_method_id = "1337"
     assert other_shipping_method_id != shipping_method.id

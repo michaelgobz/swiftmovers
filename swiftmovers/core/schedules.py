@@ -36,7 +36,7 @@ class sale_webhook_schedule(CustomSchedule):
             schedule=self,
             nowfun=nowfun,
             app=app,
-            import_path="saleor.core.schedules.initiated_sale_webhook_schedule",
+            import_path="swiftmovers.core.schedules.initiated_sale_webhook_schedule",
         )
 
     def remaining_estimate(self, last_run_at):

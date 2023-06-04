@@ -76,7 +76,7 @@ describe("As an admin I should be able to create variant", () => {
   });
 
   it(
-    "should be able to create variant visible for the customers in all channels. TC: SALEOR_2901",
+    "should be able to create variant visible for the customers in all channels. TC: swiftmovers_2901",
     { tags: ["@variants", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
@@ -132,7 +132,7 @@ describe("As an admin I should be able to create variant", () => {
     },
   );
   it(
-    "should be able to create variant. TC: SALEOR_2900",
+    "should be able to create variant. TC: swiftmovers_2900",
     { tags: ["@variants", "@allEnv", "@critical", "@stable", "@oldRelease"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
@@ -163,7 +163,7 @@ describe("As an admin I should be able to create variant", () => {
   );
 
   it(
-    "should be able to create several variants visible for the customers. TC: SALEOR_2902",
+    "should be able to create several variants visible for the customers. TC: swiftmovers_2902",
     { tags: ["@variants", "@allEnv", "@critical", "@stable", "@oldRelease"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;

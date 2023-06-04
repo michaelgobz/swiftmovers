@@ -289,7 +289,7 @@ def test_handle_authorization_for_checkout_partial_payment(
     assert not payment.order
 
 
-@mock.patch("saleor.payment.gateways.adyen.plugin.call_refund")
+@mock.patch("swiftmovers.payment.gateways.adyen.plugin.call_refund")
 def test_handle_authorization_for_checkout_out_of_stock_after_payment(
     mock_refund,
     notification,
@@ -336,7 +336,7 @@ def test_handle_authorization_for_checkout_out_of_stock_after_payment(
         Stock.objects.all().update(quantity=0)
 
     with before_after.before(
-        "saleor.checkout.complete_checkout._create_order",
+        "swiftmovers.checkout.complete_checkout._create_order",
         call_after_finalizing_payment,
     ):
         handle_authorization(notification, config)
@@ -424,7 +424,7 @@ def test_handle_authorization_for_checkout_that_cannot_be_finalized(
     assert payment.transactions.count() == 2
 
 
-@patch("saleor.payment.gateway.refund")
+@patch("swiftmovers.payment.gateway.refund")
 def test_handle_authorization_calls_refund_for_inactive_payment(
     mock_refund,
     notification,
@@ -511,7 +511,7 @@ def test_handle_authorization_calls_refund_for_inactive_payment(
     assert payment.transactions.count() == 3
 
 
-@patch("saleor.payment.gateway.void")
+@patch("swiftmovers.payment.gateway.void")
 def test_handle_authorization_for_checkout_one_of_variants_deleted(
     void_mock,
     notification,
@@ -607,7 +607,7 @@ def test_handle_authorization_with_adyen_auto_capture(
     assert external_events.count() == 1
 
 
-@patch("saleor.payment.gateway.refund")
+@patch("swiftmovers.payment.gateway.refund")
 def test_handle_authorization_with_adyen_auto_capture_and_inactive_payment(
     refund_mock, notification, adyen_plugin, inactive_payment_adyen_for_checkout
 ):
@@ -639,7 +639,7 @@ def test_handle_authorization_with_adyen_auto_capture_and_inactive_payment(
     assert refund_mock.called
 
 
-@patch("saleor.payment.gateway.refund")
+@patch("swiftmovers.payment.gateway.refund")
 def test_handle_authorization_adyen_auto_capture_inactive_payment_and_captured_txn(
     refund_mock, notification, adyen_plugin, inactive_payment_adyen_for_checkout
 ):
@@ -683,7 +683,7 @@ def test_handle_authorization_adyen_auto_capture_inactive_payment_and_captured_t
     assert refund_mock.called
 
 
-@patch("saleor.payment.gateway.void")
+@patch("swiftmovers.payment.gateway.void")
 def test_handle_authorization_without_adyen_auto_capture_and_inactive_payment(
     void_mock, notification, adyen_plugin, inactive_payment_adyen_for_checkout
 ):
@@ -900,7 +900,7 @@ def test_handle_capture_for_checkout(
     assert external_events.count() == 1
 
 
-@patch("saleor.payment.gateway.refund")
+@patch("swiftmovers.payment.gateway.refund")
 def test_handle_capture_inactive_payment(
     refund_mock,
     notification,
@@ -937,7 +937,7 @@ def test_handle_capture_inactive_payment(
     assert refund_mock.called
 
 
-@patch("saleor.payment.gateway.refund")
+@patch("swiftmovers.payment.gateway.refund")
 def test_handle_capture_inactive_payment_capture_txn_exists(
     refund_mock,
     notification,
@@ -983,7 +983,7 @@ def test_handle_capture_inactive_payment_capture_txn_exists(
     assert refund_mock.called
 
 
-@patch("saleor.payment.gateway.void")
+@patch("swiftmovers.payment.gateway.void")
 def test_handle_capture_for_checkout_order_not_created_checkout_line_variant_deleted(
     void_mock,
     notification,
@@ -1259,7 +1259,7 @@ def test_handle_pending_already_pending(
     assert payment.transactions.filter(kind=TransactionKind.PENDING).exists()
 
 
-@mock.patch("saleor.payment.gateways.adyen.webhooks.order_refunded")
+@mock.patch("swiftmovers.payment.gateways.adyen.webhooks.order_refunded")
 def test_handle_refund(
     mock_order_refunded, notification, adyen_plugin, payment_adyen_for_order
 ):
@@ -1316,7 +1316,7 @@ def test_handle_refund_invalid_payment_id(
     assert f"Unable to decode the payment ID {invalid_reference}." in caplog.text
 
 
-@mock.patch("saleor.payment.gateways.adyen.webhooks.order_refunded")
+@mock.patch("swiftmovers.payment.gateways.adyen.webhooks.order_refunded")
 def test_handle_refund_already_refunded(
     mock_order_refunded, notification, adyen_plugin, payment_adyen_for_order
 ):
@@ -1550,7 +1550,7 @@ def test_webhook_not_implemented_invalid_payment_id(
     assert f"Unable to decode the payment ID {invalid_reference}." in caplog.text
 
 
-@mock.patch("saleor.payment.gateways.adyen.webhooks.handle_refund")
+@mock.patch("swiftmovers.payment.gateways.adyen.webhooks.handle_refund")
 def test_handle_cancel_or_refund_action_refund(
     mock_handle_refund, notification, adyen_plugin, payment_adyen_for_order
 ):
@@ -1568,7 +1568,7 @@ def test_handle_cancel_or_refund_action_refund(
     mock_handle_refund.assert_called_once_with(notification, config)
 
 
-@mock.patch("saleor.payment.gateways.adyen.webhooks.handle_cancellation")
+@mock.patch("swiftmovers.payment.gateways.adyen.webhooks.handle_cancellation")
 def test_handle_cancel_or_refund_action_cancel(
     mock_handle_cancellation, notification, adyen_plugin, payment_adyen_for_order
 ):
@@ -1625,7 +1625,7 @@ def test_handle_not_created_order_order_created(
     assert payment_adyen_for_checkout.order
 
 
-@patch("saleor.payment.gateway.refund")
+@patch("swiftmovers.payment.gateway.refund")
 def test_handle_not_created_order_order_not_created_checkout_line_variant_deleted(
     refund_mock,
     checkout_ready_to_complete,
@@ -1662,8 +1662,8 @@ def test_handle_not_created_order_order_not_created_checkout_line_variant_delete
     assert not payment_adyen_for_checkout.order
 
 
-@patch("saleor.payment.gateway.refund")
-@patch("saleor.checkout.complete_checkout._get_order_data")
+@patch("swiftmovers.payment.gateway.refund")
+@patch("swiftmovers.checkout.complete_checkout._get_order_data")
 def test_handle_not_created_order_refund_when_create_order_raises(
     order_data_mock, refund_mock, payment_adyen_for_checkout, adyen_plugin, notification
 ):
@@ -1685,8 +1685,8 @@ def test_handle_not_created_order_refund_when_create_order_raises(
     assert refund_mock.call_count == 1
 
 
-@patch("saleor.payment.gateway.void")
-@patch("saleor.checkout.complete_checkout._get_order_data")
+@patch("swiftmovers.payment.gateway.void")
+@patch("swiftmovers.checkout.complete_checkout._get_order_data")
 def test_handle_not_created_order_void_when_create_order_raises(
     order_data_mock, void_mock, payment_adyen_for_checkout, adyen_plugin, notification
 ):
@@ -1757,8 +1757,8 @@ def test_handle_not_created_order_create_new_success_transaction(
     assert all_payment_transactions[1].kind == TransactionKind.AUTH
 
 
-@patch("saleor.payment.gateway.refund")
-@patch("saleor.checkout.complete_checkout._get_order_data")
+@patch("swiftmovers.payment.gateway.refund")
+@patch("swiftmovers.checkout.complete_checkout._get_order_data")
 def test_handle_not_created_order_success_transaction_create_order_raises_and_refund(
     order_data_mock, refund_mock, payment_adyen_for_checkout, adyen_plugin, notification
 ):
@@ -1789,8 +1789,8 @@ def test_handle_not_created_order_success_transaction_create_order_raises_and_re
     assert refund_mock.call_count == 1
 
 
-@patch("saleor.payment.gateway.void")
-@patch("saleor.checkout.complete_checkout._get_order_data")
+@patch("swiftmovers.payment.gateway.void")
+@patch("swiftmovers.checkout.complete_checkout._get_order_data")
 def test_handle_not_created_order_success_transaction_create_order_raises_and_void(
     order_data_mock, void_mock, payment_adyen_for_checkout, adyen_plugin, notification
 ):
@@ -2122,9 +2122,9 @@ def test_handle_order_closed_with_adyen_partial_payments_success_true_without_am
     )
 
 
-@patch("saleor.payment.gateway.void")
-@mock.patch("saleor.payment.gateways.adyen.webhooks.call_refund")
-@patch("saleor.checkout.complete_checkout._get_order_data")
+@patch("swiftmovers.payment.gateway.void")
+@mock.patch("swiftmovers.payment.gateways.adyen.webhooks.call_refund")
+@patch("swiftmovers.checkout.complete_checkout._get_order_data")
 def test_order_closed_with_adyen_partial_payments_unable_to_create_order(
     mock_order_data,
     mock_call_refund,
@@ -2172,7 +2172,7 @@ def test_order_closed_with_adyen_partial_payments_unable_to_create_order(
         "order-1-paymentAmount": "GBP 41.90",
         "order-1-paymentMethod": "givex",
     }
-    merchant_account = "SaleorEcom"
+    merchant_account = "swiftmoversEcom"
     config = adyen_plugin(merchant_account=merchant_account).config
 
     # when
@@ -2199,8 +2199,8 @@ def test_order_closed_with_adyen_partial_payments_unable_to_create_order(
     )
 
 
-@patch("saleor.payment.gateway.void")
-@mock.patch("saleor.payment.gateways.adyen.webhooks.call_refund")
+@patch("swiftmovers.payment.gateway.void")
+@mock.patch("swiftmovers.payment.gateways.adyen.webhooks.call_refund")
 def test_order_closed_with_not_active_payment(
     mock_call_refund,
     mock_void,
@@ -2246,7 +2246,7 @@ def test_order_closed_with_not_active_payment(
         "order-1-paymentAmount": "GBP 41.90",
         "order-1-paymentMethod": "givex",
     }
-    merchant_account = "SaleorEcom"
+    merchant_account = "swiftmoversEcom"
     config = adyen_plugin(merchant_account=merchant_account).config
 
     # when

@@ -19,7 +19,7 @@ import {
   PageTabPanel,
   PageTabs,
   useListWidths,
-} from "@saleor/macaw-ui";
+} from "@swiftmovers/macaw-ui";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

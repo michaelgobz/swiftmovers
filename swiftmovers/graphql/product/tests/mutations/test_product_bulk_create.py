@@ -142,7 +142,7 @@ def test_product_bulk_create_with_base_data(
         assert product.product_type == product_type
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_created")
 def test_product_bulk_create_send_product_created_webhook(
     created_webhook_mock,
     staff_api_client,
@@ -973,8 +973,8 @@ def test_product_bulk_create_with_variants_with_duplicated_sku(
     assert prod_2_errors[0]["code"] == ProductBulkCreateErrorCode.UNIQUE.name
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
-@patch("saleor.plugins.manager.PluginsManager.product_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_created")
 def test_product_bulk_create_with_variants_send_product_variant_created_event(
     product_created_webhook_mock,
     variant_created_webhook_mock,
@@ -1280,7 +1280,7 @@ def test_product_bulk_create_with_variants_and_invalid_stock(
     assert data["count"] == 0
 
 
-@patch("saleor.plugins.manager.PluginsManager.channel_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.channel_updated")
 def test_product_bulk_create_with_variants_and_channel_listings(
     channel_updated_webhook_mock,
     staff_api_client,

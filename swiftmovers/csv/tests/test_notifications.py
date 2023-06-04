@@ -11,7 +11,7 @@ from ..notifications import get_default_export_payload
 
 
 @freeze_time("2018-05-31 12:00:01")
-@mock.patch("saleor.plugins.manager.PluginsManager.notify")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_send_export_download_link_notification(
     mocked_notify, site_settings, user_export_file, tmpdir, media_root
 ):
@@ -41,7 +41,7 @@ def test_send_export_download_link_notification(
 
 
 @freeze_time("2018-05-31 12:00:01")
-@mock.patch("saleor.plugins.manager.PluginsManager.notify")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_send_export_failed_info(
     mocked_notify, site_settings, user_export_file, tmpdir, media_root
 ):

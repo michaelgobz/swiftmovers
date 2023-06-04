@@ -20,7 +20,7 @@ export const productsMocks: MockedResponse[] = [
                 id: "UHJvZHVjdDo3Mg==",
                 name: "Apple Juice",
                 thumbnail: {
-                  url: "https://wb-t-3-4-6.staging.saleor.cloud/media/thumbnails/products/saleordemoproduct_fd_juice_06_XO6p2Xu_thumbnail_256.png",
+                  url: "https://wb-t-3-4-6.staging.swiftmovers.cloud/media/thumbnails/products/swiftmoversdemoproduct_fd_juice_06_XO6p2Xu_thumbnail_256.png",
                   __typename: "Image",
                 },
                 productType: {
@@ -100,7 +100,7 @@ export const productsMocks: MockedResponse[] = [
                 id: "UHJvZHVjdDo3NA==",
                 name: "Banana Juice",
                 thumbnail: {
-                  url: "https://wb-t-3-4-6.staging.saleor.cloud/media/thumbnails/products/saleordemoproduct_fd_juice_01_thumbnail_256.png",
+                  url: "https://wb-t-3-4-6.staging.swiftmovers.cloud/media/thumbnails/products/swiftmoversdemoproduct_fd_juice_01_thumbnail_256.png",
                   __typename: "Image",
                 },
                 productType: {
@@ -180,7 +180,7 @@ export const productsMocks: MockedResponse[] = [
                 id: "UHJvZHVjdDoxMjI=",
                 name: "Bathroom Songs",
                 thumbnail: {
-                  url: "https://wb-t-3-4-6.staging.saleor.cloud/media/thumbnails/products/saleor-digital-03_4_thumbnail_256.png",
+                  url: "https://wb-t-3-4-6.staging.swiftmovers.cloud/media/thumbnails/products/swiftmovers-digital-03_4_thumbnail_256.png",
                   __typename: "Image",
                 },
                 productType: {

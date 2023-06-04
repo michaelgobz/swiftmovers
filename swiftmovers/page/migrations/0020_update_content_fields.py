@@ -2,8 +2,8 @@
 
 from django.db import migrations
 
-import saleor.core.db.fields
-import saleor.core.utils.editorjs
+import swiftmovers.core.db.fields
+import swiftmovers.core.utils.editorjs
 
 
 def update_empty_content_field(apps, schema_editor):
@@ -23,19 +23,19 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="page",
             name="content",
-            field=saleor.core.db.fields.SanitizedJSONField(
+            field=swiftmovers.core.db.fields.SanitizedJSONField(
                 blank=True,
                 null=True,
-                sanitizer=saleor.core.utils.editorjs.clean_editor_js,
+                sanitizer=swiftmovers.core.utils.editorjs.clean_editor_js,
             ),
         ),
         migrations.AlterField(
             model_name="pagetranslation",
             name="content",
-            field=saleor.core.db.fields.SanitizedJSONField(
+            field=swiftmovers.core.db.fields.SanitizedJSONField(
                 blank=True,
                 null=True,
-                sanitizer=saleor.core.utils.editorjs.clean_editor_js,
+                sanitizer=swiftmovers.core.utils.editorjs.clean_editor_js,
             ),
         ),
         migrations.RunPython(

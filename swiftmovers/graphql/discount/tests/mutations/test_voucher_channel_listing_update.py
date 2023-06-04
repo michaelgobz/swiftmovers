@@ -127,8 +127,8 @@ def test_voucher_channel_listing_update_as_customer(
 
 
 @freeze_time("2022-05-12 12:00:00")
-@patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
-@patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
+@patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
 def test_voucher_channel_listing_update_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -141,7 +141,7 @@ def test_voucher_channel_listing_update_trigger_webhook(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
 
     voucher = voucher_without_channel
     voucher_id = graphene.Node.to_global_id("Voucher", voucher.pk)

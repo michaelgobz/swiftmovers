@@ -57,7 +57,7 @@ describe("Tests on inactive channel", () => {
   });
 
   it(
-    "should not be possible to add products to order with inactive channel. TC: SALEOR_0706",
+    "should not be possible to add products to order with inactive channel. TC: swiftmovers_0706",
     { tags: ["@channel", "@allEnv", "@stable"] },
     () => {
       cy.visit(urlList.orders)
@@ -81,7 +81,7 @@ describe("Tests on inactive channel", () => {
   );
 
   it(
-    "should not be possible to create checkout with inactive channel. TC: SALEOR_0707",
+    "should not be possible to create checkout with inactive channel. TC: swiftmovers_0707",
     { tags: ["@channel", "@allEnv", "@stable"] },
     () => {
       const randomChannel = `${channelStartsWith}${faker.datatype.number()}`;
@@ -113,7 +113,7 @@ describe("Tests on inactive channel", () => {
   );
 
   it(
-    "products in inactive channel should not be displayed. TC: SALEOR_0708",
+    "products in inactive channel should not be displayed. TC: swiftmovers_0708",
     { tags: ["@channel", "@allEnv", "@stable"] },
     () => {
       const randomChannel = `${channelStartsWith}${faker.datatype.number()}`;

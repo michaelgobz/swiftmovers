@@ -13,7 +13,7 @@ import { MenuListUrlSortField, menuUrl } from "@dashboard/navigation/urls";
 import { ListActions, ListProps, SortPage } from "@dashboard/types";
 import { getArrowDirection } from "@dashboard/utils/sort";
 import { Card, TableBody, TableCell, TableFooter } from "@material-ui/core";
-import { DeleteIcon, makeStyles } from "@saleor/macaw-ui";
+import { DeleteIcon, makeStyles } from "@swiftmovers/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

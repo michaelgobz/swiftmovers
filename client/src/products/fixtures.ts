@@ -9,7 +9,7 @@ import {
   WeightUnitsEnum,
 } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
-import { ProductType } from "@saleor/sdk/dist/apollo/types";
+import { ProductType } from "@swiftmovers/sdk/dist/apollo/types";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 

@@ -7,7 +7,7 @@ import django.core.validators
 import django.db.models.deletion
 from django.db import migrations, models
 
-import saleor.payment
+import swiftmovers.payment
 
 
 class Migration(migrations.Migration):
@@ -158,39 +158,39 @@ class Migration(migrations.Migration):
                     models.CharField(
                         choices=[
                             (
-                                saleor.payment.TransactionError("incorrect_number"),
+                                swiftmovers.payment.TransactionError("incorrect_number"),
                                 "incorrect_number",
                             ),
                             (
-                                saleor.payment.TransactionError("invalid_number"),
+                                swiftmovers.payment.TransactionError("invalid_number"),
                                 "invalid_number",
                             ),
                             (
-                                saleor.payment.TransactionError("incorrect_cvv"),
+                                swiftmovers.payment.TransactionError("incorrect_cvv"),
                                 "incorrect_cvv",
                             ),
                             (
-                                saleor.payment.TransactionError("invalid_cvv"),
+                                swiftmovers.payment.TransactionError("invalid_cvv"),
                                 "invalid_cvv",
                             ),
                             (
-                                saleor.payment.TransactionError("incorrect_zip"),
+                                swiftmovers.payment.TransactionError("incorrect_zip"),
                                 "incorrect_zip",
                             ),
                             (
-                                saleor.payment.TransactionError("incorrect_address"),
+                                swiftmovers.payment.TransactionError("incorrect_address"),
                                 "incorrect_address",
                             ),
                             (
-                                saleor.payment.TransactionError("invalid_expiry_date"),
+                                swiftmovers.payment.TransactionError("invalid_expiry_date"),
                                 "invalid_expiry_date",
                             ),
-                            (saleor.payment.TransactionError("expired"), "expired"),
+                            (swiftmovers.payment.TransactionError("expired"), "expired"),
                             (
-                                saleor.payment.TransactionError("processing_error"),
+                                swiftmovers.payment.TransactionError("processing_error"),
                                 "processing_error",
                             ),
-                            (saleor.payment.TransactionError("declined"), "declined"),
+                            (swiftmovers.payment.TransactionError("declined"), "declined"),
                         ],
                         max_length=256,
                         null=True,

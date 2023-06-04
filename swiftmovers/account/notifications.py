@@ -24,7 +24,7 @@ def get_default_user_payload(user: User):
         "language_code": user.language_code,
     }
     # Deprecated: override private_metadata with empty dict as it shouldn't be returned
-    # in the payload (see SALEOR-7046). Should be removed in Saleor 4.0.
+    # in the payload (see swiftmovers-7046). Should be removed in swiftmovers 4.0.
     payload["private_metadata"] = {}
     return payload
 

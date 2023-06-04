@@ -4,7 +4,7 @@ import {
   installedAppsList,
   releasedApp,
 } from "@dashboard/apps/fixtures";
-import { GetV2SaleorAppsResponse } from "@dashboard/apps/marketplace.types";
+import { GetV2swiftmoversAppsResponse } from "@dashboard/apps/marketplace.types";
 import {
   AppListItemFragment,
   AppTypeEnum,
@@ -211,7 +211,7 @@ describe("App List verified installed apps util", () => {
         ],
       },
     ];
-    const installableMarketplaceApps: GetV2SaleorAppsResponse.ReleasedSaleorApp[] =
+    const installableMarketplaceApps: GetV2swiftmoversAppsResponse.ReleasedswiftmoversApp[] =
       [
         {
           name: {
@@ -303,7 +303,7 @@ describe("App List verified installable marketplace apps util", () => {
         ],
       },
     ];
-    const installableMarketplaceApps: GetV2SaleorAppsResponse.ReleasedSaleorApp[] =
+    const installableMarketplaceApps: GetV2swiftmoversAppsResponse.ReleasedswiftmoversApp[] =
       [
         {
           name: {

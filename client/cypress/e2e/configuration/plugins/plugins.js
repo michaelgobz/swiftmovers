@@ -50,7 +50,7 @@ describe("As an admin I want to manage plugins", () => {
   });
 
   it(
-    "should change user email. TC: SALEOR_3601",
+    "should change user email. TC: swiftmovers_3601",
     { tags: ["@plugins", "@allEnv", "@stable"] },
     () => {
       const customerEmail = `${randomName}@example.com`;
@@ -82,7 +82,7 @@ describe("As an admin I want to manage plugins", () => {
   );
 
   it(
-    "should change admin email plugin. TC: SALEOR_3602",
+    "should change admin email plugin. TC: swiftmovers_3602",
     { tags: ["@plugins", "@allEnv", "@stable"] },
     () => {
       const adminName = `Admin${randomName}`;

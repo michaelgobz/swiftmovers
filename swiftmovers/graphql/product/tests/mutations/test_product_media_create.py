@@ -40,8 +40,8 @@ PRODUCT_MEDIA_CREATE_QUERY = """
 """
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_media_created")
-@patch("saleor.plugins.manager.PluginsManager.product_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_media_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
 def test_product_media_create_mutation(
     product_updated_mock,
     product_media_created,

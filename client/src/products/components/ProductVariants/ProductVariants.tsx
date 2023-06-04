@@ -17,7 +17,7 @@ import EditIcon from "@dashboard/icons/Edit";
 import { buttonMessages } from "@dashboard/intl";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { Item } from "@glideapps/glide-data-grid";
-import { Button } from "@saleor/macaw-ui";
+import { Button } from "@swiftmovers/macaw-ui";
 // import { isLimitReached } from "@dashboard/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

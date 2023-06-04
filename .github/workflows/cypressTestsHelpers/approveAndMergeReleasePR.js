@@ -7,8 +7,8 @@ const { failedTestCases } = require("./getTestsResults");
 const program = new Command();
 const client = new GraphQLClient("https://dashboard.cypress.io/graphql");
 
-const repo = "saleor-cloud-deployments";
-const owner = "saleor";
+const repo = "swiftmovers-cloud-deployments";
+const owner = "swiftmovers";
 
 program
   .name("Approve PR")
@@ -137,7 +137,7 @@ function isPatchRelease(version) {
 
 async function getListOfTestsIssues(octokit) {
   const result = await octokit.request(
-    "GET /repos/{owner}/saleor-dashboard/issues?labels=tests",
+    "GET /repos/{owner}/swiftmovers-dashboard/issues?labels=tests",
     {
       owner,
     },
@@ -180,7 +180,7 @@ function getFormattedVersion(version) {
 async function createIssue(newBug, version, octokit) {
   const issue = await octokit.request("POST /repos/{owner}/{repo}/issues", {
     owner,
-    repo: "saleor-dashboard",
+    repo: "swiftmovers-dashboard",
     title: `Cypress test fail: ${newBug.title}`,
     body: `**Known bug for versions:**\nv${getFormattedVersion(
       version,

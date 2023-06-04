@@ -1,7 +1,7 @@
 import { useUser } from "@dashboard/auth";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { useTheme } from "@dashboard/theme";
-import { useTheme as useLegacyTheme } from "@saleor/macaw-ui";
+import { useTheme as useLegacyTheme } from "@swiftmovers/macaw-ui";
 import {
   Box,
   Button,
@@ -10,7 +10,7 @@ import {
   MoreOptionsIcon,
   sprinkles,
   Text,
-} from "@saleor/macaw-ui/next";
+} from "@swiftmovers/macaw-ui/next";
 import React, { useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";

@@ -1,4 +1,4 @@
-import { DeleteIcon, IconButton, IconButtonProps } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton, IconButtonProps } from "@swiftmovers/macaw-ui";
 import React from "react";
 
 const DeleteIconButton: React.FC<IconButtonProps> = ({ onClick }) => (

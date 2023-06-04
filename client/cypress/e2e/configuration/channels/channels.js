@@ -60,7 +60,7 @@ describe("Channels", () => {
   });
 
   it(
-    "should create new channel. TC: SALEOR_0701",
+    "should create new channel. TC: swiftmovers_0701",
     { tags: ["@channel", "@allEnv", "@stable"] },
     () => {
       const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
@@ -98,10 +98,10 @@ describe("Channels", () => {
     },
   );
   it(
-    "should create channel with shippingZone and warehouse TC: SALEOR_0712",
+    "should create channel with shippingZone and warehouse TC: swiftmovers_0712",
     { tags: ["@channel", "@allEnv"] },
     () => {
-      // remove login after fixing SALEOR-3162
+      // remove login after fixing swiftmovers-3162
       cy.clearSessionData().loginUserViaRequest();
 
       const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
@@ -126,7 +126,7 @@ describe("Channels", () => {
   );
 
   it(
-    "should validate slug name. TC: SALEOR_0703",
+    "should validate slug name. TC: swiftmovers_0703",
     { tags: ["@channel", "@allEnv", "@stable"] },
     () => {
       const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
@@ -146,7 +146,7 @@ describe("Channels", () => {
   );
 
   it(
-    "should validate not existing currency. TC: SALEOR_0704",
+    "should validate not existing currency. TC: swiftmovers_0704",
     { tags: ["@channel", "@allEnv", "@stable"] },
     () => {
       const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
@@ -163,7 +163,7 @@ describe("Channels", () => {
   );
 
   it(
-    "should delete channel. TC: SALEOR_0705",
+    "should delete channel. TC: swiftmovers_0705",
     { tags: ["@channel", "@allEnv", "@stable"] },
     () => {
       const randomChannelToDelete = `${channelStartsWith} ${faker.datatype.number()}`;

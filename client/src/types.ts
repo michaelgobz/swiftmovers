@@ -1,6 +1,6 @@
 import { FetchResult, MutationResult } from "@apollo/client";
 import { UserPermissionFragment } from "@dashboard/graphql";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@swiftmovers/macaw-ui";
 
 import { FilterElement, IFilter } from "./components/Filter";
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";

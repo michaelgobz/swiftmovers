@@ -1,5 +1,5 @@
 import { MenuItem, Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 import { GetItemPropsOptions } from "downshift";
 import React from "react";
 

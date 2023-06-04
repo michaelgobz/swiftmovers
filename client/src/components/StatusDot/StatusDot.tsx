@@ -1,4 +1,4 @@
-import { Box, Sprinkles } from "@saleor/macaw-ui/next";
+import { Box, Sprinkles } from "@swiftmovers/macaw-ui/next";
 import React from "react";
 
 export interface StatusDotProps {

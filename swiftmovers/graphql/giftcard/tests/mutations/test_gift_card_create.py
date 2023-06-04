@@ -90,7 +90,7 @@ CREATE_GIFT_CARD_MUTATION = """
 """
 
 
-@mock.patch("saleor.graphql.giftcard.mutations.send_gift_card_notification")
+@mock.patch("swiftmovers.graphql.giftcard.mutations.send_gift_card_notification")
 def test_create_never_expiry_gift_card(
     send_notification_mock,
     staff_api_client,
@@ -185,7 +185,7 @@ def test_create_never_expiry_gift_card(
     )
 
 
-@mock.patch("saleor.graphql.giftcard.mutations.send_gift_card_notification")
+@mock.patch("swiftmovers.graphql.giftcard.mutations.send_gift_card_notification")
 def test_create_gift_card_by_app(
     send_notification_mock,
     app_api_client,
@@ -501,7 +501,7 @@ def test_create_gift_card_with_zero_balance_amount(
     assert errors[0]["code"] == GiftCardErrorCode.INVALID.name
 
 
-@mock.patch("saleor.graphql.giftcard.mutations.send_gift_card_notification")
+@mock.patch("swiftmovers.graphql.giftcard.mutations.send_gift_card_notification")
 def test_create_gift_card_with_expiry_date(
     send_notification_mock,
     staff_api_client,
@@ -627,8 +627,8 @@ def test_create_gift_card_with_expiry_date_type_invalid(
 
 
 @freeze_time("2022-05-12 12:00:00")
-@mock.patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
-@mock.patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@mock.patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
+@mock.patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
 def test_create_gift_card_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -640,7 +640,7 @@ def test_create_gift_card_trigger_webhook(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
 
     initial_balance = 100
     currency = "USD"
@@ -696,8 +696,8 @@ def test_create_gift_card_trigger_webhook(
 
 
 @freeze_time("2022-05-12 12:00:00")
-@mock.patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
-@mock.patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@mock.patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
+@mock.patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
 def test_create_gift_card_with_email_triggers_gift_card_sent_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -711,7 +711,7 @@ def test_create_gift_card_with_email_triggers_gift_card_sent_webhook(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
 
     initial_balance = 100
     currency = "USD"

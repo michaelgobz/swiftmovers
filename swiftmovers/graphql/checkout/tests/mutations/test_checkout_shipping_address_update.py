@@ -49,12 +49,12 @@ MUTATION_CHECKOUT_SHIPPING_ADDRESS_UPDATE = """
 
 
 @mock.patch(
-    "saleor.graphql.checkout.mutations.checkout_shipping_address_update."
+    "swiftmovers.graphql.checkout.mutations.checkout_shipping_address_update."
     "update_checkout_shipping_method_if_invalid",
     wraps=update_checkout_shipping_method_if_invalid,
 )
 @mock.patch(
-    "saleor.graphql.checkout.mutations.checkout_shipping_address_update."
+    "swiftmovers.graphql.checkout.mutations.checkout_shipping_address_update."
     "invalidate_checkout_prices",
     wraps=invalidate_checkout_prices,
 )
@@ -103,7 +103,7 @@ def test_checkout_shipping_address_update(
 
 
 @mock.patch(
-    "saleor.graphql.checkout.mutations.checkout_shipping_address_update."
+    "swiftmovers.graphql.checkout.mutations.checkout_shipping_address_update."
     "update_checkout_shipping_method_if_invalid",
     wraps=update_checkout_shipping_method_if_invalid,
 )
@@ -160,7 +160,7 @@ def test_checkout_shipping_address_update_changes_checkout_country(
 
 
 @mock.patch(
-    "saleor.graphql.checkout.mutations.checkout_shipping_address_update."
+    "swiftmovers.graphql.checkout.mutations.checkout_shipping_address_update."
     "update_checkout_shipping_method_if_invalid",
     wraps=update_checkout_shipping_method_if_invalid,
 )
@@ -205,7 +205,7 @@ def test_checkout_shipping_address_update_insufficient_stocks(
 
 
 @mock.patch(
-    "saleor.graphql.checkout.mutations.checkout_shipping_address_update."
+    "swiftmovers.graphql.checkout.mutations.checkout_shipping_address_update."
     "update_checkout_shipping_method_if_invalid",
     wraps=update_checkout_shipping_method_if_invalid,
 )
@@ -246,7 +246,7 @@ def test_checkout_shipping_address_update_doesnt_raise_error(
 
 
 @mock.patch(
-    "saleor.graphql.checkout.mutations.checkout_shipping_address_update."
+    "swiftmovers.graphql.checkout.mutations.checkout_shipping_address_update."
     "update_checkout_shipping_method_if_invalid",
     wraps=update_checkout_shipping_method_if_invalid,
 )
@@ -297,7 +297,7 @@ def test_checkout_shipping_address_update_with_reserved_stocks(
 
 
 @mock.patch(
-    "saleor.graphql.checkout.mutations.checkout_shipping_address_update."
+    "swiftmovers.graphql.checkout.mutations.checkout_shipping_address_update."
     "update_checkout_shipping_method_if_invalid",
     wraps=update_checkout_shipping_method_if_invalid,
 )
@@ -455,7 +455,7 @@ def test_checkout_shipping_address_update_without_phone_country_prefix(
 
 
 @mock.patch(
-    "saleor.plugins.manager.PluginsManager.excluded_shipping_methods_for_checkout"
+    "swiftmovers.plugins.manager.PluginsManager.excluded_shipping_methods_for_checkout"
 )
 def test_checkout_shipping_address_update_exclude_shipping_method(
     mocked_webhook,
@@ -464,7 +464,7 @@ def test_checkout_shipping_address_update_exclude_shipping_method(
     graphql_address_data,
     settings,
 ):
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
     checkout = checkout_with_items_and_shipping
     shipping_method = checkout.shipping_method
     assert shipping_method is not None

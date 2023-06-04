@@ -14,7 +14,7 @@ import {
   ListHeader,
   ListItem,
   ListItemCell,
-} from "@saleor/macaw-ui";
+} from "@swiftmovers/macaw-ui";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

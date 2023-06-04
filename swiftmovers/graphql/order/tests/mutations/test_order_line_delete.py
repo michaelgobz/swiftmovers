@@ -39,7 +39,7 @@ ORDER_LINE_DELETE_MUTATION = """
 """
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_back_in_stock")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_back_in_stock")
 def test_order_line_remove_with_back_in_stock_webhook(
     back_in_stock_webhook_mock,
     order_with_lines,
@@ -91,8 +91,8 @@ def test_order_line_remove_with_back_in_stock_webhook(
 
 
 @pytest.mark.parametrize("status", (OrderStatus.DRAFT, OrderStatus.UNCONFIRMED))
-@patch("saleor.plugins.manager.PluginsManager.draft_order_updated")
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.draft_order_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
 def test_order_line_remove(
     order_updated_webhook_mock,
     draft_order_updated_webhook_mock,
@@ -123,8 +123,8 @@ def test_order_line_remove(
     )
 
 
-@patch("saleor.plugins.manager.PluginsManager.draft_order_updated")
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.draft_order_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
 def test_invalid_order_when_removing_lines(
     order_update_webhook_mock,
     draft_order_update_webhook_mock,

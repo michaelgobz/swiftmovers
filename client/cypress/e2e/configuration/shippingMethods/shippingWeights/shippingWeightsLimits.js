@@ -91,7 +91,7 @@ describe("As a staff user I want to manage shipping weights", () => {
   });
 
   it(
-    "should be possible to buy product in a shipping weight limits. TC: SALEOR_0902",
+    "should be possible to buy product in a shipping weight limits. TC: swiftmovers_0902",
     { tags: ["@shipping", "@allEnv", "@stable"] },
     () => {
       const rateName = `${startsWith}${faker.datatype.number()}`;
@@ -120,7 +120,7 @@ describe("As a staff user I want to manage shipping weights", () => {
   );
 
   it(
-    "should not be possible to buy product not in a shipping weight limits. TC: SALEOR_0903",
+    "should not be possible to buy product not in a shipping weight limits. TC: swiftmovers_0903",
     { tags: ["@shipping", "@allEnv", "@stable"] },
     () => {
       const rateName = `${startsWith}${faker.datatype.number()}`;

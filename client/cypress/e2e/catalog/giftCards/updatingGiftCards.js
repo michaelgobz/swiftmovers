@@ -29,7 +29,7 @@ describe("As an admin I want to update gift card", () => {
   });
 
   it(
-    "should be able to delete gift card. TC: SALEOR_1004",
+    "should be able to delete gift card. TC: swiftmovers_1004",
     { tags: ["@giftCard", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
@@ -54,7 +54,7 @@ describe("As an admin I want to update gift card", () => {
   );
 
   it(
-    "should be able to update gift card. TC: SALEOR_1005",
+    "should be able to update gift card. TC: swiftmovers_1005",
     { tags: ["@giftCard", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
@@ -97,7 +97,7 @@ describe("As an admin I want to update gift card", () => {
   );
 
   it(
-    "should be able to delete several gift cards. TC: SALEOR_1011",
+    "should be able to delete several gift cards. TC: swiftmovers_1011",
     { tags: ["@giftCard", "@allEnv", "@stable"] },
     () => {
       const giftCard01 = `${startsWith}${faker.datatype.number()}`;

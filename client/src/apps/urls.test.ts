@@ -1,6 +1,6 @@
 import { AppUrls } from "@dashboard/apps/urls";
 import * as config from "@dashboard/config";
-import { ThemeType } from "@saleor/app-sdk/app-bridge";
+import { ThemeType } from "@swiftmovers/app-sdk/app-bridge";
 
 describe("AppUrls (apps/urls.ts)", () => {
   describe("isAppDeepUrlChange", () => {
@@ -29,7 +29,7 @@ describe("AppUrls (apps/urls.ts)", () => {
       beforeEach(() => {
         jest
           .spyOn(config, "getApiUrl")
-          .mockImplementation(() => "https://shop.saleor.cloud/graphql/");
+          .mockImplementation(() => "https://shop.swiftmovers.cloud/graphql/");
       });
 
       it.each<
@@ -39,13 +39,13 @@ describe("AppUrls (apps/urls.ts)", () => {
           "XyZ123",
           "https://my-app.vercel.app",
           { param1: "param1", theme: "light" },
-          "https://my-app.vercel.app?domain=shop.saleor.cloud&saleorApiUrl=https%3A%2F%2Fshop.saleor.cloud%2Fgraphql%2F&id=XyZ123&param1=param1&theme=light",
+          "https://my-app.vercel.app?domain=shop.swiftmovers.cloud&swiftmoversApiUrl=https%3A%2F%2Fshop.swiftmovers.cloud%2Fgraphql%2F&id=XyZ123&param1=param1&theme=light",
         ],
         [
           "AbC987",
           "https://my-app.vercel.app/configuration",
           { param1: "param1", param2: "param2", theme: "light" },
-          "https://my-app.vercel.app/configuration?domain=shop.saleor.cloud&saleorApiUrl=https%3A%2F%2Fshop.saleor.cloud%2Fgraphql%2F&id=AbC987&param1=param1&param2=param2&theme=light",
+          "https://my-app.vercel.app/configuration?domain=shop.swiftmovers.cloud&swiftmoversApiUrl=https%3A%2F%2Fshop.swiftmovers.cloud%2Fgraphql%2F&id=AbC987&param1=param1&param2=param2&theme=light",
         ],
       ])(
         "Generates valid URL from segments",

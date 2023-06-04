@@ -1,5 +1,5 @@
 import { AppInstallation } from "@dashboard/apps/types";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@swiftmovers/macaw-ui";
 
 export const useStyles = makeStyles<AppInstallation>(
   theme => ({
@@ -19,7 +19,7 @@ export const useStyles = makeStyles<AppInstallation>(
       fontWeight: 600,
     },
     tunnel: {
-      color: theme.palette.saleor.main[3],
+      color: theme.palette.swiftmovers.main[3],
       whiteSpace: "nowrap",
     },
     failed: {
@@ -31,7 +31,7 @@ export const useStyles = makeStyles<AppInstallation>(
       gap: theme.spacing(1),
     },
     pending: {
-      color: theme.palette.saleor.main[3],
+      color: theme.palette.swiftmovers.main[3],
       whiteSpace: "nowrap",
     },
     colSpinner: {

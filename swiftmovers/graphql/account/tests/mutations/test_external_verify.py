@@ -33,7 +33,7 @@ def test_external_verify(api_client, customer_user, monkeypatch, rf):
     expected_return = customer_user, {"data": "XYZ123"}
     mocked_plugin_fun.return_value = expected_return
     monkeypatch.setattr(
-        "saleor.plugins.manager.PluginsManager.external_verify", mocked_plugin_fun
+        "swiftmovers.plugins.manager.PluginsManager.external_verify", mocked_plugin_fun
     )
     variables = {"pluginId": "pluginId3", "input": json.dumps({"token": "ABCD"})}
     response = api_client.post_graphql(MUTATION_EXTERNAL_VERIFY, variables)

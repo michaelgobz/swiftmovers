@@ -98,7 +98,7 @@ jobs:
       - name: Set domain
         id: set-domain
         run: |
-          echo "domain=${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.saleor.rocks" >> $GITHUB_OUTPUT
+          echo "domain=${{ env.GITHUB_HEAD_REF_SLUG_URL }}.dashboard.swiftmovers.rocks" >> $GITHUB_OUTPUT
       - name: Get API_URI
         id: api_uri
         # Search for API_URI in PR description and use default if not defined
