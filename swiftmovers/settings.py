@@ -233,14 +233,14 @@ INSTALLED_APPS = [
     # External apps that need to go before django's
     'storages',
     # swiftmovers modules
-    'swiftmovers.core',
+    # 'swiftmovers.core',
     'swiftmovers.app',
     'swiftmovers.account',
     'swiftmovers.checkout',
     'swiftmovers.invoice',
     'swiftmovers.payment',
     'swiftmovers.product',
-    'swiftmovers.plugins'
+    'swiftmovers.plugins',
     'swiftmovers.channel',
     'swiftmovers.menu',
     'swiftmovers.site',
@@ -256,8 +256,6 @@ INSTALLED_APPS = [
     'swiftmovers.subscriptions',
     'swiftmovers.webhook',
     'swiftmovers.order',
-    'swiftmovers.zones',
-    'swiftmovers.warehouses',
     # external apps
     'django_measurement',
     'django_prices',

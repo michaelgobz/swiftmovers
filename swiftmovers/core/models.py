@@ -146,6 +146,9 @@ class EventPayload(models.Model):
     payload = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class meta:
+        app_label= ''
+
 
 class EventDelivery(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)

@@ -1,4 +1,4 @@
-default_app_config = "saleor.core.app.CoreAppConfig"
+default_app_config = "swiftmovers.core.app.CoreAppConfig"
 
 
 class JobStatus:

@@ -1,4 +1,4 @@
-default_app_config = "saleor.account.app.AccountAppConfig"
+default_app_config = "swiftmovers.account.app.AccountAppConfig"
 
 
 class CustomerEvents:
