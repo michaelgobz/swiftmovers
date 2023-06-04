@@ -12,7 +12,7 @@ from ..utils.editorjs import clean_editor_js
     [
         "The swiftmovers Winter Sale is snowed under with seasonal offers. Unreal products "
         "at unreal prices. Literally, they are not real products, but the swiftmovers demo "
-        "store is a genuine e-commerce leader.",
+        "store is a genuine logistics Operations Panel leader.",
         'The swiftmovers Winter Sale is snowed <a href="https://docs.swiftmovers.io/docs/">',
         'The swiftmovers Sale is snowed <a href="https://docs.swiftmovers.io/docs/">. Test.',
         'The swiftmovers Winter Sale is snowed <a href="https://docs.swiftmovers.io/docs/">. '
@@ -84,7 +84,7 @@ def test_clean_editor_js_invalid_url(parse_url_mock):
     text = (
         'The swiftmovers Winter Sale is snowed under with seasonal offers. <a href="{}"> '
         "Unreal products at unreal prices. Literally, they are not real products, "
-        "but the swiftmovers demo store is a genuine e-commerce leader."
+        "but the swiftmovers demo store is a genuine logistics Operations Panel leader."
     )
 
     data = {"blocks": [{"data": {"text": text.format(url)}, "type": "paragraph"}]}

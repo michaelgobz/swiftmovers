@@ -6,7 +6,7 @@ export const shop: SiteSettingsQuery["shop"] = {
     __typename: "Address",
     city: "Kenstad",
     cityArea: "Alabama",
-    companyName: "swiftmovers e-commerce",
+    companyName: "swiftmovers logistics Operations Panel",
     country: {
       __typename: "CountryDisplay",
       code: "UA",
@@ -36,7 +36,7 @@ export const shop: SiteSettingsQuery["shop"] = {
     __typename: "Domain",
     host: "localhost:8000",
   },
-  name: "swiftmovers e-commerce",
+  name: "swiftmovers logistics Operations Panel",
   reserveStockDurationAnonymousUser: 10,
   reserveStockDurationAuthenticatedUser: 10,
   limitQuantityPerCheckout: 50,
