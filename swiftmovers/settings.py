@@ -221,8 +221,8 @@ PASSWORD_HASHERS = [
 
 INSTALLED_APPS = [
     # Django modules
-    "django.contrib.postgres",
-    "django_celery_beat",
+    'django.contrib.postgres',
+    'django_celery_beat',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
