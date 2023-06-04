@@ -1,6 +1,6 @@
 import graphene
 
-from saleor.discount import models
+from swiftmovers.discount import models
 
 from ....permission.enums import DiscountPermissions
 from ...channel import ChannelContext

@@ -105,7 +105,7 @@ ADMINS = (
     ('Michael Goboola', 'michael.goboola@admin.com'),
 )
 
-AUTH_USER_MODEL = "accounts.User"
+AUTH_USER_MODEL = "account.User"
 
 MANAGERS = ADMINS
 
@@ -236,11 +236,14 @@ INSTALLED_APPS = [
     'swiftmovers.core',
     'swiftmovers.app',
     'swiftmovers.account',
+    'swiftmovers.attribute',
     'swiftmovers.checkout',
     'swiftmovers.invoice',
     'swiftmovers.payment',
     'swiftmovers.product',
+    'swiftmovers.page',
     'swiftmovers.plugins',
+    'swiftmovers.giftcard',
     'swiftmovers.channel',
     'swiftmovers.menu',
     'swiftmovers.site',
@@ -253,8 +256,11 @@ INSTALLED_APPS = [
     'swiftmovers.graphql',
     'swiftmovers.reviews',
     'swiftmovers.tracking',
+    'swiftmovers.tax',
+    'swiftmovers.thumbnail',
     'swiftmovers.subscriptions',
     'swiftmovers.webhook',
+    'swiftmovers.warehouse',
     'swiftmovers.order',
     # external apps
     'django_measurement',
@@ -333,14 +339,14 @@ WSGI_APPLICATION = 'swiftmovers.wsgi.application'
 
 # database names
 
-DATABASE_DEFAULT_NAME = 'default'
-DATABASE_REPLICA_NAME = 'replica'
+DATABASE_CONNECTION_DEFAULT_NAME = 'default'
+DATABASE_CONNECTION_REPLICA_NAME = 'replica'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    DATABASE_DEFAULT_NAME:
+    DATABASE_CONNECTION_DEFAULT_NAME:
         {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'swiftmovers',
@@ -349,7 +355,7 @@ DATABASES = {
             'HOST': '127.0.0.1',
             'PORT': '5432',
         },
-    DATABASE_REPLICA_NAME:
+    DATABASE_CONNECTION_REPLICA_NAME:
         {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'swiftmovers',
