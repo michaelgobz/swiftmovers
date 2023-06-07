@@ -8,7 +8,7 @@ RUN apt-get -y update \
   && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
-COPY requirements_dev.txt /app/
+COPY pyproject.toml /app/
 WORKDIR /app
 RUN pip install peotry
 RUN poetry install
@@ -50,6 +50,9 @@ WORKDIR /app
 ARG STATIC_URL
 ENV STATIC_URL ${STATIC_URL:-/static/}
 RUN SECRET_KEY=dummy STATIC_URL=${STATIC_URL} python3 manage.py collectstatic --no-input
+RUN python manage.py makemigrations
+RUN python manage.py migrate
+RUN python manage.py populatedb
 
 EXPOSE 8000
 ENV PYTHONUNBUFFERED 1
