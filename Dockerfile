@@ -10,7 +10,8 @@ RUN apt-get -y update \
 # Install Python dependencies
 COPY requirements_dev.txt /app/
 WORKDIR /app
-RUN pip install -r requirements_dev.txt
+RUN pip install peotry
+RUN poetry install
 
 ### Final image
 FROM python:3.9-slim
@@ -57,15 +58,15 @@ ARG COMMIT_ID
 ARG PROJECT_VERSION
 ENV PROJECT_VERSION="${PROJECT_VERSION}"
 
-LABEL org.opencontainers.image.title="mirumee/swiftmovers"                                  \
+LABEL org.opencontainers.image.title="michaelgobz/swiftmovers"                                  \
       org.opencontainers.image.description="\
 A modular, high performance, headless logistics Operations Panel platform built with Python, \
-GraphQL, Django, and ReactJS."                                                         \
+GraphQL, and Django"                                                         \
       org.opencontainers.image.url="https://swiftmovers.io/"                                \
-      org.opencontainers.image.source="https://github.com/swiftmovers/swiftmovers"               \
+      org.opencontainers.image.source="https://github.com/michaelgobz/swiftmovers"               \
       org.opencontainers.image.revision="$COMMIT_ID"                                   \
       org.opencontainers.image.version="$PROJECT_VERSION"                              \
-      org.opencontainers.image.authors="swiftmovers Commerce (https://swiftmovers.io)"           \
+      org.opencontainers.image.authors="Michael Goboola (raniahgobz@outlook.com)"           \
       org.opencontainers.image.licenses="BSD 3"
 
 CMD ["gunicorn", "--bind", ":8000", "--workers", "4", "--worker-class", "swiftmovers.asgi.gunicorn_worker.UvicornWorker", "swiftmovers.asgi:application"]
