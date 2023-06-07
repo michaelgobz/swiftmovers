@@ -10,7 +10,7 @@ RUN apt-get -y update \
 # Install Python dependencies
 COPY pyproject.toml /app/
 WORKDIR /app
-RUN pip install peotry
+RUN pip install poetry
 RUN poetry install
 
 ### Final image
