@@ -195,7 +195,7 @@ def test_update_products_discounted_prices_task(product_list):
 
 
 @patch(
-    "saleor.product.management.commands"
+    "swiftmovers.product.management.commands"
     ".update_all_products_discounted_prices"
     ".update_products_discounted_price"
 )

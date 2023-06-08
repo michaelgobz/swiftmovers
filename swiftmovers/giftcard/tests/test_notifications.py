@@ -18,7 +18,7 @@ def test_get_default_gift_card_payload(gift_card):
     }
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.notify")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_send_gift_card_notification(
     mocked_notify, staff_user, customer_user, gift_card, channel_USD, site_settings
 ):

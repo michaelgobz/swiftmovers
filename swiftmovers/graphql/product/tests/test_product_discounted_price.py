@@ -8,10 +8,10 @@ from ...tests.utils import get_graphql_content
 
 
 @patch(
-    "saleor.graphql.product.mutations.product_variant.product_variant_delete"
+    "swiftmovers.graphql.product.mutations.product_variant.product_variant_delete"
     ".update_product_discounted_price_task"
 )
-@patch("saleor.order.tasks.recalculate_orders_task.delay")
+@patch("swiftmovers.order.tasks.recalculate_orders_task.delay")
 def test_product_variant_delete_updates_discounted_price(
     mocked_recalculate_orders_task,
     mock_update_product_discounted_price_task,
@@ -46,7 +46,7 @@ def test_product_variant_delete_updates_discounted_price(
     mocked_recalculate_orders_task.assert_not_called()
 
 
-@patch("saleor.product.utils.update_products_discounted_prices_task")
+@patch("swiftmovers.product.utils.update_products_discounted_prices_task")
 def test_category_delete_updates_discounted_price(
     mock_update_products_discounted_prices_task,
     staff_api_client,
@@ -92,7 +92,7 @@ def test_category_delete_updates_discounted_price(
 
 
 @patch(
-    "saleor.graphql.product.mutations.collection.collection_add_products"
+    "swiftmovers.graphql.product.mutations.collection.collection_add_products"
     ".update_products_discounted_prices_task.delay"
 )
 def test_collection_add_products_updates_discounted_price(
@@ -136,7 +136,7 @@ def test_collection_add_products_updates_discounted_price(
 
 
 @patch(
-    "saleor.graphql.product.mutations.collection.collection_remove_products"
+    "swiftmovers.graphql.product.mutations.collection.collection_remove_products"
     ".update_products_discounted_prices_task.delay"
 )
 def test_collection_remove_products_updates_discounted_price(
@@ -181,7 +181,7 @@ def test_collection_remove_products_updates_discounted_price(
 
 @freeze_time("2010-05-31 12:00:01")
 @patch(
-    "saleor.graphql.discount.mutations.sale_create"
+    "swiftmovers.graphql.discount.mutations.sale_create"
     ".update_products_discounted_prices_of_sale_task"
 )
 def test_sale_create_updates_products_discounted_prices(
@@ -234,7 +234,7 @@ def test_sale_create_updates_products_discounted_prices(
 
 
 @patch(
-    "saleor.graphql.discount.mutations.sale_update"
+    "swiftmovers.graphql.discount.mutations.sale_update"
     ".update_products_discounted_prices_of_catalogues_task.delay"
 )
 def test_sale_update_updates_products_discounted_prices(
@@ -284,7 +284,7 @@ def test_sale_update_updates_products_discounted_prices(
 
 
 @patch(
-    "saleor.graphql.discount.mutations.sale_delete"
+    "swiftmovers.graphql.discount.mutations.sale_delete"
     ".update_products_discounted_prices_of_catalogues_task.delay"
 )
 def test_sale_delete_updates_products_discounted_prices(
@@ -329,7 +329,7 @@ def test_sale_delete_updates_products_discounted_prices(
 
 
 @patch(
-    "saleor.graphql.discount.mutations.sale_base_discount_catalogue"
+    "swiftmovers.graphql.discount.mutations.sale_base_discount_catalogue"
     ".update_products_discounted_prices_of_catalogues_task"
 )
 def test_sale_add_catalogues_updates_products_discounted_prices(
@@ -389,7 +389,7 @@ def test_sale_add_catalogues_updates_products_discounted_prices(
 
 
 @patch(
-    "saleor.graphql.discount.mutations.sale_base_discount_catalogue"
+    "swiftmovers.graphql.discount.mutations.sale_base_discount_catalogue"
     ".update_products_discounted_prices_of_catalogues_task"
 )
 def test_sale_remove_catalogues_updates_products_discounted_prices(

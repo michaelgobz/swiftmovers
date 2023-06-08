@@ -53,7 +53,7 @@ def test_variant_channel_listing_update(
             }
         }
     """
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
     product = product_with_variant_with_two_attributes
     ProductChannelListing.objects.create(
         product=product,

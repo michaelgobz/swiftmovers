@@ -40,11 +40,11 @@ MUTATION_UPDATE_SHIPPING_METHOD = """
 # TODO: Deprecated
 @pytest.mark.parametrize("is_valid_shipping_method", (True, False))
 @patch(
-    "saleor.graphql.checkout.mutations.checkout_shipping_method_update."
+    "swiftmovers.graphql.checkout.mutations.checkout_shipping_method_update."
     "clean_delivery_method"
 )
 @patch(
-    "saleor.graphql.checkout.mutations.checkout_shipping_method_update."
+    "swiftmovers.graphql.checkout.mutations.checkout_shipping_method_update."
     "invalidate_checkout_prices",
     wraps=invalidate_checkout_prices,
 )
@@ -103,7 +103,7 @@ def test_checkout_shipping_method_update(
         assert checkout.last_change == previous_last_change
 
 
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
 def test_checkout_shipping_method_update_external_shipping_method(
     mock_send_request,
     staff_api_client,
@@ -113,7 +113,7 @@ def test_checkout_shipping_method_update_external_shipping_method(
     channel_USD,
     settings,
 ):
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
     response_method_id = "abcd"
     mock_json_response = [
         {
@@ -147,7 +147,7 @@ def test_checkout_shipping_method_update_external_shipping_method(
     assert PRIVATE_META_APP_SHIPPING_ID in checkout.metadata_storage.private_metadata
 
 
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
 def test_checkout_shipping_method_update_external_shipping_method_with_tax_plugin(
     mock_send_request,
     staff_api_client,
@@ -158,8 +158,8 @@ def test_checkout_shipping_method_update_external_shipping_method_with_tax_plugi
     settings,
 ):
     settings.PLUGINS = [
-        "saleor.plugins.tests.sample_plugins.PluginSample",
-        "saleor.plugins.webhook.plugin.WebhookPlugin",
+        "swiftmovers.plugins.tests.sample_plugins.PluginSample",
+        "swiftmovers.plugins.webhook.plugin.WebhookPlugin",
     ]
     response_method_id = "abcd"
     mock_json_response = [
@@ -201,7 +201,7 @@ def test_checkout_shipping_method_update_external_shipping_method_with_tax_plugi
 
 
 @mock.patch(
-    "saleor.plugins.manager.PluginsManager.excluded_shipping_methods_for_checkout"
+    "swiftmovers.plugins.manager.PluginsManager.excluded_shipping_methods_for_checkout"
 )
 def test_checkout_shipping_method_update_excluded_webhook(
     mocked_webhook,
@@ -239,7 +239,7 @@ def test_checkout_shipping_method_update_excluded_webhook(
 
 
 # Deprecated
-@patch("saleor.shipping.postal_codes.is_shipping_method_applicable_for_postal_code")
+@patch("swiftmovers.shipping.postal_codes.is_shipping_method_applicable_for_postal_code")
 def test_checkout_shipping_method_update_excluded_postal_code(
     mock_is_shipping_method_available,
     staff_api_client,

@@ -272,7 +272,7 @@ def test_product_channel_listing_update_as_staff_user(
     )
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
 def test_product_channel_listing_update_trigger_webhook_product_updated(
     mock_product_updated,
     staff_api_client,

@@ -90,8 +90,8 @@ PRODUCT_VARIANT_BULK_CREATE_MUTATION = """
 """
 
 
-@patch("saleor.product.tasks.update_product_discounted_price_task.delay")
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.product.tasks.update_product_discounted_price_task.delay")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
 def test_product_variant_bulk_create_by_name(
     product_variant_created_webhook_mock,
     update_product_discounted_price_task_mock,
@@ -149,8 +149,8 @@ def test_product_variant_bulk_create_by_name(
     update_product_discounted_price_task_mock.assert_called_once_with(product.id)
 
 
-@patch("saleor.product.tasks.update_product_discounted_price_task.delay")
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.product.tasks.update_product_discounted_price_task.delay")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
 def test_product_variant_bulk_create_by_attribute_id(
     product_variant_created_webhook_mock,
     update_product_discounted_price_task_mock,
@@ -1789,7 +1789,7 @@ def test_product_variant_bulk_create_without_sku(
     assert ProductVariant.objects.filter(sku__isnull=True).count() == 2
 
 
-@patch("saleor.product.tasks.update_product_discounted_price_task.delay")
+@patch("swiftmovers.product.tasks.update_product_discounted_price_task.delay")
 def test_product_variant_bulk_create_many_errors(
     update_product_discounted_price_task_mock,
     staff_api_client,

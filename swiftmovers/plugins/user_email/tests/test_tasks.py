@@ -31,7 +31,7 @@ from ...user_email.tasks import (
 )
 
 
-@mock.patch("saleor.plugins.email_common.send_mail")
+@mock.patch("swiftmovers.plugins.email_common.send_mail")
 def test_send_account_confirmation_email_task_default_template(
     mocked_send_mail, user_email_dict_config, customer_user
 ):
@@ -43,7 +43,7 @@ def test_send_account_confirmation_email_task_default_template(
         "token": token,
         "reset_url": f"http://localhost:8000/redirect{token}",
         "domain": "localhost:8000",
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
     }
 
     send_account_confirmation_email_task(
@@ -54,7 +54,7 @@ def test_send_account_confirmation_email_task_default_template(
     assert mocked_send_mail.called
 
 
-@mock.patch("saleor.plugins.user_email.tasks.send_email")
+@mock.patch("swiftmovers.plugins.user_email.tasks.send_email")
 def test_send_account_confirmation_email_task_custom_template(
     mocked_send_email, user_email_dict_config, customer_user
 ):
@@ -68,7 +68,7 @@ def test_send_account_confirmation_email_task_custom_template(
         "token": token,
         "reset_url": f"http://localhost:8000/redirect{token}",
         "domain": "localhost:8000",
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
     }
 
     send_account_confirmation_email_task(
@@ -89,7 +89,7 @@ def test_send_account_confirmation_email_task_custom_template(
     )
 
 
-@mock.patch("saleor.plugins.email_common.send_mail")
+@mock.patch("swiftmovers.plugins.email_common.send_mail")
 def test_send_password_reset_email_task_default_template(
     mocked_send_mail, user_email_dict_config, customer_user
 ):
@@ -101,7 +101,7 @@ def test_send_password_reset_email_task_default_template(
         "token": token,
         "reset_url": f"http://localhost:8000/redirect{token}",
         "domain": "localhost:8000",
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
     }
 
     send_password_reset_email_task(
@@ -116,7 +116,7 @@ def test_send_password_reset_email_task_default_template(
     assert mocked_send_mail.called
 
 
-@mock.patch("saleor.plugins.user_email.tasks.send_email")
+@mock.patch("swiftmovers.plugins.user_email.tasks.send_email")
 def test_send_password_reset_email_task_custom_template(
     mocked_send_email, user_email_dict_config, user_email_plugin, customer_user
 ):
@@ -134,7 +134,7 @@ def test_send_password_reset_email_task_custom_template(
         "token": token,
         "reset_url": f"http://localhost:8000/redirect{token}",
         "domain": "localhost:8000",
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
     }
 
     send_password_reset_email_task(
@@ -155,7 +155,7 @@ def test_send_password_reset_email_task_custom_template(
     )
 
 
-@mock.patch("saleor.plugins.email_common.send_mail")
+@mock.patch("swiftmovers.plugins.email_common.send_mail")
 def test_send_request_email_change_email_task_default_template(
     mocked_send_mail, user_email_dict_config, customer_user
 ):
@@ -168,7 +168,7 @@ def test_send_request_email_change_email_task_default_template(
         "redirect_url": f"http://localhost:8000/redirect{token}",
         "old_email": "old.user@example.com",
         "new_email": "user@example.com",
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
     }
 
@@ -180,7 +180,7 @@ def test_send_request_email_change_email_task_default_template(
     assert mocked_send_mail.called
 
 
-@mock.patch("saleor.plugins.user_email.tasks.send_email")
+@mock.patch("swiftmovers.plugins.user_email.tasks.send_email")
 def test_send_request_email_change_email_task_custom_template(
     mocked_send_email, user_email_dict_config, user_email_plugin, customer_user
 ):
@@ -199,7 +199,7 @@ def test_send_request_email_change_email_task_custom_template(
         "redirect_url": f"http://localhost:8000/redirect{token}",
         "old_email": "old.user@example.com",
         "new_email": "user@example.com",
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
     }
 
@@ -222,9 +222,9 @@ def test_send_request_email_change_email_task_custom_template(
 
 
 @mock.patch(
-    "saleor.plugins.user_email.tasks.account_events.customer_email_changed_event"
+    "swiftmovers.plugins.user_email.tasks.account_events.customer_email_changed_event"
 )
-@mock.patch("saleor.plugins.email_common.send_mail")
+@mock.patch("swiftmovers.plugins.email_common.send_mail")
 def test_send_user_change_email_notification_task_default_template(
     mocked_send_mail, mocked_email_changed_task, user_email_dict_config, customer_user
 ):
@@ -232,7 +232,7 @@ def test_send_user_change_email_notification_task_default_template(
     payload = {
         "user": get_default_user_payload(customer_user),
         "recipient_email": recipient_email,
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
         "old_email": "old.admin@example.com",
         "new_email": "admin@example.com",
@@ -253,7 +253,7 @@ def test_send_user_change_email_notification_task_default_template(
     )
 
 
-@mock.patch("saleor.plugins.user_email.tasks.send_email")
+@mock.patch("swiftmovers.plugins.user_email.tasks.send_email")
 def test_send_user_change_email_notification_task_custom_template(
     mocked_send_email, user_email_dict_config, user_email_plugin, customer_user
 ):
@@ -267,7 +267,7 @@ def test_send_user_change_email_notification_task_custom_template(
     payload = {
         "user": get_default_user_payload(customer_user),
         "recipient_email": recipient_email,
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
         "old_email": "old.admin@example.com",
         "new_email": "admin@example.com",
@@ -291,7 +291,7 @@ def test_send_user_change_email_notification_task_custom_template(
     )
 
 
-@mock.patch("saleor.plugins.email_common.send_mail")
+@mock.patch("swiftmovers.plugins.email_common.send_mail")
 def test_send_account_delete_confirmation_email_task_default_template(
     mocked_send_mail, user_email_dict_config, customer_user
 ):
@@ -302,7 +302,7 @@ def test_send_account_delete_confirmation_email_task_default_template(
         "recipient_email": recipient_email,
         "token": token,
         "delete_url": f"http://localhost:8000/redirect{token}",
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
     }
 
@@ -314,7 +314,7 @@ def test_send_account_delete_confirmation_email_task_default_template(
     assert mocked_send_mail.called
 
 
-@mock.patch("saleor.plugins.user_email.tasks.send_email")
+@mock.patch("swiftmovers.plugins.user_email.tasks.send_email")
 def test_send_account_delete_confirmation_email_task_custom_template(
     mocked_send_email, user_email_dict_config, user_email_plugin, customer_user
 ):
@@ -331,7 +331,7 @@ def test_send_account_delete_confirmation_email_task_custom_template(
         "recipient_email": recipient_email,
         "token": token,
         "delete_url": f"http://localhost:8000/redirect{token}",
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
     }
 
@@ -353,7 +353,7 @@ def test_send_account_delete_confirmation_email_task_custom_template(
     )
 
 
-@mock.patch("saleor.plugins.email_common.send_mail")
+@mock.patch("swiftmovers.plugins.email_common.send_mail")
 def test_send_set_user_password_email_task_default_template(
     mocked_send_mail, user_email_dict_config, customer_user
 ):
@@ -364,7 +364,7 @@ def test_send_set_user_password_email_task_default_template(
         "recipient_email": recipient_email,
         "token": token,
         "password_set_url": f"http://localhost:8000/redirect{token}",
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
     }
 
@@ -376,7 +376,7 @@ def test_send_set_user_password_email_task_default_template(
     assert mocked_send_mail.called
 
 
-@mock.patch("saleor.plugins.user_email.tasks.send_email")
+@mock.patch("swiftmovers.plugins.user_email.tasks.send_email")
 def test_send_set_user_password_email_task_custom_template(
     mocked_send_email, user_email_dict_config, user_email_plugin, customer_user
 ):
@@ -393,7 +393,7 @@ def test_send_set_user_password_email_task_custom_template(
         "recipient_email": recipient_email,
         "token": token,
         "password_set_url": f"http://localhost:8000/redirect{token}",
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
     }
 
@@ -415,7 +415,7 @@ def test_send_set_user_password_email_task_custom_template(
     )
 
 
-@mock.patch("saleor.plugins.email_common.send_mail")
+@mock.patch("swiftmovers.plugins.email_common.send_mail")
 def test_send_invoice_email_task_default_template_by_user(
     mocked_send_mail,
     user_email_dict_config,
@@ -432,7 +432,7 @@ def test_send_invoice_email_task_default_template_by_user(
             "download_url": "http://localhost:8000/download",
         },
         "recipient_email": recipient_email,
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
         "requester_user_id": to_global_id_or_none(staff_user),
         "requester_app_id": None,
@@ -458,7 +458,7 @@ def test_send_invoice_email_task_default_template_by_user(
     ).exists()
 
 
-@mock.patch("saleor.plugins.email_common.send_mail")
+@mock.patch("swiftmovers.plugins.email_common.send_mail")
 def test_send_invoice_email_task_default_template_by_app(
     mocked_send_mail,
     user_email_dict_config,
@@ -475,7 +475,7 @@ def test_send_invoice_email_task_default_template_by_app(
             "download_url": "http://localhost:8000/download",
         },
         "recipient_email": recipient_email,
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
         "requester_user_id": None,
         "requester_app_id": to_global_id_or_none(app),
@@ -501,7 +501,7 @@ def test_send_invoice_email_task_default_template_by_app(
     ).exists()
 
 
-@mock.patch("saleor.plugins.user_email.tasks.send_email")
+@mock.patch("swiftmovers.plugins.user_email.tasks.send_email")
 def test_send_invoice_email_task_custom_template(
     mocked_send_email, user_email_dict_config, user_email_plugin, staff_user, order
 ):
@@ -521,7 +521,7 @@ def test_send_invoice_email_task_custom_template(
             "download_url": "http://localhost:8000/download",
         },
         "recipient_email": recipient_email,
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
         "requester_user_id": to_global_id_or_none(staff_user),
         "requester_app_id": None,
@@ -557,7 +557,7 @@ def test_send_invoice_email_task_custom_template(
     ).exists()
 
 
-@mock.patch("saleor.plugins.email_common.send_mail")
+@mock.patch("swiftmovers.plugins.email_common.send_mail")
 def test_send_order_confirmation_email_task_default_template(
     mocked_send_mail, user_email_dict_config, order
 ):
@@ -565,7 +565,7 @@ def test_send_order_confirmation_email_task_default_template(
     payload = {
         "order": get_default_order_payload(order, "http://localhost:8000/redirect"),
         "recipient_email": recipient_email,
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
     }
 
@@ -577,7 +577,7 @@ def test_send_order_confirmation_email_task_default_template(
     assert mocked_send_mail.called
 
 
-@mock.patch("saleor.plugins.user_email.tasks.send_email")
+@mock.patch("swiftmovers.plugins.user_email.tasks.send_email")
 def test_send_order_confirmation_email_task_custom_template(
     mocked_send_email, user_email_dict_config, user_email_plugin, order
 ):
@@ -591,7 +591,7 @@ def test_send_order_confirmation_email_task_custom_template(
     payload = {
         "order": get_default_order_payload(order, "http://localhost:8000/redirect"),
         "recipient_email": recipient_email,
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
     }
 
@@ -613,7 +613,7 @@ def test_send_order_confirmation_email_task_custom_template(
     )
 
 
-@mock.patch("saleor.plugins.email_common.send_mail")
+@mock.patch("swiftmovers.plugins.email_common.send_mail")
 def test_send_fulfillment_confirmation_email_task_default_template(
     mocked_send_mail, user_email_dict_config, order, fulfillment, staff_user
 ):
@@ -640,7 +640,7 @@ def test_send_fulfillment_confirmation_email_task_default_template(
     }
 
 
-@mock.patch("saleor.plugins.user_email.tasks.send_email")
+@mock.patch("swiftmovers.plugins.user_email.tasks.send_email")
 def test_send_fulfillment_confirmation_email_task_custom_template_by_user(
     mocked_send_email,
     user_email_dict_config,
@@ -693,7 +693,7 @@ def test_send_fulfillment_confirmation_email_task_custom_template_by_user(
     }
 
 
-@mock.patch("saleor.plugins.user_email.tasks.send_email")
+@mock.patch("swiftmovers.plugins.user_email.tasks.send_email")
 def test_send_fulfillment_confirmation_email_task_custom_template_by_app(
     mocked_send_email,
     user_email_dict_config,
@@ -746,7 +746,7 @@ def test_send_fulfillment_confirmation_email_task_custom_template_by_app(
     }
 
 
-@mock.patch("saleor.plugins.email_common.send_mail")
+@mock.patch("swiftmovers.plugins.email_common.send_mail")
 def test_send_fulfillment_update_email_task_default_template(
     mocked_send_mail, user_email_dict_config, order, fulfillment
 ):
@@ -764,7 +764,7 @@ def test_send_fulfillment_update_email_task_default_template(
     assert mocked_send_mail.called
 
 
-@mock.patch("saleor.plugins.user_email.tasks.send_email")
+@mock.patch("swiftmovers.plugins.user_email.tasks.send_email")
 def test_send_fulfillment_update_email_task_custom_template(
     mocked_send_email,
     user_email_dict_config,
@@ -799,7 +799,7 @@ def test_send_fulfillment_update_email_task_custom_template(
     )
 
 
-@mock.patch("saleor.plugins.email_common.send_mail")
+@mock.patch("swiftmovers.plugins.email_common.send_mail")
 def test_send_payment_confirmation_email_task_default_template(
     mocked_send_mail, user_email_dict_config, order, payment_dummy
 ):
@@ -815,7 +815,7 @@ def test_send_payment_confirmation_email_task_default_template(
             "captured_amount": payment_dummy.captured_amount,
             "currency": payment_dummy.currency,
         },
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
     }
 
@@ -833,7 +833,7 @@ def test_send_payment_confirmation_email_task_default_template(
     }
 
 
-@mock.patch("saleor.plugins.user_email.tasks.send_email")
+@mock.patch("swiftmovers.plugins.user_email.tasks.send_email")
 def test_send_payment_confirmation_email_task_custom_template(
     mocked_send_email, user_email_dict_config, user_email_plugin, order, payment_dummy
 ):
@@ -855,7 +855,7 @@ def test_send_payment_confirmation_email_task_custom_template(
             "captured_amount": payment_dummy.captured_amount,
             "currency": payment_dummy.currency,
         },
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
     }
     send_payment_confirmation_email_task(
@@ -876,7 +876,7 @@ def test_send_payment_confirmation_email_task_custom_template(
     )
 
 
-@mock.patch("saleor.plugins.email_common.send_mail")
+@mock.patch("swiftmovers.plugins.email_common.send_mail")
 def test_send_order_canceled_email_task_default_template_by_user(
     mocked_send_mail, user_email_dict_config, order, staff_user
 ):
@@ -884,7 +884,7 @@ def test_send_order_canceled_email_task_default_template_by_user(
     payload = {
         "order": get_default_order_payload(order, "http://localhost:8000/redirect"),
         "recipient_email": recipient_email,
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
         "requester_user_id": to_global_id_or_none(staff_user),
         "requester_app_id": None,
@@ -898,7 +898,7 @@ def test_send_order_canceled_email_task_default_template_by_user(
     assert mocked_send_mail.called
 
 
-@mock.patch("saleor.plugins.email_common.send_mail")
+@mock.patch("swiftmovers.plugins.email_common.send_mail")
 def test_send_order_canceled_email_task_default_template_by_app(
     mocked_send_mail, user_email_dict_config, order, app
 ):
@@ -906,7 +906,7 @@ def test_send_order_canceled_email_task_default_template_by_app(
     payload = {
         "order": get_default_order_payload(order, "http://localhost:8000/redirect"),
         "recipient_email": recipient_email,
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
         "requester_user_id": None,
         "requester_app_id": to_global_id_or_none(app),
@@ -920,7 +920,7 @@ def test_send_order_canceled_email_task_default_template_by_app(
     assert mocked_send_mail.called
 
 
-@mock.patch("saleor.plugins.user_email.tasks.send_email")
+@mock.patch("swiftmovers.plugins.user_email.tasks.send_email")
 def test_send_order_canceled_email_task_custom_template(
     mocked_send_email, user_email_dict_config, user_email_plugin, order, staff_user
 ):
@@ -934,7 +934,7 @@ def test_send_order_canceled_email_task_custom_template(
     payload = {
         "order": get_default_order_payload(order, "http://localhost:8000/redirect"),
         "recipient_email": recipient_email,
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
         "requester_user_id": to_global_id_or_none(staff_user),
         "requester_app_id": None,
@@ -957,7 +957,7 @@ def test_send_order_canceled_email_task_custom_template(
     )
 
 
-@mock.patch("saleor.plugins.email_common.send_mail")
+@mock.patch("swiftmovers.plugins.email_common.send_mail")
 def test_send_order_refund_email_task_default_template_by_user(
     mocked_send_mail, user_email_dict_config, order, staff_user
 ):
@@ -967,7 +967,7 @@ def test_send_order_refund_email_task_default_template_by_user(
         "recipient_email": recipient_email,
         "amount": order.total_gross_amount,
         "currency": order.currency,
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
         "requester_user_id": to_global_id_or_none(staff_user),
         "requester_app_id": None,
@@ -987,7 +987,7 @@ def test_send_order_refund_email_task_default_template_by_user(
     }
 
 
-@mock.patch("saleor.plugins.email_common.send_mail")
+@mock.patch("swiftmovers.plugins.email_common.send_mail")
 def test_send_order_refund_email_task_default_template_by_app(
     mocked_send_mail, user_email_dict_config, order, app
 ):
@@ -997,7 +997,7 @@ def test_send_order_refund_email_task_default_template_by_app(
         "recipient_email": recipient_email,
         "amount": order.total_gross_amount,
         "currency": order.currency,
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
         "requester_user_id": None,
         "requester_app_id": to_global_id_or_none(app),
@@ -1017,7 +1017,7 @@ def test_send_order_refund_email_task_default_template_by_app(
     }
 
 
-@mock.patch("saleor.plugins.user_email.tasks.send_email")
+@mock.patch("swiftmovers.plugins.user_email.tasks.send_email")
 def test_send_order_refund_email_task_custom_template(
     mocked_send_email, user_email_dict_config, user_email_plugin, order, staff_user
 ):
@@ -1033,7 +1033,7 @@ def test_send_order_refund_email_task_custom_template(
         "recipient_email": recipient_email,
         "amount": order.total_gross_amount,
         "currency": order.currency,
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
         "requester_user_id": to_global_id_or_none(staff_user),
         "requester_app_id": None,
@@ -1061,7 +1061,7 @@ def test_send_order_refund_email_task_custom_template(
     }
 
 
-@mock.patch("saleor.plugins.email_common.send_mail")
+@mock.patch("swiftmovers.plugins.email_common.send_mail")
 def test_send_order_confirmed_email_task_default_template_by_user(
     mocked_send_mail, user_email_dict_config, order, staff_user
 ):
@@ -1071,7 +1071,7 @@ def test_send_order_confirmed_email_task_default_template_by_user(
         "recipient_email": recipient_email,
         "requester_user_id": to_global_id_or_none(staff_user),
         "requester_app_id": None,
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
     }
 
@@ -1091,7 +1091,7 @@ def test_send_order_confirmed_email_task_default_template_by_user(
     ).exists()
 
 
-@mock.patch("saleor.plugins.email_common.send_mail")
+@mock.patch("swiftmovers.plugins.email_common.send_mail")
 def test_send_order_confirmed_email_task_default_template_by_app(
     mocked_send_mail, user_email_dict_config, order, app
 ):
@@ -1101,7 +1101,7 @@ def test_send_order_confirmed_email_task_default_template_by_app(
         "recipient_email": recipient_email,
         "requester_app_id": to_global_id_or_none(app),
         "requester_user_id": None,
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
     }
 
@@ -1121,7 +1121,7 @@ def test_send_order_confirmed_email_task_default_template_by_app(
     ).exists()
 
 
-@mock.patch("saleor.plugins.user_email.tasks.send_email")
+@mock.patch("swiftmovers.plugins.user_email.tasks.send_email")
 def test_send_order_confirmed_email_task_custom_template(
     mocked_send_email, user_email_dict_config, user_email_plugin, order, staff_user
 ):
@@ -1137,7 +1137,7 @@ def test_send_order_confirmed_email_task_custom_template(
         "recipient_email": recipient_email,
         "requester_user_id": to_global_id_or_none(staff_user),
         "requester_app_id": None,
-        "site_name": "Saleor",
+        "site_name": "swiftmovers",
         "domain": "localhost:8000",
     }
 
@@ -1166,7 +1166,7 @@ def test_send_order_confirmed_email_task_custom_template(
     ).exists()
 
 
-@mock.patch("saleor.plugins.user_email.tasks.send_email")
+@mock.patch("swiftmovers.plugins.user_email.tasks.send_email")
 def test_send_gift_card_email_task_by_user(
     mocked_send_email, user_email_dict_config, staff_user, gift_card, user_email_plugin
 ):
@@ -1219,7 +1219,7 @@ def test_send_gift_card_email_task_by_user(
     assert not gift_card_event.app
 
 
-@mock.patch("saleor.plugins.user_email.tasks.send_email")
+@mock.patch("swiftmovers.plugins.user_email.tasks.send_email")
 def test_send_gift_card_email_task_by_user_resending(
     mocked_send_email, user_email_dict_config, staff_user, gift_card, user_email_plugin
 ):
@@ -1272,7 +1272,7 @@ def test_send_gift_card_email_task_by_user_resending(
     assert not gift_card_event.app
 
 
-@mock.patch("saleor.plugins.user_email.tasks.send_email")
+@mock.patch("swiftmovers.plugins.user_email.tasks.send_email")
 def test_send_gift_card_email_task_by_app(
     mocked_send_email, user_email_dict_config, app, gift_card, user_email_plugin
 ):

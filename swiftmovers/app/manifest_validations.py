@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 T_ERRORS = Dict[str, List[ValidationError]]
 
 
-class RequiredSaleorVersionSpec(NpmSpec):
+class RequiredswiftmoversVersionSpec(NpmSpec):
     class Parser(NpmSpec.Parser):
         @classmethod
         def range(cls, operator, target):
@@ -88,7 +88,7 @@ def clean_manifest_url(manifest_url):
 
 
 def clean_permissions(
-    required_permissions: List[str], saleor_permissions: Iterable[Permission]
+    required_permissions: List[str], swiftmovers_permissions: Iterable[Permission]
 ) -> List[Permission]:
     missing_permissions = []
     all_permissions = {perm[0]: perm[1] for perm in get_permissions_enum_list()}
@@ -103,10 +103,10 @@ def clean_permissions(
 
     permissions = [all_permissions[perm] for perm in required_permissions]
     permissions = split_permission_codename(permissions)
-    return [p for p in saleor_permissions if p.codename in permissions]
+    return [p for p in swiftmovers_permissions if p.codename in permissions]
 
 
-def clean_manifest_data(manifest_data, raise_for_saleor_version=False):
+def clean_manifest_data(manifest_data, raise_for_swiftmovers_version=False):
     errors: T_ERRORS = defaultdict(list)
 
     validate_required_fields(manifest_data, errors)
@@ -122,23 +122,23 @@ def clean_manifest_data(manifest_data, raise_for_saleor_version=False):
         )
 
     try:
-        manifest_data["requiredSaleorVersion"] = clean_required_saleor_version(
-            manifest_data.get("requiredSaleorVersion"), raise_for_saleor_version
+        manifest_data["requiredswiftmoversVersion"] = clean_required_swiftmovers_version(
+            manifest_data.get("requiredswiftmoversVersion"), raise_for_swiftmovers_version
         )
     except ValidationError as e:
-        errors["requiredSaleorVersion"].append(e)
+        errors["requiredswiftmoversVersion"].append(e)
 
     try:
         manifest_data["author"] = clean_author(manifest_data.get("author"))
     except ValidationError as e:
         errors["author"].append(e)
 
-    saleor_permissions = get_permissions().annotate(
+    swiftmovers_permissions = get_permissions().annotate(
         formated_codename=Concat("content_type__app_label", Value("."), "codename")
     )
     try:
         app_permissions = clean_permissions(
-            manifest_data.get("permissions", []), saleor_permissions
+            manifest_data.get("permissions", []), swiftmovers_permissions
         )
     except ValidationError as e:
         errors["permissions"].append(e)
@@ -329,23 +329,23 @@ def parse_version(version_str: str) -> Version:
     return Version(version_str)
 
 
-def clean_required_saleor_version(
+def clean_required_swiftmovers_version(
     required_version,
-    raise_for_saleor_version: bool,
-    saleor_version=__version__,
+    raise_for_swiftmovers_version: bool,
+    swiftmovers_version=__version__,
 ) -> Optional[Dict]:
     if not required_version:
         return None
     try:
-        spec = RequiredSaleorVersionSpec(required_version)
+        spec = RequiredswiftmoversVersionSpec(required_version)
     except Exception:
-        msg = "Incorrect value for required Saleor version."
+        msg = "Incorrect value for required swiftmovers version."
         raise ValidationError(msg, code=AppErrorCode.INVALID.value)
-    version = parse_version(saleor_version)
+    version = parse_version(swiftmovers_version)
     satisfied = spec.match(version)
-    if raise_for_saleor_version and not satisfied:
-        msg = f"Saleor version {saleor_version} is not supported by the app."
-        raise ValidationError(msg, code=AppErrorCode.UNSUPPORTED_SALEOR_VERSION.value)
+    if raise_for_swiftmovers_version and not satisfied:
+        msg = f"swiftmovers version {swiftmovers_version} is not supported by the app."
+        raise ValidationError(msg, code=AppErrorCode.UNSUPPORTED_swiftmovers_VERSION.value)
     return {"constraint": required_version, "satisfied": satisfied}
 
 

@@ -172,7 +172,7 @@ def _assert_fields(
     )
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_process_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_process_session")
 def test_for_checkout_without_data(
     mocked_process,
     user_api_client,
@@ -235,7 +235,7 @@ def test_for_checkout_without_data(
     assert checkout.authorize_status == CheckoutAuthorizeStatus.PARTIAL
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_process_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_process_session")
 def test_for_order_without_data(
     mocked_process,
     user_api_client,
@@ -293,7 +293,7 @@ def test_for_order_without_data(
     )
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_process_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_process_session")
 def test_for_checkout_with_data(
     mocked_process,
     user_api_client,
@@ -356,7 +356,7 @@ def test_for_checkout_with_data(
     assert checkout.authorize_status == CheckoutAuthorizeStatus.PARTIAL
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_process_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_process_session")
 def test_for_order_with_data(
     mocked_process,
     user_api_client,
@@ -415,7 +415,7 @@ def test_for_order_with_data(
     )
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_process_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_process_session")
 def test_checkout_with_pending_amount(
     mocked_process,
     user_api_client,
@@ -477,7 +477,7 @@ def test_checkout_with_pending_amount(
     assert checkout.authorize_status == CheckoutAuthorizeStatus.PARTIAL
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_process_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_process_session")
 def test_order_with_pending_amount(
     mocked_process,
     user_api_client,
@@ -534,7 +534,7 @@ def test_order_with_pending_amount(
     )
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_process_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_process_session")
 def test_checkout_with_action_required_response(
     mocked_process,
     user_api_client,
@@ -594,7 +594,7 @@ def test_checkout_with_action_required_response(
     assert checkout.authorize_status == CheckoutAuthorizeStatus.NONE
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_process_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_process_session")
 def test_order_with_action_required_response(
     mocked_process,
     user_api_client,
@@ -839,8 +839,8 @@ def test_app_attached_to_transaction_doesnt_exist(
 @pytest.mark.parametrize(
     "result", [TransactionEventType.CHARGE_REQUEST, TransactionEventType.CHARGE_SUCCESS]
 )
-@mock.patch("saleor.plugins.manager.PluginsManager.checkout_fully_paid")
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_process_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.checkout_fully_paid")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_process_session")
 def test_checkout_fully_paid(
     mocked_process,
     mocked_fully_paid,

@@ -173,7 +173,7 @@ def _assert_fields(
     )
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_initialize_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_initialize_session")
 def test_for_checkout_without_payment_gateway_data(
     mocked_initialize,
     user_api_client,
@@ -224,7 +224,7 @@ def test_for_checkout_without_payment_gateway_data(
     assert checkout.authorize_status == CheckoutAuthorizeStatus.PARTIAL
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_initialize_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_initialize_session")
 def test_for_order_without_payment_gateway_data(
     mocked_initialize,
     user_api_client,
@@ -275,7 +275,7 @@ def test_for_order_without_payment_gateway_data(
     assert order.total_charged_amount == expected_amount
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_initialize_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_initialize_session")
 def test_checkout_with_pending_amount(
     mocked_initialize,
     user_api_client,
@@ -327,7 +327,7 @@ def test_checkout_with_pending_amount(
     assert checkout.authorize_status == CheckoutAuthorizeStatus.PARTIAL
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_initialize_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_initialize_session")
 def test_order_with_pending_amount(
     mocked_initialize,
     user_api_client,
@@ -380,7 +380,7 @@ def test_order_with_pending_amount(
     assert order.total_charged_amount == Decimal(0)
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_initialize_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_initialize_session")
 def test_checkout_with_action_required_response(
     mocked_initialize,
     user_api_client,
@@ -430,7 +430,7 @@ def test_checkout_with_action_required_response(
     assert checkout.authorize_status == CheckoutAuthorizeStatus.NONE
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_initialize_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_initialize_session")
 def test_order_with_action_required_response(
     mocked_initialize,
     user_api_client,
@@ -481,7 +481,7 @@ def test_order_with_action_required_response(
     assert order.total_charged_amount == Decimal(0)
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_initialize_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_initialize_session")
 def test_checkout_with_action_required_response_and_missing_psp_reference(
     mocked_initialize,
     user_api_client,
@@ -530,7 +530,7 @@ def test_checkout_with_action_required_response_and_missing_psp_reference(
     assert checkout.authorize_status == CheckoutAuthorizeStatus.NONE
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_initialize_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_initialize_session")
 def test_order_with_action_required_response_and_missing_psp_reference(
     mocked_initialize,
     user_api_client,
@@ -580,7 +580,7 @@ def test_order_with_action_required_response_and_missing_psp_reference(
     assert order.total_charged_amount == Decimal(0)
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_initialize_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_initialize_session")
 def test_checkout_when_amount_is_not_provided(
     mocked_initialize,
     user_api_client,
@@ -637,7 +637,7 @@ def test_checkout_when_amount_is_not_provided(
     assert checkout.authorize_status == CheckoutAuthorizeStatus.FULL
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_initialize_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_initialize_session")
 def test_order_when_amount_is_not_provided(
     mocked_initialize,
     user_api_client,
@@ -689,7 +689,7 @@ def test_order_when_amount_is_not_provided(
     assert order.total_charged_amount == order.total_gross_amount
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_initialize_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_initialize_session")
 def test_order_with_transaction_when_amount_is_not_provided(
     mocked_initialize,
     user_api_client,
@@ -751,7 +751,7 @@ def test_order_with_transaction_when_amount_is_not_provided(
     assert order.total_charged_amount == order.total_gross_amount
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_initialize_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_initialize_session")
 def test_checkout_with_transaction_when_amount_is_not_provided(
     mocked_initialize,
     user_api_client,
@@ -820,7 +820,7 @@ def test_checkout_with_transaction_when_amount_is_not_provided(
     assert checkout.authorize_status == CheckoutAuthorizeStatus.FULL
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_initialize_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_initialize_session")
 def test_app_with_action_field_and_handle_payments(
     mocked_initialize,
     app_api_client,
@@ -884,7 +884,7 @@ def test_app_with_action_field_and_handle_payments(
     assert checkout.authorize_status == CheckoutAuthorizeStatus.FULL
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_initialize_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_initialize_session")
 def test_uses_default_channel_action(
     mocked_initialize,
     user_api_client,
@@ -938,7 +938,7 @@ def test_uses_default_channel_action(
     )
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_initialize_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_initialize_session")
 def test_app_with_action_field(
     mocked_initialize,
     app_api_client,
@@ -1135,8 +1135,8 @@ def test_order_doesnt_exists(
 @pytest.mark.parametrize(
     "result", [TransactionEventType.CHARGE_REQUEST, TransactionEventType.CHARGE_SUCCESS]
 )
-@mock.patch("saleor.plugins.manager.PluginsManager.checkout_fully_paid")
-@mock.patch("saleor.plugins.manager.PluginsManager.transaction_initialize_session")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.checkout_fully_paid")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.transaction_initialize_session")
 def test_checkout_fully_paid(
     mocked_initialize,
     mocked_fully_paid,

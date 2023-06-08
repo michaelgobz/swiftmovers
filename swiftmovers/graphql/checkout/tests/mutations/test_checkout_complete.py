@@ -229,8 +229,8 @@ def test_checkout_complete_with_inactive_channel(
 
 
 @pytest.mark.integration
-@patch("saleor.order.calculations._recalculate_order_prices")
-@patch("saleor.plugins.manager.PluginsManager.order_confirmed")
+@patch("swiftmovers.order.calculations._recalculate_order_prices")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_confirmed")
 def test_checkout_complete(
     order_confirmed_mock,
     _recalculate_order_prices_mock,
@@ -344,7 +344,7 @@ def test_checkout_complete(
 
 
 @pytest.mark.integration
-@patch("saleor.plugins.manager.PluginsManager.order_confirmed")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_confirmed")
 def test_checkout_complete_with_metadata(
     order_confirmed_mock,
     user_api_client,
@@ -422,7 +422,7 @@ def test_checkout_complete_with_metadata(
 
 
 @pytest.mark.integration
-@patch("saleor.plugins.manager.PluginsManager.order_confirmed")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_confirmed")
 def test_checkout_complete_with_metadata_updates_existing_keys(
     site_settings,
     user_api_client,
@@ -485,7 +485,7 @@ def test_checkout_complete_with_metadata_updates_existing_keys(
 
 
 @pytest.mark.integration
-@patch("saleor.plugins.manager.PluginsManager.order_confirmed")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_confirmed")
 def test_checkout_complete_with_metadata_checkout_without_metadata(
     order_confirmed_mock,
     user_api_client,
@@ -563,7 +563,7 @@ def test_checkout_complete_with_metadata_checkout_without_metadata(
 
 
 @pytest.mark.integration
-@patch("saleor.graphql.checkout.mutations.checkout_complete.complete_checkout")
+@patch("swiftmovers.graphql.checkout.mutations.checkout_complete.complete_checkout")
 def test_checkout_complete_by_app(
     mocked_complete_checkout,
     app_api_client,
@@ -628,7 +628,7 @@ def test_checkout_complete_by_app(
 
 
 @pytest.mark.integration
-@patch("saleor.graphql.checkout.mutations.checkout_complete.complete_checkout")
+@patch("swiftmovers.graphql.checkout.mutations.checkout_complete.complete_checkout")
 def test_checkout_complete_by_app_with_missing_permission(
     mocked_complete_checkout,
     app_api_client,
@@ -692,8 +692,8 @@ def test_checkout_complete_by_app_with_missing_permission(
     )
 
 
-@patch("saleor.giftcard.utils.send_gift_card_notification")
-@patch("saleor.plugins.manager.PluginsManager.order_confirmed")
+@patch("swiftmovers.giftcard.utils.send_gift_card_notification")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_confirmed")
 def test_checkout_complete_gift_card_bought(
     order_confirmed_mock,
     send_notification_mock,
@@ -881,8 +881,8 @@ def test_checkout_complete_with_variant_without_price(
     assert errors[0]["variants"] == [variant_id]
 
 
-@patch("saleor.order.calculations._recalculate_order_prices")
-@patch("saleor.plugins.manager.PluginsManager.order_confirmed")
+@patch("swiftmovers.order.calculations._recalculate_order_prices")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_confirmed")
 def test_checkout_complete_requires_confirmation(
     order_confirmed_mock,
     _recalculate_order_prices_mock,
@@ -1678,7 +1678,7 @@ def test_checkout_complete_checkout_without_lines(
 @pytest.mark.integration
 @pytest.mark.parametrize("token, error", list(TOKEN_VALIDATION_MAPPING.items()))
 @patch(
-    "saleor.payment.gateways.dummy_credit_card.plugin."
+    "swiftmovers.payment.gateways.dummy_credit_card.plugin."
     "DummyCreditCardGatewayPlugin.DEFAULT_ACTIVE",
     True,
 )
@@ -2004,7 +2004,7 @@ def test_checkout_complete_insufficient_stock(
     assert orders_count == Order.objects.count()
 
 
-@patch("saleor.checkout.complete_checkout.gateway.refund")
+@patch("swiftmovers.checkout.complete_checkout.gateway.refund")
 def test_checkout_complete_insufficient_stock_payment_refunded(
     gateway_refund_mock,
     checkout_with_item,
@@ -2063,7 +2063,7 @@ def test_checkout_complete_insufficient_stock_payment_refunded(
     )
 
 
-@patch("saleor.checkout.complete_checkout.gateway.void")
+@patch("swiftmovers.checkout.complete_checkout.gateway.void")
 def test_checkout_complete_insufficient_stock_payment_voided(
     gateway_void_mock,
     checkout_with_item,
@@ -2324,7 +2324,7 @@ def test_checkout_complete_without_redirect_url(
     ).exists(), "Checkout should have been deleted"
 
 
-@patch("saleor.checkout.complete_checkout.gateway.payment_refund_or_void")
+@patch("swiftmovers.checkout.complete_checkout.gateway.payment_refund_or_void")
 def test_checkout_complete_payment_payment_total_different_than_checkout(
     gateway_refund_or_void_mock,
     checkout_with_items,
@@ -2405,7 +2405,7 @@ def test_order_already_exists(
     assert Checkout.objects.count() == 0
 
 
-@patch("saleor.checkout.complete_checkout._create_order")
+@patch("swiftmovers.checkout.complete_checkout._create_order")
 def test_create_order_raises_insufficient_stock(
     mocked_create_order, user_api_client, checkout_ready_to_complete, payment_dummy
 ):
@@ -2903,7 +2903,7 @@ def test_checkout_complete_raises_InvalidShippingMethod_when_warehouse_disabled(
 
 
 @pytest.mark.integration
-@patch("saleor.plugins.manager.PluginsManager.order_confirmed")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_confirmed")
 def test_checkout_complete_with_preorder_variant(
     order_confirmed_mock,
     site_settings,
@@ -4041,7 +4041,7 @@ def test_checkout_complete_payment_create_create_run_in_meantime(
 
     # when
     with before_after.before(
-        "saleor.checkout.complete_checkout._get_order_data",
+        "swiftmovers.checkout.complete_checkout._get_order_data",
         call_payment_create_mutation,
     ):
         response = user_api_client.post_graphql(MUTATION_CHECKOUT_COMPLETE, variables)
@@ -4105,7 +4105,7 @@ def test_checkout_complete_line_deleted_in_the_meantime(
 
     # when
     with before_after.before(
-        "saleor.graphql.checkout.mutations.checkout_complete.complete_checkout",
+        "swiftmovers.graphql.checkout.mutations.checkout_complete.complete_checkout",
         delete_order_line,
     ):
         response = user_api_client.post_graphql(MUTATION_CHECKOUT_COMPLETE, variables)

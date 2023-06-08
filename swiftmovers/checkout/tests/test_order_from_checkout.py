@@ -219,7 +219,7 @@ def test_create_order_with_many_gift_cards(
     )
 
 
-@mock.patch("saleor.giftcard.utils.send_gift_card_notification")
+@mock.patch("swiftmovers.giftcard.utils.send_gift_card_notification")
 @pytest.mark.parametrize("is_anonymous_user", (True, False))
 def test_create_order_gift_card_bought(
     send_notification_mock,
@@ -301,7 +301,7 @@ def test_create_order_gift_card_bought(
     )
 
 
-@mock.patch("saleor.giftcard.utils.send_gift_card_notification")
+@mock.patch("swiftmovers.giftcard.utils.send_gift_card_notification")
 @pytest.mark.parametrize("is_anonymous_user", (True, False))
 def test_create_order_gift_card_bought_only_shippable_gift_card(
     send_notification_mock,
@@ -704,7 +704,7 @@ def test_note_in_created_order_checkout_line_deleted_in_the_meantime(
 
     # when
     with before_after.after(
-        "saleor.checkout.complete_checkout._increase_voucher_usage",
+        "swiftmovers.checkout.complete_checkout._increase_voucher_usage",
         delete_checkout_line,
     ):
         order = create_order_from_checkout(
@@ -741,7 +741,7 @@ def test_note_in_created_order_checkout_deleted_in_the_meantime(
 
     # when
     with before_after.after(
-        "saleor.checkout.complete_checkout._increase_voucher_usage",
+        "swiftmovers.checkout.complete_checkout._increase_voucher_usage",
         delete_checkout,
     ):
         order = create_order_from_checkout(

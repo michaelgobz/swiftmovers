@@ -37,8 +37,8 @@ APPROVE_FULFILLMENT_MUTATION = """
 """
 
 
-@patch("saleor.plugins.manager.PluginsManager.fulfillment_approved")
-@patch("saleor.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
+@patch("swiftmovers.plugins.manager.PluginsManager.fulfillment_approved")
+@patch("swiftmovers.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
 def test_fulfillment_approve(
     mock_email_fulfillment,
     mock_fulfillment_approved,
@@ -71,7 +71,7 @@ def test_fulfillment_approve(
     mock_fulfillment_approved.assert_called_once_with(fulfillment)
 
 
-@patch("saleor.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
+@patch("swiftmovers.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
 def test_fulfillment_approve_delete_products_before_approval_allow_stock_exceeded_true(
     mock_email_fulfillment,
     staff_api_client,
@@ -109,8 +109,8 @@ def test_fulfillment_approve_delete_products_before_approval_allow_stock_exceede
     assert event.user == staff_api_client.user
 
 
-@patch("saleor.plugins.manager.PluginsManager.fulfillment_approved")
-@patch("saleor.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
+@patch("swiftmovers.plugins.manager.PluginsManager.fulfillment_approved")
+@patch("swiftmovers.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
 def test_fulfillment_approve_delete_products_before_approval_allow_stock_exceeded_false(
     mock_email_fulfillment,
     mock_fulfillment_approved,
@@ -164,7 +164,7 @@ def test_fulfillment_approve_delete_products_before_approval_allow_stock_exceede
     mock_fulfillment_approved.assert_not_called()
 
 
-@patch("saleor.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
+@patch("swiftmovers.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
 def test_fulfillment_approve_gift_cards_created(
     mock_email_fulfillment,
     staff_api_client,
@@ -234,7 +234,7 @@ def test_fulfillment_approve_gift_cards_created(
             assert gift_card.fulfillment_line == fulfillment_line_2
 
 
-@patch("saleor.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
+@patch("swiftmovers.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
 def test_fulfillment_approve_when_stock_is_exceeded_and_flag_enabled(
     mock_email_fulfillment,
     staff_api_client,
@@ -276,7 +276,7 @@ def test_fulfillment_approve_when_stock_is_exceeded_and_flag_enabled(
     assert event.user == staff_api_client.user
 
 
-@patch("saleor.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
+@patch("swiftmovers.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
 def test_fulfillment_approve_when_stock_is_exceeded_and_flag_disabled(
     mock_email_fulfillment,
     staff_api_client,
@@ -324,8 +324,8 @@ def test_fulfillment_approve_when_stock_is_exceeded_and_flag_disabled(
         assert expected_error in errors
 
 
-@patch("saleor.plugins.manager.PluginsManager.fulfillment_approved")
-@patch("saleor.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
+@patch("swiftmovers.plugins.manager.PluginsManager.fulfillment_approved")
+@patch("swiftmovers.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
 def test_fulfillment_approve_partial_order_fulfill(
     mock_email_fulfillment,
     mock_fulfillment_approved,

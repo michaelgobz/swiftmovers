@@ -45,7 +45,7 @@ class Command(BaseCommand):
     def send_app_data(self, target_url, data: Dict[str, Any]):
         domain = Site.objects.get_current().domain
         headers = {
-            # X- headers will be deprecated in Saleor 4.0, proper headers are without X-
+            # X- headers will be deprecated in swiftmovers 4.0, proper headers are without X-
             DeprecatedAppHeaders.DOMAIN: domain,
             AppHeaders.DOMAIN: domain,
             AppHeaders.API_URL: build_absolute_uri(reverse("api"), domain),

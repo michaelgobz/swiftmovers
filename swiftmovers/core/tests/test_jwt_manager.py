@@ -9,7 +9,7 @@ from ..jwt_manager import JWTManager, get_jwt_manager
 
 def test_get_jwt_manager(settings):
     # given
-    assert settings.JWT_MANAGER_PATH == "saleor.core.jwt_manager.JWTManager"
+    assert settings.JWT_MANAGER_PATH == "swiftmovers.core.jwt_manager.JWTManager"
 
     # when
     jwt_manager = get_jwt_manager()

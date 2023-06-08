@@ -41,8 +41,8 @@ def test_page_delete_mutation(staff_api_client, page, permission_manage_pages):
 
 
 @freeze_time("1914-06-28 10:50")
-@mock.patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
-@mock.patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@mock.patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
+@mock.patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
 def test_page_delete_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -53,7 +53,7 @@ def test_page_delete_trigger_webhook(
     settings,
 ):
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
     variables = {"id": graphene.Node.to_global_id("Page", page.id)}
     response = staff_api_client.post_graphql(
         PAGE_DELETE_MUTATION, variables, permissions=[permission_manage_pages]

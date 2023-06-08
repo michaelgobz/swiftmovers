@@ -75,7 +75,7 @@ class AppFetchManifest(BaseMutation):
             extensions=cleaned_data.get("extensions", []),
             webhooks=cleaned_data.get("webhooks", []),
             audience=cleaned_data.get("audience"),
-            required_saleor_version=cleaned_data.get("requiredSaleorVersion"),
+            required_swiftmovers_version=cleaned_data.get("requiredswiftmoversVersion"),
             author=cleaned_data.get("author"),
         )
 

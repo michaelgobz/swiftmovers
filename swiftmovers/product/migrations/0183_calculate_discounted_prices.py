@@ -1,7 +1,7 @@
 from django.apps import apps as registry
 from django.db import migrations
 from django.db.models.signals import post_migrate
-from .tasks.saleor3_13 import update_discounted_prices_task
+from .tasks.swiftmovers3_13 import update_discounted_prices_task
 
 
 def calculate_variants_discounted_price(apps, schema_editor):

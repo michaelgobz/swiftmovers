@@ -35,12 +35,12 @@ MUTATION_CHECKOUT_LINES_DELETE = """
 
 
 @mock.patch(
-    "saleor.graphql.checkout.mutations.checkout_lines_delete."
+    "swiftmovers.graphql.checkout.mutations.checkout_lines_delete."
     "update_checkout_shipping_method_if_invalid",
     wraps=update_checkout_shipping_method_if_invalid,
 )
 @mock.patch(
-    "saleor.graphql.checkout.mutations.checkout_lines_delete."
+    "swiftmovers.graphql.checkout.mutations.checkout_lines_delete."
     "invalidate_checkout_prices",
     wraps=invalidate_checkout_prices,
 )

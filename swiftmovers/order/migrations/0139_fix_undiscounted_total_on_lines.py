@@ -4,7 +4,7 @@ from django.apps import apps as registry
 from django.db import connection, migrations
 from django.db.models.signals import post_migrate
 
-from saleor.order.tasks import send_order_updated
+from swiftmovers.order.tasks import send_order_updated
 
 # 3500 results in 187344 bytes (base64(json(list of ids)))
 # leave safe margin for rest of the payload

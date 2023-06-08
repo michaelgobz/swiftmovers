@@ -52,7 +52,7 @@ class WebhookUpdateInput(BaseInputObjectType):
     )
     secret_key = graphene.String(
         description="Use to create a hash signature with each payload."
-        f"{DEPRECATED_IN_3X_INPUT} As of Saleor 3.5, webhook payloads default to "
+        f"{DEPRECATED_IN_3X_INPUT} As of swiftmovers 3.5, webhook payloads default to "
         "signing using a verifiable JWS.",
         required=False,
     )

@@ -5,7 +5,7 @@ import django.db.models.deletion
 import oauthlib.common
 from django.db import migrations, models
 
-import saleor.core.utils.json_serializer
+import swiftmovers.core.utils.json_serializer
 
 
 def update_contentypes(apps, schema_editor):
@@ -88,7 +88,7 @@ class Migration(migrations.Migration):
                     django.contrib.postgres.fields.jsonb.JSONField(
                         blank=True,
                         default=dict,
-                        encoder=saleor.core.utils.json_serializer.CustomJsonEncoder,
+                        encoder=swiftmovers.core.utils.json_serializer.CustomJsonEncoder,
                         null=True,
                     ),
                 ),
@@ -97,7 +97,7 @@ class Migration(migrations.Migration):
                     django.contrib.postgres.fields.jsonb.JSONField(
                         blank=True,
                         default=dict,
-                        encoder=saleor.core.utils.json_serializer.CustomJsonEncoder,
+                        encoder=swiftmovers.core.utils.json_serializer.CustomJsonEncoder,
                         null=True,
                     ),
                 ),

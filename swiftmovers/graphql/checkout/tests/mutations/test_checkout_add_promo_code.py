@@ -156,7 +156,7 @@ def test_checkout_add_already_applied_voucher_for_entire_order(
     assert checkout_data["discount"]["amount"] == net.amount
 
 
-@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
+@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
 def test_checkout_add_voucher_code_by_token_with_external_shipment(
     mock_send_request,
     api_client,
@@ -166,7 +166,7 @@ def test_checkout_add_voucher_code_by_token_with_external_shipment(
     address,
     settings,
 ):
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
     response_method_id = "abcd"
     mock_json_response = [
         {
@@ -218,7 +218,7 @@ def test_checkout_add_voucher_code_with_display_gross_prices(
     voucher_channel_listing.save()
 
     monkeypatch.setattr(
-        "saleor.checkout.utils.base_calculations.base_checkout_subtotal",
+        "swiftmovers.checkout.utils.base_calculations.base_checkout_subtotal",
         lambda *args: Money(100, "USD"),
     )
 
@@ -252,7 +252,7 @@ def test_checkout_add_voucher_code_without_display_gross_prices(
     voucher_channel_listing.save()
 
     monkeypatch.setattr(
-        "saleor.checkout.utils.base_calculations.base_checkout_subtotal",
+        "swiftmovers.checkout.utils.base_calculations.base_checkout_subtotal",
         lambda *args: Money(95, "USD"),
     )
 

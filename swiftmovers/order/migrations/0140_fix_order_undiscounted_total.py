@@ -6,7 +6,7 @@ from django.apps import apps as registry
 from django.db import migrations
 from django.db.models import Exists, F, OuterRef
 from django.db.models.signals import post_migrate
-from saleor.order.tasks import send_order_updated
+from swiftmovers.order.tasks import send_order_updated
 
 BATCH_SIZE = 500
 

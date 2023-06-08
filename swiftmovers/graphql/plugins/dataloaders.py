@@ -6,7 +6,7 @@ from promise import Promise
 from ...plugins.manager import PluginsManager, get_plugins_manager
 from ...plugins.models import EmailTemplate
 from ..app.dataloaders import get_app_promise
-from ..core import SaleorContext
+from ..core import SwiftmoversContext
 from ..core.dataloaders import DataLoader
 
 
@@ -43,7 +43,7 @@ class AnonymousPluginManagerLoader(DataLoader):
         return [get_plugins_manager(None, allow_replica) for key in keys]
 
 
-def plugin_manager_promise(context: SaleorContext, app) -> Promise[PluginsManager]:
+def plugin_manager_promise(context: SwiftmoversContext, app) -> Promise[PluginsManager]:
     user = context.user
     requestor = app or user
     if requestor is None:
@@ -51,7 +51,7 @@ def plugin_manager_promise(context: SaleorContext, app) -> Promise[PluginsManage
     return PluginManagerByRequestorDataloader(context).load(requestor)
 
 
-def get_plugin_manager_promise(context: SaleorContext) -> Promise[PluginsManager]:
+def get_plugin_manager_promise(context: SwiftmoversContext) -> Promise[PluginsManager]:
     return get_app_promise(context).then(
         partial(plugin_manager_promise, context)  # type: ignore[arg-type] # mypy incorrectly assumes the return type to be a promise of a promise # noqa: E501
     )

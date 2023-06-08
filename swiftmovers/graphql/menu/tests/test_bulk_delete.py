@@ -40,8 +40,8 @@ def test_delete_menus(staff_api_client, menu_list, permission_manage_menus):
     assert not Menu.objects.filter(id__in=[menu.id for menu in menu_list]).exists()
 
 
-@mock.patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
-@mock.patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@mock.patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
+@mock.patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
 def test_delete_menus_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -53,7 +53,7 @@ def test_delete_menus_trigger_webhook(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
 
     variables = {
         "ids": [
@@ -102,8 +102,8 @@ def test_delete_menu_items(staff_api_client, menu_item_list, permission_manage_m
     ).exists()
 
 
-@mock.patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
-@mock.patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@mock.patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
+@mock.patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
 def test_delete_menu_items_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -115,7 +115,7 @@ def test_delete_menu_items_trigger_webhook(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
 
     variables = {
         "ids": [

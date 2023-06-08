@@ -33,9 +33,9 @@ def test_get_product_limit_first_page(product):
     assert get_product_limit_first_page([product] * 16) == 4
 
 
-@patch("saleor.plugins.invoicing.utils.HTML")
-@patch("saleor.plugins.invoicing.utils.get_template")
-@patch("saleor.plugins.invoicing.utils.os")
+@patch("swiftmovers.plugins.invoicing.utils.HTML")
+@patch("swiftmovers.plugins.invoicing.utils.get_template")
+@patch("swiftmovers.plugins.invoicing.utils.os")
 def test_generate_invoice_pdf_for_order(
     os_mock, get_template_mock, HTML_mock, fulfilled_order, customer_user, gift_card
 ):

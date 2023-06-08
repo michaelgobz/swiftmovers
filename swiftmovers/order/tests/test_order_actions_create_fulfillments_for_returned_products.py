@@ -13,8 +13,8 @@ from ..fetch import OrderLineInfo
 from ..models import Fulfillment, FulfillmentLine
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
-@patch("saleor.order.actions.gateway.refund")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.order.actions.gateway.refund")
 def test_create_return_fulfillment_only_order_lines(
     mocked_refund,
     mocked_order_updated,
@@ -87,8 +87,8 @@ def test_create_return_fulfillment_only_order_lines(
     mocked_order_updated.assert_called_once_with(order_with_lines)
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
-@patch("saleor.order.actions.gateway.refund")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.order.actions.gateway.refund")
 def test_create_return_fulfillment_only_order_lines_with_refund(
     mocked_refund,
     mocked_order_updated,
@@ -163,8 +163,8 @@ def test_create_return_fulfillment_only_order_lines_with_refund(
     mocked_order_updated.assert_called_once_with(order_with_lines)
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
-@patch("saleor.order.actions.gateway.refund")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.order.actions.gateway.refund")
 def test_create_return_fulfillment_only_order_lines_included_shipping_costs(
     mocked_refund,
     mocked_order_updated,
@@ -245,8 +245,8 @@ def test_create_return_fulfillment_only_order_lines_included_shipping_costs(
     mocked_order_updated.assert_called_once_with(order_with_lines)
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
-@patch("saleor.order.actions.gateway.refund")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.order.actions.gateway.refund")
 def test_create_return_fulfillment_only_order_lines_with_replace_request(
     mocked_refund,
     mocked_order_updated,
@@ -376,8 +376,8 @@ def test_create_return_fulfillment_only_order_lines_with_replace_request(
     mocked_order_updated.assert_called_once_with(order_with_lines)
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
-@patch("saleor.order.actions.gateway.refund")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.order.actions.gateway.refund")
 def test_create_return_fulfillment_only_fulfillment_lines(
     mocked_refund,
     mocked_order_updated,
@@ -424,8 +424,8 @@ def test_create_return_fulfillment_only_fulfillment_lines(
     mocked_order_updated.assert_called_once_with(fulfilled_order)
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
-@patch("saleor.order.actions.gateway.refund")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.order.actions.gateway.refund")
 def test_create_return_fulfillment_only_fulfillment_lines_replace_order(
     mocked_refund,
     mocked_order_updated,
@@ -531,8 +531,8 @@ def test_create_return_fulfillment_only_fulfillment_lines_replace_order(
     mocked_order_updated.assert_called_once_with(fulfilled_order)
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
-@patch("saleor.order.actions.gateway.refund")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.order.actions.gateway.refund")
 def test_create_return_fulfillment_with_lines_already_refunded(
     mocked_refund,
     mocked_order_updated,
@@ -639,8 +639,8 @@ def test_create_return_fulfillment_with_lines_already_refunded(
     mocked_order_updated.assert_called_once_with(fulfilled_order)
 
 
-@patch("saleor.plugins.manager.PluginsManager.order_updated")
-@patch("saleor.order.actions.gateway.refund")
+@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("swiftmovers.order.actions.gateway.refund")
 def test_create_return_fulfillment_only_order_lines_with_old_ids(
     mocked_refund,
     mocked_order_updated,

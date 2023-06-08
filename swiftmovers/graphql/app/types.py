@@ -10,7 +10,7 @@ from ...permission.auth_filters import AuthorizationFilters
 from ...permission.enums import AppPermission
 from ...permission.utils import message_one_of_permissions_required
 from ..account.utils import is_owner_or_has_one_of_perms
-from ..core import ResolveInfo, swiftmoversContext
+from ..core import ResolveInfo, SwiftmoversContext
 from ..core.connection import CountableConnection
 from ..core.descriptions import (
     ADDED_IN_31,
@@ -43,7 +43,7 @@ from .resolvers import (
 )
 
 
-def has_required_permission(app: models.App, context: swiftmoversContext):
+def has_required_permission(app: models.App, context: SwiftmoversContext):
     requester = get_user_or_app_from_context(context)
     if not is_owner_or_has_one_of_perms(requester, app, AppPermission.MANAGE_APPS):
         raise PermissionDenied(

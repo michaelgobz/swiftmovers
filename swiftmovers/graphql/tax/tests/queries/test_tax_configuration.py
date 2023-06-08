@@ -1,6 +1,6 @@
 import graphene
 
-from saleor.tax.models import TaxConfiguration
+from swiftmovers.tax.models import TaxConfiguration
 
 from ....tests.utils import assert_no_permission, get_graphql_content
 from ..fragments import TAX_CONFIGURATION_FRAGMENT

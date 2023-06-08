@@ -1,4 +1,4 @@
-default_app_config = "saleor.product.app.ProductAppConfig"
+default_app_config = "swiftmovers.product.app.ProductAppConfig"
 
 
 class ProductMediaTypes:

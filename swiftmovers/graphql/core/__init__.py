@@ -1,10 +1,10 @@
 import graphene
 
 from . import fields  # noqa
-from .context import SaleorContext
+from .context import SwiftmoversContext
 
-__all__ = ["SaleorContext"]
+__all__ = ["SwiftmoversContext"]
 
 
 class ResolveInfo(graphene.ResolveInfo):
-    context: SaleorContext
+    context: SwiftmoversContext

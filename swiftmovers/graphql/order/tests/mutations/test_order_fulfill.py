@@ -34,7 +34,7 @@ ORDER_FULFILL_QUERY = """
 """
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_out_of_stock")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_out_of_stock")
 def test_order_fulfill_with_out_of_stock_webhook(
     product_variant_out_of_stock_webhooks,
     staff_api_client,
@@ -70,7 +70,7 @@ def test_order_fulfill_with_out_of_stock_webhook(
 
 
 @pytest.mark.parametrize("fulfillment_auto_approve", [True, False])
-@patch("saleor.graphql.order.mutations.order_fulfill.create_fulfillments")
+@patch("swiftmovers.graphql.order.mutations.order_fulfill.create_fulfillments")
 def test_order_fulfill(
     mock_create_fulfillments,
     fulfillment_auto_approve,
@@ -134,7 +134,7 @@ def test_order_fulfill(
 
 
 @pytest.mark.parametrize("fulfillment_auto_approve", [True, False])
-@patch("saleor.graphql.order.mutations.order_fulfill.create_fulfillments")
+@patch("swiftmovers.graphql.order.mutations.order_fulfill.create_fulfillments")
 def test_order_fulfill_with_tracking_number(
     mock_create_fulfillments,
     fulfillment_auto_approve,
@@ -418,7 +418,7 @@ def test_order_fulfill_with_allow_stock_to_be_exceeded_flag_disabled_deleted_var
     assert order_lines[1].quantity_unfulfilled == 2
 
 
-@patch("saleor.graphql.order.mutations.order_fulfill.create_fulfillments")
+@patch("swiftmovers.graphql.order.mutations.order_fulfill.create_fulfillments")
 def test_order_fulfill_above_available_quantity(
     mock_create_fulfillments,
     staff_api_client,
@@ -471,7 +471,7 @@ def test_order_fulfill_above_available_quantity(
     mock_create_fulfillments.assert_not_called()
 
 
-@patch("saleor.graphql.order.mutations.order_fulfill.create_fulfillments")
+@patch("swiftmovers.graphql.order.mutations.order_fulfill.create_fulfillments")
 def test_order_fulfill_as_app(
     mock_create_fulfillments,
     app_api_client,
@@ -530,7 +530,7 @@ def test_order_fulfill_as_app(
     )
 
 
-@patch("saleor.graphql.order.mutations.order_fulfill.create_fulfillments")
+@patch("swiftmovers.graphql.order.mutations.order_fulfill.create_fulfillments")
 def test_order_fulfill_many_warehouses(
     mock_create_fulfillments,
     staff_api_client,
@@ -599,7 +599,7 @@ def test_order_fulfill_many_warehouses(
     )
 
 
-@patch("saleor.giftcard.utils.send_gift_card_notification")
+@patch("swiftmovers.giftcard.utils.send_gift_card_notification")
 def test_order_fulfill_with_gift_cards(
     mock_send_notification,
     staff_api_client,
@@ -684,7 +684,7 @@ def test_order_fulfill_with_gift_cards(
     )
 
 
-@patch("saleor.giftcard.utils.send_gift_card_notification")
+@patch("swiftmovers.giftcard.utils.send_gift_card_notification")
 def test_order_fulfill_with_gift_card_lines_waiting_for_approval(
     mock_send_notification,
     staff_api_client,
@@ -738,7 +738,7 @@ def test_order_fulfill_with_gift_card_lines_waiting_for_approval(
     mock_send_notification.assert_not_called()
 
 
-@patch("saleor.giftcard.utils.send_gift_card_notification")
+@patch("swiftmovers.giftcard.utils.send_gift_card_notification")
 def test_order_fulfill_with_gift_cards_by_app(
     mock_send_notification,
     app_api_client,
@@ -777,7 +777,7 @@ def test_order_fulfill_with_gift_cards_by_app(
     mock_send_notification.assert_not_called
 
 
-@patch("saleor.giftcard.utils.send_gift_card_notification")
+@patch("swiftmovers.giftcard.utils.send_gift_card_notification")
 def test_order_fulfill_with_gift_cards_multiple_warehouses(
     mock_send_notification,
     app_api_client,
@@ -838,7 +838,7 @@ def test_order_fulfill_with_gift_cards_multiple_warehouses(
     mock_send_notification.assert_not_called
 
 
-@patch("saleor.graphql.order.mutations.order_fulfill.create_fulfillments")
+@patch("swiftmovers.graphql.order.mutations.order_fulfill.create_fulfillments")
 def test_order_fulfill_without_notification(
     mock_create_fulfillments,
     staff_api_client,
@@ -890,7 +890,7 @@ def test_order_fulfill_without_notification(
     )
 
 
-@patch("saleor.graphql.order.mutations.order_fulfill.create_fulfillments")
+@patch("swiftmovers.graphql.order.mutations.order_fulfill.create_fulfillments")
 def test_order_fulfill_lines_with_empty_quantity(
     mock_create_fulfillments,
     staff_api_client,
@@ -959,7 +959,7 @@ def test_order_fulfill_lines_with_empty_quantity(
 
 
 @pytest.mark.parametrize("fulfillment_auto_approve", [True, False])
-@patch("saleor.graphql.order.mutations.order_fulfill.create_fulfillments")
+@patch("swiftmovers.graphql.order.mutations.order_fulfill.create_fulfillments")
 def test_order_fulfill_without_sku(
     mock_create_fulfillments,
     fulfillment_auto_approve,
@@ -1024,7 +1024,7 @@ def test_order_fulfill_without_sku(
     )
 
 
-@patch("saleor.graphql.order.mutations.order_fulfill.create_fulfillments")
+@patch("swiftmovers.graphql.order.mutations.order_fulfill.create_fulfillments")
 def test_order_fulfill_zero_quantity(
     mock_create_fulfillments,
     staff_api_client,
@@ -1100,7 +1100,7 @@ def test_order_fulfill_channel_without_shipping_zones(
     assert error["code"] == OrderErrorCode.INSUFFICIENT_STOCK.name
 
 
-@patch("saleor.graphql.order.mutations.order_fulfill.create_fulfillments")
+@patch("swiftmovers.graphql.order.mutations.order_fulfill.create_fulfillments")
 def test_order_fulfill_fulfilled_order(
     mock_create_fulfillments,
     staff_api_client,
@@ -1140,7 +1140,7 @@ def test_order_fulfill_fulfilled_order(
     mock_create_fulfillments.assert_not_called()
 
 
-@patch("saleor.graphql.order.mutations.order_fulfill.create_fulfillments")
+@patch("swiftmovers.graphql.order.mutations.order_fulfill.create_fulfillments")
 def test_order_fulfill_unpaid_order_and_disallow_unpaid(
     mock_create_fulfillments,
     staff_api_client,
@@ -1181,7 +1181,7 @@ def test_order_fulfill_unpaid_order_and_disallow_unpaid(
 
 
 @patch(
-    "saleor.graphql.order.mutations.order_fulfill.create_fulfillments", autospec=True
+    "swiftmovers.graphql.order.mutations.order_fulfill.create_fulfillments", autospec=True
 )
 def test_order_fulfill_warehouse_with_insufficient_stock_exception(
     mock_create_fulfillments,
@@ -1235,7 +1235,7 @@ def test_order_fulfill_warehouse_with_insufficient_stock_exception(
 
 
 @patch(
-    "saleor.graphql.order.mutations.order_fulfill.create_fulfillments", autospec=True
+    "swiftmovers.graphql.order.mutations.order_fulfill.create_fulfillments", autospec=True
 )
 def test_order_fulfill_warehouse_duplicated_warehouse_id(
     mock_create_fulfillments,
@@ -1279,7 +1279,7 @@ def test_order_fulfill_warehouse_duplicated_warehouse_id(
 
 
 @patch(
-    "saleor.graphql.order.mutations.order_fulfill.create_fulfillments", autospec=True
+    "swiftmovers.graphql.order.mutations.order_fulfill.create_fulfillments", autospec=True
 )
 def test_order_fulfill_warehouse_duplicated_order_line_id(
     mock_create_fulfillments,
@@ -1323,7 +1323,7 @@ def test_order_fulfill_warehouse_duplicated_order_line_id(
     mock_create_fulfillments.assert_not_called()
 
 
-@patch("saleor.graphql.order.mutations.order_fulfill.create_fulfillments")
+@patch("swiftmovers.graphql.order.mutations.order_fulfill.create_fulfillments")
 def test_order_fulfill_preorder(
     mock_create_fulfillments,
     staff_api_client,
@@ -1409,7 +1409,7 @@ def test_order_fulfill_preorder_waiting_fulfillment(
     )
 
 
-@patch("saleor.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
+@patch("swiftmovers.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
 def test_create_digital_fulfillment(
     mock_email_fulfillment,
     digital_content,

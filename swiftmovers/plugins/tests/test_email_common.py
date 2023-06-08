@@ -34,7 +34,7 @@ def test_validate_default_email_configuration_bad_email(
     assert e.value.args[0]["sender_address"].code == PluginErrorCode.INVALID.value
 
 
-@patch("saleor.plugins.email_common.validate_email_config")
+@patch("swiftmovers.plugins.email_common.validate_email_config")
 def test_validate_default_email_configuration_correct_email(
     mock_email_config, plugin_configuration, email_configuration
 ):
@@ -42,7 +42,7 @@ def test_validate_default_email_configuration_correct_email(
     validate_default_email_configuration(plugin_configuration, email_configuration)
 
 
-@patch("saleor.plugins.email_common.validate_email_config")
+@patch("swiftmovers.plugins.email_common.validate_email_config")
 def test_validate_default_email_configuration_backend_raises(
     validate_email_config_mock, plugin_configuration, email_configuration
 ):

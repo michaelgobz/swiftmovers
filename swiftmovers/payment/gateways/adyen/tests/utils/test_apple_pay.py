@@ -2,8 +2,8 @@ from unittest import mock
 
 import pytest
 
-from saleor.payment import PaymentError
-from saleor.payment.gateways.adyen.utils.apple_pay import (
+from swiftmovers.payment import PaymentError
+from swiftmovers.payment.gateways.adyen.utils.apple_pay import (
     initialize_apple_pay_session,
     validate_payment_data_for_apple_pay,
 )
@@ -15,37 +15,37 @@ from saleor.payment.gateways.adyen.utils.apple_pay import (
         (
             "https://apple-pay-gateway.apple.com/paymentservices/startSession",
             "merchant.com.identifier",
-            "saleor.com",
+            "swiftmovers.com",
             None,
             "certifiate data",
         ),
-        (None, "merchant.com.identifier", "saleor.com", "Saleor", "certifiate data"),
+        (None, "merchant.com.identifier", "swiftmovers.com", "swiftmovers", "certifiate data"),
         (
             "https://apple-pay-gateway.apple.com/paymentservices/startSession",
             None,
-            "saleor.com",
-            "Saleor",
+            "swiftmovers.com",
+            "swiftmovers",
             "certifiate data",
         ),
         (
             "https://apple-pay-gateway.apple.com/paymentservices/startSession",
             "merchant.com.identifier",
             None,
-            "Saleor",
+            "swiftmovers",
             "certifiate data",
         ),
         (
             "https://not-whitelisted-domain.com/paymentservices/startSession",
             "merchant.com.identifier",
-            "saleor.com",
-            "Saleor",
+            "swiftmovers.com",
+            "swiftmovers",
             "certifiate data",
         ),
         (
             "https://apple-pay-gateway.apple.com/paymentservices/startSession",
             "merchant.com.identifier",
-            "saleor.com",
-            "Saleor",
+            "swiftmovers.com",
+            "swiftmovers",
             None,
         ),
     ],
@@ -62,8 +62,8 @@ def test_validate_payment_data_for_apple_pay_raises_payment_error(
 def test_validate_payment_data_for_apple_pay():
     validation_url = "https://apple-pay-gateway.apple.com/paymentservices/startSession"
     merchant_identifier = "merchant.com.identifier"
-    domain = "saleor.com"
-    display_name = "Saleor "
+    domain = "swiftmovers.com"
+    display_name = "swiftmovers "
     certificate = "certifiate data"
 
     validate_payment_data_for_apple_pay(
@@ -71,8 +71,8 @@ def test_validate_payment_data_for_apple_pay():
     )
 
 
-@mock.patch("saleor.payment.gateways.adyen.utils.apple_pay.NamedTemporaryFile")
-@mock.patch("saleor.payment.gateways.adyen.utils.apple_pay.requests.post")
+@mock.patch("swiftmovers.payment.gateways.adyen.utils.apple_pay.NamedTemporaryFile")
+@mock.patch("swiftmovers.payment.gateways.adyen.utils.apple_pay.requests.post")
 def test_initialize_payment_for_apple_pay(mocked_request, mocked_tmp_file):
     mocked_cert_file_name = "cert-file-name"
     mocked_file = mock.MagicMock()
@@ -91,8 +91,8 @@ def test_initialize_payment_for_apple_pay(mocked_request, mocked_tmp_file):
 
     validation_url = "https://apple-pay-gateway.apple.com/paymentservices/startSession"
     merchant_identifier = "merchant.com.identifier"
-    domain = "saleor.com"
-    display_name = "Saleor Shop"
+    domain = "swiftmovers.com"
+    display_name = "swiftmovers Shop"
     certificate = "certifiate data"
 
     initialize_apple_pay_session(
@@ -119,7 +119,7 @@ def test_initialize_payment_for_apple_pay(mocked_request, mocked_tmp_file):
     )
 
 
-@mock.patch("saleor.payment.gateways.adyen.utils.apple_pay.requests.post")
+@mock.patch("swiftmovers.payment.gateways.adyen.utils.apple_pay.requests.post")
 def test_initialize_payment_for_apple_pay_request_failed(mocked_request):
     mocked_response = mock.Mock()
     mocked_response.ok = False
@@ -128,8 +128,8 @@ def test_initialize_payment_for_apple_pay_request_failed(mocked_request):
 
     validation_url = "https://apple-pay-gateway.apple.com/paymentservices/startSession"
     merchant_identifier = "merchant.com.identifier"
-    domain = "saleor.com"
-    display_name = "Saleor Shop"
+    domain = "swiftmovers.com"
+    display_name = "swiftmovers Shop"
     certificate = "certifiate data"
 
     with pytest.raises(PaymentError):

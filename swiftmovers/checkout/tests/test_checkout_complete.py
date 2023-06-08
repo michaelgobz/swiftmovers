@@ -41,7 +41,7 @@ from ..payment_utils import update_checkout_payment_statuses
 from ..utils import add_variant_to_checkout
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.notify")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_create_order_captured_payment_creates_expected_events(
     mock_notify,
     checkout_with_item,
@@ -189,7 +189,7 @@ def test_create_order_captured_payment_creates_expected_events(
     assert not placement_event.parameters  # should not have any additional parameters
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.notify")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_create_order_captured_payment_creates_expected_events_anonymous_user(
     mock_notify,
     checkout_with_item,
@@ -334,7 +334,7 @@ def test_create_order_captured_payment_creates_expected_events_anonymous_user(
     assert not CustomerEvent.objects.exists()  # should not have created any event
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.notify")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_create_order_preauth_payment_creates_expected_events(
     mock_notify,
     checkout_with_item,
@@ -446,7 +446,7 @@ def test_create_order_preauth_payment_creates_expected_events(
     assert not placement_event.parameters  # should not have any additional parameters
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.notify")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_create_order_preauth_payment_creates_expected_events_anonymous_user(
     mock_notify,
     checkout_with_item,
@@ -804,7 +804,7 @@ def test_create_order_with_many_gift_cards(
     )
 
 
-@mock.patch("saleor.giftcard.utils.send_gift_card_notification")
+@mock.patch("swiftmovers.giftcard.utils.send_gift_card_notification")
 @pytest.mark.parametrize("is_anonymous_user", (True, False))
 def test_create_order_gift_card_bought(
     send_notification_mock,
@@ -903,7 +903,7 @@ def test_create_order_gift_card_bought(
     )
 
 
-@mock.patch("saleor.giftcard.utils.send_gift_card_notification")
+@mock.patch("swiftmovers.giftcard.utils.send_gift_card_notification")
 @pytest.mark.parametrize("is_anonymous_user", (True, False))
 def test_create_order_gift_card_bought_order_not_captured_gift_cards_not_sent(
     send_notification_mock,
@@ -967,7 +967,7 @@ def test_create_order_gift_card_bought_order_not_captured_gift_cards_not_sent(
     send_notification_mock.assert_not_called()
 
 
-@mock.patch("saleor.giftcard.utils.send_gift_card_notification")
+@mock.patch("swiftmovers.giftcard.utils.send_gift_card_notification")
 @pytest.mark.parametrize("is_anonymous_user", (True, False))
 def test_create_order_gift_card_bought_only_shippable_gift_card(
     send_notification_mock,
@@ -1237,7 +1237,7 @@ def test_complete_checkout_0_total_with_transaction_for_mark_as_paid(
     assert order.charge_status == OrderChargeStatus.FULL
 
 
-@mock.patch("saleor.plugins.manager.PluginsManager.notify")
+@mock.patch("swiftmovers.plugins.manager.PluginsManager.notify")
 def test_complete_checkout_0_total_captured_payment_creates_expected_events(
     mock_notify,
     checkout_with_item_total_0,
@@ -1351,8 +1351,8 @@ def test_complete_checkout_0_total_captured_payment_creates_expected_events(
     assert not placement_event.parameters  # should not have any additional parameters
 
 
-@mock.patch("saleor.checkout.complete_checkout._create_order")
-@mock.patch("saleor.checkout.complete_checkout._process_payment")
+@mock.patch("swiftmovers.checkout.complete_checkout._create_order")
+@mock.patch("swiftmovers.checkout.complete_checkout._process_payment")
 def test_complete_checkout_action_required_voucher_once_per_customer(
     mocked_process_payment,
     mocked_create_order,
@@ -1408,7 +1408,7 @@ def test_complete_checkout_action_required_voucher_once_per_customer(
     mocked_create_order.assert_not_called()
 
 
-@mock.patch("saleor.checkout.complete_checkout._create_order")
+@mock.patch("swiftmovers.checkout.complete_checkout._create_order")
 def test_complete_checkout_order_not_created_when_the_refund_is_ongoing(
     mocked_create_order,
     customer_user,
@@ -1459,7 +1459,7 @@ def test_complete_checkout_order_not_created_when_the_refund_is_ongoing(
     mocked_create_order.assert_not_called()
 
 
-@mock.patch("saleor.checkout.complete_checkout._create_order")
+@mock.patch("swiftmovers.checkout.complete_checkout._create_order")
 def test_complete_checkout_when_checkout_doesnt_exists(
     mocked_create_order,
     customer_user,
@@ -1516,8 +1516,8 @@ def test_complete_checkout_when_checkout_doesnt_exists(
     mocked_create_order.assert_not_called()
 
 
-@mock.patch("saleor.checkout.complete_checkout._create_order")
-@mock.patch("saleor.checkout.complete_checkout._process_payment")
+@mock.patch("swiftmovers.checkout.complete_checkout._create_order")
+@mock.patch("swiftmovers.checkout.complete_checkout._process_payment")
 def test_complete_checkout_checkout_was_deleted_before_completing(
     mocked_process_payment,
     mocked_create_order,
@@ -1555,7 +1555,7 @@ def test_complete_checkout_checkout_was_deleted_before_completing(
         Checkout.objects.filter(token=checkout.token).delete()
 
     with before_after.after(
-        "saleor.checkout.complete_checkout._process_payment", convert_checkout_to_order
+        "swiftmovers.checkout.complete_checkout._process_payment", convert_checkout_to_order
     ):
         order_from_checkout, action_required, _ = complete_checkout(
             checkout_info=checkout_info,
@@ -1780,7 +1780,7 @@ def test_create_order_store_shipping_prices_with_free_shipping_voucher(
     )
 
 
-@mock.patch("saleor.payment.gateway.payment_refund_or_void")
+@mock.patch("swiftmovers.payment.gateway.payment_refund_or_void")
 def test_complete_checkout_invalid_shipping_method(
     mocked_payment_refund_or_void,
     voucher,
@@ -1844,7 +1844,7 @@ def test_complete_checkout_invalid_shipping_method(
     )
 
 
-@mock.patch("saleor.checkout.complete_checkout.complete_checkout_with_transaction")
+@mock.patch("swiftmovers.checkout.complete_checkout.complete_checkout_with_transaction")
 def test_checkout_complete_pick_transaction_flow(
     mocked_flow,
     order,
@@ -1893,7 +1893,7 @@ def test_checkout_complete_pick_transaction_flow(
     )
 
 
-@mock.patch("saleor.checkout.complete_checkout.complete_checkout_with_transaction")
+@mock.patch("swiftmovers.checkout.complete_checkout.complete_checkout_with_transaction")
 def test_checkout_complete_pick_transaction_flow_when_checkout_total_zero(
     mocked_flow, order, checkout_with_item_total_0, customer_user, channel_USD
 ):
@@ -1946,7 +1946,7 @@ def test_checkout_complete_pick_transaction_flow_when_checkout_total_zero(
     )
 
 
-@mock.patch("saleor.checkout.complete_checkout.complete_checkout_with_payment")
+@mock.patch("swiftmovers.checkout.complete_checkout.complete_checkout_with_payment")
 def test_checkout_complete_pick_payment_flow(
     mocked_flow, order, checkout_ready_to_complete, customer_user
 ):
@@ -1999,9 +1999,9 @@ def test_checkout_complete_pick_payment_flow(
     )
 
 
-@mock.patch("saleor.checkout.calculations.get_tax_calculation_strategy_for_checkout")
-@mock.patch("saleor.checkout.complete_checkout._create_order")
-@mock.patch("saleor.checkout.complete_checkout._process_payment")
+@mock.patch("swiftmovers.checkout.calculations.get_tax_calculation_strategy_for_checkout")
+@mock.patch("swiftmovers.checkout.complete_checkout._create_order")
+@mock.patch("swiftmovers.checkout.complete_checkout._process_payment")
 def test_complete_checkout_ensure_prices_are_not_recalculated_in_post_payment_part(
     mocked_process_payment,
     mocked_create_order,
@@ -2060,7 +2060,7 @@ def test_complete_checkout_ensure_prices_are_not_recalculated_in_post_payment_pa
 
     # when
     with before_after.after(
-        "saleor.checkout.complete_checkout._process_payment", update_price_expiration
+        "swiftmovers.checkout.complete_checkout._process_payment", update_price_expiration
     ):
         order, action_required, _ = complete_checkout(
             checkout_info=checkout_info,

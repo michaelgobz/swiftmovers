@@ -86,9 +86,9 @@ CREATE_PRODUCT_MUTATION = """
 """
 
 
-@patch("saleor.product.tasks.update_product_discounted_price_task.delay")
-@patch("saleor.plugins.manager.PluginsManager.product_updated")
-@patch("saleor.plugins.manager.PluginsManager.product_created")
+@patch("swiftmovers.product.tasks.update_product_discounted_price_task.delay")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_created")
 def test_create_product(
     created_webhook_mock,
     updated_webhook_mock,
@@ -864,7 +864,7 @@ def test_create_product_no_category_id(
     assert data["product"]["category"] is None
 
 
-@patch("saleor.product.tasks.update_product_discounted_price_task.delay")
+@patch("swiftmovers.product.tasks.update_product_discounted_price_task.delay")
 def test_create_product_with_negative_weight(
     update_product_discounted_price_task_mock,
     staff_api_client,
@@ -1154,7 +1154,7 @@ def test_product_create_with_collections_webhook(
         assert product.collections.first() == published_collection
 
     monkeypatch.setattr(
-        "saleor.plugins.manager.PluginsManager.product_created",
+        "swiftmovers.plugins.manager.PluginsManager.product_created",
         lambda _, product: assert_product_has_collections(product),
     )
 

@@ -24,7 +24,7 @@ from ..consts import (
 )
 
 
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.WebhookEndpoint.list")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.WebhookEndpoint.list")
 def test_validate_plugin_configuration_correct_configuration(
     mocked_stripe, stripe_plugin
 ):
@@ -39,7 +39,7 @@ def test_validate_plugin_configuration_correct_configuration(
     assert mocked_stripe.called
 
 
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.WebhookEndpoint.list")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.WebhookEndpoint.list")
 def test_validate_plugin_configuration_incorrect_configuration(
     mocked_stripe, stripe_plugin
 ):
@@ -56,7 +56,7 @@ def test_validate_plugin_configuration_incorrect_configuration(
     assert mocked_stripe.called
 
 
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.WebhookEndpoint.list")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.WebhookEndpoint.list")
 def test_validate_plugin_configuration_missing_required_fields(
     mocked_stripe, stripe_plugin
 ):
@@ -76,7 +76,7 @@ def test_validate_plugin_configuration_missing_required_fields(
     assert not mocked_stripe.called
 
 
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.WebhookEndpoint.list")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.WebhookEndpoint.list")
 def test_validate_plugin_configuration_validate_only_when_active(
     mocked_stripe, stripe_plugin
 ):
@@ -96,7 +96,7 @@ def test_validate_plugin_configuration_validate_only_when_active(
     assert not mocked_stripe.called
 
 
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.WebhookEndpoint.delete")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.WebhookEndpoint.delete")
 def test_pre_save_plugin_configuration_removes_webhook_when_disabled(
     mocked_stripe, stripe_plugin
 ):
@@ -132,7 +132,7 @@ def get_field_from_plugin_configuration(
     return None
 
 
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.WebhookEndpoint.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.WebhookEndpoint.create")
 def test_pre_save_plugin_configuration(mocked_stripe, stripe_plugin):
     webhook_object = StripeObject(id="stripe_webhook_id", last_response={})
     webhook_object.secret = "stripe_webhook_secret"
@@ -157,8 +157,8 @@ def test_pre_save_plugin_configuration(mocked_stripe, stripe_plugin):
     assert mocked_stripe.called
 
 
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.Customer.create")
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.Customer.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
 def test_process_payment(
     mocked_payment_intent,
     mocked_customer,
@@ -214,8 +214,8 @@ def test_process_payment(
     assert not mocked_customer.called
 
 
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.Customer.create")
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.Customer.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
 def test_process_payment_with_disabled_include_receipt_email(
     mocked_payment_intent,
     mocked_customer,
@@ -273,8 +273,8 @@ def test_process_payment_with_disabled_include_receipt_email(
     assert not mocked_customer.called
 
 
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.Customer.create")
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.Customer.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
 def test_process_payment_with_enabled_include_receipt_email(
     mocked_payment_intent,
     mocked_customer,
@@ -333,8 +333,8 @@ def test_process_payment_with_enabled_include_receipt_email(
     assert not mocked_customer.called
 
 
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.Customer.create")
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.Customer.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
 def test_process_payment_with_customer(
     mocked_payment_intent,
     mocked_customer_create,
@@ -408,8 +408,8 @@ def test_process_payment_with_customer(
     "store_payment_method",
     [StorePaymentMethodEnum.OFF_SESSION, StorePaymentMethodEnum.ON_SESSION],
 )
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.Customer.create")
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.Customer.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
 def test_process_payment_with_customer_and_future_usage(
     mocked_payment_intent,
     mocked_customer_create,
@@ -502,8 +502,8 @@ def test_process_payment_with_customer_and_future_usage(
     )
 
 
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.Customer.create")
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.Customer.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
 def test_process_payment_with_customer_and_future_usage_no_store(
     mocked_payment_intent,
     mocked_customer_create,
@@ -579,8 +579,8 @@ def test_process_payment_with_customer_and_future_usage_no_store(
     )
 
 
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.Customer.create")
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.Customer.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
 def test_process_payment_with_customer_and_payment_method(
     mocked_payment_intent,
     mocked_customer_create,
@@ -676,8 +676,8 @@ def test_process_payment_with_customer_and_payment_method(
     )
 
 
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.Customer.create")
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.Customer.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
 def test_process_payment_with_payment_method_types(
     mocked_payment_intent,
     mocked_customer_create,
@@ -773,8 +773,8 @@ def test_process_payment_with_payment_method_types(
     )
 
 
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.Customer.create")
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.Customer.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
 def test_process_payment_offline(
     mocked_payment_intent,
     mocked_customer_create,
@@ -871,8 +871,8 @@ def test_process_payment_offline(
     )
 
 
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.Customer.create")
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.Customer.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
 def test_process_payment_with_customer_and_payment_method_raises_authentication_error(
     mocked_payment_intent,
     mocked_customer_create,
@@ -974,8 +974,8 @@ def test_process_payment_with_customer_and_payment_method_raises_authentication_
     )
 
 
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.Customer.create")
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.Customer.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
 def test_process_payment_with_customer_and_payment_method_raises_error(
     mocked_payment_intent,
     mocked_customer_create,
@@ -1052,7 +1052,7 @@ def test_process_payment_with_customer_and_payment_method_raises_error(
     )
 
 
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
 def test_process_payment_with_disabled_order_auto_confirmation(
     mocked_payment_intent,
     stripe_plugin,
@@ -1109,7 +1109,7 @@ def test_process_payment_with_disabled_order_auto_confirmation(
     )
 
 
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
 def test_process_payment_with_manual_capture(
     mocked_payment_intent, stripe_plugin, payment_stripe_for_checkout, channel_USD
 ):
@@ -1164,7 +1164,7 @@ def test_process_payment_with_manual_capture(
     )
 
 
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
 def test_process_payment_with_error(
     mocked_payment_intent, stripe_plugin, payment_stripe_for_checkout, channel_USD
 ):
@@ -1247,7 +1247,7 @@ def test_confirm_payment_for_webhook(kind, stripe_plugin, payment_stripe_for_che
         (TransactionKind.CAPTURE, SUCCESS_STATUS),
     ],
 )
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.retrieve")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.retrieve")
 def test_confirm_payment_intent_without_details(
     mocked_intent_retrieve,
     kind,
@@ -1304,7 +1304,7 @@ def test_confirm_payment_intent_without_details(
         (TransactionKind.CAPTURE, SUCCESS_STATUS),
     ],
 )
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.retrieve")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.retrieve")
 def test_confirm_payment_intent_with_details(
     mocked_intent_retrieve,
     kind,
@@ -1361,7 +1361,7 @@ def test_confirm_payment_intent_with_details(
     assert payment_method_info.type == "card"
 
 
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.retrieve")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.retrieve")
 def test_confirm_payment_incorrect_payment_intent(
     mocked_intent_retrieve, stripe_plugin, payment_stripe_for_checkout
 ):
@@ -1402,7 +1402,7 @@ def test_confirm_payment_incorrect_payment_intent(
 
 
 @pytest.mark.parametrize("status", ACTION_REQUIRED_STATUSES)
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.retrieve")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.retrieve")
 def test_confirm_payment_action_required_status(
     mocked_intent_retrieve, status, stripe_plugin, payment_stripe_for_checkout
 ):
@@ -1446,7 +1446,7 @@ def test_confirm_payment_action_required_status(
     assert response.error is None
 
 
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.retrieve")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.retrieve")
 def test_confirm_payment_processing_status(
     mocked_intent_retrieve, stripe_plugin, payment_stripe_for_checkout
 ):
@@ -1490,7 +1490,7 @@ def test_confirm_payment_processing_status(
     assert response.error is None
 
 
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.capture")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.capture")
 def test_capture_payment(
     mocked_capture, payment_stripe_for_order, order_with_lines, stripe_plugin
 ):
@@ -1540,7 +1540,7 @@ def test_capture_payment(
     assert response.transaction_id == payment_intent_id
 
 
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.Refund.create")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.Refund.create")
 def test_refund_payment(
     mocked_refund, payment_stripe_for_order, order_with_lines, stripe_plugin
 ):
@@ -1590,7 +1590,7 @@ def test_refund_payment(
     assert response.transaction_id == payment_intent_id
 
 
-@patch("saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.cancel")
+@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.cancel")
 def test_void_payment(
     mocked_cancel, payment_stripe_for_order, order_with_lines, stripe_plugin
 ):

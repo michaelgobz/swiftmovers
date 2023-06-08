@@ -115,7 +115,7 @@ query FetchProduct($id: ID, $channel: String) {
 """
 
 
-@mock.patch("saleor.graphql.product.types.products.get_tax_rate_for_tax_class")
+@mock.patch("swiftmovers.graphql.product.types.products.get_tax_rate_for_tax_class")
 def test_product_channel_listing_pricing_field_no_address(
     mock_get_tax_rate_for_tax_class,
     staff_api_client,

@@ -90,13 +90,13 @@ class IssuingPrincipal(Union):
 
 class Event(graphene.Interface):
     issued_at = graphene.DateTime(description="Time of the event.")
-    version = graphene.String(description="Saleor version that triggered the event.")
+    version = graphene.String(description="swiftmovers version that triggered the event.")
     issuing_principal = graphene.Field(
         IssuingPrincipal,
         description="The user or application that triggered the event.",
     )
     recipient = graphene.Field(
-        "saleor.graphql.app.types.App",
+        "swiftmovers.graphql.app.types.App",
         description="The application receiving the webhook.",
     )
 
@@ -130,7 +130,7 @@ class Event(graphene.Interface):
 
 class AddressBase(AbstractType):
     address = graphene.Field(
-        "saleor.graphql.account.types.Address",
+        "swiftmovers.graphql.account.types.Address",
         description="The address the event relates to.",
     )
 
@@ -166,7 +166,7 @@ class AddressDeleted(SubscriptionObjectType, AddressBase):
 
 class AppBase(AbstractType):
     app = graphene.Field(
-        "saleor.graphql.app.types.App",
+        "swiftmovers.graphql.app.types.App",
         description="The application the event relates to.",
     )
 
@@ -210,7 +210,7 @@ class AppStatusChanged(SubscriptionObjectType, AppBase):
 
 class AttributeBase(AbstractType):
     attribute = graphene.Field(
-        "saleor.graphql.attribute.types.Attribute",
+        "swiftmovers.graphql.attribute.types.Attribute",
         description="The attribute the event relates to.",
     )
 
@@ -246,7 +246,7 @@ class AttributeDeleted(SubscriptionObjectType, AttributeBase):
 
 class AttributeValueBase(AbstractType):
     attribute_value = graphene.Field(
-        "saleor.graphql.attribute.types.AttributeValue",
+        "swiftmovers.graphql.attribute.types.AttributeValue",
         description="The attribute value the event relates to.",
     )
 
@@ -282,7 +282,7 @@ class AttributeValueDeleted(SubscriptionObjectType, AttributeValueBase):
 
 class CategoryBase(AbstractType):
     category = graphene.Field(
-        "saleor.graphql.product.types.Category",
+        "swiftmovers.graphql.product.types.Category",
         description="The category the event relates to.",
     )
 
@@ -318,7 +318,7 @@ class CategoryDeleted(SubscriptionObjectType, CategoryBase):
 
 class ChannelBase(AbstractType):
     channel = graphene.Field(
-        "saleor.graphql.channel.types.Channel",
+        "swiftmovers.graphql.channel.types.Channel",
         description="The channel the event relates to.",
     )
 
@@ -362,7 +362,7 @@ class ChannelStatusChanged(SubscriptionObjectType, ChannelBase):
 
 class OrderBase(AbstractType):
     order = graphene.Field(
-        "saleor.graphql.order.types.Order",
+        "swiftmovers.graphql.order.types.Order",
         description="The order the event relates to.",
     )
 
@@ -464,7 +464,7 @@ class DraftOrderDeleted(SubscriptionObjectType, OrderBase):
 
 class GiftCardBase(AbstractType):
     gift_card = graphene.Field(
-        "saleor.graphql.giftcard.types.GiftCard",
+        "swiftmovers.graphql.giftcard.types.GiftCard",
         description="The gift card the event relates to.",
     )
 
@@ -548,7 +548,7 @@ class GiftCardMetadataUpdated(SubscriptionObjectType, GiftCardBase):
 
 class MenuBase(AbstractType):
     menu = graphene.Field(
-        "saleor.graphql.menu.types.Menu",
+        "swiftmovers.graphql.menu.types.Menu",
         channel=graphene.String(
             description="Slug of a channel for which the data should be returned."
         ),
@@ -587,7 +587,7 @@ class MenuDeleted(SubscriptionObjectType, MenuBase):
 
 class MenuItemBase(AbstractType):
     menu_item = graphene.Field(
-        "saleor.graphql.menu.types.MenuItem",
+        "swiftmovers.graphql.menu.types.MenuItem",
         channel=graphene.String(
             description="Slug of a channel for which the data should be returned."
         ),
@@ -626,14 +626,14 @@ class MenuItemDeleted(SubscriptionObjectType, MenuItemBase):
 
 class ProductBase(AbstractType):
     product = graphene.Field(
-        "saleor.graphql.product.types.Product",
+        "swiftmovers.graphql.product.types.Product",
         channel=graphene.String(
             description="Slug of a channel for which the data should be returned."
         ),
         description="The product the event relates to.",
     )
     category = graphene.Field(
-        "saleor.graphql.product.types.categories.Category",
+        "swiftmovers.graphql.product.types.categories.Category",
         description="The category of the product.",
     )
 
@@ -682,7 +682,7 @@ class ProductMetadataUpdated(SubscriptionObjectType, ProductBase):
 
 class ProductMediaBase(AbstractType):
     product_media = graphene.Field(
-        "saleor.graphql.product.types.ProductMedia",
+        "swiftmovers.graphql.product.types.ProductMedia",
         description="The product media the event relates to.",
     )
 
@@ -718,7 +718,7 @@ class ProductMediaDeleted(SubscriptionObjectType, ProductMediaBase):
 
 class ProductVariantBase(AbstractType):
     product_variant = graphene.Field(
-        "saleor.graphql.product.types.ProductVariant",
+        "swiftmovers.graphql.product.types.ProductVariant",
         channel=graphene.String(
             description="Slug of a channel for which the data should be returned."
         ),
@@ -767,7 +767,7 @@ class ProductVariantMetadataUpdated(SubscriptionObjectType, ProductVariantBase):
 
 class ProductVariantOutOfStock(SubscriptionObjectType, ProductVariantBase):
     warehouse = graphene.Field(
-        "saleor.graphql.warehouse.types.Warehouse", description="Look up a warehouse."
+        "swiftmovers.graphql.warehouse.types.Warehouse", description="Look up a warehouse."
     )
 
     class Meta:
@@ -790,7 +790,7 @@ class ProductVariantOutOfStock(SubscriptionObjectType, ProductVariantBase):
 
 class ProductVariantBackInStock(SubscriptionObjectType, ProductVariantBase):
     warehouse = graphene.Field(
-        "saleor.graphql.warehouse.types.Warehouse", description="Look up a warehouse."
+        "swiftmovers.graphql.warehouse.types.Warehouse", description="Look up a warehouse."
     )
 
     class Meta:
@@ -813,7 +813,7 @@ class ProductVariantBackInStock(SubscriptionObjectType, ProductVariantBase):
 
 class ProductVariantStockUpdated(SubscriptionObjectType, ProductVariantBase):
     warehouse = graphene.Field(
-        "saleor.graphql.warehouse.types.Warehouse", description="Look up a warehouse."
+        "swiftmovers.graphql.warehouse.types.Warehouse", description="Look up a warehouse."
     )
 
     class Meta:
@@ -844,7 +844,7 @@ class ProductVariantStockUpdated(SubscriptionObjectType, ProductVariantBase):
 
 class SaleBase(AbstractType):
     sale = graphene.Field(
-        "saleor.graphql.discount.types.Sale",
+        "swiftmovers.graphql.discount.types.Sale",
         channel=graphene.String(
             description="Slug of a channel for which the data should be returned."
         ),
@@ -883,7 +883,7 @@ class SaleDeleted(SubscriptionObjectType, SaleBase):
 
 class SaleToggle(SubscriptionObjectType, SaleBase):
     sale = graphene.Field(
-        "saleor.graphql.discount.types.Sale",
+        "swiftmovers.graphql.discount.types.Sale",
         channel=graphene.String(
             description="Slug of a channel for which the data should be returned."
         ),
@@ -901,11 +901,11 @@ class SaleToggle(SubscriptionObjectType, SaleBase):
 
 class InvoiceBase(AbstractType):
     invoice = graphene.Field(
-        "saleor.graphql.invoice.types.Invoice",
+        "swiftmovers.graphql.invoice.types.Invoice",
         description="The invoice the event relates to.",
     )
     order = graphene.Field(
-        "saleor.graphql.order.types.Order",
+        "swiftmovers.graphql.order.types.Order",
         description="Order related to the invoice." + ADDED_IN_310,
     )
 
@@ -922,7 +922,7 @@ class InvoiceBase(AbstractType):
 
 class InvoiceRequested(SubscriptionObjectType, InvoiceBase):
     order = graphene.Field(
-        "saleor.graphql.order.types.Order",
+        "swiftmovers.graphql.order.types.Order",
         required=True,
         description="Order related to the invoice." + ADDED_IN_310,
     )
@@ -952,11 +952,11 @@ class InvoiceSent(SubscriptionObjectType, InvoiceBase):
 
 class FulfillmentBase(AbstractType):
     fulfillment = graphene.Field(
-        "saleor.graphql.order.types.Fulfillment",
+        "swiftmovers.graphql.order.types.Fulfillment",
         description="The fulfillment the event relates to.",
     )
     order = graphene.Field(
-        "saleor.graphql.order.types.Order",
+        "swiftmovers.graphql.order.types.Order",
         description="The order the fulfillment belongs to.",
     )
 
@@ -1005,7 +1005,7 @@ class FulfillmentMetadataUpdated(SubscriptionObjectType, FulfillmentBase):
 
 class UserBase(AbstractType):
     user = graphene.Field(
-        "saleor.graphql.account.types.User",
+        "swiftmovers.graphql.account.types.User",
         description="The user the event relates to.",
     )
 
@@ -1041,7 +1041,7 @@ class CustomerMetadataUpdated(SubscriptionObjectType, UserBase):
 
 class CollectionBase(AbstractType):
     collection = graphene.Field(
-        "saleor.graphql.product.types.collections.Collection",
+        "swiftmovers.graphql.product.types.collections.Collection",
         channel=graphene.String(
             description="Slug of a channel for which the data should be returned."
         ),
@@ -1088,7 +1088,7 @@ class CollectionMetadataUpdated(SubscriptionObjectType, CollectionBase):
 
 class CheckoutBase(AbstractType):
     checkout = graphene.Field(
-        "saleor.graphql.checkout.types.Checkout",
+        "swiftmovers.graphql.checkout.types.Checkout",
         description="The checkout the event relates to.",
     )
 
@@ -1136,7 +1136,7 @@ class CheckoutMetadataUpdated(SubscriptionObjectType, CheckoutBase):
 
 class PageBase(AbstractType):
     page = graphene.Field(
-        "saleor.graphql.page.types.Page", description="The page the event relates to."
+        "swiftmovers.graphql.page.types.Page", description="The page the event relates to."
     )
 
     @staticmethod
@@ -1171,7 +1171,7 @@ class PageDeleted(SubscriptionObjectType, PageBase):
 
 class PageTypeBase(AbstractType):
     page_type = graphene.Field(
-        "saleor.graphql.page.types.PageType",
+        "swiftmovers.graphql.page.types.PageType",
         description="The page type the event relates to.",
     )
 
@@ -1207,7 +1207,7 @@ class PageTypeDeleted(SubscriptionObjectType, PageTypeBase):
 
 class PermissionGroupBase(AbstractType):
     permission_group = graphene.Field(
-        "saleor.graphql.account.types.Group",
+        "swiftmovers.graphql.account.types.Group",
         description="The permission group the event relates to.",
     )
 
@@ -1243,14 +1243,14 @@ class PermissionGroupDeleted(SubscriptionObjectType, PermissionGroupBase):
 
 class ShippingPriceBase(AbstractType):
     shipping_method = graphene.Field(
-        "saleor.graphql.shipping.types.ShippingMethodType",
+        "swiftmovers.graphql.shipping.types.ShippingMethodType",
         channel=graphene.String(
             description="Slug of a channel for which the data should be returned."
         ),
         description="The shipping method the event relates to.",
     )
     shipping_zone = graphene.Field(
-        "saleor.graphql.shipping.types.ShippingZone",
+        "swiftmovers.graphql.shipping.types.ShippingZone",
         channel=graphene.String(
             description="Slug of a channel for which the data should be returned."
         ),
@@ -1297,7 +1297,7 @@ class ShippingPriceDeleted(SubscriptionObjectType, ShippingPriceBase):
 
 class ShippingZoneBase(AbstractType):
     shipping_zone = graphene.Field(
-        "saleor.graphql.shipping.types.ShippingZone",
+        "swiftmovers.graphql.shipping.types.ShippingZone",
         channel=graphene.String(
             description="Slug of a channel for which the data should be returned."
         ),
@@ -1418,7 +1418,7 @@ class TransactionActionRequest(TransactionActionBase, SubscriptionObjectType):
         description = (
             "Event sent when transaction action is requested."
             + ADDED_IN_34
-            + "\n\nDEPRECATED: this subscription will be removed in Saleor 3.14 "
+            + "\n\nDEPRECATED: this subscription will be removed in swiftmovers 3.14 "
             + "(Preview Feature). Use `TransactionChargeRequested`, "
             + "`TransactionRefundRequested`, `TransactionCancelationRequested` instead."
         )
@@ -1664,7 +1664,7 @@ class TranslationUpdated(SubscriptionObjectType, TranslationBase):
 
 class VoucherBase(AbstractType):
     voucher = graphene.Field(
-        "saleor.graphql.discount.types.Voucher",
+        "swiftmovers.graphql.discount.types.Voucher",
         channel=graphene.String(
             description="Slug of a channel for which the data should be returned."
         ),
@@ -1711,7 +1711,7 @@ class VoucherMetadataUpdated(SubscriptionObjectType, VoucherBase):
 
 class PaymentBase(AbstractType):
     payment = graphene.Field(
-        "saleor.graphql.payment.types.Payment",
+        "swiftmovers.graphql.payment.types.Payment",
         description="Look up a payment.",
     )
 
@@ -1807,7 +1807,7 @@ class ShippingListMethodsForCheckout(SubscriptionObjectType, CheckoutBase):
 
 class CalculateTaxes(SubscriptionObjectType):
     tax_base = graphene.Field(
-        "saleor.graphql.core.types.taxes.TaxableObject", required=True
+        "swiftmovers.graphql.core.types.taxes.TaxableObject", required=True
     )
 
     class Meta:
@@ -1879,7 +1879,7 @@ class OrderFilterShippingMethods(SubscriptionObjectType, OrderBase):
 
 class WarehouseBase(AbstractType):
     warehouse = graphene.Field(
-        "saleor.graphql.warehouse.types.Warehouse",
+        "swiftmovers.graphql.warehouse.types.Warehouse",
         description="The warehouse the event relates to.",
     )
 

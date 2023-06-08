@@ -53,7 +53,7 @@ def test_order_resolver_tax_recalculation(
 
     # when
     with patch(
-        f"saleor.order.calculations.{fun_to_patch}", new=Mock(return_value=price)
+        f"swiftmovers.order.calculations.{fun_to_patch}", new=Mock(return_value=price)
     ):
         response = staff_api_client.post_graphql(
             query,
@@ -127,7 +127,7 @@ def test_order_line_resolver_tax_recalculation(
 
     # when
     with patch(
-        f"saleor.order.calculations.{fun_to_patch}",
+        f"swiftmovers.order.calculations.{fun_to_patch}",
         new=Mock(return_value=ORDER_LINE_PRICE_DATA),
     ):
         response = staff_api_client.post_graphql(
@@ -193,7 +193,7 @@ def test_order_tax_rate_resolver_tax_recalculation(
 
     # when
     with patch(
-        f"saleor.order.calculations.{fun_to_patch}", new=Mock(return_value=tax_rate)
+        f"swiftmovers.order.calculations.{fun_to_patch}", new=Mock(return_value=tax_rate)
     ):
         response = staff_api_client.post_graphql(
             query,

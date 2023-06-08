@@ -7,7 +7,7 @@ from ..calculations import fetch_checkout_data
 from ..fetch import fetch_checkout_info, fetch_checkout_lines
 
 
-@patch("saleor.plugins.manager.PluginsManager.checkout_fully_paid")
+@patch("swiftmovers.plugins.manager.PluginsManager.checkout_fully_paid")
 def test_transaction_amounts_for_checkout_updated_fully_paid(
     mocked_fully_paid, checkout_with_items, transaction_item_generator, plugins_manager
 ):
@@ -35,7 +35,7 @@ def test_transaction_amounts_for_checkout_updated_fully_paid(
     mocked_fully_paid.assert_called_with(checkout)
 
 
-@patch("saleor.plugins.manager.PluginsManager.checkout_fully_paid")
+@patch("swiftmovers.plugins.manager.PluginsManager.checkout_fully_paid")
 def test_transaction_amounts_for_checkout_updated_with_already_fully_paid(
     mocked_fully_paid, checkout_with_items, transaction_item_generator, plugins_manager
 ):

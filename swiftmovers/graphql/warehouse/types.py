@@ -45,7 +45,7 @@ class WarehouseInput(BaseInputObjectType):
 class WarehouseCreateInput(WarehouseInput):
     name = graphene.String(description="Warehouse name.", required=True)
     address = graphene.Field(
-        "saleor.graphql.account.types.AddressInput",
+        "swiftmovers.graphql.account.types.AddressInput",
         description="Address of the warehouse.",
         required=True,
     )
@@ -63,7 +63,7 @@ class WarehouseCreateInput(WarehouseInput):
 class WarehouseUpdateInput(WarehouseInput):
     name = graphene.String(description="Warehouse name.", required=False)
     address = graphene.Field(
-        "saleor.graphql.account.types.AddressInput",
+        "swiftmovers.graphql.account.types.AddressInput",
         description="Address of the warehouse.",
         required=False,
     )
@@ -88,7 +88,7 @@ class Warehouse(ModelObjectType[models.Warehouse]):
     slug = graphene.String(required=True)
     email = graphene.String(required=True)
     is_private = graphene.Boolean(required=True)
-    address = graphene.Field("saleor.graphql.account.types.Address", required=True)
+    address = graphene.Field("swiftmovers.graphql.account.types.Address", required=True)
     company_name = graphene.String(
         required=True,
         description="Warehouse company name.",
@@ -103,7 +103,7 @@ class Warehouse(ModelObjectType[models.Warehouse]):
         required=True,
     )
     shipping_zones = ConnectionField(
-        "saleor.graphql.shipping.types.ShippingZoneCountableConnection",
+        "swiftmovers.graphql.shipping.types.ShippingZoneCountableConnection",
         required=True,
     )
     external_reference = graphene.String(
@@ -162,7 +162,7 @@ class Stock(ModelObjectType[models.Stock]):
     id = graphene.GlobalID(required=True)
     warehouse = graphene.Field(Warehouse, required=True)
     product_variant = graphene.Field(
-        "saleor.graphql.product.types.ProductVariant", required=True
+        "swiftmovers.graphql.product.types.ProductVariant", required=True
     )
     quantity = PermissionsField(
         graphene.Int,

@@ -91,8 +91,8 @@ def test_product_variant_update_with_new_attributes(
     assert attributes[0]["attribute"]["id"] == size_attribute_id
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
 def test_update_product_variant_by_id(
     product_variant_updated_webhook_mock,
     product_variant_created_webhook_mock,
@@ -204,8 +204,8 @@ UPDATE_VARIANT_BY_SKU = """
 """
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
 def test_update_product_variant_by_sku(
     product_variant_updated_webhook_mock,
     product_variant_created_webhook_mock,
@@ -307,8 +307,8 @@ UPDATE_VARIANT_BY_EXTERNAL_REFERENCE = """
     """
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
 def test_update_product_variant_by_external_reference(
     product_variant_updated_webhook_mock,
     product_variant_created_webhook_mock,
@@ -571,8 +571,8 @@ def test_update_product_variant_without_sku_keep_it_empty(
     assert variant.sku is None
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
 def test_update_product_variant_change_sku_to_empty_string(
     product_variant_updated_webhook_mock,
     product_variant_created_webhook_mock,
@@ -847,7 +847,7 @@ def test_update_product_variant_with_value_that_matching_existing_name(
         assert len(attr_data["values"]) == 1
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
 def test_update_variant_with_boolean_attribute(
     product_variant_updated,
     permission_manage_products,
@@ -897,7 +897,7 @@ def test_update_variant_with_boolean_attribute(
     product_variant_updated.assert_called_once_with(product.variants.last())
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
 def test_update_variant_with_swatch_attribute_new_value_created(
     product_variant_updated,
     permission_manage_products,
@@ -946,7 +946,7 @@ def test_update_variant_with_swatch_attribute_new_value_created(
     product_variant_updated.assert_called_once_with(product.variants.last())
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
 def test_update_variant_with_swatch_attribute_existing_value(
     product_variant_updated,
     permission_manage_products,
@@ -996,7 +996,7 @@ def test_update_variant_with_swatch_attribute_existing_value(
     product_variant_updated.assert_called_once_with(product.variants.last())
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
 def test_update_variant_with_swatch_attribute_use_values(
     product_variant_updated,
     permission_manage_products,
@@ -1042,7 +1042,7 @@ def test_update_variant_with_swatch_attribute_use_values(
     product_variant_updated.assert_called_once_with(product.variants.last())
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
 def test_update_variant_with_swatch_attribute_no_values_given(
     product_variant_updated,
     permission_manage_products,
@@ -1084,7 +1084,7 @@ def test_update_variant_with_swatch_attribute_no_values_given(
     assert not data["attributes"][-1]["values"]
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
 def test_update_variant_with_rich_text_attribute(
     product_variant_updated,
     permission_manage_products,
@@ -1131,7 +1131,7 @@ def test_update_variant_with_rich_text_attribute(
     product_variant_updated.assert_called_once_with(product.variants.last())
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
 def test_update_variant_with_plain_text_attribute(
     product_variant_updated,
     permission_manage_products,
@@ -1182,7 +1182,7 @@ def test_update_variant_with_plain_text_attribute(
     product_variant_updated.assert_called_once_with(product.variants.last())
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
 def test_update_variant_with_plain_text_attribute_value_required(
     product_variant_updated,
     permission_manage_products,
@@ -1290,7 +1290,7 @@ def test_update_variant_with_required_plain_text_attribute_no_value(
     assert errors[0]["field"] == "attributes"
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
 def test_update_variant_with_date_attribute(
     product_variant_updated,
     permission_manage_products,
@@ -1350,7 +1350,7 @@ def test_update_variant_with_date_attribute(
     product_variant_updated.assert_called_once_with(product.variants.last())
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
 def test_update_variant_with_date_time_attribute(
     product_variant_updated,
     permission_manage_products,
@@ -1412,7 +1412,7 @@ def test_update_variant_with_date_time_attribute(
     product_variant_updated.assert_called_once_with(product.variants.last())
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
 def test_update_variant_with_numeric_attribute(
     product_variant_updated,
     permission_manage_products,

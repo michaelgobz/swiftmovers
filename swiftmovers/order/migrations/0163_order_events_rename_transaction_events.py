@@ -2,7 +2,7 @@ from django.db import migrations
 from django.apps import apps as registry
 from django.db.models.signals import post_migrate
 
-from .tasks.saleor3_13 import (
+from .tasks.swiftmovers3_13 import (
     order_events_rename_transaction_capture_events_task,
     order_events_rename_transaction_void_events_task,
 )

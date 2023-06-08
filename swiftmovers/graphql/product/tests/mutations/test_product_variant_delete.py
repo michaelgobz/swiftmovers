@@ -22,9 +22,9 @@ DELETE_VARIANT_BY_SKU_MUTATION = """
 """
 
 
-@patch("saleor.product.tasks.update_product_discounted_price_task.delay")
-@patch("saleor.plugins.manager.PluginsManager.product_variant_deleted")
-@patch("saleor.order.tasks.recalculate_orders_task.delay")
+@patch("swiftmovers.product.tasks.update_product_discounted_price_task.delay")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_deleted")
+@patch("swiftmovers.order.tasks.recalculate_orders_task.delay")
 def test_delete_variant_by_sku(
     mocked_recalculate_orders_task,
     product_variant_deleted_webhook_mock,
@@ -69,9 +69,9 @@ DELETE_VARIANT_MUTATION = """
 """
 
 
-@patch("saleor.product.tasks.update_product_discounted_price_task.delay")
-@patch("saleor.plugins.manager.PluginsManager.product_variant_deleted")
-@patch("saleor.order.tasks.recalculate_orders_task.delay")
+@patch("swiftmovers.product.tasks.update_product_discounted_price_task.delay")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_deleted")
+@patch("swiftmovers.order.tasks.recalculate_orders_task.delay")
 def test_delete_variant(
     mocked_recalculate_orders_task,
     product_variant_deleted_webhook_mock,
@@ -124,9 +124,9 @@ def test_delete_variant_remove_checkout_lines(
         line.refresh_from_db()
 
 
-@patch("saleor.product.signals.delete_from_storage_task.delay")
-@patch("saleor.plugins.manager.PluginsManager.product_variant_deleted")
-@patch("saleor.order.tasks.recalculate_orders_task.delay")
+@patch("swiftmovers.product.signals.delete_from_storage_task.delay")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_deleted")
+@patch("swiftmovers.order.tasks.recalculate_orders_task.delay")
 def test_delete_variant_with_image(
     mocked_recalculate_orders_task,
     product_variant_deleted_webhook_mock,
@@ -158,7 +158,7 @@ def test_delete_variant_with_image(
     delete_from_storage_task_mock.assert_not_called()
 
 
-@patch("saleor.order.tasks.recalculate_orders_task.delay")
+@patch("swiftmovers.order.tasks.recalculate_orders_task.delay")
 def test_delete_variant_in_draft_order(
     mocked_recalculate_orders_task,
     staff_api_client,
@@ -256,7 +256,7 @@ def test_delete_variant_in_draft_order(
         assert param in events.get(order=second_draft_order).parameters
 
 
-@patch("saleor.order.tasks.recalculate_orders_task.delay")
+@patch("swiftmovers.order.tasks.recalculate_orders_task.delay")
 def test_delete_default_variant(
     mocked_recalculate_orders_task,
     staff_api_client,
@@ -295,7 +295,7 @@ def test_delete_default_variant(
     mocked_recalculate_orders_task.assert_not_called()
 
 
-@patch("saleor.order.tasks.recalculate_orders_task.delay")
+@patch("swiftmovers.order.tasks.recalculate_orders_task.delay")
 def test_delete_not_default_variant_left_default_variant_unchanged(
     mocked_recalculate_orders_task,
     staff_api_client,
@@ -334,7 +334,7 @@ def test_delete_not_default_variant_left_default_variant_unchanged(
     mocked_recalculate_orders_task.assert_not_called()
 
 
-@patch("saleor.order.tasks.recalculate_orders_task.delay")
+@patch("swiftmovers.order.tasks.recalculate_orders_task.delay")
 def test_delete_default_all_product_variant_left_product_default_variant_unset(
     mocked_recalculate_orders_task,
     staff_api_client,
@@ -371,8 +371,8 @@ def test_delete_default_all_product_variant_left_product_default_variant_unset(
     mocked_recalculate_orders_task.assert_not_called()
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_deleted")
-@patch("saleor.order.tasks.recalculate_orders_task.delay")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_deleted")
+@patch("swiftmovers.order.tasks.recalculate_orders_task.delay")
 def test_delete_variant_delete_product_channel_listing_without_available_channel(
     mocked_recalculate_orders_task,
     product_variant_deleted_webhook_mock,
@@ -413,8 +413,8 @@ def test_delete_variant_delete_product_channel_listing_without_available_channel
     assert product.channel_listings.count() == 0
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_deleted")
-@patch("saleor.order.tasks.recalculate_orders_task.delay")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_deleted")
+@patch("swiftmovers.order.tasks.recalculate_orders_task.delay")
 def test_delete_variant_delete_product_channel_listing_not_deleted(
     mocked_recalculate_orders_task,
     product_variant_deleted_webhook_mock,
@@ -469,8 +469,8 @@ DELETE_VARIANT_BY_EXTERNAL_REFERENCE = """
 """
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_deleted")
-@patch("saleor.order.tasks.recalculate_orders_task.delay")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_deleted")
+@patch("swiftmovers.order.tasks.recalculate_orders_task.delay")
 def test_delete_variant_by_external_reference(
     mocked_recalculate_orders_task,
     product_variant_deleted_webhook_mock,

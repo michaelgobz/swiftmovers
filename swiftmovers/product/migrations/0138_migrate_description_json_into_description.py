@@ -3,8 +3,8 @@
 from django.db import migrations
 from django.db.models import F
 
-import saleor.core.db.fields
-import saleor.core.utils.editorjs
+import swiftmovers.core.db.fields
+import swiftmovers.core.utils.editorjs
 
 
 def clean_description_field(apps, schema_editor):
@@ -62,55 +62,55 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="category",
             name="description",
-            field=saleor.core.db.fields.SanitizedJSONField(
+            field=swiftmovers.core.db.fields.SanitizedJSONField(
                 blank=True,
                 default=dict,
-                sanitizer=saleor.core.utils.editorjs.clean_editor_js,
+                sanitizer=swiftmovers.core.utils.editorjs.clean_editor_js,
             ),
         ),
         migrations.AlterField(
             model_name="categorytranslation",
             name="description",
-            field=saleor.core.db.fields.SanitizedJSONField(
+            field=swiftmovers.core.db.fields.SanitizedJSONField(
                 blank=True,
                 default=dict,
-                sanitizer=saleor.core.utils.editorjs.clean_editor_js,
+                sanitizer=swiftmovers.core.utils.editorjs.clean_editor_js,
             ),
         ),
         migrations.AlterField(
             model_name="collection",
             name="description",
-            field=saleor.core.db.fields.SanitizedJSONField(
+            field=swiftmovers.core.db.fields.SanitizedJSONField(
                 blank=True,
                 default=dict,
-                sanitizer=saleor.core.utils.editorjs.clean_editor_js,
+                sanitizer=swiftmovers.core.utils.editorjs.clean_editor_js,
             ),
         ),
         migrations.AlterField(
             model_name="collectiontranslation",
             name="description",
-            field=saleor.core.db.fields.SanitizedJSONField(
+            field=swiftmovers.core.db.fields.SanitizedJSONField(
                 blank=True,
                 default=dict,
-                sanitizer=saleor.core.utils.editorjs.clean_editor_js,
+                sanitizer=swiftmovers.core.utils.editorjs.clean_editor_js,
             ),
         ),
         migrations.AlterField(
             model_name="product",
             name="description",
-            field=saleor.core.db.fields.SanitizedJSONField(
+            field=swiftmovers.core.db.fields.SanitizedJSONField(
                 blank=True,
                 default=dict,
-                sanitizer=saleor.core.utils.editorjs.clean_editor_js,
+                sanitizer=swiftmovers.core.utils.editorjs.clean_editor_js,
             ),
         ),
         migrations.AlterField(
             model_name="producttranslation",
             name="description",
-            field=saleor.core.db.fields.SanitizedJSONField(
+            field=swiftmovers.core.db.fields.SanitizedJSONField(
                 blank=True,
                 default=dict,
-                sanitizer=saleor.core.utils.editorjs.clean_editor_js,
+                sanitizer=swiftmovers.core.utils.editorjs.clean_editor_js,
             ),
         ),
         migrations.RunPython(

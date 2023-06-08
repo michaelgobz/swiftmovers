@@ -66,8 +66,8 @@ PRODUCT_VARIANT_BULK_UPDATE_MUTATION = """
 """
 
 
-@patch("saleor.product.tasks.update_product_discounted_price_task.delay")
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.product.tasks.update_product_discounted_price_task.delay")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
 def test_product_variant_bulk_update(
     product_variant_created_webhook_mock,
     update_product_discounted_price_task_mock,
@@ -119,7 +119,7 @@ def test_product_variant_bulk_update(
     )
 
 
-@patch("saleor.product.tasks.update_product_discounted_price_task.delay")
+@patch("swiftmovers.product.tasks.update_product_discounted_price_task.delay")
 def test_product_variant_bulk_update_stocks(
     update_product_discounted_price_task_mock,
     staff_api_client,
@@ -227,7 +227,7 @@ def test_product_variant_bulk_update_and_remove_stock(
     assert variant.stocks.count() == 1
 
 
-@patch("saleor.product.tasks.update_product_discounted_price_task.delay")
+@patch("swiftmovers.product.tasks.update_product_discounted_price_task.delay")
 def test_product_variant_bulk_update_and_remove_stock_when_stock_not_exists(
     update_product_discounted_price_task_mock,
     staff_api_client,

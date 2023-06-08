@@ -80,7 +80,7 @@ def stripe_plugin(settings, monkeypatch, channel_USD):
         public_api_key = public_api_key or "test_key"
         secret_api_key = secret_api_key or "secret_key"
 
-        settings.PLUGINS = ["saleor.payment.gateways.stripe.plugin.StripeGatewayPlugin"]
+        settings.PLUGINS = ["swiftmovers.payment.gateways.stripe.plugin.StripeGatewayPlugin"]
 
         configuration = [
             {"name": "public_api_key", "value": public_api_key},

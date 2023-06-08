@@ -58,7 +58,7 @@ mutation UpdateProductChannelListing(
 """
 
 
-@patch("saleor.product.tasks.update_product_discounted_price_task.delay")
+@patch("swiftmovers.product.tasks.update_product_discounted_price_task.delay")
 def test_product_channel_listing_update_as_staff_user(
     update_product_discounted_price_task_mock,
     staff_api_client,
@@ -138,7 +138,7 @@ def test_product_channel_listing_update_as_staff_user(
     update_product_discounted_price_task_mock.assert_called_once_with(product.id)
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
 def test_product_channel_listing_update_trigger_webhook_product_updated(
     mock_product_updated,
     staff_api_client,

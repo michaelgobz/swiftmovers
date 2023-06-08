@@ -17,7 +17,7 @@ from ....webhook.models import Webhook, WebhookEvent
 @pytest.fixture
 def webhook_plugin(settings):
     def factory() -> WebhookPlugin:
-        settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
+        settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
         manager = get_plugins_manager()
         return manager.global_plugins[0]
 

@@ -150,8 +150,8 @@ class TransactionAction:
     CHARGE - Represents the charge action.
     REFUND - Represents a refund action.
     VOID - Represents a void action. This field will be removed
-    in Saleor 3.14 (Preview Feature). Use `CANCEL` instead.
-    CANCEL - Represents a cancel action. Added in Saleor 3.12.
+    in swiftmovers 3.14 (Preview Feature). Use `CANCEL` instead.
+    CANCEL - Represents a cancel action. Added in swiftmovers 3.12.
     """
 
     CHARGE = "charge"
@@ -170,7 +170,7 @@ class TransactionAction:
 class TransactionEventType:
     """Represents possible event types.
 
-    Added in Saleor 3.12.
+    Added in swiftmovers 3.12.
 
     The following types are possible:
     AUTHORIZATION_SUCCESS - represents success authorization.

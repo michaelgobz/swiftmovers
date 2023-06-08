@@ -76,9 +76,9 @@ CREATE_VARIANT_MUTATION = """
 """
 
 
-@patch("saleor.product.tasks.update_product_discounted_price_task.delay")
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.product.tasks.update_product_discounted_price_task.delay")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
 def test_create_variant_with_name(
     updated_webhook_mock,
     created_webhook_mock,
@@ -154,8 +154,8 @@ def test_create_variant_with_name(
     update_product_discounted_price_task_mock.assert_called_once_with(product.id)
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
 def test_create_variant_without_name(
     updated_webhook_mock,
     created_webhook_mock,
@@ -216,8 +216,8 @@ def test_create_variant_without_name(
     updated_webhook_mock.assert_not_called()
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
 def test_create_variant_preorder(
     updated_webhook_mock,
     created_webhook_mock,
@@ -269,8 +269,8 @@ def test_create_variant_preorder(
     updated_webhook_mock.assert_not_called()
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
 def test_create_variant_no_required_attributes(
     updated_webhook_mock,
     created_webhook_mock,
@@ -326,7 +326,7 @@ def test_create_variant_no_required_attributes(
     updated_webhook_mock.assert_not_called()
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
 def test_create_variant_with_file_attribute(
     created_webhook_mock,
     staff_api_client,
@@ -393,7 +393,7 @@ def test_create_variant_with_file_attribute(
     created_webhook_mock.assert_called_once_with(product.variants.last())
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
 def test_create_variant_with_boolean_attribute(
     created_webhook_mock,
     permission_manage_products,
@@ -461,7 +461,7 @@ def test_create_variant_with_boolean_attribute(
     created_webhook_mock.assert_called_once_with(product.variants.last())
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
 def test_create_variant_with_file_attribute_new_value(
     created_webhook_mock,
     staff_api_client,
@@ -526,7 +526,7 @@ def test_create_variant_with_file_attribute_new_value(
     created_webhook_mock.assert_called_once_with(product.variants.last())
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
 def test_create_variant_with_file_attribute_no_file_url_given(
     created_webhook_mock,
     staff_api_client,
@@ -589,7 +589,7 @@ def test_create_variant_with_file_attribute_no_file_url_given(
     created_webhook_mock.assert_called_once_with(product.variants.last())
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
 def test_create_variant_with_page_reference_attribute(
     created_webhook_mock,
     staff_api_client,
@@ -682,8 +682,8 @@ def test_create_variant_with_page_reference_attribute(
     created_webhook_mock.assert_called_once_with(product.variants.last())
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
 def test_create_variant_with_page_reference_attribute_no_references_given(
     created_webhook_mock,
     updated_webhook_mock,
@@ -748,7 +748,7 @@ def test_create_variant_with_page_reference_attribute_no_references_given(
     updated_webhook_mock.assert_not_called()
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
 def test_create_variant_with_product_reference_attribute(
     created_webhook_mock,
     staff_api_client,
@@ -846,8 +846,8 @@ def test_create_variant_with_product_reference_attribute(
     created_webhook_mock.assert_called_once_with(product.variants.last())
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
 def test_create_variant_with_product_reference_attribute_no_references_given(
     created_webhook_mock,
     updated_webhook_mock,
@@ -912,7 +912,7 @@ def test_create_variant_with_product_reference_attribute_no_references_given(
     updated_webhook_mock.assert_not_called()
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
 def test_create_variant_with_variant_reference_attribute(
     created_webhook_mock,
     staff_api_client,
@@ -1017,8 +1017,8 @@ def test_create_variant_with_variant_reference_attribute(
     created_webhook_mock.assert_called_once_with(product.variants.last())
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
 def test_create_variant_with_variant_reference_attribute_no_references_given(
     created_webhook_mock,
     updated_webhook_mock,
@@ -1088,7 +1088,7 @@ def test_create_variant_with_variant_reference_attribute_no_references_given(
     updated_webhook_mock.assert_not_called()
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
 def test_create_variant_with_numeric_attribute(
     created_webhook_mock,
     staff_api_client,
@@ -1145,7 +1145,7 @@ def test_create_variant_with_numeric_attribute(
     created_webhook_mock.assert_called_once_with(product.variants.last())
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
 def test_create_variant_with_numeric_attribute_not_numeric_value_given(
     updated_webhook_mock,
     staff_api_client,
@@ -1424,7 +1424,7 @@ def test_create_variant_invalid_variant_attributes(
         assert error in errors
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
 def test_create_variant_with_rich_text_attribute(
     created_webhook_mock,
     permission_manage_products,
@@ -1474,7 +1474,7 @@ def test_create_variant_with_rich_text_attribute(
     created_webhook_mock.assert_called_once_with(product.variants.last())
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
 def test_create_variant_with_plain_text_attribute(
     created_webhook_mock,
     permission_manage_products,
@@ -1528,7 +1528,7 @@ def test_create_variant_with_plain_text_attribute(
     created_webhook_mock.assert_called_once_with(product.variants.last())
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
 @freeze_time(datetime(2020, 5, 5, 5, 5, 5, tzinfo=pytz.utc))
 def test_create_variant_with_date_attribute(
     created_webhook_mock,
@@ -1591,7 +1591,7 @@ def test_create_variant_with_date_attribute(
     created_webhook_mock.assert_called_once_with(variant)
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
 @freeze_time(datetime(2020, 5, 5, 5, 5, 5, tzinfo=pytz.utc))
 def test_create_variant_with_date_time_attribute(
     created_webhook_mock,
@@ -1655,8 +1655,8 @@ def test_create_variant_with_date_time_attribute(
     created_webhook_mock.assert_called_once_with(variant)
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
 def test_create_variant_with_empty_string_for_sku(
     updated_webhook_mock,
     created_webhook_mock,
@@ -1713,8 +1713,8 @@ def test_create_variant_with_empty_string_for_sku(
     updated_webhook_mock.assert_not_called()
 
 
-@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
-@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
+@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
 def test_create_variant_without_sku(
     updated_webhook_mock,
     created_webhook_mock,

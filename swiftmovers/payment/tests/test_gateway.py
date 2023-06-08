@@ -98,7 +98,7 @@ TOKEN = "token"
 USED_GATEWAY = "mirumee.payments.dummy"
 
 
-@patch("saleor.payment.gateway.update_payment")
+@patch("swiftmovers.payment.gateway.update_payment")
 def test_process_payment(
     update_payment_mock, fake_payment_interface, payment_txn_preauth
 ):
@@ -148,7 +148,7 @@ def test_store_source_when_processing_payment(
     assert transaction.customer_id == PROCESS_PAYMENT_RESPONSE.customer_id
 
 
-@patch("saleor.payment.gateway.update_payment")
+@patch("swiftmovers.payment.gateway.update_payment")
 def test_authorize_payment(update_payment_mock, fake_payment_interface, payment_dummy):
     PAYMENT_DATA = create_payment_information(
         payment=payment_dummy, payment_token=TOKEN
@@ -172,7 +172,7 @@ def test_authorize_payment(update_payment_mock, fake_payment_interface, payment_
     update_payment_mock.assert_called_once_with(payment_dummy, AUTHORIZE_RESPONSE)
 
 
-@patch("saleor.payment.gateway.update_payment")
+@patch("swiftmovers.payment.gateway.update_payment")
 def test_capture_payment(
     update_payment_mock, fake_payment_interface, payment_txn_preauth
 ):
@@ -292,7 +292,7 @@ def test_void_payment(fake_payment_interface, payment_txn_preauth):
     assert transaction.gateway_response == RAW_RESPONSE
 
 
-@patch("saleor.payment.gateway.update_payment")
+@patch("swiftmovers.payment.gateway.update_payment")
 def test_confirm_payment(
     update_payment_mock, fake_payment_interface, payment_txn_to_confirm
 ):
@@ -332,7 +332,7 @@ def test_list_gateways(fake_payment_interface):
     assert lst == gateways
 
 
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
 def test_request_charge_action_missing_active_event(
     mocked_is_active, order, staff_user
 ):
@@ -367,8 +367,8 @@ def test_request_charge_action_missing_active_event(
         )
 
 
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_action_request")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_action_request")
 def test_request_charge_action_with_transaction_action_request(
     mocked_transaction_request, mocked_is_active, order, staff_user
 ):
@@ -421,8 +421,8 @@ def test_request_charge_action_with_transaction_action_request(
     assert event.user == staff_user
 
 
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_charge_requested")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_charge_requested")
 def test_request_charge_action_on_order(
     mocked_transaction_request, mocked_is_active, order, staff_user
 ):
@@ -475,8 +475,8 @@ def test_request_charge_action_on_order(
     assert event.user == staff_user
 
 
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_charge_requested")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_charge_requested")
 def test_request_charge_action_by_app(
     mocked_transaction_request, mocked_is_active, order, app
 ):
@@ -529,8 +529,8 @@ def test_request_charge_action_by_app(
     assert event.app == app
 
 
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_charge_requested")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_charge_requested")
 def test_request_charge_action_on_checkout(
     mocked_transaction_request, mocked_is_active, checkout, staff_user
 ):
@@ -577,7 +577,7 @@ def test_request_charge_action_on_checkout(
     )
 
 
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
 def test_request_refund_action_missing_active_event(
     mocked_is_active, order, staff_user
 ):
@@ -612,8 +612,8 @@ def test_request_refund_action_missing_active_event(
         )
 
 
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_action_request")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_action_request")
 def test_request_refund_action_with_transaction_action_request(
     mocked_transaction_request, mocked_is_active, order, staff_user
 ):
@@ -666,8 +666,8 @@ def test_request_refund_action_with_transaction_action_request(
     assert event.user == staff_user
 
 
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_refund_requested")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_refund_requested")
 def test_request_refund_action_on_order(
     mocked_transaction_request, mocked_is_active, order, staff_user
 ):
@@ -720,8 +720,8 @@ def test_request_refund_action_on_order(
     assert event.user == staff_user
 
 
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_refund_requested")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_refund_requested")
 def test_request_refund_action_by_app(
     mocked_transaction_request, mocked_is_active, order, app
 ):
@@ -775,8 +775,8 @@ def test_request_refund_action_by_app(
     assert not event.user
 
 
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_refund_requested")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_refund_requested")
 def test_request_refund_action_on_checkout(
     mocked_transaction_request, mocked_is_active, checkout, staff_user
 ):
@@ -823,7 +823,7 @@ def test_request_refund_action_on_checkout(
     )
 
 
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
 def test_request_cancelation_action_missing_active_event(
     mocked_is_active, order, staff_user
 ):
@@ -858,8 +858,8 @@ def test_request_cancelation_action_missing_active_event(
         )
 
 
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_cancelation_requested")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_cancelation_requested")
 def test_request_cancelation_action_on_order(
     mocked_transaction_request, mocked_is_active, order, staff_user
 ):
@@ -910,8 +910,8 @@ def test_request_cancelation_action_on_order(
     assert event.user == staff_user
 
 
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_action_request")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_action_request")
 def test_request_cancelation_action_with_transaction_action_request(
     mocked_transaction_request, mocked_is_active, order, staff_user
 ):
@@ -961,8 +961,8 @@ def test_request_cancelation_action_with_transaction_action_request(
     assert event.user == staff_user
 
 
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_cancelation_requested")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_cancelation_requested")
 def test_request_cancelation_action_by_app(
     mocked_transaction_request, mocked_is_active, order, app
 ):
@@ -1013,8 +1013,8 @@ def test_request_cancelation_action_by_app(
     assert not event.user
 
 
-@patch("saleor.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
-@patch("saleor.plugins.manager.PluginsManager.transaction_cancelation_requested")
+@patch("swiftmovers.plugins.manager.PluginsManager.is_event_active_for_any_plugin")
+@patch("swiftmovers.plugins.manager.PluginsManager.transaction_cancelation_requested")
 def test_request_cancelation_action_on_checkout(
     mocked_transaction_request, mocked_is_active, checkout, staff_user
 ):
@@ -1060,8 +1060,8 @@ def test_request_cancelation_action_on_checkout(
     )
 
 
-@patch("saleor.payment.gateway.void")
-@patch("saleor.payment.gateway.refund")
+@patch("swiftmovers.payment.gateway.void")
+@patch("swiftmovers.payment.gateway.refund")
 def test_payment_refund_or_void_no_payment(refund_mock, void_mock):
     """Ensure that either refund or void method is not called when
     there is no payment object."""
@@ -1073,7 +1073,7 @@ def test_payment_refund_or_void_no_payment(refund_mock, void_mock):
     void_mock.assert_not_called()
 
 
-@patch("saleor.payment.gateway.refund")
+@patch("swiftmovers.payment.gateway.refund")
 def test_payment_refund_or_void_refund_called(refund_mock, payment):
     """Ensure that the refund method is called when payment can be refunded
     and there is no refund transaction."""
@@ -1089,7 +1089,7 @@ def test_payment_refund_or_void_refund_called(refund_mock, payment):
     assert refund_mock.called_once()
 
 
-@patch("saleor.payment.gateway.refund")
+@patch("swiftmovers.payment.gateway.refund")
 def test_payment_refund_or_void_refund_not_called_refund_already_started(
     refund_mock, payment
 ):
@@ -1119,7 +1119,7 @@ def test_payment_refund_or_void_refund_not_called_refund_already_started(
     refund_mock.assert_not_called()
 
 
-@patch("saleor.payment.gateway.refund")
+@patch("swiftmovers.payment.gateway.refund")
 def test_payment_refund_or_void_refund_called_txn_exist(refund_mock, payment):
     """Ensure that the refund method is called when the refund process
     is already ongoing but not covered full payment captured amount."""
@@ -1148,7 +1148,7 @@ def test_payment_refund_or_void_refund_called_txn_exist(refund_mock, payment):
     assert refund_mock.called_once()
 
 
-@patch("saleor.payment.gateway.refund")
+@patch("swiftmovers.payment.gateway.refund")
 def test_payment_refund_or_void_refund_called_no_txn_with_given_transaction_id(
     refund_mock, payment
 ):
@@ -1179,7 +1179,7 @@ def test_payment_refund_or_void_refund_called_no_txn_with_given_transaction_id(
     assert refund_mock.called_once()
 
 
-@patch("saleor.payment.gateway.void")
+@patch("swiftmovers.payment.gateway.void")
 def test_payment_refund_or_void_void_called(void_mock, payment):
     """Ensure that the refund method is called when payment can be voided
     and there is no void transaction for given payment."""
@@ -1195,7 +1195,7 @@ def test_payment_refund_or_void_void_called(void_mock, payment):
     assert void_mock.called_once()
 
 
-@patch("saleor.payment.gateway.void")
+@patch("swiftmovers.payment.gateway.void")
 def test_payment_refund_or_void_void_not_called_txn_exist(void_mock, payment):
     """Ensure that void method is not called when VOID transaction already exists with
     given transaction_id."""

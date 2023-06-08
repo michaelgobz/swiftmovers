@@ -164,7 +164,7 @@ WEBHOOK_EVENT_DESCRIPTION = {
     WebhookEventAsyncType.STAFF_DELETED: "A staff user is deleted.",
     WebhookEventAsyncType.TRANSACTION_ACTION_REQUEST: (
         "An action requested for transaction."
-        + "\n\nDEPRECATED: this subscription will be removed in Saleor 3.14 "
+        + "\n\nDEPRECATED: this subscription will be removed in swiftmovers 3.14 "
         + "(Preview Feature). Use `TRANSACTION_CHARGE_REQUESTED`, "
         + "`TRANSACTION_REFUND_REQUESTED`, `TRANSACTION_CANCELATION_REQUESTED` instead."
     ),

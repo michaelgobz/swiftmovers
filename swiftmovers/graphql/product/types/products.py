@@ -818,7 +818,7 @@ class Product(ChannelContextTypeWithMetadata[models.Product]):
     description = JSONString(description="Description of the product." + RICH_CONTENT)
     product_type = graphene.Field(lambda: ProductType, required=True)
     slug = graphene.String(required=True)
-    category = graphene.Field("saleor.graphql.product.types.categories.Category")
+    category = graphene.Field("swiftmovers.graphql.product.types.categories.Category")
     created = graphene.DateTime(required=True)
     updated_at = graphene.DateTime(required=True)
     charge_taxes = graphene.Boolean(
@@ -924,7 +924,7 @@ class Product(ChannelContextTypeWithMetadata[models.Product]):
         deprecation_reason=f"{DEPRECATED_IN_3X_FIELD} Use the `media` field instead.",
     )
     collections = NonNullList(
-        "saleor.graphql.product.types.collections.Collection",
+        "swiftmovers.graphql.product.types.collections.Collection",
         description=(
             "List of collections for the product. Requires the following permissions "
             "to include the unpublished items: "

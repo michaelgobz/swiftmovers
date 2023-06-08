@@ -18,7 +18,7 @@ from graphql.error import GraphQLError, GraphQLSyntaxError
 from graphql.execution import ExecutionResult
 from jwt.exceptions import PyJWTError
 
-from .. import __version__ as saleor_version
+from .. import __version__ as swiftmovers_version
 from ..core.exceptions import PermissionDenied, ReadOnlyException
 from ..core.utils import is_valid_ipv4, is_valid_ipv6
 from ..webhook import observability
@@ -436,7 +436,7 @@ def instantiate_middleware(middlewares):
 
 def generate_cache_key(raw_query: str) -> str:
     hashed_query = hashlib.sha256(str(raw_query).encode("utf-8")).hexdigest()
-    return f"{saleor_version}-{hashed_query}"
+    return f"{swiftmovers_version}-{hashed_query}"
 
 
 def set_query_cost_on_result(execution_result: ExecutionResult, query_cost):

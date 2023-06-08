@@ -133,7 +133,7 @@ def test_create_address(db):
 def test_create_fake_order(db, monkeypatch, image, media_root, warehouse):
     # Tests shouldn't depend on images present in placeholder folder
     monkeypatch.setattr(
-        "saleor.core.utils.random_data.get_image", Mock(return_value=image)
+        "swiftmovers.core.utils.random_data.get_image", Mock(return_value=image)
     )
     for _ in random_data.create_channels():
         pass
@@ -257,7 +257,7 @@ def test_delete_sort_order_with_null_value(menu_item):
         ("Ładny", "ladny"),
         ("زيوت", "zywt"),
         ("わたし-わ にっぽん です", "watasi-wa-nitupon-desu-2"),
-        ("Салеор", "saleor-2"),
+        ("Салеор", "swiftmovers-2"),
     ],
 )
 def test_generate_unique_slug_with_slugable_field(
@@ -267,7 +267,7 @@ def test_generate_unique_slug_with_slugable_field(
         ("Paint", "paint"),
         ("Paint blue", "paint-blue"),
         ("Paint test", "paint-2"),
-        ("Saleor", "saleor"),
+        ("swiftmovers", "swiftmovers"),
         ("405", "405"),
         ("FM1", "fm1"),
         ("わたし わ にっぽん です", "watasi-wa-nitupon-desu"),

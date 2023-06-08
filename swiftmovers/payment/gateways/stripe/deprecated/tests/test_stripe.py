@@ -41,7 +41,7 @@ def gateway_config():
         connection_params={
             "public_key": "public",
             "private_key": "secret",
-            "store_name": "Saleor",
+            "store_name": "swiftmovers",
             "store_image": "image.gif",
             "prefill": True,
             "remember_me": True,

@@ -39,7 +39,7 @@ def resolve_countries(**kwargs):
     language_code = kwargs.get("language_code")
     taxes = {vat.country_code: vat for vat in VAT.objects.all()}
     codes_list = get_countries_codes_list(attached_to_shipping_zones)
-    # DEPRECATED: translation.override will be dropped in Saleor 4.0
+    # DEPRECATED: translation.override will be dropped in swiftmovers 4.0
     with translation.override(language_code):
         return [
             CountryDisplay(

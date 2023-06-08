@@ -3,7 +3,7 @@ from django.db.models.signals import post_delete
 
 
 class ProductAppConfig(AppConfig):
-    name = "saleor.product"
+    name = "swiftmovers.product"
 
     def ready(self):
         from .models import Category, Collection, DigitalContent, ProductMedia

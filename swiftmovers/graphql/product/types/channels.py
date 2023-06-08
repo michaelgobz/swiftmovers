@@ -94,7 +94,7 @@ class ProductChannelListing(ModelObjectType[models.ProductChannelListing]):
         description="Whether the product is available for purchase."
     )
     pricing = graphene.Field(
-        "saleor.graphql.product.types.products.ProductPricingInfo",
+        "swiftmovers.graphql.product.types.products.ProductPricingInfo",
         address=graphene.Argument(
             account_types.AddressInput,
             description=(

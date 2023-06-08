@@ -35,10 +35,10 @@ from ...utils.export import (
     "file_type",
     [FileTypes.CSV, FileTypes.XLSX],
 )
-@patch("saleor.csv.utils.export.create_file_with_headers")
-@patch("saleor.csv.utils.export.export_products_in_batches")
-@patch("saleor.csv.utils.export.send_export_download_link_notification")
-@patch("saleor.csv.utils.export.save_csv_file_in_export_file")
+@patch("swiftmovers.csv.utils.export.create_file_with_headers")
+@patch("swiftmovers.csv.utils.export.export_products_in_batches")
+@patch("swiftmovers.csv.utils.export.send_export_download_link_notification")
+@patch("swiftmovers.csv.utils.export.save_csv_file_in_export_file")
 def test_export_products(
     save_file_mock,
     send_email_mock,
@@ -89,10 +89,10 @@ def test_export_products(
     save_file_mock.assert_called_once_with(user_export_file, mock_file, ANY)
 
 
-@patch("saleor.csv.utils.export.create_file_with_headers")
-@patch("saleor.csv.utils.export.export_products_in_batches")
-@patch("saleor.csv.utils.export.send_export_download_link_notification")
-@patch("saleor.csv.utils.export.save_csv_file_in_export_file")
+@patch("swiftmovers.csv.utils.export.create_file_with_headers")
+@patch("swiftmovers.csv.utils.export.export_products_in_batches")
+@patch("swiftmovers.csv.utils.export.send_export_download_link_notification")
+@patch("swiftmovers.csv.utils.export.save_csv_file_in_export_file")
 def test_export_products_ids(
     save_file_mock,
     send_email_mock,
@@ -136,10 +136,10 @@ def test_export_products_ids(
     save_file_mock.assert_called_once_with(user_export_file, mock_file, ANY)
 
 
-@patch("saleor.csv.utils.export.create_file_with_headers")
-@patch("saleor.csv.utils.export.export_products_in_batches")
-@patch("saleor.csv.utils.export.send_export_download_link_notification")
-@patch("saleor.csv.utils.export.save_csv_file_in_export_file")
+@patch("swiftmovers.csv.utils.export.create_file_with_headers")
+@patch("swiftmovers.csv.utils.export.export_products_in_batches")
+@patch("swiftmovers.csv.utils.export.send_export_download_link_notification")
+@patch("swiftmovers.csv.utils.export.save_csv_file_in_export_file")
 def test_export_products_filter_is_published(
     save_file_mock,
     send_email_mock,
@@ -193,10 +193,10 @@ def test_export_products_filter_is_published(
     save_file_mock.assert_called_once_with(user_export_file, mock_file, ANY)
 
 
-@patch("saleor.csv.utils.export.create_file_with_headers")
-@patch("saleor.csv.utils.export.export_products_in_batches")
-@patch("saleor.csv.utils.export.send_export_download_link_notification")
-@patch("saleor.csv.utils.export.save_csv_file_in_export_file")
+@patch("swiftmovers.csv.utils.export.create_file_with_headers")
+@patch("swiftmovers.csv.utils.export.export_products_in_batches")
+@patch("swiftmovers.csv.utils.export.send_export_download_link_notification")
+@patch("swiftmovers.csv.utils.export.save_csv_file_in_export_file")
 def test_export_products_filter_collections(
     save_file_mock,
     send_email_mock,
@@ -242,10 +242,10 @@ def test_export_products_filter_collections(
     save_file_mock.assert_called_once_with(user_export_file, mock_file, ANY)
 
 
-@patch("saleor.csv.utils.export.create_file_with_headers")
-@patch("saleor.csv.utils.export.export_products_in_batches")
-@patch("saleor.csv.utils.export.send_export_download_link_notification")
-@patch("saleor.csv.utils.export.save_csv_file_in_export_file")
+@patch("swiftmovers.csv.utils.export.create_file_with_headers")
+@patch("swiftmovers.csv.utils.export.export_products_in_batches")
+@patch("swiftmovers.csv.utils.export.send_export_download_link_notification")
+@patch("swiftmovers.csv.utils.export.save_csv_file_in_export_file")
 def test_export_products_by_app(
     save_file_mock,
     send_email_mock,
@@ -293,10 +293,10 @@ def test_export_products_by_app(
     save_file_mock.assert_called_once_with(app_export_file, mock_file, ANY)
 
 
-@patch("saleor.csv.utils.export.create_file_with_headers")
-@patch("saleor.csv.utils.export.export_gift_cards_in_batches")
-@patch("saleor.csv.utils.export.send_export_download_link_notification")
-@patch("saleor.csv.utils.export.save_csv_file_in_export_file")
+@patch("swiftmovers.csv.utils.export.create_file_with_headers")
+@patch("swiftmovers.csv.utils.export.export_gift_cards_in_batches")
+@patch("swiftmovers.csv.utils.export.send_export_download_link_notification")
+@patch("swiftmovers.csv.utils.export.save_csv_file_in_export_file")
 def test_export_gift_cards(
     save_file_mock,
     send_email_mock,
@@ -335,10 +335,10 @@ def test_export_gift_cards(
     save_file_mock.assert_called_once_with(user_export_file, mock_file, ANY)
 
 
-@patch("saleor.csv.utils.export.create_file_with_headers")
-@patch("saleor.csv.utils.export.export_gift_cards_in_batches")
-@patch("saleor.csv.utils.export.send_export_download_link_notification")
-@patch("saleor.csv.utils.export.save_csv_file_in_export_file")
+@patch("swiftmovers.csv.utils.export.create_file_with_headers")
+@patch("swiftmovers.csv.utils.export.export_gift_cards_in_batches")
+@patch("swiftmovers.csv.utils.export.send_export_download_link_notification")
+@patch("swiftmovers.csv.utils.export.save_csv_file_in_export_file")
 def test_export_gift_cards_by_app(
     save_file_mock,
     send_email_mock,
@@ -377,10 +377,10 @@ def test_export_gift_cards_by_app(
     save_file_mock.assert_called_once_with(app_export_file, mock_file, ANY)
 
 
-@patch("saleor.csv.utils.export.create_file_with_headers")
-@patch("saleor.csv.utils.export.export_gift_cards_in_batches")
-@patch("saleor.csv.utils.export.send_export_download_link_notification")
-@patch("saleor.csv.utils.export.save_csv_file_in_export_file")
+@patch("swiftmovers.csv.utils.export.create_file_with_headers")
+@patch("swiftmovers.csv.utils.export.export_gift_cards_in_batches")
+@patch("swiftmovers.csv.utils.export.send_export_download_link_notification")
+@patch("swiftmovers.csv.utils.export.save_csv_file_in_export_file")
 def test_export_gift_cards_ids(
     save_file_mock,
     send_email_mock,
@@ -418,10 +418,10 @@ def test_export_gift_cards_ids(
     save_file_mock.assert_called_once_with(user_export_file, mock_file, ANY)
 
 
-@patch("saleor.csv.utils.export.create_file_with_headers")
-@patch("saleor.csv.utils.export.export_gift_cards_in_batches")
-@patch("saleor.csv.utils.export.send_export_download_link_notification")
-@patch("saleor.csv.utils.export.save_csv_file_in_export_file")
+@patch("swiftmovers.csv.utils.export.create_file_with_headers")
+@patch("swiftmovers.csv.utils.export.export_gift_cards_in_batches")
+@patch("swiftmovers.csv.utils.export.send_export_download_link_notification")
+@patch("swiftmovers.csv.utils.export.save_csv_file_in_export_file")
 def test_export_gift_cards_with_filter(
     save_file_mock,
     send_email_mock,
@@ -647,7 +647,7 @@ def test_append_to_file_for_xlsx(user_export_file, tmpdir, media_root):
     shutil.rmtree(tmpdir)
 
 
-@patch("saleor.csv.utils.export.BATCH_SIZE", 1)
+@patch("swiftmovers.csv.utils.export.BATCH_SIZE", 1)
 def test_export_products_in_batches_for_csv(
     product_list,
     user_export_file,
@@ -709,7 +709,7 @@ def test_export_products_in_batches_for_csv(
     shutil.rmtree(tmpdir)
 
 
-@patch("saleor.csv.utils.export.BATCH_SIZE", 1)
+@patch("swiftmovers.csv.utils.export.BATCH_SIZE", 1)
 def test_export_products_in_batches_for_xlsx(
     product_list,
     user_export_file,
@@ -788,7 +788,7 @@ def test_export_products_in_batches_for_xlsx(
     shutil.rmtree(tmpdir)
 
 
-@patch("saleor.csv.utils.export.BATCH_SIZE", 1)
+@patch("swiftmovers.csv.utils.export.BATCH_SIZE", 1)
 def test_export_gift_cards_in_batches_to_csv(
     gift_card,
     gift_card_expiry_date,
@@ -823,7 +823,7 @@ def test_export_gift_cards_in_batches_to_csv(
     shutil.rmtree(tmpdir)
 
 
-@patch("saleor.csv.utils.export.BATCH_SIZE", 1)
+@patch("swiftmovers.csv.utils.export.BATCH_SIZE", 1)
 def test_export_gift_cards_in_batches_to_xlsx(
     gift_card,
     gift_card_expiry_date,

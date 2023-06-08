@@ -32,7 +32,7 @@ from ...utils.random_data import (
 
 class Command(BaseCommand):
     help = "Populate database with test objects"
-    placeholders_dir = "saleor/static/placeholders/"
+    placeholders_dir = "swiftmovers/static/placeholders/"
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -61,7 +61,7 @@ class Command(BaseCommand):
         )
 
     def sequence_reset(self):
-        """Run a SQL sequence reset on all saleor.* apps.
+        """Run a SQL sequence reset on all swiftmovers.* apps.
 
         When a value is manually assigned to an auto-incrementing field
         it doesn't update the field's sequence, which might cause a conflict
@@ -69,7 +69,7 @@ class Command(BaseCommand):
         """
         commands = StringIO()
         for app in apps.get_app_configs():
-            if "saleor" in app.name:
+            if "swiftmovers" in app.name:
                 call_command(
                     "sqlsequencereset", app.label, stdout=commands, no_color=True
                 )
@@ -83,8 +83,8 @@ class Command(BaseCommand):
         staff_password = options["staff_password"]
         superuser_password = options["superuser_password"]
         settings.PLUGINS = [
-            "saleor.payment.gateways.dummy.plugin.DummyGatewayPlugin",
-            "saleor.payment.gateways.dummy_credit_card.plugin."
+            "swiftmovers.payment.gateways.dummy.plugin.DummyGatewayPlugin",
+            "swiftmovers.payment.gateways.dummy_credit_card.plugin."
             "DummyCreditCardGatewayPlugin",
         ]
         create_images = not options["withoutimages"]
