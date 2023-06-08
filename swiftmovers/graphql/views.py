@@ -114,7 +114,7 @@ class GraphQLView(View):
     def render_playground(self, request):
         return render(
             request,
-            "graphql/playground.html",
+            "playground/playground.html",
             {
                 "api_url": request.build_absolute_uri(str(API_PATH)),
                 "plugins_url": request.build_absolute_uri("/plugins/"),
