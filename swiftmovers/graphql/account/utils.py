@@ -16,7 +16,7 @@ from ...permission.auth_filters import AuthorizationFilters
 from ...permission.enums import AccountPermissions
 from ...permission.utils import has_one_of_permissions
 from ..app.dataloaders import get_app_promise
-from ..core import ResolveInfo, swiftmoversContext
+from ..core import ResolveInfo, SaleorContext
 
 if TYPE_CHECKING:
     from django.db.models import QuerySet
@@ -83,7 +83,7 @@ class StaffDeleteMixin(UserDeleteMixin):
         abstract = True
 
     @classmethod
-    def check_permissions(cls, context: swiftmoversContext, permissions=None, **data):
+    def check_permissions(cls, context: SaleorContext, permissions=None, **data):
         if get_app_promise(context).get():
             raise PermissionDenied(
                 message="Apps are not allowed to perform this mutation."

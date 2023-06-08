@@ -18,8 +18,7 @@ class CoreAppConfig(AppConfig):
             settings.SENTRY_INIT(settings.SENTRY_DSN, settings.SENTRY_OPTS)
         self.validate_jwt_manager()
 
-    @staticmethod
-    def validate_jwt_manager():
+    def validate_jwt_manager(self):
         jwt_manager_path = getattr(settings, "JWT_MANAGER_PATH", None)
         if not jwt_manager_path:
             raise ImportError(

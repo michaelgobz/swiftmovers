@@ -57,7 +57,7 @@ def redis_server(settings):
 
 @pytest.fixture
 def patch_connection_pool(redis_server):
-    t = "swiftmovers.webhook.observability.buffers.RedisBuffer.get_or_create_connection_pool"
+    t = "saleor.webhook.observability.buffers.RedisBuffer.get_or_create_connection_pool"
     with patch(
         t,
         return_value=ConnectionPool(

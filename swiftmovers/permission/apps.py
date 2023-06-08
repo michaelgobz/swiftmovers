@@ -5,7 +5,7 @@ from .management import create_permissions
 
 
 class AccountAppConfig(AppConfig):
-    name = "swiftmovers.permission"
+    name = "saleor.permission"
 
     def ready(self):
         post_migrate.connect(

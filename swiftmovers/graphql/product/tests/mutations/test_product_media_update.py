@@ -5,8 +5,8 @@ import graphene
 from .....graphql.tests.utils import get_graphql_content
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_media_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_media_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_product_image_update_mutation(
     product_updated_mock,
     product_media_update_mock,

@@ -35,7 +35,7 @@ MUTATION_UPDATE_SHIPPING_METHOD = """
 
 
 @patch(
-    "swiftmovers.graphql.checkout.mutations.checkout_shipping_method_update."
+    "saleor.graphql.checkout.mutations.checkout_shipping_method_update."
     "clean_delivery_method"
 )
 def test_checkout_shipping_method_update_by_id(
@@ -83,7 +83,7 @@ def test_checkout_shipping_method_update_by_id(
 
 
 @patch(
-    "swiftmovers.graphql.checkout.mutations.checkout_shipping_method_update."
+    "saleor.graphql.checkout.mutations.checkout_shipping_method_update."
     "clean_delivery_method"
 )
 def test_checkout_shipping_method_update_by_token(
@@ -130,7 +130,7 @@ def test_checkout_shipping_method_update_by_token(
 
 
 @patch(
-    "swiftmovers.graphql.checkout.mutations.checkout_shipping_method_update."
+    "saleor.graphql.checkout.mutations.checkout_shipping_method_update."
     "clean_delivery_method"
 )
 def test_checkout_shipping_method_update_neither_token_and_id_given(
@@ -149,7 +149,7 @@ def test_checkout_shipping_method_update_neither_token_and_id_given(
 
 
 @patch(
-    "swiftmovers.graphql.checkout.mutations.checkout_shipping_method_update."
+    "saleor.graphql.checkout.mutations.checkout_shipping_method_update."
     "clean_delivery_method"
 )
 def test_checkout_shipping_method_update_both_token_and_id_given(
@@ -178,7 +178,7 @@ def test_checkout_shipping_method_update_both_token_and_id_given(
 
 
 @patch(
-    "swiftmovers.graphql.checkout.mutations.checkout_shipping_method_update."
+    "saleor.graphql.checkout.mutations.checkout_shipping_method_update."
     "clean_delivery_method"
 )
 def test_checkout_shipping_method_update_by_id_no_checkout_metadata(

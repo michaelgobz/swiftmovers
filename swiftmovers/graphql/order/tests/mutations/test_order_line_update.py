@@ -35,7 +35,7 @@ ORDER_LINE_UPDATE_MUTATION = """
 """
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_out_of_stock")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_out_of_stock")
 def test_order_line_update_with_out_of_stock_webhook_for_two_lines_success_scenario(
     out_of_stock_mock,
     order_with_lines,
@@ -65,7 +65,7 @@ def test_order_line_update_with_out_of_stock_webhook_for_two_lines_success_scena
     out_of_stock_mock.assert_called_with(Stock.objects.last())
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_out_of_stock")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_out_of_stock")
 def test_order_line_update_with_out_of_stock_webhook_success_scenario(
     out_of_stock_mock,
     order_with_lines,
@@ -88,7 +88,7 @@ def test_order_line_update_with_out_of_stock_webhook_success_scenario(
     out_of_stock_mock.assert_called_once_with(Stock.objects.first())
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_back_in_stock")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_back_in_stock")
 def test_order_line_update_with_back_in_stock_webhook_fail_scenario(
     product_variant_back_in_stock_webhook_mock,
     order_with_lines,
@@ -111,7 +111,7 @@ def test_order_line_update_with_back_in_stock_webhook_fail_scenario(
     product_variant_back_in_stock_webhook_mock.assert_not_called()
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_back_in_stock")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_back_in_stock")
 def test_order_line_update_with_back_in_stock_webhook_called_once_success_scenario(
     back_in_stock_mock,
     order_with_lines,
@@ -137,7 +137,7 @@ def test_order_line_update_with_back_in_stock_webhook_called_once_success_scenar
     back_in_stock_mock.assert_called_once_with(first_allocated.stock)
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_back_in_stock")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_back_in_stock")
 def test_order_line_update_with_back_in_stock_webhook_called_twice_success_scenario(
     product_variant_back_in_stock_webhook_mock,
     order_with_lines,
@@ -170,8 +170,8 @@ def test_order_line_update_with_back_in_stock_webhook_called_twice_success_scena
 
 
 @pytest.mark.parametrize("status", (OrderStatus.DRAFT, OrderStatus.UNCONFIRMED))
-@patch("swiftmovers.plugins.manager.PluginsManager.draft_order_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("saleor.plugins.manager.PluginsManager.draft_order_updated")
+@patch("saleor.plugins.manager.PluginsManager.order_updated")
 def test_order_line_update(
     order_updated_webhook_mock,
     draft_order_updated_webhook_mock,
@@ -289,8 +289,8 @@ def test_order_line_update_without_sku(
     assert data["errors"][0]["field"] == "quantity"
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.draft_order_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("saleor.plugins.manager.PluginsManager.draft_order_updated")
+@patch("saleor.plugins.manager.PluginsManager.order_updated")
 def test_invalid_order_when_updating_lines(
     order_update_webhook_mock,
     draft_order_update_webhook_mock,

@@ -39,7 +39,7 @@ _context = Local()
 @dataclass
 class WebhookData:
     id: int
-    swiftmovers_domain: str
+    saleor_domain: str
     target_url: str
     secret_key: Optional[str] = None
 
@@ -71,7 +71,7 @@ def get_webhooks(timeout=CACHE_TIMEOUT) -> List[WebhookData]:
                     webhooks_data.append(
                         WebhookData(
                             id=webhook.id,
-                            swiftmovers_domain=domain,
+                            saleor_domain=domain,
                             target_url=webhook.target_url,
                             secret_key=webhook.secret_key,
                         )

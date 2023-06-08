@@ -17,7 +17,7 @@ interactions:
       User-Agent:
       - python-requests/2.24.0
     method: POST
-    uri: https://swiftmovers.io/oauth/token
+    uri: https://saleor.io/oauth/token
   response:
     body:
       string: '{"error":"access_denied","error_description":"Unauthorized"}'

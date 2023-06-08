@@ -99,8 +99,8 @@ def test_order_from_checkout_with_inactive_channel(
 
 
 @pytest.mark.integration
-@patch("swiftmovers.order.calculations._recalculate_order_prices")
-@patch("swiftmovers.plugins.manager.PluginsManager.order_confirmed")
+@patch("saleor.order.calculations._recalculate_order_prices")
+@patch("saleor.plugins.manager.PluginsManager.order_confirmed")
 def test_order_from_checkout(
     order_confirmed_mock,
     _recalculate_order_prices_mock,
@@ -295,7 +295,7 @@ def test_order_from_checkout_auto_confirm_flag(
 
 
 @pytest.mark.integration
-@patch("swiftmovers.plugins.manager.PluginsManager.order_confirmed")
+@patch("saleor.plugins.manager.PluginsManager.order_confirmed")
 def test_order_from_checkout_with_metadata(
     order_confirmed_mock,
     app_api_client,
@@ -370,7 +370,7 @@ def test_order_from_checkout_with_metadata(
 
 
 @pytest.mark.integration
-@patch("swiftmovers.plugins.manager.PluginsManager.order_confirmed")
+@patch("saleor.plugins.manager.PluginsManager.order_confirmed")
 def test_order_from_checkout_with_metadata_checkout_without_metadata(
     order_confirmed_mock,
     app_api_client,
@@ -466,8 +466,8 @@ def test_order_from_checkout_by_app_with_missing_permission(
     assert_no_permission(response)
 
 
-@patch("swiftmovers.giftcard.utils.send_gift_card_notification")
-@patch("swiftmovers.plugins.manager.PluginsManager.order_confirmed")
+@patch("saleor.giftcard.utils.send_gift_card_notification")
+@patch("saleor.plugins.manager.PluginsManager.order_confirmed")
 def test_order_from_checkout_gift_card_bought(
     order_confirmed_mock,
     send_notification_mock,
@@ -676,8 +676,8 @@ def test_order_from_checkout_with_variant_without_price(
     assert errors[0]["variants"] == [variant_id]
 
 
-@patch("swiftmovers.order.calculations._recalculate_order_prices")
-@patch("swiftmovers.plugins.manager.PluginsManager.order_confirmed")
+@patch("saleor.order.calculations._recalculate_order_prices")
+@patch("saleor.plugins.manager.PluginsManager.order_confirmed")
 def test_order_from_checkout_requires_confirmation(
     order_confirmed_mock,
     _recalculate_order_prices_mock,
@@ -1485,7 +1485,7 @@ def test_order_from_checkout_raises_invalid_shipping_method_when_warehouse_disab
 
 
 @pytest.mark.integration
-@patch("swiftmovers.plugins.manager.PluginsManager.order_confirmed")
+@patch("saleor.plugins.manager.PluginsManager.order_confirmed")
 def test_order_from_draft_create_with_preorder_variant(
     order_confirmed_mock,
     site_settings,

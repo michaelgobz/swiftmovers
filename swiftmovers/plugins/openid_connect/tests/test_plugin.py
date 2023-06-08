@@ -43,7 +43,7 @@ def test_get_oauth_session_dont_add_refresh_scope_when_disabled(openid_plugin):
 def test_external_authentication_url_returns_redirect_url(openid_plugin, settings, rf):
     settings.ALLOWED_CLIENT_HOSTS = ["*"]
     authorize_path = "/authorize"
-    domain = "swiftmovers.io"
+    domain = "saleor.io"
     authorize_url = f"https://{domain}{authorize_path}"
     client_id = "test_client"
     plugin = openid_plugin(oauth_authorization_url=authorize_url, client_id=client_id)
@@ -97,7 +97,7 @@ def test_external_refresh_from_cookie(
     mocked_jwt_validator.get.side_effect = id_payload.get
 
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.get_decoded_token",
+        "saleor.plugins.openid_connect.utils.get_decoded_token",
         Mock(return_value=mocked_jwt_validator),
     )
     oauth_payload = {
@@ -111,18 +111,18 @@ def test_external_refresh_from_cookie(
     }
     mocked_refresh_token = Mock(return_value=oauth_payload)
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.OAuth2Session.refresh_token",
+        "saleor.plugins.openid_connect.plugin.OAuth2Session.refresh_token",
         mocked_refresh_token,
     )
 
     oauth_refresh_token = "refresh"
     plugin = openid_plugin()
     csrf_token = _get_new_csrf_token()
-    swiftmovers_refresh_token = create_jwt_refresh_token(
+    saleor_refresh_token = create_jwt_refresh_token(
         admin_user, oauth_refresh_token, csrf_token, plugin.PLUGIN_ID
     )
     request = rf.request()
-    request.COOKIES[JWT_REFRESH_TOKEN_COOKIE_NAME] = swiftmovers_refresh_token
+    request.COOKIES[JWT_REFRESH_TOKEN_COOKIE_NAME] = saleor_refresh_token
 
     data = {"csrfToken": csrf_token}
     response = plugin.external_refresh(data, request, None)
@@ -135,7 +135,7 @@ def test_external_refresh_from_cookie(
     assert decoded_refresh_token["oauth_refresh_token"] == "new_refresh"
     assert decoded_refresh_token["csrf_token"] == response.csrf_token
     mocked_refresh_token.assert_called_once_with(
-        "https://swiftmovers.io/oauth/token",
+        "https://saleor.io/oauth/token",
         refresh_token=oauth_refresh_token,
     )
 
@@ -150,7 +150,7 @@ def test_external_refresh_from_input(
     mocked_jwt_validator.get.side_effect = id_payload.get
 
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.get_decoded_token",
+        "saleor.plugins.openid_connect.utils.get_decoded_token",
         Mock(return_value=mocked_jwt_validator),
     )
     oauth_payload = {
@@ -164,19 +164,19 @@ def test_external_refresh_from_input(
     }
     mocked_refresh_token = Mock(return_value=oauth_payload)
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.OAuth2Session.refresh_token",
+        "saleor.plugins.openid_connect.plugin.OAuth2Session.refresh_token",
         mocked_refresh_token,
     )
 
     oauth_refresh_token = "refresh"
     plugin = openid_plugin()
     csrf_token = _get_new_csrf_token()
-    swiftmovers_refresh_token = create_jwt_refresh_token(
+    saleor_refresh_token = create_jwt_refresh_token(
         admin_user, oauth_refresh_token, csrf_token, plugin.PLUGIN_ID
     )
 
     request = rf.request()
-    data = {"refreshToken": swiftmovers_refresh_token}
+    data = {"refreshToken": saleor_refresh_token}
     response = plugin.external_refresh(data, request, None)
 
     decoded_token = jwt_decode(response.token)
@@ -187,7 +187,7 @@ def test_external_refresh_from_input(
     assert decoded_refresh_token["oauth_refresh_token"] == "new_refresh"
     assert decoded_refresh_token["csrf_token"] == response.csrf_token
     mocked_refresh_token.assert_called_once_with(
-        "https://swiftmovers.io/oauth/token",
+        "https://saleor.io/oauth/token",
         refresh_token=oauth_refresh_token,
     )
 
@@ -201,7 +201,7 @@ def test_external_refresh_with_scope_permissions(
     mocked_jwt_validator.get.side_effect = id_payload.get
 
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.get_parsed_id_token",
+        "saleor.plugins.openid_connect.plugin.get_parsed_id_token",
         Mock(return_value=mocked_jwt_validator),
     )
     oauth_payload = {
@@ -209,7 +209,7 @@ def test_external_refresh_with_scope_permissions(
         "refresh_token": "new_refresh",
         "id_token": id_token,
         "scope": (
-            "openid profile email offline_access swiftmovers:manage_orders swiftmovers:staff"
+            "openid profile email offline_access saleor:manage_orders saleor:staff"
         ),
         "expires_in": 86400,
         "token_type": "Bearer",
@@ -217,19 +217,19 @@ def test_external_refresh_with_scope_permissions(
     }
     mocked_refresh_token = Mock(return_value=oauth_payload)
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.OAuth2Session.refresh_token",
+        "saleor.plugins.openid_connect.plugin.OAuth2Session.refresh_token",
         mocked_refresh_token,
     )
 
     oauth_refresh_token = "refresh"
     plugin = openid_plugin(use_oauth_scope_permissions=True)
     csrf_token = _get_new_csrf_token()
-    swiftmovers_refresh_token = create_jwt_refresh_token(
+    saleor_refresh_token = create_jwt_refresh_token(
         admin_user, oauth_refresh_token, csrf_token, plugin.PLUGIN_ID
     )
 
     request = rf.request()
-    data = {"refreshToken": swiftmovers_refresh_token}
+    data = {"refreshToken": saleor_refresh_token}
     response = plugin.external_refresh(data, request, None)
 
     decoded_token = jwt_decode(response.token)
@@ -241,7 +241,7 @@ def test_external_refresh_with_scope_permissions(
     assert decoded_refresh_token["oauth_refresh_token"] == "new_refresh"
     assert decoded_refresh_token["csrf_token"] == response.csrf_token
     mocked_refresh_token.assert_called_once_with(
-        "https://swiftmovers.io/oauth/token",
+        "https://saleor.io/oauth/token",
         refresh_token=oauth_refresh_token,
     )
 
@@ -255,7 +255,7 @@ def test_external_refresh_raises_error_when_token_is_invalid(
     mocked_jwt_validator.__getitem__.side_effect = id_payload.__getitem__
 
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.get_decoded_token",
+        "saleor.plugins.openid_connect.utils.get_decoded_token",
         Mock(side_effect=JoseError()),
     )
     oauth_payload = {
@@ -269,19 +269,19 @@ def test_external_refresh_raises_error_when_token_is_invalid(
     }
     mocked_refresh_token = Mock(return_value=oauth_payload)
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.OAuth2Session.refresh_token",
+        "saleor.plugins.openid_connect.plugin.OAuth2Session.refresh_token",
         mocked_refresh_token,
     )
 
     oauth_refresh_token = "refresh"
     plugin = openid_plugin()
     csrf_token = _get_new_csrf_token()
-    swiftmovers_refresh_token = create_jwt_refresh_token(
+    saleor_refresh_token = create_jwt_refresh_token(
         admin_user, oauth_refresh_token, csrf_token, plugin.PLUGIN_ID
     )
 
     request = rf.request()
-    data = {"refreshToken": swiftmovers_refresh_token}
+    data = {"refreshToken": saleor_refresh_token}
     with pytest.raises(ValidationError):
         plugin.external_refresh(data, request, None)
 
@@ -314,11 +314,11 @@ def test_external_refresh_raises_error(
     plugin = openid_plugin()
     csrf_token = _get_new_csrf_token()
     oauth_refresh_token = "refresh"
-    swiftmovers_refresh_token = create_jwt_refresh_token(
+    saleor_refresh_token = create_jwt_refresh_token(
         admin_user, oauth_refresh_token, csrf_token, plugin.PLUGIN_ID
     )
     request = rf.request()
-    request.COOKIES[JWT_REFRESH_TOKEN_COOKIE_NAME] = swiftmovers_refresh_token
+    request.COOKIES[JWT_REFRESH_TOKEN_COOKIE_NAME] = saleor_refresh_token
 
     data = {"csrfToken": csrf_token}
     with pytest.raises(ValidationError):
@@ -333,11 +333,11 @@ def test_external_refresh_incorrect_csrf(
     plugin = openid_plugin()
     csrf_token = _get_new_csrf_token()
     oauth_refresh_token = "refresh"
-    swiftmovers_refresh_token = create_jwt_refresh_token(
+    saleor_refresh_token = create_jwt_refresh_token(
         admin_user, oauth_refresh_token, csrf_token, plugin.PLUGIN_ID
     )
     request = rf.request()
-    request.COOKIES[JWT_REFRESH_TOKEN_COOKIE_NAME] = swiftmovers_refresh_token
+    request.COOKIES[JWT_REFRESH_TOKEN_COOKIE_NAME] = saleor_refresh_token
 
     data = {"csrfToken": "incorrect"}
     with pytest.raises(ValidationError):
@@ -353,7 +353,7 @@ def test_external_obtain_access_tokens(
     mocked_jwt_validator.get.side_effect = id_payload.get
 
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.get_decoded_token",
+        "saleor.plugins.openid_connect.utils.get_decoded_token",
         Mock(return_value=mocked_jwt_validator),
     )
     plugin = openid_plugin(use_oauth_scope_permissions=True)
@@ -368,7 +368,7 @@ def test_external_obtain_access_tokens(
     }
     mocked_fetch_token = Mock(return_value=oauth_payload)
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.OAuth2Session.fetch_token",
+        "saleor.plugins.openid_connect.plugin.OAuth2Session.fetch_token",
         mocked_fetch_token,
     )
     redirect_uri = "http://localhost:3000/used-logged-in"
@@ -379,7 +379,7 @@ def test_external_obtain_access_tokens(
     )
 
     mocked_fetch_token.assert_called_once_with(
-        "https://swiftmovers.io/oauth/token",
+        "https://saleor.io/oauth/token",
         code=code,
         redirect_uri=redirect_uri,
     )
@@ -388,7 +388,7 @@ def test_external_obtain_access_tokens(
         oauth_payload,
         plugin.config.json_web_key_set_url,
     )
-    user = get_or_create_user_from_payload(claims, oauth_url="https://swiftmovers.io/oauth")
+    user = get_or_create_user_from_payload(claims, oauth_url="https://saleor.io/oauth")
     expected_tokens = create_tokens_from_oauth_payload(
         oauth_payload, user, claims, permissions=[], owner=plugin.PLUGIN_ID
     )
@@ -411,7 +411,7 @@ def test_external_obtain_access_tokens_with_permissions(
     mocked_jwt_validator.get.side_effect = id_payload.get
 
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.get_decoded_token",
+        "saleor.plugins.openid_connect.utils.get_decoded_token",
         Mock(return_value=mocked_jwt_validator),
     )
     plugin = openid_plugin(use_oauth_scope_permissions=True)
@@ -419,14 +419,14 @@ def test_external_obtain_access_tokens_with_permissions(
         "access_token": "FeHkE_QbuU3cYy1a1eQUrCE5jRcUnBK3",
         "refresh_token": "refresh",
         "id_token": id_token,
-        "scope": "openid profile email offline_access swiftmovers:manage_orders",
+        "scope": "openid profile email offline_access saleor:manage_orders",
         "expires_in": 86400,
         "token_type": "Bearer",
         "expires_at": 1600851112,
     }
     mocked_fetch_token = Mock(return_value=oauth_payload)
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.OAuth2Session.fetch_token",
+        "saleor.plugins.openid_connect.plugin.OAuth2Session.fetch_token",
         mocked_fetch_token,
     )
     redirect_uri = "http://localhost:3000/used-logged-in"
@@ -437,7 +437,7 @@ def test_external_obtain_access_tokens_with_permissions(
     )
 
     mocked_fetch_token.assert_called_once_with(
-        "https://swiftmovers.io/oauth/token",
+        "https://saleor.io/oauth/token",
         code=code,
         redirect_uri=redirect_uri,
     )
@@ -446,7 +446,7 @@ def test_external_obtain_access_tokens_with_permissions(
         oauth_payload,
         plugin.config.json_web_key_set_url,
     )
-    user = get_or_create_user_from_payload(claims, "https://swiftmovers.io/oauth")
+    user = get_or_create_user_from_payload(claims, "https://saleor.io/oauth")
     user.is_staff = True
     expected_tokens = create_tokens_from_oauth_payload(
         oauth_payload,
@@ -472,7 +472,7 @@ def test_external_obtain_access_tokens_with_permissions(
 
 @freeze_time("2019-03-18 12:00:00")
 @pytest.mark.vcr
-def test_external_obtain_access_tokens_with_swiftmovers_staff(
+def test_external_obtain_access_tokens_with_saleor_staff(
     openid_plugin, monkeypatch, rf, id_token, id_payload
 ):
     mocked_jwt_validator = MagicMock()
@@ -480,7 +480,7 @@ def test_external_obtain_access_tokens_with_swiftmovers_staff(
     mocked_jwt_validator.get.side_effect = id_payload.get
 
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.get_decoded_token",
+        "saleor.plugins.openid_connect.utils.get_decoded_token",
         Mock(return_value=mocked_jwt_validator),
     )
     plugin = openid_plugin(use_oauth_scope_permissions=True)
@@ -488,14 +488,14 @@ def test_external_obtain_access_tokens_with_swiftmovers_staff(
         "access_token": "FeHkE_QbuU3cYy1a1eQUrCE5jRcUnBK3",
         "refresh_token": "refresh",
         "id_token": id_token,
-        "scope": "openid profile email offline_access swiftmovers:staff",
+        "scope": "openid profile email offline_access saleor:staff",
         "expires_in": 86400,
         "token_type": "Bearer",
         "expires_at": 1600851112,
     }
     mocked_fetch_token = Mock(return_value=oauth_payload)
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.OAuth2Session.fetch_token",
+        "saleor.plugins.openid_connect.plugin.OAuth2Session.fetch_token",
         mocked_fetch_token,
     )
     redirect_uri = "http://localhost:3000/used-logged-in"
@@ -506,7 +506,7 @@ def test_external_obtain_access_tokens_with_swiftmovers_staff(
     )
 
     mocked_fetch_token.assert_called_once_with(
-        "https://swiftmovers.io/oauth/token",
+        "https://saleor.io/oauth/token",
         code=code,
         redirect_uri=redirect_uri,
     )
@@ -515,7 +515,7 @@ def test_external_obtain_access_tokens_with_swiftmovers_staff(
         oauth_payload,
         plugin.config.json_web_key_set_url,
     )
-    user = get_or_create_user_from_payload(claims, "https://swiftmovers.io/oauth")
+    user = get_or_create_user_from_payload(claims, "https://saleor.io/oauth")
     user.refresh_from_db()
 
     assert user.is_staff is True
@@ -555,7 +555,7 @@ def test_external_obtain_access_tokens_user_which_is_no_more_staff(
     mocked_jwt_validator.get.side_effect = id_payload.get
 
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.get_decoded_token",
+        "saleor.plugins.openid_connect.utils.get_decoded_token",
         Mock(return_value=mocked_jwt_validator),
     )
     plugin = openid_plugin(use_oauth_scope_permissions=True)
@@ -570,7 +570,7 @@ def test_external_obtain_access_tokens_user_which_is_no_more_staff(
     }
     mocked_fetch_token = Mock(return_value=oauth_payload)
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.OAuth2Session.fetch_token",
+        "saleor.plugins.openid_connect.plugin.OAuth2Session.fetch_token",
         mocked_fetch_token,
     )
     redirect_uri = "http://localhost:3000/used-logged-in"
@@ -581,7 +581,7 @@ def test_external_obtain_access_tokens_user_which_is_no_more_staff(
     )
 
     mocked_fetch_token.assert_called_once_with(
-        "https://swiftmovers.io/oauth/token",
+        "https://saleor.io/oauth/token",
         code=code,
         redirect_uri=redirect_uri,
     )
@@ -590,7 +590,7 @@ def test_external_obtain_access_tokens_user_which_is_no_more_staff(
         oauth_payload,
         plugin.config.json_web_key_set_url,
     )
-    user = get_or_create_user_from_payload(claims, "https://swiftmovers.io/oauth")
+    user = get_or_create_user_from_payload(claims, "https://saleor.io/oauth")
 
     staff_user.refresh_from_db()
     assert staff_user == user
@@ -648,7 +648,7 @@ def test_external_obtain_access_tokens_missing_redirect_uri_in_state(openid_plug
         )
 
 
-test_url = "http://swiftmovers.io/"
+test_url = "http://saleor.io/"
 
 
 @pytest.mark.parametrize(
@@ -662,7 +662,7 @@ test_url = "http://swiftmovers.io/"
         [
             "cc",
             "123",
-            "swiftmovers.io/auth",
+            "saleor.io/auth",
             f"{test_url}token",
             f"{test_url}token",
             "",
@@ -705,9 +705,9 @@ def test_validate_plugin_configuration(plugin_configuration, openid_plugin):
         client_id="c_id",
         client_secret="c_secret",
         enable_refresh_token=True,
-        oauth_authorization_url="http://swiftmovers.io/auth",
-        oauth_token_url="http://swiftmovers.io/token",
-        json_web_key_set_url="http://swiftmovers.io/jwks",
+        oauth_authorization_url="http://saleor.io/auth",
+        oauth_token_url="http://saleor.io/token",
+        json_web_key_set_url="http://saleor.io/jwks",
     )
     conf = PluginConfiguration(active=True, configuration=configuration)
     plugin = openid_plugin()
@@ -728,7 +728,7 @@ def test_external_logout_plugin_inactive(openid_plugin, rf):
 
 def test_external_logout(openid_plugin, rf):
     client_id = "AVC"
-    domain = "swiftmovers.io"
+    domain = "saleor.io"
     path = "/logout"
     plugin = openid_plugin(oauth_logout_url=f"http://{domain}{path}?client_id=AVC")
     input_data = {"redirectUrl": "http://localhost:3000/logout", "field1": "value1"}
@@ -825,7 +825,7 @@ def test_authenticate_user(openid_plugin, id_payload, customer_user, monkeypatch
         owner=plugin.PLUGIN_ID,
     )
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.get_token_from_request", lambda _: token
+        "saleor.plugins.openid_connect.plugin.get_token_from_request", lambda _: token
     )
     user = plugin.authenticate_user(rf.request(), None)
     assert user == customer_user
@@ -843,29 +843,29 @@ def test_authenticate_user_with_access_token(
     plugin = openid_plugin(
         oauth_authorization_url=None,
         oauth_token_url=None,
-        json_web_key_set_url="https://swiftmovers.io/.well-known/jwks.json",
-        user_info_url="https://swiftmovers.io/userinfo",
+        json_web_key_set_url="https://saleor.io/.well-known/jwks.json",
+        user_info_url="https://saleor.io/userinfo",
         use_oauth_scope_permissions=True,
     )
     decoded_access_token["scope"] = ""
 
     # mock get token from request
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.get_token_from_request",
+        "saleor.plugins.openid_connect.plugin.get_token_from_request",
         lambda _: "OAuth_access_token",
     )
 
     # decode access token returns payload when access token is in JWT format
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.decode_access_token", lambda x, y: None
+        "saleor.plugins.openid_connect.utils.decode_access_token", lambda x, y: None
     )
     # mock request to api to fetch user info details
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.get_user_info",
+        "saleor.plugins.openid_connect.utils.get_user_info",
         lambda x, z: user_info_response,
     )
     # mock cache used for caching user info details
-    monkeypatch.setattr("swiftmovers.plugins.openid_connect.utils.cache.set", Mock())
+    monkeypatch.setattr("saleor.plugins.openid_connect.utils.cache.set", Mock())
 
     user = plugin.authenticate_user(rf.request(), None)
 
@@ -883,28 +883,28 @@ def test_authenticate_user_with_access_token_unable_to_fetch_user_info(
     plugin = openid_plugin(
         oauth_authorization_url=None,
         oauth_token_url=None,
-        json_web_key_set_url="https://swiftmovers.io/.well-known/jwks.json",
-        user_info_url="https://swiftmovers.io/userinfo",
+        json_web_key_set_url="https://saleor.io/.well-known/jwks.json",
+        user_info_url="https://saleor.io/userinfo",
         use_oauth_scope_permissions=True,
     )
     decoded_access_token["scope"] = ""
 
     # mock get token from request
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.get_token_from_request",
+        "saleor.plugins.openid_connect.plugin.get_token_from_request",
         lambda _: "OAuth_access_token",
     )
 
     # decode access token returns payload when access token is in JWT format
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.decode_access_token", lambda x, y: None
+        "saleor.plugins.openid_connect.utils.decode_access_token", lambda x, y: None
     )
     # mock request to api to fetch user info details
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.get_user_info", lambda x, z: None
+        "saleor.plugins.openid_connect.utils.get_user_info", lambda x, z: None
     )
     # mock cache used for caching user info details
-    monkeypatch.setattr("swiftmovers.plugins.openid_connect.utils.cache.set", Mock())
+    monkeypatch.setattr("saleor.plugins.openid_connect.utils.cache.set", Mock())
 
     user = plugin.authenticate_user(rf.request(), None)
 
@@ -923,8 +923,8 @@ def test_authenticate_user_with_jwt_access_token(
     plugin = openid_plugin(
         oauth_authorization_url=None,
         oauth_token_url=None,
-        json_web_key_set_url="https://swiftmovers.io/.well-known/jwks.json",
-        user_info_url="https://swiftmovers.io/userinfo",
+        json_web_key_set_url="https://saleor.io/.well-known/jwks.json",
+        user_info_url="https://saleor.io/userinfo",
         use_oauth_scope_permissions=True,
     )
     decoded_access_token["scope"] = ""
@@ -934,21 +934,21 @@ def test_authenticate_user_with_jwt_access_token(
 
     # mock get token from request
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.get_token_from_request",
+        "saleor.plugins.openid_connect.plugin.get_token_from_request",
         lambda _: "OAuth_access_token",
     )
     # decode access token returns payload when access token is in JWT format
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.decode_access_token",
+        "saleor.plugins.openid_connect.utils.decode_access_token",
         lambda x, y: decoded_token,
     )
     # mock request to api to fetch user info details
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.get_user_info",
+        "saleor.plugins.openid_connect.utils.get_user_info",
         lambda x, z: user_info_response,
     )
     # mock cache used for caching user info details
-    monkeypatch.setattr("swiftmovers.plugins.openid_connect.utils.cache.set", Mock())
+    monkeypatch.setattr("saleor.plugins.openid_connect.utils.cache.set", Mock())
 
     user = plugin.authenticate_user(rf.request(), None)
 
@@ -973,8 +973,8 @@ def test_authenticate_user_with_jwt_access_token_which_is_no_more_staff(
     plugin = openid_plugin(
         oauth_authorization_url=None,
         oauth_token_url=None,
-        json_web_key_set_url="https://swiftmovers.io/.well-known/jwks.json",
-        user_info_url="https://swiftmovers.io/userinfo",
+        json_web_key_set_url="https://saleor.io/.well-known/jwks.json",
+        user_info_url="https://saleor.io/userinfo",
         use_oauth_scope_permissions=True,
     )
     decoded_access_token["scope"] = ""
@@ -984,21 +984,21 @@ def test_authenticate_user_with_jwt_access_token_which_is_no_more_staff(
 
     # mock get token from request
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.get_token_from_request",
+        "saleor.plugins.openid_connect.plugin.get_token_from_request",
         lambda _: "OAuth_access_token",
     )
     # decode access token returns payload when access token is in JWT format
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.decode_access_token",
+        "saleor.plugins.openid_connect.utils.decode_access_token",
         lambda x, y: decoded_token,
     )
     # mock request to api to fetch user info details
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.get_user_info",
+        "saleor.plugins.openid_connect.utils.get_user_info",
         lambda x, z: user_info_response,
     )
     # mock cache used for caching user info details
-    monkeypatch.setattr("swiftmovers.plugins.openid_connect.utils.cache.set", Mock())
+    monkeypatch.setattr("saleor.plugins.openid_connect.utils.cache.set", Mock())
 
     user = plugin.authenticate_user(rf.request(), None)
 
@@ -1020,32 +1020,32 @@ def test_authenticate_staff_user_with_jwt_access_token_and_staff_scope(
     plugin = openid_plugin(
         oauth_authorization_url=None,
         oauth_token_url=None,
-        json_web_key_set_url="https://swiftmovers.io/.well-known/jwks.json",
-        user_info_url="https://swiftmovers.io/userinfo",
+        json_web_key_set_url="https://saleor.io/.well-known/jwks.json",
+        user_info_url="https://saleor.io/userinfo",
         use_oauth_scope_permissions=True,
     )
-    decoded_access_token["scope"] = "openid profile email swiftmovers:staff"
+    decoded_access_token["scope"] = "openid profile email saleor:staff"
     decoded_token = MagicMock()
     decoded_token.__getitem__.side_effect = decoded_access_token.__getitem__
     decoded_token.get.side_effect = decoded_access_token.get
 
     # mock get token from request
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.get_token_from_request",
+        "saleor.plugins.openid_connect.plugin.get_token_from_request",
         lambda _: "OAuth_access_token",
     )
     # decode access token returns payload when access token is in JWT format
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.decode_access_token",
+        "saleor.plugins.openid_connect.utils.decode_access_token",
         lambda x, y: decoded_token,
     )
     # mock request to api to fetch user info details
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.get_user_info",
+        "saleor.plugins.openid_connect.utils.get_user_info",
         lambda x, z: user_info_response,
     )
     # mock cache used for caching user info details
-    monkeypatch.setattr("swiftmovers.plugins.openid_connect.utils.cache.set", Mock())
+    monkeypatch.setattr("saleor.plugins.openid_connect.utils.cache.set", Mock())
 
     user = plugin.authenticate_user(rf.request(), None)
 
@@ -1072,33 +1072,33 @@ def test_authenticate_staff_user_with_jwt_access_token_and_staff_in_permissions_
     plugin = openid_plugin(
         oauth_authorization_url=None,
         oauth_token_url=None,
-        json_web_key_set_url="https://swiftmovers.io/.well-known/jwks.json",
-        user_info_url="https://swiftmovers.io/userinfo",
+        json_web_key_set_url="https://saleor.io/.well-known/jwks.json",
+        user_info_url="https://saleor.io/userinfo",
         use_oauth_scope_permissions=True,
     )
     decoded_access_token["scope"] = "openid profile email"
-    decoded_access_token["permissions"] = ["swiftmovers:staff"]
+    decoded_access_token["permissions"] = ["saleor:staff"]
     decoded_token = MagicMock()
     decoded_token.__getitem__.side_effect = decoded_access_token.__getitem__
     decoded_token.get.side_effect = decoded_access_token.get
 
     # mock get token from request
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.get_token_from_request",
+        "saleor.plugins.openid_connect.plugin.get_token_from_request",
         lambda _: "OAuth_access_token",
     )
     # decode access token returns payload when access token is in JWT format
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.decode_access_token",
+        "saleor.plugins.openid_connect.utils.decode_access_token",
         lambda x, y: decoded_token,
     )
     # mock request to api to fetch user info details
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.get_user_info",
+        "saleor.plugins.openid_connect.utils.get_user_info",
         lambda x, z: user_info_response,
     )
     # mock cache used for caching user info details
-    monkeypatch.setattr("swiftmovers.plugins.openid_connect.utils.cache.set", Mock())
+    monkeypatch.setattr("saleor.plugins.openid_connect.utils.cache.set", Mock())
 
     user = plugin.authenticate_user(rf.request(), None)
 
@@ -1122,33 +1122,33 @@ def test_authenticate_staff_user_with_jwt_access_token_with_permissions_field(
     plugin = openid_plugin(
         oauth_authorization_url=None,
         oauth_token_url=None,
-        json_web_key_set_url="https://swiftmovers.io/.well-known/jwks.json",
-        user_info_url="https://swiftmovers.io/userinfo",
+        json_web_key_set_url="https://saleor.io/.well-known/jwks.json",
+        user_info_url="https://saleor.io/userinfo",
         use_oauth_scope_permissions=True,
     )
     decoded_access_token["scope"] = "openid profile email"
-    decoded_access_token["permissions"] = ["swiftmovers:manage_orders", "swiftmovers:manage_apps"]
+    decoded_access_token["permissions"] = ["saleor:manage_orders", "saleor:manage_apps"]
     decoded_token = MagicMock()
     decoded_token.__getitem__.side_effect = decoded_access_token.__getitem__
     decoded_token.get.side_effect = decoded_access_token.get
 
     # mock get token from request
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.get_token_from_request",
+        "saleor.plugins.openid_connect.plugin.get_token_from_request",
         lambda _: "OAuth_access_token",
     )
     # decode access token returns payload when access token is in JWT format
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.decode_access_token",
+        "saleor.plugins.openid_connect.utils.decode_access_token",
         lambda x, y: decoded_token,
     )
     # mock request to api to fetch user info details
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.get_user_info",
+        "saleor.plugins.openid_connect.utils.get_user_info",
         lambda x, z: user_info_response,
     )
     # mock cache used for caching user info details
-    monkeypatch.setattr("swiftmovers.plugins.openid_connect.utils.cache.set", Mock())
+    monkeypatch.setattr("saleor.plugins.openid_connect.utils.cache.set", Mock())
 
     user = plugin.authenticate_user(rf.request(), None)
 
@@ -1168,8 +1168,8 @@ def test_authenticate_user_with_jwt_access_token_unable_to_fetch_user_info(
     plugin = openid_plugin(
         oauth_authorization_url=None,
         oauth_token_url=None,
-        json_web_key_set_url="https://swiftmovers.io/.well-known/jwks.json",
-        user_info_url="https://swiftmovers.io/userinfo",
+        json_web_key_set_url="https://saleor.io/.well-known/jwks.json",
+        user_info_url="https://saleor.io/userinfo",
         use_oauth_scope_permissions=True,
     )
     decoded_access_token["scope"] = ""
@@ -1180,20 +1180,20 @@ def test_authenticate_user_with_jwt_access_token_unable_to_fetch_user_info(
 
     # mock get token from request
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.get_token_from_request",
+        "saleor.plugins.openid_connect.plugin.get_token_from_request",
         lambda _: "OAuth_access_token",
     )
     # decode access token returns payload when access token is in JWT format
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.decode_access_token",
+        "saleor.plugins.openid_connect.utils.decode_access_token",
         lambda x, y: decoded_token,
     )
     # mock request to api to fetch user info details
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.get_user_info", Mock(return_value=None)
+        "saleor.plugins.openid_connect.utils.get_user_info", Mock(return_value=None)
     )
     # mock cache used for caching user info details
-    monkeypatch.setattr("swiftmovers.plugins.openid_connect.utils.cache.set", Mock())
+    monkeypatch.setattr("saleor.plugins.openid_connect.utils.cache.set", Mock())
 
     user = plugin.authenticate_user(rf.request(), None)
 
@@ -1211,8 +1211,8 @@ def test_authenticate_user_with_jwt_invalid_access_token(
     plugin = openid_plugin(
         oauth_authorization_url=None,
         oauth_token_url=None,
-        json_web_key_set_url="https://swiftmovers.io/.well-known/jwks.json",
-        user_info_url="https://swiftmovers.io/userinfo",
+        json_web_key_set_url="https://saleor.io/.well-known/jwks.json",
+        user_info_url="https://saleor.io/userinfo",
         use_oauth_scope_permissions=True,
     )
     decoded_access_token["scope"] = ""
@@ -1224,22 +1224,22 @@ def test_authenticate_user_with_jwt_invalid_access_token(
 
     # mock get token from request
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.get_token_from_request",
+        "saleor.plugins.openid_connect.plugin.get_token_from_request",
         lambda _: "OAuth_access_token",
     )
     # decode access token returns payload when access token is in JWT format
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.decode_access_token",
+        "saleor.plugins.openid_connect.utils.decode_access_token",
         lambda x, y: decoded_token,
     )
 
     # mock request to api to fetch user info details
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.get_user_info",
+        "saleor.plugins.openid_connect.utils.get_user_info",
         lambda x, z: user_info_response,
     )
     # mock cache used for caching user info details
-    monkeypatch.setattr("swiftmovers.plugins.openid_connect.utils.cache.set", Mock())
+    monkeypatch.setattr("saleor.plugins.openid_connect.utils.cache.set", Mock())
 
     user = plugin.authenticate_user(rf.request(), None)
 
@@ -1264,8 +1264,8 @@ def test_authenticate_staff_user_with_jwt_access_token(
     plugin = openid_plugin(
         oauth_authorization_url=None,
         oauth_token_url=None,
-        json_web_key_set_url="https://swiftmovers.io/.well-known/jwks.json",
-        user_info_url="https://swiftmovers.io/userinfo",
+        json_web_key_set_url="https://saleor.io/.well-known/jwks.json",
+        user_info_url="https://saleor.io/userinfo",
         use_oauth_scope_permissions=True,
         audience=decoded_access_token["aud"][0],
     )
@@ -1278,21 +1278,21 @@ def test_authenticate_staff_user_with_jwt_access_token(
 
     # mock get token from request
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.get_token_from_request",
+        "saleor.plugins.openid_connect.plugin.get_token_from_request",
         lambda _: "OAuth_access_token",
     )
     # decode access token returns payload when access token is in JWT format
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.decode_access_token",
+        "saleor.plugins.openid_connect.utils.decode_access_token",
         lambda x, y: decoded_token,
     )
     # mock request to api to fetch user info details
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.get_user_info",
+        "saleor.plugins.openid_connect.utils.get_user_info",
         lambda x, z: user_info_response,
     )
     # mock cache used for caching user info details
-    monkeypatch.setattr("swiftmovers.plugins.openid_connect.utils.cache.set", Mock())
+    monkeypatch.setattr("saleor.plugins.openid_connect.utils.cache.set", Mock())
 
     user = plugin.authenticate_user(rf.request(), None)
 
@@ -1313,8 +1313,8 @@ def test_authenticate_staff_user_with_jwt_access_token_and_disabled_scope_permis
     plugin = openid_plugin(
         oauth_authorization_url=None,
         oauth_token_url=None,
-        json_web_key_set_url="https://swiftmovers.io/.well-known/jwks.json",
-        user_info_url="https://swiftmovers.io/userinfo",
+        json_web_key_set_url="https://saleor.io/.well-known/jwks.json",
+        user_info_url="https://saleor.io/userinfo",
         use_oauth_scope_permissions=False,
     )
 
@@ -1326,24 +1326,24 @@ def test_authenticate_staff_user_with_jwt_access_token_and_disabled_scope_permis
 
     # mock get token from request
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.get_token_from_request",
+        "saleor.plugins.openid_connect.plugin.get_token_from_request",
         lambda _: "OAuth_access_token",
     )
 
     # decode access token returns payload when access token is in JWT format
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.decode_access_token",
+        "saleor.plugins.openid_connect.utils.decode_access_token",
         lambda x, y: decoded_token,
     )
 
     # mock request to api to fetch user info details
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.utils.get_user_info",
+        "saleor.plugins.openid_connect.utils.get_user_info",
         lambda x, z: user_info_response,
     )
 
     # mock cache used for caching user info details
-    monkeypatch.setattr("swiftmovers.plugins.openid_connect.utils.cache.set", Mock())
+    monkeypatch.setattr("saleor.plugins.openid_connect.utils.cache.set", Mock())
 
     user = plugin.authenticate_user(rf.request(), None)
 
@@ -1365,7 +1365,7 @@ def test_authenticate_user_wrong_owner(
         owner="DifferentPlugin",
     )
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.get_token_from_request", lambda _: token
+        "saleor.plugins.openid_connect.plugin.get_token_from_request", lambda _: token
     )
     user = plugin.authenticate_user(rf.request(), previous_value=staff_user)
     assert user == staff_user
@@ -1389,7 +1389,7 @@ def test_authenticate_user_missing_owner(
     )
     token = jwt_encode(jwt_payload)
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.get_token_from_request", lambda _: token
+        "saleor.plugins.openid_connect.plugin.get_token_from_request", lambda _: token
     )
     user = plugin.authenticate_user(rf.request(), None)
     assert user is None
@@ -1415,7 +1415,7 @@ def test_authenticate_user_plugin_is_disabled(
         owner=plugin.PLUGIN_ID,
     )
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.get_token_from_request", lambda _: token
+        "saleor.plugins.openid_connect.plugin.get_token_from_request", lambda _: token
     )
 
     user = plugin.authenticate_user(rf.request(), None)
@@ -1426,7 +1426,7 @@ def test_authenticate_user_plugin_is_disabled(
 def test_authenticate_user_unable_to_decode_token(openid_plugin, monkeypatch, rf):
     plugin = openid_plugin(user_info_url="")
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.get_token_from_request", lambda _: "ABC"
+        "saleor.plugins.openid_connect.plugin.get_token_from_request", lambda _: "ABC"
     )
     user = plugin.authenticate_user(rf.request(), None)
     assert user is None
@@ -1457,7 +1457,7 @@ def test_authenticate_user_staff_user_with_effective_permissions(
         owner=plugin.PLUGIN_ID,
     )
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.get_token_from_request", lambda _: token
+        "saleor.plugins.openid_connect.plugin.get_token_from_request", lambda _: token
     )
     user = plugin.authenticate_user(rf.request(), None)
     assert user == staff_user
@@ -1484,7 +1484,7 @@ def test_authenticate_user_staff_user_without_permissions(
         owner=plugin.PLUGIN_ID,
     )
     monkeypatch.setattr(
-        "swiftmovers.plugins.openid_connect.plugin.get_token_from_request", lambda _: token
+        "saleor.plugins.openid_connect.plugin.get_token_from_request", lambda _: token
     )
     user = plugin.authenticate_user(rf.request(), None)
     assert user == staff_user

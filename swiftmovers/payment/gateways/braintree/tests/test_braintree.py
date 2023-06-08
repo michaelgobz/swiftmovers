@@ -121,17 +121,17 @@ def test_get_error_for_client(braintree_error, monkeypatch):
     error = {"code": braintree_error.code, "message": braintree_error.message}
 
     # error not whitelisted
-    monkeypatch.setattr("swiftmovers.payment.gateways.braintree.ERROR_CODES_WHITELIST", {})
+    monkeypatch.setattr("saleor.payment.gateways.braintree.ERROR_CODES_WHITELIST", {})
     assert get_error_for_client([error]) == DEFAULT_ERROR
 
     monkeypatch.setattr(
-        "swiftmovers.payment.gateways.braintree.ERROR_CODES_WHITELIST",
+        "saleor.payment.gateways.braintree.ERROR_CODES_WHITELIST",
         {braintree_error.code: ""},
     )
     assert get_error_for_client([error]) == braintree_error.message
 
     monkeypatch.setattr(
-        "swiftmovers.payment.gateways.braintree.ERROR_CODES_WHITELIST",
+        "saleor.payment.gateways.braintree.ERROR_CODES_WHITELIST",
         {braintree_error.code: "Error msg override"},
     )
     assert get_error_for_client([error]) == "Error msg override"
@@ -183,7 +183,7 @@ def test_get_braintree_gateway_inproperly_configured(gateway_config):
         get_braintree_gateway(**gateway_config.connection_params)
 
 
-@patch("swiftmovers.payment.gateways.braintree.get_braintree_gateway")
+@patch("saleor.payment.gateways.braintree.get_braintree_gateway")
 def test_get_client_token(mock_gateway, gateway_config):
     expected_token = "client-token"
     mock_generate = Mock(return_value=expected_token)
@@ -200,7 +200,7 @@ def gateway_config_with_merchant_account_id(gateway_config):
     return gateway_config
 
 
-@patch("swiftmovers.payment.gateways.braintree.get_braintree_gateway")
+@patch("saleor.payment.gateways.braintree.get_braintree_gateway")
 def test_get_client_token_with_merchant_account_id(
     mock_gateway, gateway_config_with_merchant_account_id
 ):
@@ -221,7 +221,7 @@ def gateway_config_with_store_enabled(gateway_config):
     return gateway_config
 
 
-@patch("swiftmovers.payment.gateways.braintree.get_braintree_gateway")
+@patch("saleor.payment.gateways.braintree.get_braintree_gateway")
 def test_get_client_token_with_customer_id(
     mock_gateway, gateway_config_with_store_enabled
 ):
@@ -246,7 +246,7 @@ def gateway_config_with_merchant_account_id_and_store_enabled(
     return gateway_config_with_merchant_account_id
 
 
-@patch("swiftmovers.payment.gateways.braintree.get_braintree_gateway")
+@patch("saleor.payment.gateways.braintree.get_braintree_gateway")
 def test_get_client_token_with_customer_id_and_merchant_account_id(
     mock_gateway, gateway_config_with_merchant_account_id_and_store_enabled
 ):
@@ -269,7 +269,7 @@ def test_get_client_token_with_customer_id_and_merchant_account_id(
     assert token == expected_token
 
 
-@patch("swiftmovers.payment.gateways.braintree.get_braintree_gateway")
+@patch("saleor.payment.gateways.braintree.get_braintree_gateway")
 def test_get_client_token_with_no_customer_id_when_disabled(
     mock_gateway, gateway_config
 ):
@@ -283,7 +283,7 @@ def test_get_client_token_with_no_customer_id_when_disabled(
 
 
 @pytest.mark.integration
-@patch("swiftmovers.payment.gateways.braintree.get_braintree_gateway")
+@patch("saleor.payment.gateways.braintree.get_braintree_gateway")
 def test_authorize_error_response(
     mock_gateway, payment_dummy, braintree_error_response, gateway_config
 ):

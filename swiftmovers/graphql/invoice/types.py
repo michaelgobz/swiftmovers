@@ -15,7 +15,7 @@ class Invoice(ModelObjectType[models.Invoice]):
     message = graphene.String()
     url = graphene.String(description="URL to download an invoice.")
     order = graphene.Field(
-        "swiftmovers.graphql.order.types.Order",
+        "saleor.graphql.order.types.Order",
         description="Order related to the invoice." + ADDED_IN_310,
     )
 

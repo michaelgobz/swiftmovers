@@ -4,7 +4,7 @@ from jwt import PyJWK
 from ..jwt_manager import get_jwt_manager
 
 
-def test_jwks_can_be_used_to_decode_swiftmovers_token(client):
+def test_jwks_can_be_used_to_decode_saleor_token(client):
     # given
     jwt_manager = get_jwt_manager()
     payload = {"A": "1", "B": "2", "C": "3"}

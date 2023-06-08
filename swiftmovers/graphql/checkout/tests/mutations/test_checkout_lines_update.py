@@ -59,12 +59,12 @@ MUTATION_CHECKOUT_LINES_UPDATE = """
 
 
 @mock.patch(
-    "swiftmovers.graphql.checkout.mutations.checkout_lines_add."
+    "saleor.graphql.checkout.mutations.checkout_lines_add."
     "update_checkout_shipping_method_if_invalid",
     wraps=update_checkout_shipping_method_if_invalid,
 )
 @mock.patch(
-    "swiftmovers.graphql.checkout.mutations.checkout_lines_add."
+    "saleor.graphql.checkout.mutations.checkout_lines_add."
     "invalidate_checkout_prices",
     wraps=invalidate_checkout_prices,
 )
@@ -111,7 +111,7 @@ def test_checkout_lines_update(
 
 
 @mock.patch(
-    "swiftmovers.graphql.checkout.mutations.checkout_lines_add."
+    "saleor.graphql.checkout.mutations.checkout_lines_add."
     "update_checkout_shipping_method_if_invalid",
     wraps=update_checkout_shipping_method_if_invalid,
 )
@@ -154,7 +154,7 @@ def test_checkout_lines_update_using_line_id(
 
 
 @mock.patch(
-    "swiftmovers.graphql.checkout.mutations.checkout_lines_add."
+    "saleor.graphql.checkout.mutations.checkout_lines_add."
     "update_checkout_shipping_method_if_invalid",
     wraps=update_checkout_shipping_method_if_invalid,
 )
@@ -260,7 +260,7 @@ def test_checkout_lines_update_block_when_variant_id_and_line_id_provided(
 
 
 @mock.patch(
-    "swiftmovers.graphql.checkout.mutations.checkout_lines_add."
+    "saleor.graphql.checkout.mutations.checkout_lines_add."
     "update_checkout_shipping_method_if_invalid",
     wraps=update_checkout_shipping_method_if_invalid,
 )
@@ -920,7 +920,7 @@ def test_checkout_lines_delete_with_by_zero_quantity_when_variant_out_of_stock(
 
 
 @mock.patch(
-    "swiftmovers.graphql.checkout.mutations.checkout_lines_add."
+    "saleor.graphql.checkout.mutations.checkout_lines_add."
     "update_checkout_shipping_method_if_invalid",
     wraps=update_checkout_shipping_method_if_invalid,
 )
@@ -955,7 +955,7 @@ def test_checkout_line_delete_by_zero_quantity(
 
 
 @mock.patch(
-    "swiftmovers.graphql.checkout.mutations.checkout_lines_add."
+    "saleor.graphql.checkout.mutations.checkout_lines_add."
     "update_checkout_shipping_method_if_invalid",
     wraps=update_checkout_shipping_method_if_invalid,
 )
@@ -990,7 +990,7 @@ def test_checkout_line_delete_by_zero_quantity_when_variant_unavailable_for_purc
 
 
 @mock.patch(
-    "swiftmovers.graphql.checkout.mutations.checkout_lines_add."
+    "saleor.graphql.checkout.mutations.checkout_lines_add."
     "update_checkout_shipping_method_if_invalid",
     wraps=update_checkout_shipping_method_if_invalid,
 )

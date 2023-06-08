@@ -139,7 +139,7 @@ mutation PaymentGatewayInitialize(
         [1, 2, 3],
     ],
 )
-@mock.patch("swiftmovers.plugins.manager.PluginsManager.payment_gateway_initialize_session")
+@mock.patch("saleor.plugins.manager.PluginsManager.payment_gateway_initialize_session")
 def test_json_scalar_as_correct_variable(
     mocked_initialize, data, user_api_client, checkout_with_prices, plugins_manager
 ):
@@ -165,7 +165,7 @@ def test_json_scalar_as_correct_variable(
 
 
 @pytest.mark.parametrize("data_value", (True, "string", 1.0, 1))
-@mock.patch("swiftmovers.plugins.manager.PluginsManager.payment_gateway_initialize_session")
+@mock.patch("saleor.plugins.manager.PluginsManager.payment_gateway_initialize_session")
 def test_json_scalar_as_incorrect_variable(
     mocked_initialize,
     data_value,
@@ -210,7 +210,7 @@ mutation {
 
 
 @pytest.mark.parametrize("data_value", (True, "string", 1.0, 1))
-@mock.patch("swiftmovers.plugins.manager.PluginsManager.payment_gateway_initialize_session")
+@mock.patch("saleor.plugins.manager.PluginsManager.payment_gateway_initialize_session")
 def test_json_scalar_as_incorrect_value(
     mocked_initialize,
     data_value,
@@ -252,7 +252,7 @@ def test_json_scalar_as_incorrect_value(
         "[1,2,3]",
     ],
 )
-@mock.patch("swiftmovers.plugins.manager.PluginsManager.payment_gateway_initialize_session")
+@mock.patch("saleor.plugins.manager.PluginsManager.payment_gateway_initialize_session")
 def test_json_scalar_as_correct_value(
     mocked_initialize, data, user_api_client, checkout_with_prices, plugins_manager
 ):

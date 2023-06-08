@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     from .dataloaders import DataLoader
 
 
-class swiftmoversContext(HttpRequest):
+class SaleorContext(HttpRequest):
     _cached_user: Optional[User]
     decoded_auth_token: Optional[Dict[str, Any]]
     allow_replica: bool = True
@@ -23,24 +23,24 @@ class swiftmoversContext(HttpRequest):
     request_time: datetime.datetime
 
 
-def disallow_replica_in_context(context: swiftmoversContext) -> None:
+def disallow_replica_in_context(context: SaleorContext) -> None:
     """Set information in context to use database replicas or not.
 
-    Part of the database read replicas in swiftmovers.
-    When swiftmovers builds a response for mutation `context` stores information
+    Part of the database read replicas in Saleor.
+    When Saleor builds a response for mutation `context` stores information
     `allow_replica=False`. That means that all data should be provided from
     the master database.
-    When swiftmovers builds a response for query, set `allow_replica`=True in `context`.
+    When Saleor builds a response for query, set `allow_replica`=True in `context`.
     That means that all data should be provided from reading replica of the database.
     Database read replica couldn't be used to save any data.
     """
     context.allow_replica = False
 
 
-def get_database_connection_name(context: swiftmoversContext) -> str:
+def get_database_connection_name(context: SaleorContext) -> str:
     """Retrieve connection name based on request context.
 
-    Part of the database read replicas in swiftmovers.
+    Part of the database read replicas in Saleor.
     Return proper connection name based on `context`.
     For more info check `disallow_replica_in_context`
     Add `.using(connection_name)` to use connection name in QuerySet.
@@ -53,7 +53,7 @@ def get_database_connection_name(context: swiftmoversContext) -> str:
     return settings.DATABASE_CONNECTION_DEFAULT_NAME
 
 
-def setup_context_user(context: swiftmoversContext) -> None:
+def setup_context_user(context: SaleorContext) -> None:
     if hasattr(context.user, "_wrapped") and (
         context.user._wrapped is empty or context.user._wrapped is None  # type: ignore
     ):

@@ -24,7 +24,7 @@ PRODUCT_MEDIA_REORDER = """
 """
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_reorder_media(
     product_updated_mock,
     staff_api_client,
@@ -110,7 +110,7 @@ def test_reorder_not_existing_media(
             media.delete()
 
     with before_after.before(
-        "swiftmovers.graphql.product.mutations.product.product_media_reorder"
+        "saleor.graphql.product.mutations.product.product_media_reorder"
         ".update_ordered_media",
         delete_media,
     ):

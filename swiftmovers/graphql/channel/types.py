@@ -288,7 +288,7 @@ class Channel(ModelObjectType):
     )
 
     available_shipping_methods_per_country = graphene.Field(
-        NonNullList("swiftmovers.graphql.shipping.types.ShippingMethodsPerCountry"),
+        NonNullList("saleor.graphql.shipping.types.ShippingMethodsPerCountry"),
         countries=graphene.Argument(NonNullList(CountryCodeEnum)),
         description="Shipping methods that are available for the channel."
         + ADDED_IN_36,

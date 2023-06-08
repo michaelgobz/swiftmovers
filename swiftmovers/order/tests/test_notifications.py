@@ -309,7 +309,7 @@ def test_get_default_fulfillment_payload(fulfillment, digital_content, site_sett
     }
 
 
-@mock.patch("swiftmovers.plugins.manager.PluginsManager.notify")
+@mock.patch("saleor.plugins.manager.PluginsManager.notify")
 def test_send_email_payment_confirmation(mocked_notify, site_settings, payment_dummy):
     manager = get_plugins_manager()
     order = payment_dummy.order
@@ -335,7 +335,7 @@ def test_send_email_payment_confirmation(mocked_notify, site_settings, payment_d
     )
 
 
-@mock.patch("swiftmovers.plugins.manager.PluginsManager.notify")
+@mock.patch("saleor.plugins.manager.PluginsManager.notify")
 def test_send_email_order_confirmation(mocked_notify, order, site_settings):
     manager = get_plugins_manager()
     redirect_url = "https://www.example.com"
@@ -355,7 +355,7 @@ def test_send_email_order_confirmation(mocked_notify, order, site_settings):
     )
 
 
-@mock.patch("swiftmovers.plugins.manager.PluginsManager.notify")
+@mock.patch("saleor.plugins.manager.PluginsManager.notify")
 def test_send_email_order_confirmation_for_cc(
     mocked_notify, order_with_lines_for_cc, site_settings, warehouse_for_cc
 ):
@@ -378,7 +378,7 @@ def test_send_email_order_confirmation_for_cc(
     assert expected_payload["order"]["collection_point_name"] == warehouse_for_cc.name
 
 
-@mock.patch("swiftmovers.plugins.manager.PluginsManager.notify")
+@mock.patch("saleor.plugins.manager.PluginsManager.notify")
 def test_send_confirmation_emails_without_addresses_for_payment(
     mocked_notify,
     site_settings,
@@ -430,7 +430,7 @@ def test_send_confirmation_emails_without_addresses_for_payment(
     )
 
 
-@mock.patch("swiftmovers.plugins.manager.PluginsManager.notify")
+@mock.patch("saleor.plugins.manager.PluginsManager.notify")
 def test_send_confirmation_emails_without_addresses_for_order(
     mocked_notify,
     order,
@@ -477,7 +477,7 @@ def test_send_confirmation_emails_without_addresses_for_order(
     )
 
 
-@mock.patch("swiftmovers.plugins.manager.PluginsManager.notify")
+@mock.patch("saleor.plugins.manager.PluginsManager.notify")
 def test_send_fulfillment_confirmation_by_user(
     mocked_notify, fulfilled_order, site_settings, staff_user
 ):
@@ -504,7 +504,7 @@ def test_send_fulfillment_confirmation_by_user(
     )
 
 
-@mock.patch("swiftmovers.plugins.manager.PluginsManager.notify")
+@mock.patch("saleor.plugins.manager.PluginsManager.notify")
 def test_send_fulfillment_confirmation_by_app(
     mocked_notify, fulfilled_order, site_settings, app
 ):
@@ -531,7 +531,7 @@ def test_send_fulfillment_confirmation_by_app(
     )
 
 
-@mock.patch("swiftmovers.plugins.manager.PluginsManager.notify")
+@mock.patch("saleor.plugins.manager.PluginsManager.notify")
 def test_send_fulfillment_update(mocked_notify, fulfilled_order, site_settings):
     fulfillment = fulfilled_order.fulfillments.first()
     fulfillment.tracking_number = "https://www.example.com"
@@ -551,7 +551,7 @@ def test_send_fulfillment_update(mocked_notify, fulfilled_order, site_settings):
     )
 
 
-@mock.patch("swiftmovers.plugins.manager.PluginsManager.notify")
+@mock.patch("saleor.plugins.manager.PluginsManager.notify")
 def test_send_email_order_canceled_by_user(
     mocked_notify, order, site_settings, staff_user
 ):
@@ -576,7 +576,7 @@ def test_send_email_order_canceled_by_user(
     )
 
 
-@mock.patch("swiftmovers.plugins.manager.PluginsManager.notify")
+@mock.patch("saleor.plugins.manager.PluginsManager.notify")
 def test_send_email_order_canceled_by_app(mocked_notify, order, site_settings, app):
     # given
     manager = get_plugins_manager()
@@ -599,7 +599,7 @@ def test_send_email_order_canceled_by_app(mocked_notify, order, site_settings, a
     )
 
 
-@mock.patch("swiftmovers.plugins.manager.PluginsManager.notify")
+@mock.patch("saleor.plugins.manager.PluginsManager.notify")
 def test_send_email_order_refunded_by_user(
     mocked_notify, order, site_settings, staff_user
 ):
@@ -630,7 +630,7 @@ def test_send_email_order_refunded_by_user(
     )
 
 
-@mock.patch("swiftmovers.plugins.manager.PluginsManager.notify")
+@mock.patch("saleor.plugins.manager.PluginsManager.notify")
 def test_send_email_order_refunded_by_app(mocked_notify, order, site_settings, app):
     # given
     manager = get_plugins_manager()

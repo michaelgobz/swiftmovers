@@ -43,8 +43,8 @@ MUTATION_CHECKOUT_CREATE = """
 """
 
 
-@mock.patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
-@mock.patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
+@mock.patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
+@mock.patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
 def test_checkout_create_triggers_webhooks(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -57,7 +57,7 @@ def test_checkout_create_triggers_webhooks(
 ):
     """Create checkout object using GraphQL API."""
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
     variant = stock.product_variant
     variant_id = graphene.Node.to_global_id("ProductVariant", variant.id)
     shipping_address = graphql_address_data

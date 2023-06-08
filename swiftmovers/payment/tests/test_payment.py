@@ -424,7 +424,7 @@ def test_create_transaction_no_gateway_response(transaction_data):
 
 
 @patch.object(PluginsManager, "capture_payment")
-@patch("swiftmovers.order.actions.handle_fully_paid_order")
+@patch("saleor.order.actions.handle_fully_paid_order")
 def test_gateway_charge_failed(
     mock_handle_fully_paid_order,
     mock_capture_payment,
@@ -690,7 +690,7 @@ def test_is_currency_supported(
     manager = get_plugins_manager()
     dummy_gateway_config.supported_currencies = "USD, EUR"
     monkeypatch.setattr(
-        "swiftmovers.payment.gateways.dummy.plugin.DummyGatewayPlugin._get_gateway_config",
+        "saleor.payment.gateways.dummy.plugin.DummyGatewayPlugin._get_gateway_config",
         lambda _: dummy_gateway_config,
     )
 

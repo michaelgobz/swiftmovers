@@ -34,7 +34,7 @@ from ...permission.models import Permission
 from ..error_codes import PluginErrorCode
 from ..models import PluginConfiguration
 from . import PLUGIN_ID
-from .const import swiftmovers_STAFF_PERMISSION
+from .const import SALEOR_STAFF_PERMISSION
 from .exceptions import AuthenticationError
 
 JWKS_KEY = "oauth_jwks"
@@ -201,12 +201,12 @@ def get_user_from_oauth_access_token_in_jwt_format(
     else:
         audience_in_token = audience == aud
 
-    is_staff_id = swiftmovers_STAFF_PERMISSION
+    is_staff_id = SALEOR_STAFF_PERMISSION
 
     if use_scope_permissions and audience_in_token:
-        permissions = get_swiftmovers_permissions_qs_from_scope(scope)
+        permissions = get_saleor_permissions_qs_from_scope(scope)
         if not permissions and token_permissions:
-            permissions = get_swiftmovers_permissions_from_list(token_permissions)
+            permissions = get_saleor_permissions_from_list(token_permissions)
         user.effective_permissions = permissions
         is_staff_in_scope = is_staff_id in scope
         is_staff_in_token_permissions = is_staff_id in token_permissions
@@ -548,26 +548,26 @@ def get_incorrect_fields(plugin_configuration: "PluginConfiguration"):
         return incorrect_fields
 
 
-def get_swiftmovers_permissions_qs_from_scope(scope: str) -> QuerySet[Permission]:
+def get_saleor_permissions_qs_from_scope(scope: str) -> QuerySet[Permission]:
     scope_list = scope.lower().strip().split()
-    return get_swiftmovers_permissions_from_list(scope_list)
+    return get_saleor_permissions_from_list(scope_list)
 
 
-def get_swiftmovers_permissions_from_list(permissions: list) -> QuerySet[Permission]:
-    swiftmovers_permissions_str = [s for s in permissions if s.startswith("swiftmovers:")]
-    if swiftmovers_STAFF_PERMISSION in swiftmovers_permissions_str:
-        swiftmovers_permissions_str.remove(swiftmovers_STAFF_PERMISSION)
-    if not swiftmovers_permissions_str:
+def get_saleor_permissions_from_list(permissions: list) -> QuerySet[Permission]:
+    saleor_permissions_str = [s for s in permissions if s.startswith("saleor:")]
+    if SALEOR_STAFF_PERMISSION in saleor_permissions_str:
+        saleor_permissions_str.remove(SALEOR_STAFF_PERMISSION)
+    if not saleor_permissions_str:
         return Permission.objects.none()
 
     permission_codenames = list(
-        map(lambda perm: perm.replace("swiftmovers:", ""), swiftmovers_permissions_str)
+        map(lambda perm: perm.replace("saleor:", ""), saleor_permissions_str)
     )
     permissions = get_permissions_from_codenames(permission_codenames)
     return permissions
 
 
-def get_swiftmovers_permission_names(permissions: QuerySet) -> List[str]:
+def get_saleor_permission_names(permissions: QuerySet) -> List[str]:
     permission_names = get_permission_names(permissions)
     return list(permission_names)
 

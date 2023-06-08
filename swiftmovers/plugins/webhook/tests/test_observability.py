@@ -12,10 +12,10 @@ from ..tasks import (
 )
 
 
-@patch("swiftmovers.plugins.webhook.tasks.group")
-@patch("swiftmovers.plugins.webhook.tasks.send_observability_events")
-@patch("swiftmovers.plugins.webhook.tasks.observability.get_webhooks")
-@patch("swiftmovers.plugins.webhook.tasks.observability.pop_events_with_remaining_size")
+@patch("saleor.plugins.webhook.tasks.group")
+@patch("saleor.plugins.webhook.tasks.send_observability_events")
+@patch("saleor.plugins.webhook.tasks.observability.get_webhooks")
+@patch("saleor.plugins.webhook.tasks.observability.pop_events_with_remaining_size")
 def test_observability_reporter_task(
     mock_pop_events_with_remaining_size,
     mock_get_webhooks,
@@ -41,9 +41,9 @@ def test_observability_reporter_task(
     mock_send_observability_events.assert_called_once_with(webhooks, events)
 
 
-@patch("swiftmovers.plugins.webhook.tasks.send_observability_events")
-@patch("swiftmovers.plugins.webhook.tasks.observability.get_webhooks")
-@patch("swiftmovers.plugins.webhook.tasks.observability.pop_events_with_remaining_size")
+@patch("saleor.plugins.webhook.tasks.send_observability_events")
+@patch("saleor.plugins.webhook.tasks.observability.get_webhooks")
+@patch("saleor.plugins.webhook.tasks.observability.pop_events_with_remaining_size")
 def test_observability_send_events(
     mock_pop_events_with_remaining_size,
     mock_get_webhooks,
@@ -60,7 +60,7 @@ def test_observability_send_events(
     mock_send_observability_events.assert_called_once_with(webhooks, events)
 
 
-@patch("swiftmovers.plugins.webhook.tasks.send_webhook_using_scheme_method")
+@patch("saleor.plugins.webhook.tasks.send_webhook_using_scheme_method")
 def test_send_observability_events(
     mock_send_webhook_using_scheme_method, observability_webhook_data
 ):
@@ -70,14 +70,14 @@ def test_send_observability_events(
 
     mock_send_webhook_using_scheme_method.assert_called_once_with(
         observability_webhook_data.target_url,
-        observability_webhook_data.swiftmovers_domain,
+        observability_webhook_data.saleor_domain,
         observability_webhook_data.secret_key,
         WebhookEventAsyncType.OBSERVABILITY,
         dump_payload(events),
     )
 
 
-@patch("swiftmovers.plugins.webhook.tasks.send_webhook_using_scheme_method")
+@patch("saleor.plugins.webhook.tasks.send_webhook_using_scheme_method")
 def test_send_observability_events_when_reposnse_failed(
     mock_send_webhook_using_scheme_method, observability_webhook_data
 ):
@@ -90,12 +90,12 @@ def test_send_observability_events_when_reposnse_failed(
     mock_send_webhook_using_scheme_method.assert_called_once()
 
 
-@patch("swiftmovers.plugins.webhook.tasks.send_webhook_using_scheme_method")
+@patch("saleor.plugins.webhook.tasks.send_webhook_using_scheme_method")
 def test_send_observability_events_to_google_pub_sub(
     mock_send_webhook_using_scheme_method, observability_webhook_data
 ):
     observability_webhook_data.target_url = (
-        "gcpubsub://cloud.google.com/projects/swiftmovers/topics/test"
+        "gcpubsub://cloud.google.com/projects/saleor/topics/test"
     )
     webhooks = [observability_webhook_data]
     events = [{"event": "data"}, {"event": "data"}]
@@ -105,19 +105,19 @@ def test_send_observability_events_to_google_pub_sub(
     assert mock_send_webhook_using_scheme_method.call_count == len(events)
     mock_send_webhook_using_scheme_method.assert_called_with(
         observability_webhook_data.target_url,
-        observability_webhook_data.swiftmovers_domain,
+        observability_webhook_data.saleor_domain,
         observability_webhook_data.secret_key,
         WebhookEventAsyncType.OBSERVABILITY,
         dump_payload(events[-1]),
     )
 
 
-@patch("swiftmovers.plugins.webhook.tasks.send_webhook_using_scheme_method")
+@patch("saleor.plugins.webhook.tasks.send_webhook_using_scheme_method")
 def test_send_observability_events_to_google_pub_sub_when_reposnse_failed(
     mock_send_webhook_using_scheme_method, observability_webhook_data
 ):
     observability_webhook_data.target_url = (
-        "gcpubsub://cloud.google.com/projects/swiftmovers/topics/test"
+        "gcpubsub://cloud.google.com/projects/saleor/topics/test"
     )
     events = [{"event": "data"}, {"event": "data"}]
     response = Mock()

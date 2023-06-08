@@ -30,7 +30,7 @@ MUTATION_CHECKOUT_SHIPPING_ADDRESS_UPDATE = """
 
 
 @mock.patch(
-    "swiftmovers.graphql.checkout.mutations.checkout_shipping_address_update."
+    "saleor.graphql.checkout.mutations.checkout_shipping_address_update."
     "update_checkout_shipping_method_if_invalid",
     wraps=update_checkout_shipping_method_if_invalid,
 )
@@ -73,7 +73,7 @@ def test_checkout_shipping_address_update_by_id(
 
 
 @mock.patch(
-    "swiftmovers.graphql.checkout.mutations.checkout_shipping_address_update."
+    "saleor.graphql.checkout.mutations.checkout_shipping_address_update."
     "update_checkout_shipping_method_if_invalid",
     wraps=update_checkout_shipping_method_if_invalid,
 )

@@ -32,7 +32,7 @@ def test_trigger_webhooks_with_aws_sqs(
     mocked_client_constructor = MagicMock(spec=boto3.client, return_value=mocked_client)
 
     monkeypatch.setattr(
-        "swiftmovers.plugins.webhook.tasks.boto3.client",
+        "saleor.plugins.webhook.tasks.boto3.client",
         mocked_client_constructor,
     )
 
@@ -62,8 +62,8 @@ def test_trigger_webhooks_with_aws_sqs(
     expected_call_args = {
         "QueueUrl": f"https://sqs.us-east-1.amazonaws.com/account_id/{queue_name}",
         "MessageAttributes": {
-            "swiftmoversDomain": {"DataType": "String", "StringValue": "mirumee.com"},
-            "swiftmoversApiUrl": {
+            "SaleorDomain": {"DataType": "String", "StringValue": "mirumee.com"},
+            "SaleorApiUrl": {
                 "DataType": "String",
                 "StringValue": "http://mirumee.com/graphql/",
             },
@@ -98,7 +98,7 @@ def test_trigger_webhooks_with_aws_sqs_and_secret_key(
     mocked_client_constructor = MagicMock(spec=boto3.client, return_value=mocked_client)
 
     monkeypatch.setattr(
-        "swiftmovers.plugins.webhook.tasks.boto3.client",
+        "saleor.plugins.webhook.tasks.boto3.client",
         mocked_client_constructor,
     )
 
@@ -131,8 +131,8 @@ def test_trigger_webhooks_with_aws_sqs_and_secret_key(
     mocked_client.send_message.assert_called_once_with(
         QueueUrl="https://sqs.us-east-1.amazonaws.com/account_id/queue_name",
         MessageAttributes={
-            "swiftmoversDomain": {"DataType": "String", "StringValue": "mirumee.com"},
-            "swiftmoversApiUrl": {
+            "SaleorDomain": {"DataType": "String", "StringValue": "mirumee.com"},
+            "SaleorApiUrl": {
                 "DataType": "String",
                 "StringValue": "http://mirumee.com/graphql/",
             },
@@ -154,11 +154,11 @@ def test_trigger_webhooks_with_google_pub_sub(
     mocked_publisher = MagicMock(spec=PublisherClient)
     mocked_publisher.publish.return_value.result.return_value = "message_id"
     monkeypatch.setattr(
-        "swiftmovers.plugins.webhook.tasks.pubsub_v1.PublisherClient",
+        "saleor.plugins.webhook.tasks.pubsub_v1.PublisherClient",
         lambda: mocked_publisher,
     )
     webhook.app.permissions.add(permission_manage_orders)
-    webhook.target_url = "gcpubsub://cloud.google.com/projects/swiftmovers/topics/test"
+    webhook.target_url = "gcpubsub://cloud.google.com/projects/saleor/topics/test"
     webhook.save()
     expected_data = serialize("json", [order_with_lines])
     expected_signature = signature_for_payload(expected_data.encode("utf-8"), None)
@@ -167,10 +167,10 @@ def test_trigger_webhooks_with_google_pub_sub(
         expected_data, WebhookEventAsyncType.ORDER_CREATED, [webhook]
     )
     mocked_publisher.publish.assert_called_once_with(
-        "projects/swiftmovers/topics/test",
+        "projects/saleor/topics/test",
         expected_data.encode("utf-8"),
-        swiftmoversDomain="mirumee.com",
-        swiftmoversApiUrl="http://mirumee.com/graphql/",
+        saleorDomain="mirumee.com",
+        saleorApiUrl="http://mirumee.com/graphql/",
         eventType=WebhookEventAsyncType.ORDER_CREATED,
         signature=expected_signature,
     )
@@ -187,11 +187,11 @@ def test_trigger_webhooks_with_google_pub_sub_and_secret_key(
     mocked_publisher = MagicMock(spec=PublisherClient)
     mocked_publisher.publish.return_value.result.return_value = "message_id"
     monkeypatch.setattr(
-        "swiftmovers.plugins.webhook.tasks.pubsub_v1.PublisherClient",
+        "saleor.plugins.webhook.tasks.pubsub_v1.PublisherClient",
         lambda: mocked_publisher,
     )
     webhook.app.permissions.add(permission_manage_orders)
-    webhook.target_url = "gcpubsub://cloud.google.com/projects/swiftmovers/topics/test"
+    webhook.target_url = "gcpubsub://cloud.google.com/projects/saleor/topics/test"
     webhook.secret_key = "secret_key"
     webhook.save()
 
@@ -204,16 +204,16 @@ def test_trigger_webhooks_with_google_pub_sub_and_secret_key(
         expected_data, WebhookEventAsyncType.ORDER_CREATED, [webhook]
     )
     mocked_publisher.publish.assert_called_once_with(
-        "projects/swiftmovers/topics/test",
+        "projects/saleor/topics/test",
         message.encode("utf-8"),
-        swiftmoversDomain="mirumee.com",
-        swiftmoversApiUrl="http://mirumee.com/graphql/",
+        saleorDomain="mirumee.com",
+        saleorApiUrl="http://mirumee.com/graphql/",
         eventType=WebhookEventAsyncType.ORDER_CREATED,
         signature=expected_signature,
     )
 
 
-@patch("swiftmovers.plugins.webhook.tasks.requests.post")
+@patch("saleor.plugins.webhook.tasks.requests.post")
 def test_trigger_webhooks_with_http(
     mock_request,
     webhook,
@@ -244,14 +244,14 @@ def test_trigger_webhooks_with_http(
 
     expected_headers = {
         "Content-Type": "application/json",
-        # X- headers will be deprecated in swiftmovers 4.0, proper headers are without X-
-        "X-swiftmovers-Event": "order_created",
-        "X-swiftmovers-Domain": "mirumee.com",
-        "X-swiftmovers-Signature": expected_signature,
-        "swiftmovers-Event": "order_created",
-        "swiftmovers-Domain": "mirumee.com",
-        "swiftmovers-Signature": expected_signature,
-        "swiftmovers-Api-Url": "http://mirumee.com/graphql/",
+        # X- headers will be deprecated in Saleor 4.0, proper headers are without X-
+        "X-Saleor-Event": "order_created",
+        "X-Saleor-Domain": "mirumee.com",
+        "X-Saleor-Signature": expected_signature,
+        "Saleor-Event": "order_created",
+        "Saleor-Domain": "mirumee.com",
+        "Saleor-Signature": expected_signature,
+        "Saleor-Api-Url": "http://mirumee.com/graphql/",
     }
 
     mock_request.assert_called_once_with(
@@ -263,7 +263,7 @@ def test_trigger_webhooks_with_http(
     )
 
 
-@patch("swiftmovers.plugins.webhook.tasks.requests.post")
+@patch("saleor.plugins.webhook.tasks.requests.post")
 def test_trigger_webhooks_with_http_and_secret_key(
     mock_request, webhook, order_with_lines, permission_manage_orders
 ):
@@ -289,14 +289,14 @@ def test_trigger_webhooks_with_http_and_secret_key(
     )
     expected_headers = {
         "Content-Type": "application/json",
-        # X- headers will be deprecated in swiftmovers 4.0, proper headers are without X-
-        "X-swiftmovers-Event": "order_created",
-        "X-swiftmovers-Domain": "mirumee.com",
-        "X-swiftmovers-Signature": expected_signature,
-        "swiftmovers-Event": "order_created",
-        "swiftmovers-Domain": "mirumee.com",
-        "swiftmovers-Signature": expected_signature,
-        "swiftmovers-Api-Url": "http://mirumee.com/graphql/",
+        # X- headers will be deprecated in Saleor 4.0, proper headers are without X-
+        "X-Saleor-Event": "order_created",
+        "X-Saleor-Domain": "mirumee.com",
+        "X-Saleor-Signature": expected_signature,
+        "Saleor-Event": "order_created",
+        "Saleor-Domain": "mirumee.com",
+        "Saleor-Signature": expected_signature,
+        "Saleor-Api-Url": "http://mirumee.com/graphql/",
     }
 
     mock_request.assert_called_once_with(
@@ -308,7 +308,7 @@ def test_trigger_webhooks_with_http_and_secret_key(
     )
 
 
-@patch("swiftmovers.plugins.webhook.tasks.requests.post")
+@patch("saleor.plugins.webhook.tasks.requests.post")
 def test_trigger_webhooks_with_http_and_secret_key_as_empty_string(
     mock_request, webhook, order_with_lines, permission_manage_orders
 ):
@@ -332,14 +332,14 @@ def test_trigger_webhooks_with_http_and_secret_key_as_empty_string(
     expected_signature = signature_for_payload(expected_data.encode("utf-8"), "")
     expected_headers = {
         "Content-Type": "application/json",
-        # X- headers will be deprecated in swiftmovers 4.0, proper headers are without X-
-        "X-swiftmovers-Event": "order_created",
-        "X-swiftmovers-Domain": "mirumee.com",
-        "X-swiftmovers-Signature": expected_signature,
-        "swiftmovers-Event": "order_created",
-        "swiftmovers-Domain": "mirumee.com",
-        "swiftmovers-Signature": expected_signature,
-        "swiftmovers-Api-Url": "http://mirumee.com/graphql/",
+        # X- headers will be deprecated in Saleor 4.0, proper headers are without X-
+        "X-Saleor-Event": "order_created",
+        "X-Saleor-Domain": "mirumee.com",
+        "X-Saleor-Signature": expected_signature,
+        "Saleor-Event": "order_created",
+        "Saleor-Domain": "mirumee.com",
+        "Saleor-Signature": expected_signature,
+        "Saleor-Api-Url": "http://mirumee.com/graphql/",
     }
 
     signature_headers = jwt.get_unverified_header(expected_signature)
@@ -357,7 +357,7 @@ def test_trigger_webhooks_with_http_and_secret_key_as_empty_string(
     )
 
 
-@patch("swiftmovers.plugins.webhook.tasks.requests.post")
+@patch("saleor.plugins.webhook.tasks.requests.post")
 def test_trigger_webhooks_with_http_and_custom_headers(
     mock_request, webhook, order_with_lines, permission_manage_orders
 ):
@@ -371,13 +371,13 @@ def test_trigger_webhooks_with_http_and_custom_headers(
     expected_signature = signature_for_payload(expected_data.encode("utf-8"), "")
     expected_headers = {
         "Content-Type": "application/json",
-        "X-swiftmovers-Event": "order_created",
-        "X-swiftmovers-Domain": "mirumee.com",
-        "X-swiftmovers-Signature": expected_signature,
-        "swiftmovers-Event": "order_created",
-        "swiftmovers-Domain": "mirumee.com",
-        "swiftmovers-Signature": expected_signature,
-        "swiftmovers-Api-Url": "http://mirumee.com/graphql/",
+        "X-Saleor-Event": "order_created",
+        "X-Saleor-Domain": "mirumee.com",
+        "X-Saleor-Signature": expected_signature,
+        "Saleor-Event": "order_created",
+        "Saleor-Domain": "mirumee.com",
+        "Saleor-Signature": expected_signature,
+        "Saleor-Api-Url": "http://mirumee.com/graphql/",
         "X-Key": "Value",
         "Authorization-Key": "Value",
     }

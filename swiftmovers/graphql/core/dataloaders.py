@@ -5,7 +5,7 @@ import opentracing.tags
 from promise import Promise
 from promise.dataloader import DataLoader as BaseLoader
 
-from . import swiftmoversContext
+from . import SaleorContext
 from .context import get_database_connection_name
 
 K = TypeVar("K")
@@ -14,10 +14,10 @@ R = TypeVar("R")
 
 class DataLoader(BaseLoader, Generic[K, R]):
     context_key: str
-    context: swiftmoversContext
+    context: SaleorContext
     database_connection_name: str
 
-    def __new__(cls, context: swiftmoversContext):
+    def __new__(cls, context: SaleorContext):
         key = cls.context_key
         if key is None:
             raise TypeError("Data loader %r does not define a context key" % (cls,))
@@ -29,7 +29,7 @@ class DataLoader(BaseLoader, Generic[K, R]):
         assert isinstance(loader, cls)
         return loader
 
-    def __init__(self, context: swiftmoversContext) -> None:
+    def __init__(self, context: SaleorContext) -> None:
         if getattr(self, "context", None) != context:
             self.context = context
             self.database_connection_name = get_database_connection_name(context)

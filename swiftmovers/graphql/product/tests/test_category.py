@@ -216,7 +216,7 @@ def test_category_query_error_when_id_and_slug_provided(
     }
     response = user_api_client.post_graphql(QUERY_CATEGORY, variables=variables)
     assert graphql_log_handler.messages == [
-        "swiftmovers.graphql.errors.handled[INFO].GraphQLError"
+        "saleor.graphql.errors.handled[INFO].GraphQLError"
     ]
     content = get_graphql_content(response, ignore_errors=True)
     assert len(content["errors"]) == 1
@@ -228,7 +228,7 @@ def test_category_query_error_when_no_param(
     variables = {}
     response = user_api_client.post_graphql(QUERY_CATEGORY, variables=variables)
     assert graphql_log_handler.messages == [
-        "swiftmovers.graphql.errors.handled[INFO].GraphQLError"
+        "saleor.graphql.errors.handled[INFO].GraphQLError"
     ]
     content = get_graphql_content(response, ignore_errors=True)
     assert len(content["errors"]) == 1
@@ -466,8 +466,8 @@ def test_category_create_mutation(
 
 
 @freeze_time("2022-05-12 12:00:00")
-@patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
-@patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
+@patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
+@patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
 def test_category_create_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -482,7 +482,7 @@ def test_category_create_trigger_webhook(
 
     query = CATEGORY_CREATE_MUTATION
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
 
     category_name = "Test category"
     description = "description"
@@ -690,8 +690,8 @@ def test_category_update_mutation(
 
 
 @freeze_time("2022-05-12 12:00:00")
-@patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
-@patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
+@patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
+@patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
 def test_category_update_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -706,7 +706,7 @@ def test_category_update_trigger_webhook(
     staff_api_client.user.user_permissions.add(permission_manage_products)
 
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
 
     category_name = "Updated name"
     description = "description"
@@ -751,7 +751,7 @@ def test_category_update_trigger_webhook(
     )
 
 
-@patch("swiftmovers.core.tasks.delete_from_storage_task.delay")
+@patch("saleor.core.tasks.delete_from_storage_task.delay")
 def test_category_update_background_image_mutation(
     delete_from_storage_task_mock,
     monkeypatch,
@@ -818,7 +818,7 @@ def test_category_update_background_image_mutation(
     delete_from_storage_task_mock.assert_called_once_with(img_path)
 
 
-@patch("swiftmovers.core.tasks.delete_from_storage_task.delay")
+@patch("saleor.core.tasks.delete_from_storage_task.delay")
 def test_category_update_mutation_invalid_background_image_content_type(
     delete_from_storage_task_mock,
     staff_api_client,
@@ -862,7 +862,7 @@ def test_category_update_mutation_invalid_background_image_content_type(
     delete_from_storage_task_mock.assert_not_called()
 
 
-@patch("swiftmovers.core.tasks.delete_from_storage_task.delay")
+@patch("saleor.core.tasks.delete_from_storage_task.delay")
 def test_category_update_mutation_invalid_background_image(
     delete_from_storage_task_mock,
     monkeypatch,
@@ -880,7 +880,7 @@ def test_category_update_mutation_invalid_background_image(
     error_msg = "Test syntax error"
     image_file_mock = Mock(side_effect=SyntaxError(error_msg))
     monkeypatch.setattr(
-        "swiftmovers.graphql.core.validators.file.Image.open", image_file_mock
+        "saleor.graphql.core.validators.file.Image.open", image_file_mock
     )
 
     size = 128
@@ -1120,11 +1120,14 @@ MUTATION_CATEGORY_DELETE = """
 """
 
 
-@patch("swiftmovers.core.tasks.delete_from_storage_task.delay")
+@patch("saleor.product.tasks.update_products_discounted_prices_task.delay")
+@patch("saleor.core.tasks.delete_from_storage_task.delay")
 def test_category_delete_mutation(
     delete_from_storage_task_mock,
+    update_products_discounted_price_task_mock,
     staff_api_client,
     category,
+    product_list,
     media_root,
     permission_manage_products,
 ):
@@ -1133,6 +1136,8 @@ def test_category_delete_mutation(
     thumbnail_mock.name = "thumbnail_image.jpg"
     Thumbnail.objects.create(category=category, size=128, image=thumbnail_mock)
     Thumbnail.objects.create(category=category, size=200, image=thumbnail_mock)
+
+    category.products.add(*product_list)
 
     category_id = category.id
 
@@ -1153,10 +1158,14 @@ def test_category_delete_mutation(
     assert not Thumbnail.objects.filter(category_id=category_id)
     assert delete_from_storage_task_mock.call_count == 2
 
+    update_products_discounted_price_task_mock.assert_called_once()
+    args, kwargs = update_products_discounted_price_task_mock.call_args
+    assert set(kwargs["product_ids"]) == {product.id for product in product_list}
+
 
 @freeze_time("2022-05-12 12:00:00")
-@patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
-@patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
+@patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
+@patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
 def test_category_delete_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -1167,7 +1176,7 @@ def test_category_delete_trigger_webhook(
     settings,
 ):
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
 
     variables = {"id": graphene.Node.to_global_id("Category", category.id)}
     response = staff_api_client.post_graphql(
@@ -1217,7 +1226,7 @@ def test_delete_category_with_background_image(
         category.refresh_from_db()
 
 
-@patch("swiftmovers.product.utils.update_products_discounted_prices_task")
+@patch("saleor.product.utils.update_products_discounted_prices_task")
 def test_category_delete_mutation_for_categories_tree(
     mock_update_products_discounted_prices_task,
     staff_api_client,
@@ -1256,7 +1265,7 @@ def test_category_delete_mutation_for_categories_tree(
     assert product_channel_listings.count() == 4
 
 
-@patch("swiftmovers.product.utils.update_products_discounted_prices_task")
+@patch("saleor.product.utils.update_products_discounted_prices_task")
 def test_category_delete_mutation_for_children_from_categories_tree(
     mock_update_products_discounted_prices_task,
     staff_api_client,

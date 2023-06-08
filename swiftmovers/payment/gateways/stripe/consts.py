@@ -1,4 +1,4 @@
-PLUGIN_ID = "swiftmovers.payments.stripe"
+PLUGIN_ID = "saleor.payments.stripe"
 PLUGIN_NAME = "Stripe"
 WEBHOOK_PATH = "webhooks/"
 
@@ -19,7 +19,7 @@ WEBHOOK_EVENTS = [
     WEBHOOK_CANCELED_EVENT,
     WEBHOOK_REFUND_EVENT,
 ]
-METADATA_IDENTIFIER = "swiftmovers-domain"
+METADATA_IDENTIFIER = "saleor-domain"
 
 ACTION_REQUIRED_STATUSES = [
     "requires_payment_method",

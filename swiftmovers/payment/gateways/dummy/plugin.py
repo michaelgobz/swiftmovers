@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from swiftmovers.plugins.base_plugin import BasePlugin, ConfigurationTypeField
+from saleor.plugins.base_plugin import BasePlugin, ConfigurationTypeField
 
 from ..utils import get_supported_currencies
 from . import (
@@ -32,12 +32,12 @@ class DummyGatewayPlugin(BasePlugin):
     CONFIG_STRUCTURE = {
         "Store customers card": {
             "type": ConfigurationTypeField.BOOLEAN,
-            "help_text": "Determines if swiftmovers should store cards.",
+            "help_text": "Determines if Saleor should store cards.",
             "label": "Store customers card",
         },
         "Automatic payment capture": {
             "type": ConfigurationTypeField.BOOLEAN,
-            "help_text": "Determines if swiftmovers should automatically capture payments.",
+            "help_text": "Determines if Saleor should automatically capture payments.",
             "label": "Automatic payment capture",
         },
         "Supported currencies": {

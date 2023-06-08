@@ -22,7 +22,7 @@ def setup_celery_logging(loglevel=None, **_kwargs):
 
     Respects the --loglevel=<level> passed to Celery beats
     """
-    logging.getLogger("swiftmovers.schedulers").setLevel(loglevel)
+    logging.getLogger("saleor.schedulers").setLevel(loglevel)
 
 
 def is_numeric_value(value):
@@ -149,8 +149,8 @@ class PersistentScheduler(celery.beat.PersistentScheduler, BaseScheduler):
     """Celery beat scheduler backed by ``shelve`` python module for persistence.
 
     Usage:
-    $ celery --app swiftmovers.celeryconf:app beat \
-        --scheduler swiftmovers.schedulers.schedulers.PersistentScheduler
+    $ celery --app saleor.celeryconf:app beat \
+        --scheduler saleor.schedulers.schedulers.PersistentScheduler
     """
 
 
@@ -160,8 +160,8 @@ class DatabaseScheduler(BaseDatabaseScheduler, BaseScheduler):
     This uses the django-celery-beat package.
 
     Usage:
-    $ celery --app swiftmovers.celeryconf:app beat \
-        --scheduler swiftmovers.schedulers.schedulers.DatabaseScheduler
+    $ celery --app saleor.celeryconf:app beat \
+        --scheduler saleor.schedulers.schedulers.DatabaseScheduler
     """
 
     Entry = CustomModelEntry

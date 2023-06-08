@@ -341,7 +341,7 @@ def send_webhook_using_http(
     """
     headers = {
         "Content-Type": "application/json",
-        # X- headers will be deprecated in swiftmovers 4.0, proper headers are without X-
+        # X- headers will be deprecated in Saleor 4.0, proper headers are without X-
         DeprecatedAppHeaders.EVENT_TYPE: event_type,
         DeprecatedAppHeaders.DOMAIN: domain,
         DeprecatedAppHeaders.SIGNATURE: signature,
@@ -420,8 +420,8 @@ def send_webhook_using_aws_sqs(
     is_fifo = parts.path.endswith(".fifo")
 
     msg_attributes = {
-        "swiftmoversDomain": {"DataType": "String", "StringValue": domain},
-        "swiftmoversApiUrl": {
+        "SaleorDomain": {"DataType": "String", "StringValue": domain},
+        "SaleorApiUrl": {
             "DataType": "String",
             "StringValue": build_absolute_uri(reverse("api"), domain),
         },
@@ -461,8 +461,8 @@ def send_webhook_using_google_cloud_pubsub(
             future = client.publish(
                 topic_name,
                 message,
-                swiftmoversDomain=domain,
-                swiftmoversApiUrl=build_absolute_uri(reverse("api"), domain),
+                saleorDomain=domain,
+                saleorApiUrl=build_absolute_uri(reverse("api"), domain),
                 eventType=event_type,
                 signature=signature,
             )
@@ -690,7 +690,7 @@ def send_observability_events(webhooks: List[WebhookData], events: List[Any]):
                 for event in events:
                     response = send_webhook_using_scheme_method(
                         webhook.target_url,
-                        webhook.swiftmovers_domain,
+                        webhook.saleor_domain,
                         webhook.secret_key,
                         event_type,
                         observability.dump_payload(event),
@@ -700,7 +700,7 @@ def send_observability_events(webhooks: List[WebhookData], events: List[Any]):
             else:
                 response = send_webhook_using_scheme_method(
                     webhook.target_url,
-                    webhook.swiftmovers_domain,
+                    webhook.saleor_domain,
                     webhook.secret_key,
                     event_type,
                     observability.dump_payload(events),

@@ -695,7 +695,7 @@ class ProductFilter(MetadataFilterBase):
         help_text="Filter by the lowest variant price after discounts.",
     )
     attributes = ListObjectTypeFilter(
-        input_class="swiftmovers.graphql.attribute.types.AttributeInput",
+        input_class="saleor.graphql.attribute.types.AttributeInput",
         method="filter_attributes",
     )
     stock_availability = EnumFilter(

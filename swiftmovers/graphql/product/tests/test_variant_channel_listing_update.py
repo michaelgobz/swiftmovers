@@ -182,8 +182,14 @@ def test_variant_channel_listing_update_with_too_many_decimal_places_in_price(
     assert error["code"] == ProductErrorCode.INVALID.name
 
 
+@patch("saleor.product.tasks.update_product_discounted_price_task.delay")
 def test_variant_channel_listing_update_as_staff_user(
-    staff_api_client, product, permission_manage_products, channel_USD, channel_PLN
+    update_product_discounted_price_task_mock,
+    staff_api_client,
+    product,
+    permission_manage_products,
+    channel_USD,
+    channel_PLN,
 ):
     # given
     ProductChannelListing.objects.create(
@@ -240,6 +246,7 @@ def test_variant_channel_listing_update_as_staff_user(
     assert channel_pln_data["price"]["amount"] == second_price
     assert channel_pln_data["costPrice"]["amount"] == second_price
     assert channel_pln_data["channel"]["slug"] == channel_PLN.slug
+    update_product_discounted_price_task_mock.assert_called_once_with(product.id)
 
 
 def test_variant_channel_listing_update_by_sku(
@@ -302,7 +309,7 @@ def test_variant_channel_listing_update_by_sku(
     assert channel_pln_data["channel"]["slug"] == channel_PLN.slug
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
 def test_variant_channel_listing_update_trigger_webhook_product_variant_updated(
     mock_product_variant_updated,
     staff_api_client,
@@ -462,7 +469,7 @@ def test_variant_channel_listing_update_as_anonymous(
     assert_no_permission(response)
 
 
-@patch("swiftmovers.graphql.product.mutations.channels.update_product_discounted_price_task")
+@patch("saleor.graphql.product.mutations.channels.update_product_discounted_price_task")
 def test_product_variant_channel_listing_update_updates_discounted_price(
     mock_update_product_discounted_price_task,
     staff_api_client,

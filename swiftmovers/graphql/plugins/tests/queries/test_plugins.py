@@ -50,7 +50,7 @@ PLUGINS_QUERY = """
 
 def test_query_plugin_configurations(staff_api_client_can_manage_plugins, settings):
     # Enable test plugin
-    settings.PLUGINS = ["swiftmovers.plugins.tests.sample_plugins.PluginSample"]
+    settings.PLUGINS = ["saleor.plugins.tests.sample_plugins.PluginSample"]
     response = staff_api_client_can_manage_plugins.post_graphql(PLUGINS_QUERY)
     content = get_graphql_content(response)
 
@@ -92,7 +92,7 @@ def test_query_plugin_configurations_for_channel_configurations(
     staff_api_client_can_manage_plugins, settings, channel_PLN
 ):
     # Enable test plugin
-    settings.PLUGINS = ["swiftmovers.plugins.tests.sample_plugins.ChannelPluginSample"]
+    settings.PLUGINS = ["saleor.plugins.tests.sample_plugins.ChannelPluginSample"]
 
     response = staff_api_client_can_manage_plugins.post_graphql(PLUGINS_QUERY)
     content = get_graphql_content(response)
@@ -157,7 +157,7 @@ def test_query_plugins_hides_secret_fields(
     permission_manage_plugins,
     settings,
 ):
-    settings.PLUGINS = ["swiftmovers.plugins.tests.sample_plugins.PluginSample"]
+    settings.PLUGINS = ["saleor.plugins.tests.sample_plugins.PluginSample"]
     manager = get_plugins_manager()
     plugin = manager.get_plugin(PluginSample.PLUGIN_ID)
     configuration = copy.deepcopy(plugin.configuration)
@@ -214,7 +214,7 @@ def test_query_plugins_hides_secret_fields_for_channel_configurations(
     settings,
     channel_PLN,
 ):
-    settings.PLUGINS = ["swiftmovers.plugins.tests.sample_plugins.ChannelPluginSample"]
+    settings.PLUGINS = ["saleor.plugins.tests.sample_plugins.ChannelPluginSample"]
     manager = get_plugins_manager()
     plugin = manager.get_plugin(
         ChannelPluginSample.PLUGIN_ID, channel_slug=channel_PLN.slug
@@ -257,7 +257,7 @@ def test_query_plugins_hides_secret_fields_for_channel_configurations(
 
 
 def test_query_plugin_configurations_as_customer_user(user_api_client, settings):
-    settings.PLUGINS = ["swiftmovers.plugins.tests.sample_plugins.PluginSample"]
+    settings.PLUGINS = ["saleor.plugins.tests.sample_plugins.PluginSample"]
     response = user_api_client.post_graphql(PLUGINS_QUERY)
 
     assert_no_permission(response)
@@ -287,10 +287,10 @@ def test_plugins_query_with_filter(
     channel_PLN,
 ):
     settings.PLUGINS = [
-        "swiftmovers.plugins.tests.sample_plugins.PluginSample",
-        "swiftmovers.plugins.tests.sample_plugins.PluginInactive",
-        "swiftmovers.plugins.tests.sample_plugins.ActivePlugin",
-        "swiftmovers.plugins.tests.sample_plugins.ChannelPluginSample",
+        "saleor.plugins.tests.sample_plugins.PluginSample",
+        "saleor.plugins.tests.sample_plugins.PluginInactive",
+        "saleor.plugins.tests.sample_plugins.ActivePlugin",
+        "saleor.plugins.tests.sample_plugins.ChannelPluginSample",
     ]
     plugin_filter = {
         "search": plugin_filter_fields.get("search"),
@@ -357,9 +357,9 @@ def test_query_plugins_with_sort(
     plugin_sort, result_order, staff_api_client_can_manage_plugins, settings
 ):
     settings.PLUGINS = [
-        "swiftmovers.plugins.tests.sample_plugins.PluginSample",
-        "swiftmovers.plugins.tests.sample_plugins.PluginInactive",
-        "swiftmovers.plugins.tests.sample_plugins.ActivePlugin",
+        "saleor.plugins.tests.sample_plugins.PluginSample",
+        "saleor.plugins.tests.sample_plugins.PluginInactive",
+        "saleor.plugins.tests.sample_plugins.ActivePlugin",
     ]
     variables = {"sort_by": plugin_sort}
     response = staff_api_client_can_manage_plugins.post_graphql(
@@ -377,9 +377,9 @@ def test_cannot_retrieve_hidden_plugins(
 ):
     """Ensure one cannot see hidden plugins when listing"""
     settings.PLUGINS = [
-        "swiftmovers.plugins.tests.sample_plugins.ChannelPluginSample",
-        "swiftmovers.plugins.tests.sample_plugins.PluginSample",
-        "swiftmovers.plugins.tests.sample_plugins.ActivePlugin",
+        "saleor.plugins.tests.sample_plugins.ChannelPluginSample",
+        "saleor.plugins.tests.sample_plugins.PluginSample",
+        "saleor.plugins.tests.sample_plugins.ActivePlugin",
     ]
 
     query = """{

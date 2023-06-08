@@ -45,12 +45,12 @@ MUTATION_CHECKOUT_LINES_ADD = """
 
 
 @mock.patch(
-    "swiftmovers.graphql.checkout.mutations.checkout_lines_add."
+    "saleor.graphql.checkout.mutations.checkout_lines_add."
     "update_checkout_shipping_method_if_invalid",
     wraps=update_checkout_shipping_method_if_invalid,
 )
 @mock.patch(
-    "swiftmovers.graphql.checkout.mutations.checkout_lines_add."
+    "saleor.graphql.checkout.mutations.checkout_lines_add."
     "invalidate_checkout_prices",
     wraps=invalidate_checkout_prices,
 )
@@ -190,7 +190,7 @@ def test_checkout_lines_add_with_new_variant_and_metadata(
 
 
 @mock.patch(
-    "swiftmovers.graphql.checkout.mutations.checkout_lines_add."
+    "saleor.graphql.checkout.mutations.checkout_lines_add."
     "update_checkout_shipping_method_if_invalid",
     wraps=update_checkout_shipping_method_if_invalid,
 )

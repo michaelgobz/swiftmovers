@@ -20,8 +20,8 @@ def test_plugin_webhook_view(
     plugin_id, plugin_path, status_code, client, settings, monkeypatch
 ):
     settings.PLUGINS = [
-        "swiftmovers.plugins.tests.sample_plugins.PluginSample",
-        "swiftmovers.plugins.tests.sample_plugins.PluginInactive",
+        "saleor.plugins.tests.sample_plugins.PluginSample",
+        "saleor.plugins.tests.sample_plugins.PluginInactive",
     ]
 
     response = client.post(f"/plugins/{plugin_id}{plugin_path}")
@@ -41,9 +41,9 @@ def test_plugin_per_channel_webhook_view(
     plugin_id, plugin_path, status_code, client, settings, monkeypatch, channel_PLN
 ):
     settings.PLUGINS = [
-        "swiftmovers.plugins.tests.sample_plugins.PluginSample",
-        "swiftmovers.plugins.tests.sample_plugins.ChannelPluginSample",
-        "swiftmovers.plugins.tests.sample_plugins.InactiveChannelPluginSample",
+        "saleor.plugins.tests.sample_plugins.PluginSample",
+        "saleor.plugins.tests.sample_plugins.ChannelPluginSample",
+        "saleor.plugins.tests.sample_plugins.InactiveChannelPluginSample",
     ]
 
     response = client.post(
@@ -64,8 +64,8 @@ def test_plugin_global_webhook_view(
     plugin_id, plugin_path, status_code, client, settings, monkeypatch, channel_PLN
 ):
     settings.PLUGINS = [
-        "swiftmovers.plugins.tests.sample_plugins.PluginSample",
-        "swiftmovers.plugins.tests.sample_plugins.PluginInactive",
+        "saleor.plugins.tests.sample_plugins.PluginSample",
+        "saleor.plugins.tests.sample_plugins.PluginInactive",
     ]
 
     response = client.post(f"/plugins/global/{plugin_id}{plugin_path}")

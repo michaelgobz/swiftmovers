@@ -15,7 +15,7 @@ class InvoicingPlugin(BasePlugin):
     PLUGIN_ID = "mirumee.invoicing"
     PLUGIN_NAME = "Invoicing"
     DEFAULT_ACTIVE = True
-    PLUGIN_DESCRIPTION = "Built-in swiftmovers plugin that handles invoice creation."
+    PLUGIN_DESCRIPTION = "Built-in saleor plugin that handles invoice creation."
     CONFIGURATION_PER_CHANNEL = False
 
     def invoice_request(

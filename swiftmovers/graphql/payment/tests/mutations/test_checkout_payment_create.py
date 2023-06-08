@@ -285,7 +285,7 @@ def test_checkout_add_payment_no_checkout_email(
 
 
 @patch(
-    "swiftmovers.payment.gateways.dummy.plugin.DummyGatewayPlugin.CONFIGURATION_PER_CHANNEL",
+    "saleor.payment.gateways.dummy.plugin.DummyGatewayPlugin.CONFIGURATION_PER_CHANNEL",
     False,
 )
 def test_checkout_add_payment_not_supported_currency(
@@ -325,7 +325,7 @@ def test_checkout_add_payment_not_existing_gateway(
     assert data["errors"][0]["field"] == "gateway"
 
 
-@patch("swiftmovers.payment.gateways.dummy.plugin.DummyGatewayPlugin.DEFAULT_ACTIVE", False)
+@patch("saleor.payment.gateways.dummy.plugin.DummyGatewayPlugin.DEFAULT_ACTIVE", False)
 def test_checkout_add_payment_gateway_inactive(
     user_api_client, checkout_without_shipping_required, address
 ):
@@ -693,7 +693,7 @@ def test_checkout_add_payment_run_multiple_times(
 
     # when
     with before_after.before(
-        "swiftmovers.graphql.payment.mutations.cancel_active_payments",
+        "saleor.graphql.payment.mutations.cancel_active_payments",
         call_payment_create_mutation,
     ):
         response = user_api_client.post_graphql(CREATE_PAYMENT_MUTATION, variables)

@@ -76,7 +76,7 @@ def test_stocks_bulk_update_using_ids(
     assert stock_2.quantity == new_quantity_2
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_stock_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_stock_updated")
 def test_stocks_bulk_update_send_stock_updated_event(
     product_variant_stock_update_webhook,
     staff_api_client,

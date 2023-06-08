@@ -187,7 +187,7 @@ def test_calculate_expiry_settings_for_never_expire_settings(site_settings):
     assert expiry_date is None
 
 
-@patch("swiftmovers.giftcard.utils.send_gift_card_notification")
+@patch("saleor.giftcard.utils.send_gift_card_notification")
 def test_gift_cards_create(
     send_notification_mock,
     order,
@@ -287,7 +287,7 @@ def test_gift_cards_create(
     )
 
 
-@patch("swiftmovers.giftcard.utils.send_gift_card_notification")
+@patch("saleor.giftcard.utils.send_gift_card_notification")
 def test_gift_cards_create_expiry_date_set(
     send_notification_mock,
     order,
@@ -364,7 +364,7 @@ def test_gift_cards_create_expiry_date_set(
     )
 
 
-@patch("swiftmovers.giftcard.utils.send_gift_card_notification")
+@patch("saleor.giftcard.utils.send_gift_card_notification")
 def test_gift_cards_create_multiple_quantity(
     send_notification_mock,
     order,
@@ -410,9 +410,9 @@ def test_gift_cards_create_multiple_quantity(
 
 
 @freeze_time("2022-05-12 12:00:00")
-@patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
-@patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
-@patch("swiftmovers.giftcard.utils.send_gift_card_notification")
+@patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
+@patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
+@patch("saleor.giftcard.utils.send_gift_card_notification")
 def test_gift_cards_create_trigger_webhook(
     send_notification_mock,
     mocked_webhook_trigger,
@@ -428,7 +428,7 @@ def test_gift_cards_create_trigger_webhook(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
 
     manager = get_plugins_manager()
     line_1, line_2 = gift_card_shippable_order_line, gift_card_non_shippable_order_line
@@ -553,7 +553,7 @@ def test_get_non_shippable_gift_card_lines_no_gift_card_lines(
     assert not gift_card_lines
 
 
-@patch("swiftmovers.giftcard.utils.create_fulfillments")
+@patch("saleor.giftcard.utils.create_fulfillments")
 def test_fulfill_non_shippable_gift_cards(
     create_fulfillments_mock,
     order,
@@ -593,7 +593,7 @@ def test_fulfill_non_shippable_gift_cards(
     assert kwargs["notify_customer"] is True
 
 
-@patch("swiftmovers.giftcard.utils.create_fulfillments")
+@patch("saleor.giftcard.utils.create_fulfillments")
 def test_fulfill_non_shippable_gift_cards_line_with_allocation(
     create_fulfillments_mock,
     order,

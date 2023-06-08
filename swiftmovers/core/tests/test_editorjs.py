@@ -10,15 +10,15 @@ from ..utils.editorjs import clean_editor_js
 @pytest.mark.parametrize(
     "text",
     [
-        "The swiftmovers Winter Sale is snowed under with seasonal offers. Unreal products "
-        "at unreal prices. Literally, they are not real products, but the swiftmovers demo "
-        "store is a genuine logistics Operations Panel leader.",
-        'The swiftmovers Winter Sale is snowed <a href="https://docs.swiftmovers.io/docs/">',
-        'The swiftmovers Sale is snowed <a href="https://docs.swiftmovers.io/docs/">. Test.',
-        'The swiftmovers Winter Sale is snowed <a href="https://docs.swiftmovers.io/docs/">. '
-        'Test <a href="https://docs.swiftmovers.io/docs/">.',
+        "The Saleor Winter Sale is snowed under with seasonal offers. Unreal products "
+        "at unreal prices. Literally, they are not real products, but the Saleor demo "
+        "store is a genuine e-commerce leader.",
+        'The Saleor Winter Sale is snowed <a href="https://docs.saleor.io/docs/">',
+        'The Saleor Sale is snowed <a href="https://docs.saleor.io/docs/">. Test.',
+        'The Saleor Winter Sale is snowed <a href="https://docs.saleor.io/docs/">. '
+        'Test <a href="https://docs.saleor.io/docs/">.',
         "",
-        "The swiftmovers Winter Sale is snowed <a >",
+        "The Saleor Winter Sale is snowed <a >",
     ],
 )
 def test_clean_editor_js(text):
@@ -72,7 +72,7 @@ def test_clean_editor_js_no_data():
     assert result == ""
 
 
-@mock.patch("swiftmovers.core.utils.editorjs.parse_url")
+@mock.patch("saleor.core.utils.editorjs.parse_url")
 def test_clean_editor_js_invalid_url(parse_url_mock):
     # given
     response_mock = mock.Mock()
@@ -82,9 +82,9 @@ def test_clean_editor_js_invalid_url(parse_url_mock):
 
     url = "https://github.com/editor-js"
     text = (
-        'The swiftmovers Winter Sale is snowed under with seasonal offers. <a href="{}"> '
+        'The Saleor Winter Sale is snowed under with seasonal offers. <a href="{}"> '
         "Unreal products at unreal prices. Literally, they are not real products, "
-        "but the swiftmovers demo store is a genuine logistics Operations Panel leader."
+        "but the Saleor demo store is a genuine e-commerce leader."
     )
 
     data = {"blocks": [{"data": {"text": text.format(url)}, "type": "paragraph"}]}
@@ -107,8 +107,8 @@ def test_clean_editor_js_for_list():
         "blocks": [
             {
                 "data": {
-                    "text": "The swiftmovers Winter Sale is snowed "
-                    '<a href="https://docs.swiftmovers.io/docs/">. Test.'
+                    "text": "The Saleor Winter Sale is snowed "
+                    '<a href="https://docs.saleor.io/docs/">. Test.'
                 },
                 "type": "paragraph",
             },
@@ -118,7 +118,7 @@ def test_clean_editor_js_for_list():
                     "style": "unordered",
                     "items": [
                         "It is a block-styled editor "
-                        '<a href="https://docs.swiftmovers.io/docs/">.',
+                        '<a href="https://docs.saleor.io/docs/">.',
                         "It returns clean data output in JSON",
                         "Designed to be extendable and pluggable with a simple API",
                         "",
@@ -139,16 +139,16 @@ def test_clean_editor_js_for_list():
 
     # then
     assert result == strip_tags(
-        "The swiftmovers Winter Sale is snowed "
-        '<a href="https://docs.swiftmovers.io/docs/">. Test.'
+        "The Saleor Winter Sale is snowed "
+        '<a href="https://docs.saleor.io/docs/">. Test.'
         " It is a block-styled editor "
-        '<a href="https://docs.swiftmovers.io/docs/">.'
+        '<a href="https://docs.saleor.io/docs/">.'
         " It returns clean data output in JSON"
         " Designed to be extendable and pluggable with a simple API"
     )
 
 
-@mock.patch("swiftmovers.core.utils.editorjs.parse_url")
+@mock.patch("saleor.core.utils.editorjs.parse_url")
 def test_clean_editor_js_for_list_invalid_url(parse_url_mock):
     # given
     response_mock = mock.Mock()
@@ -156,9 +156,9 @@ def test_clean_editor_js_for_list_invalid_url(parse_url_mock):
     mocked_parse = mock.Mock(return_value=response_mock)
     parse_url_mock.side_effect = mocked_parse
 
-    url1 = "https://docs.swiftmovers.io/docs/"
+    url1 = "https://docs.saleor.io/docs/"
     url2 = "https://github.com/editor-js"
-    text1 = 'The swiftmovers Winter Sale is snowed <a href="{}">. Test.'
+    text1 = 'The Saleor Winter Sale is snowed <a href="{}">. Test.'
     item_text_with_url = 'It is a block-styled editor <a href="{}">.'
 
     data = {
@@ -205,8 +205,8 @@ def test_clean_editor_js_for_complex_description():
         "blocks": [
             {
                 "data": {
-                    "text": "The swiftmovers Winter Sale is snowed"
-                    '<a href="https://docs.swiftmovers.io/docs/">. Test.'
+                    "text": "The Saleor Winter Sale is snowed"
+                    '<a href="https://docs.saleor.io/docs/">. Test.'
                 },
                 "type": "paragraph",
             },
@@ -277,8 +277,8 @@ def test_clean_editor_js_for_complex_description():
 
     # then
     assert result == strip_tags(
-        "The swiftmovers Winter Sale is snowed"
-        '<a href="https://docs.swiftmovers.io/docs/">. Test.'
+        "The Saleor Winter Sale is snowed"
+        '<a href="https://docs.saleor.io/docs/">. Test.'
         " The one thing you be sure of is: Polish winters are quite"
         " unpredictable. The coldest months are January and February"
         " with temperatures around -3.0 °C (on average), but the"

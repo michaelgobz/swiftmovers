@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from graphql import GraphQLError
 from graphql.error import GraphQLSyntaxError
 
-from swiftmovers.webhook.error_codes import WebhookErrorCode
+from saleor.webhook.error_codes import WebhookErrorCode
 
 from ..subscription_query import IsFragment, SubscriptionQuery
 

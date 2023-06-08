@@ -4,8 +4,8 @@ from unittest.mock import patch
 from stripe.error import AuthenticationError, StripeError
 from stripe.stripe_object import StripeObject
 
-from swiftmovers.payment.interface import PaymentMethodInfo
-from swiftmovers.payment.utils import price_to_minor_unit
+from saleor.payment.interface import PaymentMethodInfo
+from saleor.payment.utils import price_to_minor_unit
 
 from ..consts import (
     AUTOMATIC_CAPTURE_METHOD,
@@ -30,7 +30,7 @@ from ..stripe_api import (
 
 
 @patch(
-    "swiftmovers.payment.gateways.stripe.stripe_api.stripe.WebhookEndpoint",
+    "saleor.payment.gateways.stripe.stripe_api.stripe.WebhookEndpoint",
 )
 def test_is_secret_api_key_valid_incorrect_key(mocked_webhook):
     api_key = "incorrect"
@@ -39,7 +39,7 @@ def test_is_secret_api_key_valid_incorrect_key(mocked_webhook):
 
 
 @patch(
-    "swiftmovers.payment.gateways.stripe.stripe_api.stripe.WebhookEndpoint",
+    "saleor.payment.gateways.stripe.stripe_api.stripe.WebhookEndpoint",
 )
 def test_is_secret_api_key_valid_correct_key(mocked_webhook):
     api_key = "correct_key"
@@ -49,12 +49,12 @@ def test_is_secret_api_key_valid_correct_key(mocked_webhook):
 
 
 @patch(
-    "swiftmovers.payment.gateways.stripe.stripe_api.stripe.WebhookEndpoint",
+    "saleor.payment.gateways.stripe.stripe_api.stripe.WebhookEndpoint",
 )
 def test_subscribe_webhook_returns_webhook_object(mocked_webhook, channel_USD):
     api_key = "api_key"
     expected_url = (
-        "http://mirumee.com/plugins/channel/main/swiftmovers.payments.stripe/webhooks/"
+        "http://mirumee.com/plugins/channel/main/saleor.payments.stripe/webhooks/"
     )
 
     subscribe_webhook(api_key, channel_slug=channel_USD.slug)
@@ -68,7 +68,7 @@ def test_subscribe_webhook_returns_webhook_object(mocked_webhook, channel_USD):
 
 
 @patch(
-    "swiftmovers.payment.gateways.stripe.stripe_api.stripe.WebhookEndpoint",
+    "saleor.payment.gateways.stripe.stripe_api.stripe.WebhookEndpoint",
 )
 def test_delete_webhook(mocked_webhook):
     api_key = "api_key"
@@ -82,7 +82,7 @@ def test_delete_webhook(mocked_webhook):
 
 
 @patch(
-    "swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent",
+    "saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent",
 )
 def test_create_payment_intent_returns_intent_object(mocked_payment_intent):
     api_key = "api_key"
@@ -104,7 +104,7 @@ def test_create_payment_intent_returns_intent_object(mocked_payment_intent):
 
 
 @patch(
-    "swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent",
+    "saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent",
 )
 def test_create_payment_intent_with_customer(mocked_payment_intent):
     customer = StripeObject(id="c_ABC")
@@ -128,7 +128,7 @@ def test_create_payment_intent_with_customer(mocked_payment_intent):
 
 
 @patch(
-    "swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent",
+    "saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent",
 )
 def test_create_payment_intent_manual_auto_capture(mocked_payment_intent):
     api_key = "api_key"
@@ -147,7 +147,7 @@ def test_create_payment_intent_manual_auto_capture(mocked_payment_intent):
 
 
 @patch(
-    "swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent",
+    "saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent",
 )
 def test_create_payment_intent_returns_error(mocked_payment_intent):
     api_key = "api_key"
@@ -168,7 +168,7 @@ def test_create_payment_intent_returns_error(mocked_payment_intent):
 
 
 @patch(
-    "swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentMethod",
+    "saleor.payment.gateways.stripe.stripe_api.stripe.PaymentMethod",
 )
 def test_update_payment_method(mocked_payment_method):
     # given
@@ -188,7 +188,7 @@ def test_update_payment_method(mocked_payment_method):
 
 
 @patch(
-    "swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent",
+    "saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent",
 )
 def test_retrieve_payment_intent(mocked_payment_intent):
     api_key = "api_key"
@@ -206,7 +206,7 @@ def test_retrieve_payment_intent(mocked_payment_intent):
 
 
 @patch(
-    "swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent",
+    "saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent",
 )
 def test_retrieve_payment_intent_stripe_returns_error(mocked_payment_intent):
     api_key = "api_key"
@@ -226,7 +226,7 @@ def test_retrieve_payment_intent_stripe_returns_error(mocked_payment_intent):
 
 
 @patch(
-    "swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent",
+    "saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent",
 )
 def test_capture_payment_intent(mocked_payment_intent):
     api_key = "api_key"
@@ -248,7 +248,7 @@ def test_capture_payment_intent(mocked_payment_intent):
 
 
 @patch(
-    "swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent",
+    "saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent",
 )
 def test_capture_payment_intent_stripe_returns_error(mocked_payment_intent):
     api_key = "api_key"
@@ -272,7 +272,7 @@ def test_capture_payment_intent_stripe_returns_error(mocked_payment_intent):
 
 
 @patch(
-    "swiftmovers.payment.gateways.stripe.stripe_api.stripe.Refund",
+    "saleor.payment.gateways.stripe.stripe_api.stripe.Refund",
 )
 def test_refund_payment_intent(mocked_refund):
     api_key = "api_key"
@@ -294,7 +294,7 @@ def test_refund_payment_intent(mocked_refund):
 
 
 @patch(
-    "swiftmovers.payment.gateways.stripe.stripe_api.stripe.Refund",
+    "saleor.payment.gateways.stripe.stripe_api.stripe.Refund",
 )
 def test_refund_payment_intent_returns_error(mocked_refund):
     api_key = "api_key"
@@ -317,7 +317,7 @@ def test_refund_payment_intent_returns_error(mocked_refund):
 
 
 @patch(
-    "swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent",
+    "saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent",
 )
 def test_cancel_payment_intent(mocked_payment_intent):
     api_key = "api_key"
@@ -334,7 +334,7 @@ def test_cancel_payment_intent(mocked_payment_intent):
 
 
 @patch(
-    "swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent",
+    "saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent",
 )
 def test_cancel_payment_intent_stripe_returns_error(mocked_payment_intent):
     api_key = "api_key"
@@ -353,7 +353,7 @@ def test_cancel_payment_intent_stripe_returns_error(mocked_payment_intent):
 
 
 @patch(
-    "swiftmovers.payment.gateways.stripe.stripe_api.stripe.Customer",
+    "saleor.payment.gateways.stripe.stripe_api.stripe.Customer",
 )
 def test_get_or_create_customer_retrieve(mocked_customer):
     mocked_customer.retrieve.return_value = StripeObject()
@@ -372,7 +372,7 @@ def test_get_or_create_customer_retrieve(mocked_customer):
 
 
 @patch(
-    "swiftmovers.payment.gateways.stripe.stripe_api.stripe.Customer",
+    "saleor.payment.gateways.stripe.stripe_api.stripe.Customer",
 )
 def test_get_or_create_customer_failed_retrieve(mocked_customer):
     expected_error = StripeError(message="stripe-error")
@@ -393,7 +393,7 @@ def test_get_or_create_customer_failed_retrieve(mocked_customer):
 
 
 @patch(
-    "swiftmovers.payment.gateways.stripe.stripe_api.stripe.Customer",
+    "saleor.payment.gateways.stripe.stripe_api.stripe.Customer",
 )
 def test_get_or_create_customer_create(mocked_customer):
     mocked_customer.create.return_value = StripeObject()
@@ -410,7 +410,7 @@ def test_get_or_create_customer_create(mocked_customer):
 
 
 @patch(
-    "swiftmovers.payment.gateways.stripe.stripe_api.stripe.Customer",
+    "saleor.payment.gateways.stripe.stripe_api.stripe.Customer",
 )
 def test_get_or_create_customer_failed_create(mocked_customer):
     expected_error = StripeError(message="stripe-error")
@@ -429,7 +429,7 @@ def test_get_or_create_customer_failed_create(mocked_customer):
 
 
 @patch(
-    "swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentMethod",
+    "saleor.payment.gateways.stripe.stripe_api.stripe.PaymentMethod",
 )
 def test_list_customer_payment_methods(mocked_payment_method):
     api_key = "123"
@@ -450,7 +450,7 @@ def test_list_customer_payment_methods(mocked_payment_method):
 
 
 @patch(
-    "swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentMethod",
+    "saleor.payment.gateways.stripe.stripe_api.stripe.PaymentMethod",
 )
 def test_list_customer_payment_methods_failed_to_fetch(mocked_payment_method):
     api_key = "123"

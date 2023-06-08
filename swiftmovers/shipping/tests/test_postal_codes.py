@@ -76,7 +76,7 @@ def test_check_postal_code_for_other_countries(code, start, end, in_range):
         ["JE", "GY16 7HZ", "GY16 7HA", "GY16 7HG"],
     ],
 )
-@patch("swiftmovers.shipping.postal_codes.check_uk_postal_code")
+@patch("saleor.shipping.postal_codes.check_uk_postal_code")
 def test_check_uk_islands_follow_uk_check(check_uk_mock, country, code, start, end):
     """Check if Isle of Man, Guernsey, Jersey triggers check_uk_postal_code method."""
     assert check_postal_code_in_range(country, code, start, end)
@@ -114,7 +114,7 @@ def test_check_uk_islands_follow_uk_check(check_uk_mock, country, code, start, e
         ],
     ],
 )
-@patch("swiftmovers.shipping.postal_codes.check_shipping_method_for_postal_code")
+@patch("saleor.shipping.postal_codes.check_shipping_method_for_postal_code")
 def test_is_shipping_method_applicable_for_postal_code(
     check_shipping_method_mock, rules_result, is_applicable
 ):

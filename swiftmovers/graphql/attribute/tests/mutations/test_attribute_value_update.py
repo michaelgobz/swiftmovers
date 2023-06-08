@@ -109,8 +109,8 @@ def test_update_attribute_value_update_search_index_dirty_in_product(
 
 
 @freeze_time("2022-05-12 12:00:00")
-@mock.patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
-@mock.patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
+@mock.patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
+@mock.patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
 def test_update_attribute_value_trigger_webhooks(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -122,7 +122,7 @@ def test_update_attribute_value_trigger_webhooks(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
 
     value = pink_attribute_value
     node_id = graphene.Node.to_global_id("AttributeValue", value.id)

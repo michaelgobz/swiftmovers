@@ -8,8 +8,8 @@ from ......payment import ChargeStatus
 from ......payment.gateways.adyen.webhooks import handle_api_response
 
 
-@patch("swiftmovers.payment.gateway.refund")
-@patch("swiftmovers.payment.gateway.void")
+@patch("saleor.payment.gateway.refund")
+@patch("saleor.payment.gateway.void")
 def test_handle_api_response_auto_capture_order_created_can_refund(
     void_mock, refund_mock, payment_adyen_for_checkout, adyen_plugin
 ):
@@ -45,8 +45,8 @@ def test_handle_api_response_auto_capture_order_created_can_refund(
     assert not void_mock.called
 
 
-@patch("swiftmovers.payment.gateway.refund")
-@patch("swiftmovers.payment.gateway.void")
+@patch("saleor.payment.gateway.refund")
+@patch("saleor.payment.gateway.void")
 def test_handle_api_response_auto_capture_false_order_created_can_void(
     void_mock, refund_mock, payment_adyen_for_checkout, adyen_plugin
 ):
@@ -82,9 +82,9 @@ def test_handle_api_response_auto_capture_false_order_created_can_void(
     assert not void_mock.called
 
 
-@patch("swiftmovers.payment.gateway.void")
-@patch("swiftmovers.payment.gateway.refund")
-@patch("swiftmovers.checkout.complete_checkout._get_order_data")
+@patch("saleor.payment.gateway.void")
+@patch("saleor.payment.gateway.refund")
+@patch("saleor.checkout.complete_checkout._get_order_data")
 def test_handle_api_response_auto_capture_false_cannot_create_order_void_payment(
     order_data_mock, refund_mock, void_mock, payment_adyen_for_checkout, adyen_plugin
 ):
@@ -123,9 +123,9 @@ def test_handle_api_response_auto_capture_false_cannot_create_order_void_payment
     assert void_mock.call_count == 1
 
 
-@patch("swiftmovers.payment.gateway.void")
-@patch("swiftmovers.payment.gateway.refund")
-@patch("swiftmovers.checkout.complete_checkout._get_order_data")
+@patch("saleor.payment.gateway.void")
+@patch("saleor.payment.gateway.refund")
+@patch("saleor.checkout.complete_checkout._get_order_data")
 def test_handle_api_response_auto_capture_cannot_create_order_refund_payment(
     order_data_mock, refund_mock, void_mock, payment_adyen_for_checkout, adyen_plugin
 ):
@@ -164,8 +164,8 @@ def test_handle_api_response_auto_capture_cannot_create_order_refund_payment(
     assert not void_mock.called
 
 
-@patch("swiftmovers.payment.gateway.void")
-@patch("swiftmovers.payment.gateway.refund")
+@patch("saleor.payment.gateway.void")
+@patch("saleor.payment.gateway.refund")
 def test_handle_api_response_auto_capture_cannot_create_order_variant_deleted(
     refund_mock, void_mock, payment_adyen_for_checkout, adyen_plugin
 ):

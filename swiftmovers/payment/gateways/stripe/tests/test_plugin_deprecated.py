@@ -5,8 +5,8 @@ from ....utils import create_payment_information, price_to_minor_unit
 from ..consts import AUTOMATIC_CAPTURE_METHOD, SUCCESS_STATUS
 
 
-@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.Customer.create")
-@patch("swiftmovers.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
+@patch("saleor.payment.gateways.stripe.stripe_api.stripe.Customer.create")
+@patch("saleor.payment.gateways.stripe.stripe_api.stripe.PaymentIntent.create")
 def test_process_payment_with_customer_and_future_usage(
     mocked_payment_intent,
     mocked_customer_create,

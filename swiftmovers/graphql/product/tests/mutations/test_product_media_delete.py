@@ -6,9 +6,9 @@ import pytest
 from .....graphql.tests.utils import get_graphql_content
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_media_deleted")
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
-@patch("swiftmovers.product.signals.delete_from_storage_task.delay")
+@patch("saleor.plugins.manager.PluginsManager.product_media_deleted")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.product.signals.delete_from_storage_task.delay")
 def test_product_media_delete(
     delete_from_storage_task_mock,
     product_updated_mock,

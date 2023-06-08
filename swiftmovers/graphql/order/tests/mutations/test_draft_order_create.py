@@ -520,7 +520,7 @@ def test_draft_order_create_variant_with_0_price(
     assert created_draft_event.parameters == {}
 
 
-@patch("swiftmovers.graphql.order.mutations.draft_order_create.create_order_line")
+@patch("saleor.graphql.order.mutations.draft_order_create.create_order_line")
 def test_draft_order_create_tax_error(
     create_order_line_mock,
     staff_api_client,
@@ -1175,7 +1175,7 @@ def test_draft_order_create_invalid_shipping_address(
     assert errors[0]["addressType"] == AddressType.SHIPPING.upper()
 
 
-@patch("swiftmovers.order.calculations.fetch_order_prices_if_expired")
+@patch("saleor.order.calculations.fetch_order_prices_if_expired")
 def test_draft_order_create_price_recalculation(
     mock_fetch_order_prices_if_expired,
     staff_api_client,

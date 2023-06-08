@@ -241,11 +241,11 @@ class Attribute(ModelObjectType[models.Attribute]):
         description=AttributeDescriptions.WITH_CHOICES, required=True
     )
     product_types = ConnectionField(
-        "swiftmovers.graphql.product.types.ProductTypeCountableConnection",
+        "saleor.graphql.product.types.ProductTypeCountableConnection",
         required=True,
     )
     product_variant_types = ConnectionField(
-        "swiftmovers.graphql.product.types.ProductTypeCountableConnection",
+        "saleor.graphql.product.types.ProductTypeCountableConnection",
         required=True,
     )
     external_reference = graphene.String(

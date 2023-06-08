@@ -23,7 +23,7 @@ from ..base_plugin import BasePlugin, ConfigurationTypeField, ExternalAccessToke
 from ..error_codes import PluginErrorCode
 from ..models import PluginConfiguration
 from . import PLUGIN_ID
-from .const import swiftmovers_STAFF_PERMISSION
+from .const import SALEOR_STAFF_PERMISSION
 from .dataclasses import OpenIDConnectConfig
 from .exceptions import AuthenticationError
 from .utils import (
@@ -33,8 +33,8 @@ from .utils import (
     get_incorrect_fields,
     get_or_create_user_from_payload,
     get_parsed_id_token,
-    get_swiftmovers_permission_names,
-    get_swiftmovers_permissions_qs_from_scope,
+    get_saleor_permission_names,
+    get_saleor_permissions_qs_from_scope,
     get_user_from_oauth_access_token,
     get_user_from_token,
     is_owner_of_token_valid,
@@ -127,7 +127,7 @@ class OpenIDConnectPlugin(BasePlugin):
         "audience": {
             "type": ConfigurationTypeField.STRING,
             "help_text": (
-                "The OAuth resource identifier. If provided, swiftmovers will define "
+                "The OAuth resource identifier. If provided, Saleor will define "
                 "audience for each authorization request."
             ),
             "label": "Audience",
@@ -137,8 +137,8 @@ class OpenIDConnectPlugin(BasePlugin):
             "help_text": (
                 "Use OAuth scope permissions to grant a logged-in user access to "
                 "protected resources. Your OAuth provider needs to have defined "
-                "swiftmovers's permission scopes in format swiftmovers:<swiftmovers-perm>. Check"
-                " swiftmovers docs for more details."
+                "Saleor's permission scopes in format saleor:<saleor-perm>. Check"
+                " Saleor docs for more details."
             ),
             "label": "Use OAuth scope permissions",
         },
@@ -173,7 +173,7 @@ class OpenIDConnectPlugin(BasePlugin):
         )
 
         # Determine, if we have defined all fields required to use OAuth access token
-        # as swiftmovers's authorization token.
+        # as Saleor's authorization token.
         self.use_oauth_access_token = bool(
             self.config.user_info_url and self.config.json_web_key_set_url
         )
@@ -207,8 +207,8 @@ class OpenIDConnectPlugin(BasePlugin):
     def _get_oauth_session(self):
         scope = "openid profile email"
         if self.config.use_scope_permissions:
-            permissions = [f"swiftmovers:{perm}" for perm in get_permissions_codename()]
-            permissions.append(swiftmovers_STAFF_PERMISSION)
+            permissions = [f"saleor:{perm}" for perm in get_permissions_codename()]
+            permissions.append(SALEOR_STAFF_PERMISSION)
             scope_permissions = " ".join(permissions)
             scope += f" {scope_permissions}"
         if self.config.enable_refresh_token:
@@ -222,8 +222,8 @@ class OpenIDConnectPlugin(BasePlugin):
     def _use_scope_permissions(self, user, scope):
         user_permissions = []
         if scope:
-            permissions = get_swiftmovers_permissions_qs_from_scope(scope)
-            user_permissions = get_swiftmovers_permission_names(permissions)
+            permissions = get_saleor_permissions_qs_from_scope(scope)
+            user_permissions = get_saleor_permission_names(permissions)
             user.effective_permissions = permissions
         return user_permissions
 
@@ -282,12 +282,12 @@ class OpenIDConnectPlugin(BasePlugin):
             scope = token_data.get("scope")
             user_permissions = self._use_scope_permissions(user, scope)
             if not user.is_staff and bool(
-                swiftmovers_STAFF_PERMISSION in scope or user_permissions
+                SALEOR_STAFF_PERMISSION in scope or user_permissions
             ):
                 user.is_staff = True
                 user.save(update_fields=["is_staff"])
             elif user.is_staff and not bool(
-                swiftmovers_STAFF_PERMISSION in scope or user_permissions
+                SALEOR_STAFF_PERMISSION in scope or user_permissions
             ):
                 user.is_staff = False
                 user.save(update_fields=["is_staff"])
@@ -350,12 +350,12 @@ class OpenIDConnectPlugin(BasePlugin):
         refresh_token = data.get("refreshToken") or refresh_token
 
         validate_refresh_token(refresh_token, data)
-        swiftmovers_refresh_token = jwt_decode(refresh_token)  # type: ignore
+        saleor_refresh_token = jwt_decode(refresh_token)  # type: ignore
         token_endpoint = self.config.token_url
         try:
             token_data = self.oauth.refresh_token(
                 token_endpoint,
-                refresh_token=swiftmovers_refresh_token[OAUTH_TOKEN_REFRESH_FIELD],
+                refresh_token=saleor_refresh_token[OAUTH_TOKEN_REFRESH_FIELD],
             )
         except (AuthlibBaseError, HTTPError):
             logger.warning("Unable to refresh the token.", exc_info=True)

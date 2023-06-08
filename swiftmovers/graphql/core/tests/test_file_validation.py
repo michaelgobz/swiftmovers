@@ -115,7 +115,7 @@ def test_validate_image_url_valid_image_response(monkeypatch):
     valid_image_response_mock = Mock()
     valid_image_response_mock.headers = {"content-type": "image/jpeg"}
     monkeypatch.setattr(
-        "swiftmovers.graphql.core.validators.file.requests.head",
+        "saleor.graphql.core.validators.file.requests.head",
         Mock(return_value=valid_image_response_mock),
     )
     field = "image"
@@ -136,7 +136,7 @@ def test_validate_image_url_invalid_mimetype_response(monkeypatch):
     invalid_response_mock = Mock()
     invalid_response_mock.headers = {"content-type": "application/json"}
     monkeypatch.setattr(
-        "swiftmovers.graphql.core.validators.file.requests.head",
+        "saleor.graphql.core.validators.file.requests.head",
         Mock(return_value=invalid_response_mock),
     )
     field = "image"
@@ -159,7 +159,7 @@ def test_validate_image_url_response_without_content_headers(monkeypatch):
     invalid_response_mock = Mock()
     invalid_response_mock.headers = {}
     monkeypatch.setattr(
-        "swiftmovers.graphql.core.validators.file.requests.head",
+        "saleor.graphql.core.validators.file.requests.head",
         Mock(return_value=invalid_response_mock),
     )
     field = "image"
@@ -283,7 +283,7 @@ def test_clean_image_file_issue_with_file_opening(monkeypatch):
     error_msg = "Test syntax error"
     image_file_mock = Mock(side_effect=SyntaxError(error_msg))
     monkeypatch.setattr(
-        "swiftmovers.graphql.core.validators.file.Image.open", image_file_mock
+        "saleor.graphql.core.validators.file.Image.open", image_file_mock
     )
     img = SimpleUploadedFile("product.jpg", img_data.getvalue(), "image/jpeg")
 
@@ -305,7 +305,7 @@ def test_clean_image_file_exif_validation_raising_error(monkeypatch):
     error_msg = "Test syntax error"
     image_file_mock = Mock(side_effect=SyntaxError(error_msg))
     monkeypatch.setattr(
-        "swiftmovers.graphql.core.validators.file._validate_image_exif", image_file_mock
+        "saleor.graphql.core.validators.file._validate_image_exif", image_file_mock
     )
     img = SimpleUploadedFile("product.jpg", img_data.getvalue(), "image/jpeg")
 

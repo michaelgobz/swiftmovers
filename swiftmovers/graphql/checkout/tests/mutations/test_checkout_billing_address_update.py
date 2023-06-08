@@ -142,7 +142,7 @@ def test_checkout_billing_address_update_by_id_without_street_address_2(
 
 
 @mock.patch(
-    "swiftmovers.graphql.checkout.mutations.checkout_billing_address_update."
+    "saleor.graphql.checkout.mutations.checkout_billing_address_update."
     "invalidate_checkout_prices",
     wraps=invalidate_checkout_prices,
 )

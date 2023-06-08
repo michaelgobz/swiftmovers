@@ -32,7 +32,7 @@ def gateway_config():
             "public_key": "public",
             "private_key": "secret",
             "prefill": True,
-            "store_name": "swiftmovers",
+            "store_name": "Saleor",
             "store_image": "image.png",
         },
     )

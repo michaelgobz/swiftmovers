@@ -27,10 +27,10 @@ from ..core.utils import from_global_id_or_error
 from ..core.validators.query_cost import QueryCostError
 
 if TYPE_CHECKING:
-    from ..core import swiftmoversContext
+    from ..core import SaleorContext
 
-unhandled_errors_logger = logging.getLogger("swiftmovers.graphql.errors.unhandled")
-handled_errors_logger = logging.getLogger("swiftmovers.graphql.errors.handled")
+unhandled_errors_logger = logging.getLogger("saleor.graphql.errors.unhandled")
+handled_errors_logger = logging.getLogger("saleor.graphql.errors.handled")
 
 
 ERROR_COULD_NO_RESOLVE_GLOBAL_ID = (
@@ -193,7 +193,7 @@ def format_permissions_for_display(permissions):
     return formatted_permissions
 
 
-def get_user_or_app_from_context(context: "swiftmoversContext") -> Union[App, User, None]:
+def get_user_or_app_from_context(context: "SaleorContext") -> Union[App, User, None]:
     # order is important
     # app can be None but user if None then is passed as anonymous
     return context.app or context.user

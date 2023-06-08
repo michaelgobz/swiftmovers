@@ -60,10 +60,10 @@ def test_creates_app_from_manifest_sends_token(monkeypatch):
         "http://localhost:3000/register",
         headers={
             "Content-Type": "application/json",
-            # X- headers will be deprecated in swiftmovers 4.0, proper headers are without X-
-            "X-swiftmovers-Domain": "mirumee.com",
-            "swiftmovers-Domain": "mirumee.com",
-            "swiftmovers-Api-Url": "http://mirumee.com/graphql/",
+            # X- headers will be deprecated in Saleor 4.0, proper headers are without X-
+            "X-Saleor-Domain": "mirumee.com",
+            "Saleor-Domain": "mirumee.com",
+            "Saleor-Api-Url": "http://mirumee.com/graphql/",
         },
         json={"auth_token": ANY},
         timeout=ANY,
@@ -126,10 +126,10 @@ def test_sends_data_to_target_url(monkeypatch):
     mocked_post.assert_called_once_with(
         target_url,
         headers={
-            # X- headers will be deprecated in swiftmovers 4.0, proper headers are without X-
-            "X-swiftmovers-Domain": "mirumee.com",
-            "swiftmovers-Domain": "mirumee.com",
-            "swiftmovers-Api-Url": "http://mirumee.com/graphql/",
+            # X- headers will be deprecated in Saleor 4.0, proper headers are without X-
+            "X-Saleor-Domain": "mirumee.com",
+            "Saleor-Domain": "mirumee.com",
+            "Saleor-Api-Url": "http://mirumee.com/graphql/",
         },
         json={"auth_token": ANY},
         timeout=ANY,

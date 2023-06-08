@@ -31,7 +31,7 @@ ORDER_ADD_NOTE_MUTATION = """
 """
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("saleor.plugins.manager.PluginsManager.order_updated")
 def test_order_add_note_as_staff_user(
     order_updated_webhook_mock,
     staff_api_client,
@@ -77,7 +77,7 @@ def test_order_add_note_as_staff_user(
         "   ",
     ),
 )
-@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("saleor.plugins.manager.PluginsManager.order_updated")
 def test_order_add_note_fail_on_empty_message(
     order_updated_webhook_mock,
     staff_api_client,

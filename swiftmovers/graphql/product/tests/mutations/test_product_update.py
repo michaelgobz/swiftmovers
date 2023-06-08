@@ -26,6 +26,9 @@ MUTATION_UPDATE_PRODUCT = """
                     category {
                         name
                     }
+                    collections {
+                        name
+                    }
                     rating
                     description
                     chargeTaxes
@@ -79,11 +82,13 @@ MUTATION_UPDATE_PRODUCT = """
 """
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.product_created")
+@patch("saleor.product.tasks.update_product_discounted_price_task.delay")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_created")
 def test_update_product(
     created_webhook_mock,
     updated_webhook_mock,
+    update_product_discounted_price_task_mock,
     staff_api_client,
     category,
     non_default_category,
@@ -176,9 +181,12 @@ def test_update_product(
 
     updated_webhook_mock.assert_called_once_with(product)
     created_webhook_mock.assert_not_called()
+    update_product_discounted_price_task_mock.assert_called_once_with(product.id)
 
 
+@patch("saleor.product.tasks.update_product_discounted_price_task.delay")
 def test_update_and_search_product_by_description(
+    update_product_discounted_price_task_mock,
     staff_api_client,
     category,
     non_default_category,
@@ -214,6 +222,70 @@ def test_update_and_search_product_by_description(
     assert data["product"]["name"] == product_name
     assert data["product"]["slug"] == product_slug
     assert data["product"]["description"] == other_description_json
+    update_product_discounted_price_task_mock.assert_called_once_with(product.id)
+
+
+@patch("saleor.product.tasks.update_product_discounted_price_task.delay")
+def test_update_product_only_description(
+    update_product_discounted_price_task_mock,
+    staff_api_client,
+    product,
+    other_description_json,
+    permission_manage_products,
+):
+    query = MUTATION_UPDATE_PRODUCT
+    other_description_json = json.dumps(other_description_json)
+
+    product_id = graphene.Node.to_global_id("Product", product.pk)
+
+    variables = {
+        "productId": product_id,
+        "input": {
+            "description": other_description_json,
+        },
+    }
+
+    response = staff_api_client.post_graphql(
+        query, variables, permissions=[permission_manage_products]
+    )
+    content = get_graphql_content(response)
+    data = content["data"]["productUpdate"]
+    assert not data["errors"]
+    assert data["product"]["description"] == other_description_json
+    update_product_discounted_price_task_mock.assert_not_called()
+
+
+@patch("saleor.product.tasks.update_product_discounted_price_task.delay")
+def test_update_product_only_collections(
+    update_product_discounted_price_task_mock,
+    staff_api_client,
+    product,
+    collection,
+    other_description_json,
+    permission_manage_products,
+):
+    query = MUTATION_UPDATE_PRODUCT
+    other_description_json = json.dumps(other_description_json)
+
+    product_id = graphene.Node.to_global_id("Product", product.pk)
+    collection_id = graphene.Node.to_global_id("Collection", collection.pk)
+
+    variables = {
+        "productId": product_id,
+        "input": {
+            "collections": [collection_id],
+        },
+    }
+
+    response = staff_api_client.post_graphql(
+        query, variables, permissions=[permission_manage_products]
+    )
+    content = get_graphql_content(response)
+    data = content["data"]["productUpdate"]
+    assert not data["errors"]
+    assert len(data["product"]["collections"]) == 1
+    assert data["product"]["collections"][0]["name"] == collection.name
+    update_product_discounted_price_task_mock.assert_called_once_with(product.id)
 
 
 def test_update_product_clear_description_plaintext_when_description_is_none(
@@ -359,7 +431,7 @@ def test_update_product_seo_field_description(
     assert product.seo_title == old_seo_title
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_with_boolean_attribute_value(
     updated_webhook_mock,
     staff_api_client,
@@ -413,7 +485,7 @@ def test_update_product_with_boolean_attribute_value(
     updated_webhook_mock.assert_called_once_with(product)
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_with_file_attribute_value(
     updated_webhook_mock,
     staff_api_client,
@@ -474,7 +546,7 @@ def test_update_product_with_file_attribute_value(
     updated_webhook_mock.assert_called_once_with(product)
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_with_file_attribute_value_new_value_is_not_created(
     updated_webhook_mock,
     staff_api_client,
@@ -541,7 +613,7 @@ def test_update_product_with_file_attribute_value_new_value_is_not_created(
     updated_webhook_mock.assert_called_once_with(product)
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_with_numeric_attribute_value(
     updated_webhook_mock,
     staff_api_client,
@@ -597,7 +669,7 @@ def test_update_product_with_numeric_attribute_value(
     updated_webhook_mock.assert_called_once_with(product)
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_with_numeric_attribute_value_new_value_is_not_created(
     updated_webhook_mock,
     staff_api_client,
@@ -662,7 +734,7 @@ def test_update_product_with_numeric_attribute_value_new_value_is_not_created(
     assert value.name == new_value
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_clear_attribute_values(
     updated_webhook_mock,
     staff_api_client,
@@ -799,7 +871,7 @@ def test_update_product_clean_file_attribute_value(
     assert product_attr.values.count() == 0
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_none_as_attribute_values(
     updated_webhook_mock,
     staff_api_client,
@@ -844,7 +916,7 @@ def test_update_product_none_as_attribute_values(
     updated_webhook_mock.assert_called_once_with(product)
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_with_plain_text_attribute_value(
     updated_webhook_mock,
     staff_api_client,
@@ -899,7 +971,7 @@ def test_update_product_with_plain_text_attribute_value(
     updated_webhook_mock.assert_called_once_with(product)
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_with_plain_text_attribute_value_required(
     updated_webhook_mock,
     staff_api_client,
@@ -958,7 +1030,7 @@ def test_update_product_with_plain_text_attribute_value_required(
 
 
 @pytest.mark.parametrize("value", ["", "  ", None])
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_with_plain_text_attribute_value_required_no_value_given(
     updated_webhook_mock,
     value,
@@ -1024,7 +1096,7 @@ def test_update_product_rating(
     assert product.rating == expected_rating
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_with_page_reference_attribute_value(
     updated_webhook_mock,
     staff_api_client,
@@ -1183,7 +1255,7 @@ def test_update_product_with_empty_input_collections(
     assert product_errors["code"] == ProductErrorCode.GRAPHQL_ERROR.name
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_with_page_reference_attribute_existing_value(
     updated_webhook_mock,
     staff_api_client,
@@ -1259,7 +1331,7 @@ def test_update_product_with_page_reference_attribute_existing_value(
     assert product_type_page_reference_attribute.values.count() == values_count
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_with_page_reference_attribute_value_not_given(
     updated_webhook_mock,
     staff_api_client,
@@ -1304,7 +1376,7 @@ def test_update_product_with_page_reference_attribute_value_not_given(
     updated_webhook_mock.assert_not_called()
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_with_product_reference_attribute_value(
     updated_webhook_mock,
     staff_api_client,
@@ -1372,7 +1444,7 @@ def test_update_product_with_product_reference_attribute_value(
     assert product_type_product_reference_attribute.values.count() == values_count + 1
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_with_variant_reference_attribute_value(
     updated_webhook_mock,
     staff_api_client,
@@ -1469,7 +1541,7 @@ def test_update_product_with_no_id(
     ]
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_with_product_reference_attribute_existing_value(
     updated_webhook_mock,
     staff_api_client,
@@ -1546,7 +1618,7 @@ def test_update_product_with_product_reference_attribute_existing_value(
     assert product_type_product_reference_attribute.values.count() == values_count
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_with_product_reference_attribute_value_not_given(
     updated_webhook_mock,
     staff_api_client,
@@ -1591,7 +1663,7 @@ def test_update_product_with_product_reference_attribute_value_not_given(
     updated_webhook_mock.assert_not_called()
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_change_values_ordering(
     updated_webhook_mock,
     staff_api_client,
@@ -2053,7 +2125,7 @@ def test_update_product_slug_with_existing_value(
     assert errors[0]["message"] == "Product with this Slug already exists."
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_with_numeric_attribute_value_by_numeric_field(
     updated_webhook_mock,
     staff_api_client,
@@ -2209,7 +2281,7 @@ def test_update_product_with_numeric_attribute_by_numeric_field_new_value_not_cr
     assert value.name == new_value
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_with_dropdown_attribute_non_existing_value(
     updated_webhook_mock,
     staff_api_client,
@@ -2256,7 +2328,7 @@ def test_update_product_with_dropdown_attribute_non_existing_value(
     updated_webhook_mock.assert_called_once_with(product)
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_with_dropdown_attribute_existing_value(
     updated_webhook_mock,
     staff_api_client,
@@ -2308,7 +2380,7 @@ def test_update_product_with_dropdown_attribute_existing_value(
     updated_webhook_mock.assert_called_once_with(product)
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_with_dropdown_attribute_existing_value_passed_as_new_value(
     updated_webhook_mock,
     staff_api_client,
@@ -2362,7 +2434,7 @@ def test_update_product_with_dropdown_attribute_existing_value_passed_as_new_val
     updated_webhook_mock.assert_called_once_with(product)
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_with_dropdown_attribute_null_value(
     updated_webhook_mock,
     staff_api_client,
@@ -2408,7 +2480,7 @@ def test_update_product_with_dropdown_attribute_null_value(
     updated_webhook_mock.assert_called_once_with(product)
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_with_multiselect_attribute_non_existing_values(
     updated_webhook_mock,
     staff_api_client,
@@ -2458,7 +2530,7 @@ def test_update_product_with_multiselect_attribute_non_existing_values(
     assert AttributeValue.objects.count() == value_count + 2
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_with_multiselect_attribute_existing_values(
     updated_webhook_mock,
     staff_api_client,
@@ -2513,7 +2585,7 @@ def test_update_product_with_multiselect_attribute_existing_values(
     updated_webhook_mock.assert_called_once_with(product)
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_update_product_with_multiselect_attribute_new_values_not_created(
     updated_webhook_mock,
     staff_api_client,
@@ -2867,8 +2939,8 @@ MUTATION_UPDATE_PRODUCT_BY_EXTERNAL_REFERENCE = """
 """
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.product_created")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_created")
 def test_update_product_by_external_reference(
     created_webhook_mock,
     updated_webhook_mock,

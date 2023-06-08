@@ -5,7 +5,7 @@ from graphql_relay.node.node import to_global_id
 from ....account.models import User
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.notify")
+@patch("saleor.plugins.manager.PluginsManager.notify")
 def test_notify_via_external_notification_trigger(
     notify_single_plugin_mock,
     settings,
@@ -16,7 +16,7 @@ def test_notify_via_external_notification_trigger(
     channel_PLN,
 ):
     settings.PLUGINS = [
-        "swiftmovers.plugins.tests.sample_plugins.PluginSample",
+        "saleor.plugins.tests.sample_plugins.PluginSample",
     ]
     test_template_id = "2efac70d-64ed-4e57-9951-f87e14d7e60e"
 

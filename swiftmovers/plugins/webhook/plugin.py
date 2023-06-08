@@ -13,7 +13,7 @@ from ...core.models import EventDelivery
 from ...core.notify_events import NotifyEventType
 from ...core.taxes import TaxData, TaxType
 from ...core.utils.json_serializer import CustomJsonEncoder
-from ...graphql.core.context import swiftmoversContext
+from ...graphql.core.context import SaleorContext
 from ...graphql.webhook.subscription_payload import initialize_request
 from ...payment import PaymentError, TransactionKind
 from ...payment.interface import (
@@ -1558,7 +1558,7 @@ class WebhookPlugin(BasePlugin):
         response_gateway: dict[str, "PaymentGatewayData"],
         amount: Decimal,
         source_object: Union["Order", "Checkout"],
-        request: swiftmoversContext,
+        request: SaleorContext,
     ):
         if not webhook.app.identifier:
             logger.debug(

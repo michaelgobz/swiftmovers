@@ -54,8 +54,8 @@ def test_delete_attributes(
     ).exists()
 
 
-@mock.patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
-@mock.patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
+@mock.patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
+@mock.patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
 def test_delete_attributes_trigger_webhooks(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -67,7 +67,7 @@ def test_delete_attributes_trigger_webhooks(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
 
     variables = {
         "ids": [
@@ -172,8 +172,8 @@ def test_delete_attribute_values(
     ).exists()
 
 
-@mock.patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
-@mock.patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
+@mock.patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
+@mock.patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
 def test_delete_attribute_values_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -185,7 +185,7 @@ def test_delete_attribute_values_trigger_webhook(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
 
     attributes = {value.attribute for value in attribute_value_list}
     variables = {

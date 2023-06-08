@@ -11,8 +11,8 @@ from ..actions import create_fulfillments
 from ..models import FulfillmentLine, OrderStatus
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.fulfillment_approved")
-@patch("swiftmovers.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
+@patch("saleor.plugins.manager.PluginsManager.fulfillment_approved")
+@patch("saleor.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
 def test_create_fulfillments(
     mock_email_fulfillment,
     mock_fulfillment_approved,
@@ -80,8 +80,8 @@ def test_create_fulfillments(
     mock_fulfillment_approved.assert_called_once_with(fulfillment)
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.fulfillment_approved")
-@patch("swiftmovers.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
+@patch("saleor.plugins.manager.PluginsManager.fulfillment_approved")
+@patch("saleor.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
 def test_create_fulfillments_require_approval(
     mock_email_fulfillment,
     mock_fulfillment_approved,
@@ -151,7 +151,7 @@ def test_create_fulfillments_require_approval(
     mock_fulfillment_approved.assert_not_called()
 
 
-@patch("swiftmovers.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
+@patch("saleor.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
 def test_create_fulfillments_require_approval_as_app(
     mock_email_fulfillment,
     app,
@@ -219,7 +219,7 @@ def test_create_fulfillments_require_approval_as_app(
     mock_email_fulfillment.assert_not_called()
 
 
-@patch("swiftmovers.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
+@patch("saleor.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
 def test_create_fulfillments_without_notification(
     mock_email_fulfillment,
     staff_user,
@@ -339,7 +339,7 @@ def test_create_fulfillments_many_warehouses(
     )
 
 
-@patch("swiftmovers.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
+@patch("saleor.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
 def test_create_fulfillments_with_one_line_empty_quantity(
     mock_email_fulfillment,
     staff_user,
@@ -394,7 +394,7 @@ def test_create_fulfillments_with_one_line_empty_quantity(
     )
 
 
-@patch("swiftmovers.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
+@patch("saleor.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
 def test_create_fulfillments_with_variant_without_inventory_tracking(
     mock_email_fulfillment,
     staff_user,
@@ -443,7 +443,7 @@ def test_create_fulfillments_with_variant_without_inventory_tracking(
     )
 
 
-@patch("swiftmovers.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
+@patch("saleor.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
 def test_create_fulfillments_without_allocations(
     mock_email_fulfillment,
     staff_user,
@@ -501,7 +501,7 @@ def test_create_fulfillments_without_allocations(
     )
 
 
-@patch("swiftmovers.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
+@patch("saleor.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
 def test_create_fulfillments_warehouse_without_stock(
     mock_email_fulfillment,
     staff_user,
@@ -559,7 +559,7 @@ def test_create_fulfillments_warehouse_without_stock(
     mock_email_fulfillment.assert_not_called()
 
 
-@patch("swiftmovers.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
+@patch("saleor.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
 def test_create_fulfillments_with_variant_without_inventory_tracking_and_without_stock(
     mock_email_fulfillment,
     staff_user,
@@ -608,7 +608,7 @@ def test_create_fulfillments_with_variant_without_inventory_tracking_and_without
     mock_email_fulfillment.assert_not_called()
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_out_of_stock")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_out_of_stock")
 def test_create_fullfilment_with_out_of_stock_webhook(
     product_variant_out_of_stock_webhook,
     staff_user,
@@ -638,7 +638,7 @@ def test_create_fullfilment_with_out_of_stock_webhook(
     product_variant_out_of_stock_webhook.assert_called_once()
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_out_of_stock")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_out_of_stock")
 def test_create_fullfilment_with_out_of_stock_webhook_not_triggered(
     product_variant_out_of_stock_webhook,
     staff_user,
@@ -669,7 +669,7 @@ def test_create_fullfilment_with_out_of_stock_webhook_not_triggered(
     product_variant_out_of_stock_webhook.assert_not_called()
 
 
-@patch("swiftmovers.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
+@patch("saleor.order.actions.send_fulfillment_confirmation_to_customer", autospec=True)
 def test_create_fulfillments_quantity_allocated_lower_than_line_quantity(
     mock_email_fulfillment,
     staff_user,

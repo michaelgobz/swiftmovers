@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, List
 
-from swiftmovers.plugins.base_plugin import BasePlugin, ConfigurationTypeField
+from saleor.plugins.base_plugin import BasePlugin, ConfigurationTypeField
 
 from ..utils import get_supported_currencies
 from . import (
@@ -61,24 +61,24 @@ class BraintreeGatewayPlugin(BasePlugin):
         },
         "Use sandbox": {
             "type": ConfigurationTypeField.BOOLEAN,
-            "help_text": "Determines if swiftmovers should use Braintree sandbox API.",
+            "help_text": "Determines if Saleor should use Braintree sandbox API.",
             "label": "Sandbox mode",
         },
         "Store customers card": {
             "type": ConfigurationTypeField.BOOLEAN,
-            "help_text": "Determines if swiftmovers should store cards on payments"
+            "help_text": "Determines if Saleor should store cards on payments"
             " in Braintree customer.",
             "label": "Store customer cards",
         },
         "Automatic payment capture": {
             "type": ConfigurationTypeField.BOOLEAN,
-            "help_text": "Determines if swiftmovers should automatically capture payments.",
+            "help_text": "Determines if Saleor should automatically capture payments.",
             "label": "Automatic payment capture",
         },
         "Require 3D secure": {
             "type": ConfigurationTypeField.BOOLEAN,
             "help_text": (
-                "Determines if swiftmovers should enforce 3D Secure during payment."
+                "Determines if Saleor should enforce 3D Secure during payment."
             ),
             "label": "Require 3D Secure",
         },

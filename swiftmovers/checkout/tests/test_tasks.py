@@ -235,7 +235,7 @@ def test_delete_expired_checkouts_no_checkouts_to_delete(checkout):
     assert Checkout.objects.count() == checkout_count
 
 
-@mock.patch("swiftmovers.checkout.tasks.delete_expired_checkouts.delay")
+@mock.patch("saleor.checkout.tasks.delete_expired_checkouts.delay")
 def test_delete_checkouts_until_done(mocked_task: mock.MagicMock, channel_USD):
     """
     Ensure the Celery task ``delete_expired_checkouts`` deletes all inactive
@@ -303,7 +303,7 @@ def test_delete_checkouts_until_done(mocked_task: mock.MagicMock, channel_USD):
     mocked_task.assert_not_called()
 
 
-@mock.patch("swiftmovers.checkout.tasks.delete_expired_checkouts.delay")
+@mock.patch("saleor.checkout.tasks.delete_expired_checkouts.delay")
 def test_aborts_deleting_checkouts_when_invocation_count_exhausted(
     mocked_task: mock.MagicMock, channel_USD
 ):

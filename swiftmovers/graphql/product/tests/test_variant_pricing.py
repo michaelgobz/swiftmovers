@@ -364,7 +364,7 @@ QUERY_GET_PRODUCT_VARIANTS_PRICING_NO_ADDRESS = """
 
 
 @patch(
-    "swiftmovers.graphql.product.types.products.get_tax_rate_for_tax_class",
+    "saleor.graphql.product.types.products.get_tax_rate_for_tax_class",
 )
 def test_product_variant_price_no_address(
     mock_get_tax_rate_for_tax_class, user_api_client, variant, stock, channel_USD

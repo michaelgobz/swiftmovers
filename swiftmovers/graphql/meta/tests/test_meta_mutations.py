@@ -138,7 +138,7 @@ def test_meta_mutations_handle_validation_errors(staff_api_client):
     invalid_id = "6QjoLs5LIqb3At7hVKKcUlqXceKkFK"
     variables = {
         "id": invalid_id,
-        "input": [{"key": "year", "value": "of-swiftmovers"}],
+        "input": [{"key": "year", "value": "of-saleor"}],
     }
     response = staff_api_client.post_graphql(
         UPDATE_PUBLIC_METADATA_MUTATION % "Checkout", variables
@@ -149,7 +149,7 @@ def test_meta_mutations_handle_validation_errors(staff_api_client):
     assert errors[0]["code"] == MetadataErrorCode.INVALID.name
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.checkout_updated")
+@patch("saleor.plugins.manager.PluginsManager.checkout_updated")
 def test_base_metadata_mutation_handles_errors_from_extra_action(
     mock_checkout_updated, api_client, checkout
 ):
@@ -442,7 +442,7 @@ def test_add_public_metadata_for_checkout_by_token(api_client, checkout):
     )
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.checkout_updated")
+@patch("saleor.plugins.manager.PluginsManager.checkout_updated")
 def test_add_metadata_for_checkout_triggers_checkout_updated_hook(
     mock_checkout_updated, api_client, checkout
 ):
@@ -647,7 +647,7 @@ def test_add_public_metadata_for_fulfillment(
     )
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_add_public_metadata_for_product(
     updated_webhook_mock, staff_api_client, permission_manage_products, product
 ):
@@ -1004,7 +1004,7 @@ def test_update_public_metadata_for_item_on_deleted_instance(api_client, checkou
             Checkout.objects.filter(pk=checkout.pk).delete()
 
     with before_after.before(
-        "swiftmovers.graphql.meta.mutations._save_instance", delete_checkout_object
+        "saleor.graphql.meta.mutations._save_instance", delete_checkout_object
     ):
         response = execute_update_public_metadata_for_item(
             api_client,
@@ -1931,7 +1931,7 @@ def test_delete_public_metadata_for_fulfillment(
     )
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_delete_public_metadata_for_product(
     updated_webhook_mock, staff_api_client, permission_manage_products, product
 ):
@@ -2799,7 +2799,7 @@ def test_add_private_metadata_for_fulfillment(
     )
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_add_private_metadata_for_product(
     updated_webhook_mock, staff_api_client, permission_manage_products, product
 ):
@@ -4117,7 +4117,7 @@ def test_delete_private_metadata_for_fulfillment(
     )
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_delete_private_metadata_for_product(
     updated_webhook_mock, staff_api_client, permission_manage_products, product
 ):

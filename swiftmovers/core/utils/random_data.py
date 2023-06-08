@@ -82,7 +82,7 @@ from ...product.models import (
     VariantMedia,
 )
 from ...product.search import update_products_search_vector
-from ...product.tasks import update_products_discounted_prices_of_discount_task
+from ...product.tasks import update_products_discounted_prices_of_sale_task
 from ...product.utils.variant_prices import update_products_discounted_prices
 from ...shipping.models import (
     ShippingMethod,
@@ -107,51 +107,51 @@ DUMMY_STAFF_PASSWORD = "password"
 DEFAULT_CURRENCY = os.environ.get("DEFAULT_CURRENCY", "USD")
 
 IMAGES_MAPPING = {
-    126: ["swiftmovers-headless-omnichannel-book.png"],
+    126: ["saleor-headless-omnichannel-book.png"],
     127: [
-        "swiftmovers-white-plimsolls-1.png",
-        "swiftmovers-white-plimsolls-2.png",
-        "swiftmovers-white-plimsolls-3.png",
-        "swiftmovers-white-plimsolls-4.png",
+        "saleor-white-plimsolls-1.png",
+        "saleor-white-plimsolls-2.png",
+        "saleor-white-plimsolls-3.png",
+        "saleor-white-plimsolls-4.png",
     ],
     128: [
-        "swiftmovers-blue-plimsolls-1.png",
-        "swiftmovers-blue-plimsolls-2.png",
-        "swiftmovers-blue-plimsolls-3.png",
-        "swiftmovers-blue-plimsolls-4.png",
+        "saleor-blue-plimsolls-1.png",
+        "saleor-blue-plimsolls-2.png",
+        "saleor-blue-plimsolls-3.png",
+        "saleor-blue-plimsolls-4.png",
     ],
-    129: ["swiftmovers-dash-force-1.png", "swiftmovers-dash-force-2.png"],
-    130: ["swiftmovers-pauls-blanace-420-1.png", "swiftmovers-pauls-blanace-420-2.png"],
-    131: ["swiftmovers-grey-hoodie.png"],
-    132: ["swiftmovers-blue-hoodie.png"],
-    133: ["swiftmovers-white-hoodie.png"],
-    134: ["swiftmovers-ascii-shirt-front.png", "swiftmovers-ascii-shirt-back.png"],
-    135: ["swiftmovers-team-tee-front.png", "swiftmovers-team-tee-front.png"],
-    136: ["swiftmovers-polo-shirt-front.png", "swiftmovers-polo-shirt-back.png"],
-    137: ["swiftmovers-blue-polygon-tee-front.png", "swiftmovers-blue-polygon-tee-back.png"],
-    138: ["swiftmovers-dark-polygon-tee-front.png", "swiftmovers-dark-polygon-tee-back.png"],
-    141: ["swiftmovers-beanie-1.png", "swiftmovers-beanie-2.png"],
-    143: ["swiftmovers-neck-warmer.png"],
-    144: ["swiftmovers-sunnies.png"],
-    145: ["swiftmovers-battle-tested-book.png"],
-    146: ["swiftmovers-enterprise-cloud-book.png"],
-    147: ["swiftmovers-own-your-stack-and-data-book.png"],
-    150: ["swiftmovers-mighty-mug.png"],
-    151: ["swiftmovers-cushion-blue.png"],
-    152: ["swiftmovers-apple-drink.png"],
-    153: ["swiftmovers-bean-drink.png"],
-    154: ["swiftmovers-banana-drink.png"],
-    155: ["swiftmovers-carrot-drink.png"],
-    156: ["swiftmovers-sunnies-dark.png"],
+    129: ["saleor-dash-force-1.png", "saleor-dash-force-2.png"],
+    130: ["saleor-pauls-blanace-420-1.png", "saleor-pauls-blanace-420-2.png"],
+    131: ["saleor-grey-hoodie.png"],
+    132: ["saleor-blue-hoodie.png"],
+    133: ["saleor-white-hoodie.png"],
+    134: ["saleor-ascii-shirt-front.png", "saleor-ascii-shirt-back.png"],
+    135: ["saleor-team-tee-front.png", "saleor-team-tee-front.png"],
+    136: ["saleor-polo-shirt-front.png", "saleor-polo-shirt-back.png"],
+    137: ["saleor-blue-polygon-tee-front.png", "saleor-blue-polygon-tee-back.png"],
+    138: ["saleor-dark-polygon-tee-front.png", "saleor-dark-polygon-tee-back.png"],
+    141: ["saleor-beanie-1.png", "saleor-beanie-2.png"],
+    143: ["saleor-neck-warmer.png"],
+    144: ["saleor-sunnies.png"],
+    145: ["saleor-battle-tested-book.png"],
+    146: ["saleor-enterprise-cloud-book.png"],
+    147: ["saleor-own-your-stack-and-data-book.png"],
+    150: ["saleor-mighty-mug.png"],
+    151: ["saleor-cushion-blue.png"],
+    152: ["saleor-apple-drink.png"],
+    153: ["saleor-bean-drink.png"],
+    154: ["saleor-banana-drink.png"],
+    155: ["saleor-carrot-drink.png"],
+    156: ["saleor-sunnies-dark.png"],
     157: [
-        "swiftmovers-monospace-white-tee-front.png",
-        "swiftmovers-monospace-white-tee-back.png",
+        "saleor-monospace-white-tee-front.png",
+        "saleor-monospace-white-tee-back.png",
     ],
-    160: ["swiftmovers-gift-100.png"],
-    161: ["swiftmovers-white-cubes-tee-front.png", "swiftmovers-white-cubes-tee-back.png"],
-    162: ["swiftmovers-white-parrot-cushion.png"],
-    163: ["swiftmovers-gift-500.png"],
-    164: ["swiftmovers-gift-50.png"],
+    160: ["saleor-gift-100.png"],
+    161: ["saleor-white-cubes-tee-front.png", "saleor-white-cubes-tee-back.png"],
+    162: ["saleor-white-parrot-cushion.png"],
+    163: ["saleor-gift-500.png"],
+    164: ["saleor-gift-50.png"],
 }
 
 CATEGORY_IMAGES = {
@@ -166,7 +166,7 @@ COLLECTION_IMAGES = {1: "summer.jpg", 2: "clothing.jpg", 3: "clothing.jpg"}
 @lru_cache()
 def get_sample_data():
     path = os.path.join(
-        settings.PROJECT_ROOT, "swiftmovers", "static", "populatedb_data.json"
+        settings.PROJECT_ROOT, "saleor", "static", "populatedb_data.json"
     )
     with open(path, encoding="utf8") as f:
         db_items = json.load(f)
@@ -479,7 +479,7 @@ def create_products_by_schema(placeholder_dir, create_images):
     update_products_discounted_prices(all_products_qs)
 
 
-class swiftmoversProvider(BaseProvider):
+class SaleorProvider(BaseProvider):
     def money(self):
         return Money(fake.pydecimal(2, 2, positive=True), DEFAULT_CURRENCY)
 
@@ -487,7 +487,7 @@ class swiftmoversProvider(BaseProvider):
         return Weight(kg=fake.pydecimal(1, 2, positive=True))
 
 
-fake.add_provider(swiftmoversProvider)
+fake.add_provider(SaleorProvider)
 
 
 def get_email(first_name, last_name):
@@ -565,7 +565,7 @@ def create_fake_user(user_password, save=True):
 
 # We don't want to spam the console with payment confirmations sent to
 # fake customers.
-@patch("swiftmovers.plugins.manager.PluginsManager.notify")
+@patch("saleor.plugins.manager.PluginsManager.notify")
 def create_fake_payment(mock_notify, order):
     payment = create_payment(
         gateway="mirumee.payments.dummy",
@@ -979,7 +979,7 @@ def create_orders(how_many=10):
 def create_product_sales(how_many=5):
     for _ in range(how_many):
         sale = create_fake_sale()
-        update_products_discounted_prices_of_discount_task.delay(sale.pk)
+        update_products_discounted_prices_of_sale_task.delay(sale.pk)
         yield f"Sale: {sale}"
 
 

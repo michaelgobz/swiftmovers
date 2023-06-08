@@ -57,7 +57,7 @@ def test_incorect_type_of_token(prefix, rf, staff_user):
 
 
 @pytest.mark.parametrize("prefix", ["JWT", "Bearer"])
-def test_swiftmovers_is_not_owner_of_token(prefix, rf, staff_user, settings):
+def test_saleor_is_not_owner_of_token(prefix, rf, staff_user, settings):
     payload = jwt_user_payload(
         staff_user,
         JWT_ACCESS_TYPE,

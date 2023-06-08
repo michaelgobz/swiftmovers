@@ -10,7 +10,7 @@ from braintree.exceptions.too_many_requests_error import TooManyRequestsError
 from braintree.exceptions.upgrade_required_error import UpgradeRequiredError
 from django.core.exceptions import ValidationError
 
-from swiftmovers.payment.gateways.braintree import BraintreeException, handle_braintree_error
+from saleor.payment.gateways.braintree import BraintreeException, handle_braintree_error
 
 
 @pytest.mark.parametrize(

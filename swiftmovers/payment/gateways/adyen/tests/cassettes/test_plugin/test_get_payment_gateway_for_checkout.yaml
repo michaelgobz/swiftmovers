@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"merchantAccount": "swiftmoversECOM", "countryCode": "PL", "channel": "web",
+    body: '{"merchantAccount": "SaleorECOM", "countryCode": "PL", "channel": "web",
       "amount": {"value": "1000", "currency": "USD"}}'
     headers:
       Accept:
@@ -22,8 +22,8 @@ interactions:
   response:
     body:
       string: '{"groups":[{"name":"Credit Card","types":["visa","mc","amex","diners","discover"]}],"paymentMethods":[{"brands":["visa","mc","amex","diners","discover"],"details":[{"key":"encryptedCardNumber","type":"cardToken"},{"key":"encryptedSecurityCode","type":"cardToken"},{"key":"encryptedExpiryMonth","type":"cardToken"},{"key":"encryptedExpiryYear","type":"cardToken"},{"key":"holderName","optional":true,"type":"text"}],"name":"Credit
-        Card","type":"scheme"},{"configuration":{"intent":"capture"},"name":"PayPal","supportsRecurring":true,"type":"paypal"},{"name":"Paysafecard","supportsRecurring":true,"type":"paysafecard"},{"configuration":{"merchantDisplayName":"swiftmoversECOM","merchantIdentifier":"1000"},"details":[{"key":"applepay.token","type":"applePayToken"}],"name":"Apple
-        Pay","supportsRecurring":true,"type":"applepay"},{"configuration":{"merchantId":"1000","gatewayMerchantId":"swiftmoversECOM"},"details":[{"key":"paywithgoogle.token","type":"payWithGoogleToken"}],"name":"Google
+        Card","type":"scheme"},{"configuration":{"intent":"capture"},"name":"PayPal","supportsRecurring":true,"type":"paypal"},{"name":"Paysafecard","supportsRecurring":true,"type":"paysafecard"},{"configuration":{"merchantDisplayName":"SaleorECOM","merchantIdentifier":"1000"},"details":[{"key":"applepay.token","type":"applePayToken"}],"name":"Apple
+        Pay","supportsRecurring":true,"type":"applepay"},{"configuration":{"merchantId":"1000","gatewayMerchantId":"SaleorECOM"},"details":[{"key":"paywithgoogle.token","type":"payWithGoogleToken"}],"name":"Google
         Pay","supportsRecurring":true,"type":"paywithgoogle"}]}'
     headers:
       Connection:

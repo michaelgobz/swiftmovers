@@ -19,7 +19,7 @@ mutation CancelManyOrders($ids: [ID!]!) {
 """
 
 
-@patch("swiftmovers.graphql.order.bulk_mutations.orders.cancel_order")
+@patch("saleor.graphql.order.bulk_mutations.orders.cancel_order")
 def test_order_bulk_cancel(
     mock_cancel_order,
     staff_api_client,
@@ -51,7 +51,7 @@ def test_order_bulk_cancel(
     mock_cancel_order.call_count == expected_count
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_back_in_stock")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_back_in_stock")
 def test_order_bulk_cancel_with_back_in_stock_webhook(
     product_variant_back_in_stock_webhook_mock,
     staff_api_client,
@@ -72,7 +72,7 @@ def test_order_bulk_cancel_with_back_in_stock_webhook(
     product_variant_back_in_stock_webhook_mock.assert_called_once()
 
 
-@patch("swiftmovers.graphql.order.bulk_mutations.orders.cancel_order")
+@patch("saleor.graphql.order.bulk_mutations.orders.cancel_order")
 def test_order_bulk_cancel_as_app(
     mock_cancel_order,
     app_api_client,
@@ -104,7 +104,7 @@ def test_order_bulk_cancel_as_app(
     assert mock_cancel_order.call_count == expected_count
 
 
-@patch("swiftmovers.graphql.order.bulk_mutations.orders.cancel_order")
+@patch("saleor.graphql.order.bulk_mutations.orders.cancel_order")
 def test_order_bulk_cancel_without_sku(
     mock_cancel_order,
     staff_api_client,

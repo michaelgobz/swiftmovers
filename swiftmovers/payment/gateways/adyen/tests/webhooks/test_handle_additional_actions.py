@@ -17,8 +17,8 @@ ERROR_MSG_MISSING_CHECKOUT = (
 )
 
 
-@mock.patch("swiftmovers.payment.gateways.adyen.webhooks.payment_refund_or_void")
-@mock.patch("swiftmovers.payment.gateways.adyen.webhooks.api_call")
+@mock.patch("saleor.payment.gateways.adyen.webhooks.payment_refund_or_void")
+@mock.patch("saleor.payment.gateways.adyen.webhooks.api_call")
 def test_handle_additional_actions_post(
     api_call_mock, _, payment_adyen_for_checkout, adyen_plugin
 ):
@@ -68,7 +68,7 @@ def test_handle_additional_actions_post(
     assert payment_adyen_for_checkout.checkout is None
 
 
-@mock.patch("swiftmovers.payment.gateways.adyen.webhooks.api_call")
+@mock.patch("saleor.payment.gateways.adyen.webhooks.api_call")
 def test_handle_additional_actions_order_already_created(
     api_call_mock, payment_adyen_for_order, adyen_plugin, order
 ):
@@ -116,10 +116,10 @@ def test_handle_additional_actions_order_already_created(
     [
         "adyencheckout://your.package.name",
         "myiOSapp://path",
-        "https://checkout.swiftmovers.com/",
+        "https://checkout.saleor.com/",
     ],
 )
-@mock.patch("swiftmovers.payment.gateways.adyen.webhooks.api_call")
+@mock.patch("saleor.payment.gateways.adyen.webhooks.api_call")
 def test_handle_additional_actions_handles_return_urls(
     api_call_mock, custom_url, payment_adyen_for_checkout, adyen_plugin
 ):
@@ -159,7 +159,7 @@ def test_handle_additional_actions_handles_return_urls(
     assert response.status_code == 302
 
 
-@mock.patch("swiftmovers.payment.gateways.adyen.webhooks.api_call")
+@mock.patch("saleor.payment.gateways.adyen.webhooks.api_call")
 def test_handle_additional_actions_sets_psp_reference(
     api_call_mock, payment_adyen_for_checkout, adyen_plugin
 ):
@@ -198,7 +198,7 @@ def test_handle_additional_actions_sets_psp_reference(
     assert payment_adyen_for_checkout.psp_reference == expected_psp_reference
 
 
-@mock.patch("swiftmovers.payment.gateways.adyen.webhooks.api_call")
+@mock.patch("saleor.payment.gateways.adyen.webhooks.api_call")
 def test_handle_additional_actions_get(
     api_call_mock, payment_adyen_for_checkout, adyen_plugin
 ):
@@ -250,7 +250,7 @@ def test_handle_additional_actions_get(
     assert payment_adyen_for_checkout.checkout is None
 
 
-@mock.patch("swiftmovers.payment.gateways.adyen.webhooks.api_call")
+@mock.patch("saleor.payment.gateways.adyen.webhooks.api_call")
 def test_handle_additional_actions_with_adyen_partial_data(
     api_call_mock, payment_adyen_for_checkout, adyen_plugin
 ):
@@ -346,7 +346,7 @@ def test_handle_additional_actions_with_adyen_partial_data(
     )
 
 
-@mock.patch("swiftmovers.payment.gateways.adyen.webhooks.api_call")
+@mock.patch("saleor.payment.gateways.adyen.webhooks.api_call")
 def test_handle_additional_actions_with_adyen_partial_data_without_amount(
     api_call_mock, payment_adyen_for_checkout, adyen_plugin
 ):
@@ -441,7 +441,7 @@ def test_handle_additional_actions_with_adyen_partial_data_without_amount(
     )
 
 
-@mock.patch("swiftmovers.payment.gateways.adyen.webhooks.api_call")
+@mock.patch("saleor.payment.gateways.adyen.webhooks.api_call")
 def test_handle_additional_actions_for_ideal(
     api_call_mock, payment_adyen_for_checkout, adyen_plugin
 ):
@@ -695,7 +695,7 @@ def test_handle_additional_actions_payment_does_not_have_checkout(
     assert response.content.decode() == ERROR_MSG_MISSING_CHECKOUT
 
 
-@mock.patch("swiftmovers.payment.gateways.adyen.webhooks.api_call")
+@mock.patch("saleor.payment.gateways.adyen.webhooks.api_call")
 def test_handle_additional_actions_api_call_error(
     api_call_mock,
     payment_adyen_for_checkout,
@@ -792,7 +792,7 @@ def test_handle_additional_actions_payment_with_no_adyen_gateway(
     assert response.content.decode() == ERROR_MSG_MISSING_PAYMENT
 
 
-@mock.patch("swiftmovers.payment.gateways.adyen.webhooks.api_call")
+@mock.patch("saleor.payment.gateways.adyen.webhooks.api_call")
 def test_handle_additional_actions_lack_of_parameter_in_request(
     api_call_mock, payment_adyen_for_checkout
 ):
@@ -827,8 +827,8 @@ def test_handle_additional_actions_lack_of_parameter_in_request(
     )
 
 
-@mock.patch("swiftmovers.payment.gateways.adyen.webhooks.payment_refund_or_void")
-@mock.patch("swiftmovers.payment.gateways.adyen.webhooks.api_call")
+@mock.patch("saleor.payment.gateways.adyen.webhooks.payment_refund_or_void")
+@mock.patch("saleor.payment.gateways.adyen.webhooks.api_call")
 def test_handle_additional_actions_unavailable_variants(
     api_call_mock, payment_refund_or_void, payment_adyen_for_checkout, adyen_plugin
 ):

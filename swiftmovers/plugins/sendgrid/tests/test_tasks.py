@@ -46,12 +46,12 @@ def sample_payload(customer_user):
         "token": token,
         "reset_url": f"http://localhost:8000/redirect{token}",
         "domain": "localhost:8000",
-        "site_name": "swiftmovers",
+        "site_name": "Saleor",
     }
 
 
-@patch("swiftmovers.plugins.sendgrid.tasks.Mail")
-@patch("swiftmovers.plugins.sendgrid.tasks.SendGridAPIClient.send")
+@patch("saleor.plugins.sendgrid.tasks.Mail")
+@patch("saleor.plugins.sendgrid.tasks.SendGridAPIClient.send")
 def test_send_email(
     mocked_api_client, mocked_mail, sendgrid_email_plugin, sample_payload
 ):
@@ -81,7 +81,7 @@ def test_send_email(
     mocked_api_client.assert_called_with(mock_message)
 
 
-@patch("swiftmovers.plugins.sendgrid.tasks.send_email")
+@patch("saleor.plugins.sendgrid.tasks.send_email")
 def test_send_account_confirmation_email_task(
     mocked_send_email, customer_user, sendgrid_email_plugin
 ):
@@ -94,7 +94,7 @@ def test_send_account_confirmation_email_task(
         "token": token,
         "reset_url": f"http://localhost:8000/redirect{token}",
         "domain": "localhost:8000",
-        "site_name": "swiftmovers",
+        "site_name": "Saleor",
     }
 
     plugin = sendgrid_email_plugin(
@@ -110,7 +110,7 @@ def test_send_account_confirmation_email_task(
     )
 
 
-@patch("swiftmovers.plugins.sendgrid.tasks.send_email")
+@patch("saleor.plugins.sendgrid.tasks.send_email")
 def test_send_password_reset_email_task(
     mocked_send_email, customer_user, sendgrid_email_plugin
 ):
@@ -123,7 +123,7 @@ def test_send_password_reset_email_task(
         "token": token,
         "reset_url": f"http://localhost:8000/redirect{token}",
         "domain": "localhost:8000",
-        "site_name": "swiftmovers",
+        "site_name": "Saleor",
     }
 
     plugin = sendgrid_email_plugin(
@@ -145,7 +145,7 @@ def test_send_password_reset_email_task(
     assert event.user == customer_user
 
 
-@patch("swiftmovers.plugins.sendgrid.tasks.send_email")
+@patch("saleor.plugins.sendgrid.tasks.send_email")
 def test_send_request_email_change_email_task(
     mocked_send_email, customer_user, sendgrid_email_plugin
 ):
@@ -159,7 +159,7 @@ def test_send_request_email_change_email_task(
         "redirect_url": f"http://localhost:8000/redirect{token}",
         "old_email": "old.user@example.com",
         "new_email": "user@example.com",
-        "site_name": "swiftmovers",
+        "site_name": "Saleor",
         "domain": "localhost:8000",
     }
 
@@ -186,7 +186,7 @@ def test_send_request_email_change_email_task(
     }
 
 
-@patch("swiftmovers.plugins.sendgrid.tasks.send_email")
+@patch("saleor.plugins.sendgrid.tasks.send_email")
 def test_send_user_change_email_notification_task(
     mocked_send_email, customer_user, sendgrid_email_plugin
 ):
@@ -196,7 +196,7 @@ def test_send_user_change_email_notification_task(
     payload = {
         "user": get_default_user_payload(customer_user),
         "recipient_email": recipient_email,
-        "site_name": "swiftmovers",
+        "site_name": "Saleor",
         "domain": "localhost:8000",
         "old_email": "old.admin@example.com",
         "new_email": recipient_email,
@@ -225,7 +225,7 @@ def test_send_user_change_email_notification_task(
     }
 
 
-@patch("swiftmovers.plugins.sendgrid.tasks.send_email")
+@patch("saleor.plugins.sendgrid.tasks.send_email")
 def test_send_account_delete_confirmation_email_task(
     mocked_send_email, customer_user, sendgrid_email_plugin
 ):
@@ -238,7 +238,7 @@ def test_send_account_delete_confirmation_email_task(
         "recipient_email": recipient_email,
         "token": token,
         "delete_url": f"http://localhost:8000/redirect{token}",
-        "site_name": "swiftmovers",
+        "site_name": "Saleor",
         "domain": "localhost:8000",
     }
 
@@ -258,7 +258,7 @@ def test_send_account_delete_confirmation_email_task(
     )
 
 
-@patch("swiftmovers.plugins.sendgrid.tasks.send_email")
+@patch("saleor.plugins.sendgrid.tasks.send_email")
 def test_send_set_user_password_email_task(
     mocked_send_email, customer_user, sendgrid_email_plugin
 ):
@@ -271,7 +271,7 @@ def test_send_set_user_password_email_task(
         "recipient_email": recipient_email,
         "token": token,
         "password_set_url": f"http://localhost:8000/redirect{token}",
-        "site_name": "swiftmovers",
+        "site_name": "Saleor",
         "domain": "localhost:8000",
     }
 
@@ -291,7 +291,7 @@ def test_send_set_user_password_email_task(
     )
 
 
-@patch("swiftmovers.plugins.sendgrid.tasks.send_email")
+@patch("saleor.plugins.sendgrid.tasks.send_email")
 def test_send_invoice_email_task_by_user(
     mocked_send_email, staff_user, order, sendgrid_email_plugin
 ):
@@ -307,7 +307,7 @@ def test_send_invoice_email_task_by_user(
             "download_url": "http://localhost:8000/download",
         },
         "recipient_email": recipient_email,
-        "site_name": "swiftmovers",
+        "site_name": "Saleor",
         "domain": "localhost:8000",
         "requester_user_id": to_global_id_or_none(staff_user),
         "requester_app_id": None,
@@ -338,7 +338,7 @@ def test_send_invoice_email_task_by_user(
     assert not order_event.app
 
 
-@patch("swiftmovers.plugins.sendgrid.tasks.send_email")
+@patch("saleor.plugins.sendgrid.tasks.send_email")
 def test_send_invoice_email_task_by_app(
     mocked_send_email, app, order, sendgrid_email_plugin
 ):
@@ -354,7 +354,7 @@ def test_send_invoice_email_task_by_app(
             "download_url": "http://localhost:8000/download",
         },
         "recipient_email": recipient_email,
-        "site_name": "swiftmovers",
+        "site_name": "Saleor",
         "domain": "localhost:8000",
         "requester_user_id": None,
         "requester_app_id": to_global_id_or_none(app),
@@ -385,7 +385,7 @@ def test_send_invoice_email_task_by_app(
     assert not order_event.user
 
 
-@patch("swiftmovers.plugins.sendgrid.tasks.send_email")
+@patch("saleor.plugins.sendgrid.tasks.send_email")
 def test_send_order_confirmation_email_task(
     mocked_send_email, staff_user, order, sendgrid_email_plugin
 ):
@@ -395,7 +395,7 @@ def test_send_order_confirmation_email_task(
     payload = {
         "order": get_default_order_payload(order, "http://localhost:8000/redirect"),
         "recipient_email": recipient_email,
-        "site_name": "swiftmovers",
+        "site_name": "Saleor",
         "domain": "localhost:8000",
     }
 
@@ -422,7 +422,7 @@ def test_send_order_confirmation_email_task(
     }
 
 
-@patch("swiftmovers.plugins.sendgrid.tasks.send_email")
+@patch("saleor.plugins.sendgrid.tasks.send_email")
 def test_send_fulfillment_confirmation_email_task_by_user(
     mocked_send_email, staff_user, fulfillment, order, sendgrid_email_plugin
 ):
@@ -457,7 +457,7 @@ def test_send_fulfillment_confirmation_email_task_by_user(
     }
 
 
-@patch("swiftmovers.plugins.sendgrid.tasks.send_email")
+@patch("saleor.plugins.sendgrid.tasks.send_email")
 def test_send_fulfillment_confirmation_email_task_by_app(
     mocked_send_email, app, fulfillment, order, sendgrid_email_plugin
 ):
@@ -492,7 +492,7 @@ def test_send_fulfillment_confirmation_email_task_by_app(
     }
 
 
-@patch("swiftmovers.plugins.sendgrid.tasks.send_email")
+@patch("saleor.plugins.sendgrid.tasks.send_email")
 def test_send_fulfillment_update_email_task(
     mocked_send_email, staff_user, fulfillment, order, sendgrid_email_plugin
 ):
@@ -516,7 +516,7 @@ def test_send_fulfillment_update_email_task(
     )
 
 
-@patch("swiftmovers.plugins.sendgrid.tasks.send_email")
+@patch("saleor.plugins.sendgrid.tasks.send_email")
 def test_send_payment_confirmation_email_task(
     mocked_send_email, payment_dummy, staff_user, order, sendgrid_email_plugin
 ):
@@ -534,7 +534,7 @@ def test_send_payment_confirmation_email_task(
             "captured_amount": payment_dummy.captured_amount,
             "currency": payment_dummy.currency,
         },
-        "site_name": "swiftmovers",
+        "site_name": "Saleor",
         "domain": "localhost:8000",
     }
 
@@ -561,7 +561,7 @@ def test_send_payment_confirmation_email_task(
     }
 
 
-@patch("swiftmovers.plugins.sendgrid.tasks.send_email")
+@patch("saleor.plugins.sendgrid.tasks.send_email")
 def test_send_order_canceled_email_task_by_user(
     mocked_send_email, staff_user, order, sendgrid_email_plugin
 ):
@@ -571,7 +571,7 @@ def test_send_order_canceled_email_task_by_user(
     payload = {
         "order": get_default_order_payload(order, "http://localhost:8000/redirect"),
         "recipient_email": recipient_email,
-        "site_name": "swiftmovers",
+        "site_name": "Saleor",
         "domain": "localhost:8000",
         "requester_user_id": to_global_id_or_none(staff_user),
         "requester_app_id": None,
@@ -602,7 +602,7 @@ def test_send_order_canceled_email_task_by_user(
     assert order_event.user == staff_user
 
 
-@patch("swiftmovers.plugins.sendgrid.tasks.send_email")
+@patch("saleor.plugins.sendgrid.tasks.send_email")
 def test_send_order_canceled_email_task_by_app(
     mocked_send_email, app, order, sendgrid_email_plugin
 ):
@@ -612,7 +612,7 @@ def test_send_order_canceled_email_task_by_app(
     payload = {
         "order": get_default_order_payload(order, "http://localhost:8000/redirect"),
         "recipient_email": recipient_email,
-        "site_name": "swiftmovers",
+        "site_name": "Saleor",
         "domain": "localhost:8000",
         "requester_user_id": None,
         "requester_app_id": to_global_id_or_none(app),
@@ -643,7 +643,7 @@ def test_send_order_canceled_email_task_by_app(
     assert order_event.app == app
 
 
-@patch("swiftmovers.plugins.sendgrid.tasks.send_email")
+@patch("saleor.plugins.sendgrid.tasks.send_email")
 def test_send_order_refund_email_task_by_user(
     mocked_send_email, staff_user, order, sendgrid_email_plugin
 ):
@@ -655,7 +655,7 @@ def test_send_order_refund_email_task_by_user(
         "recipient_email": recipient_email,
         "amount": order.total_gross_amount,
         "currency": order.currency,
-        "site_name": "swiftmovers",
+        "site_name": "Saleor",
         "domain": "localhost:8000",
         "requester_user_id": to_global_id_or_none(staff_user),
         "requester_app_id": None,
@@ -686,7 +686,7 @@ def test_send_order_refund_email_task_by_user(
     assert order_event.user == staff_user
 
 
-@patch("swiftmovers.plugins.sendgrid.tasks.send_email")
+@patch("saleor.plugins.sendgrid.tasks.send_email")
 def test_send_order_refund_email_task_by_app(
     mocked_send_email, app, order, sendgrid_email_plugin
 ):
@@ -698,7 +698,7 @@ def test_send_order_refund_email_task_by_app(
         "recipient_email": recipient_email,
         "amount": order.total_gross_amount,
         "currency": order.currency,
-        "site_name": "swiftmovers",
+        "site_name": "Saleor",
         "domain": "localhost:8000",
         "requester_user_id": None,
         "requester_app_id": to_global_id_or_none(app),
@@ -729,7 +729,7 @@ def test_send_order_refund_email_task_by_app(
     assert order_event.app == app
 
 
-@patch("swiftmovers.plugins.sendgrid.tasks.send_email")
+@patch("saleor.plugins.sendgrid.tasks.send_email")
 def test_send_gift_card_email_task_by_user(
     mocked_send_email, staff_user, gift_card, sendgrid_email_plugin
 ):
@@ -774,7 +774,7 @@ def test_send_gift_card_email_task_by_user(
     assert not gift_card_event.app
 
 
-@patch("swiftmovers.plugins.sendgrid.tasks.send_email")
+@patch("saleor.plugins.sendgrid.tasks.send_email")
 def test_send_gift_card_email_task_by_user_resending(
     mocked_send_email, staff_user, gift_card, sendgrid_email_plugin
 ):
@@ -819,7 +819,7 @@ def test_send_gift_card_email_task_by_user_resending(
     assert not gift_card_event.app
 
 
-@patch("swiftmovers.plugins.sendgrid.tasks.send_email")
+@patch("saleor.plugins.sendgrid.tasks.send_email")
 def test_send_gift_card_email_task_by_app(
     mocked_send_email, app, gift_card, sendgrid_email_plugin
 ):
@@ -864,7 +864,7 @@ def test_send_gift_card_email_task_by_app(
     assert gift_card_event.app == app
 
 
-@patch("swiftmovers.plugins.sendgrid.tasks.send_email")
+@patch("saleor.plugins.sendgrid.tasks.send_email")
 def test_send_order_confirmed_email_task_by_user(
     mocked_send_email, staff_user, order, sendgrid_email_plugin
 ):
@@ -876,7 +876,7 @@ def test_send_order_confirmed_email_task_by_user(
         "recipient_email": recipient_email,
         "amount": order.total_gross_amount,
         "currency": order.currency,
-        "site_name": "swiftmovers",
+        "site_name": "Saleor",
         "domain": "localhost:8000",
         "requester_user_id": to_global_id_or_none(staff_user),
         "requester_app_id": None,
@@ -907,7 +907,7 @@ def test_send_order_confirmed_email_task_by_user(
     assert not order_event.app
 
 
-@patch("swiftmovers.plugins.sendgrid.tasks.send_email")
+@patch("saleor.plugins.sendgrid.tasks.send_email")
 def test_send_order_confirmed_email_task_by_app(
     mocked_send_email, app, order, sendgrid_email_plugin
 ):
@@ -919,7 +919,7 @@ def test_send_order_confirmed_email_task_by_app(
         "recipient_email": recipient_email,
         "amount": order.total_gross_amount,
         "currency": order.currency,
-        "site_name": "swiftmovers",
+        "site_name": "Saleor",
         "domain": "localhost:8000",
         "requester_user_id": None,
         "requester_app_id": to_global_id_or_none(app),

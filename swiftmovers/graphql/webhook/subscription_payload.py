@@ -11,7 +11,7 @@ from promise import Promise
 from ...app.models import App
 from ...core.exceptions import PermissionDenied
 from ...settings import get_host
-from ..core import swiftmoversContext
+from ..core import SaleorContext
 from ..utils import format_error
 
 logger = get_task_logger(__name__)
@@ -22,7 +22,7 @@ def initialize_request(
     sync_event=False,
     allow_replica=True,
     event_type: Optional[str] = None,
-) -> swiftmoversContext:
+) -> SaleorContext:
     """Prepare a request object for webhook subscription.
 
     It creates a dummy request object.
@@ -31,7 +31,7 @@ def initialize_request(
     """
 
     request_time = timezone.now()
-    request = swiftmoversContext()
+    request = SaleorContext()
     request.path = "/graphql/"
     request.path_info = "/graphql/"
     request.method = "GET"
@@ -61,7 +61,7 @@ def generate_payload_from_subscription(
     event_type: str,
     subscribable_object,
     subscription_query: Optional[str],
-    request: swiftmoversContext,
+    request: SaleorContext,
     app: Optional[App] = None,
 ) -> Optional[Dict[str, Any]]:
     """Generate webhook payload from subscription query.

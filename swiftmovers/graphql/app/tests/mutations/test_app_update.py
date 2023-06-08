@@ -80,8 +80,8 @@ def test_app_update_mutation(
 
 
 @freeze_time("2022-05-12 12:00:00")
-@mock.patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
-@mock.patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
+@mock.patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
+@mock.patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
 def test_app_update_trigger_mutation(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -96,7 +96,7 @@ def test_app_update_trigger_mutation(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
 
     staff_user.user_permissions.add(permission_manage_products, permission_manage_users)
     app_global_id = graphene.Node.to_global_id("App", app_with_token.id)

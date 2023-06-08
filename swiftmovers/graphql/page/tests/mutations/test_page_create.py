@@ -172,8 +172,8 @@ def test_page_create_mutation_with_published_at_date(
 
 
 @freeze_time("1914-06-28 10:50")
-@mock.patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
-@mock.patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
+@mock.patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
+@mock.patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
 def test_page_create_trigger_page_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -184,7 +184,7 @@ def test_page_create_trigger_page_webhook(
     settings,
 ):
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
 
     page_slug = "test-slug"
     page_content = dummy_editorjs("test content", True)

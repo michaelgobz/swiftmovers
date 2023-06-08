@@ -24,18 +24,18 @@ interactions:
       User-Agent:
       - python-requests/2.24.0
 
-      # X- headers will be deprecated in swiftmovers 4.0, proper headers are without X-
-      X-swiftmovers-Domain:
+      # X- headers will be deprecated in Saleor 4.0, proper headers are without X-
+      X-Saleor-Domain:
       - mirumee.com
-      X-swiftmovers-Event:
+      X-Saleor-Event:
       - order_created
-      X-swiftmovers-Signature:
+      X-Saleor-Signature:
       - ''
-      swiftmovers-Domain:
+      Saleor-Domain:
       - mirumee.com
-      swiftmovers-Event:
+      Saleor-Event:
       - order_created
-      swiftmovers-Signature:
+      Saleor-Signature:
       - ''
     method: POST
     uri: https://webhook.site/48978b64-4efb-43d5-a334-451a1d164009

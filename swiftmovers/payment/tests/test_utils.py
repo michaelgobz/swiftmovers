@@ -202,9 +202,9 @@ def test_get_channel_slug_from_payment_without_checkout_and_order(
     assert not get_channel_slug_from_payment(payment)
 
 
-@patch("swiftmovers.payment.utils.update_payment_charge_status")
-@patch("swiftmovers.payment.utils.get_channel_slug_from_payment")
-@patch("swiftmovers.payment.gateway.payment_refund_or_void")
+@patch("saleor.payment.utils.update_payment_charge_status")
+@patch("saleor.payment.utils.get_channel_slug_from_payment")
+@patch("saleor.payment.gateway.payment_refund_or_void")
 def test_try_void_or_refund_inactive_payment_failed_transaction(
     refund_or_void_mock,
     get_channel_slug_from_payment_mock,
@@ -221,8 +221,8 @@ def test_try_void_or_refund_inactive_payment_failed_transaction(
     assert not refund_or_void_mock.called
 
 
-@patch("swiftmovers.payment.utils.get_channel_slug_from_payment")
-@patch("swiftmovers.payment.gateway.payment_refund_or_void")
+@patch("saleor.payment.utils.get_channel_slug_from_payment")
+@patch("saleor.payment.gateway.payment_refund_or_void")
 def test_try_void_or_refund_inactive_payment_transaction_success(
     refund_or_void_mock,
     get_channel_slug_from_payment_mock,
@@ -499,8 +499,8 @@ def test_create_transaction_event_from_request_updates_order_charge(
     assert order.search_vector
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.order_fully_paid")
+@patch("saleor.plugins.manager.PluginsManager.order_updated")
+@patch("saleor.plugins.manager.PluginsManager.order_fully_paid")
 @freeze_time("2018-05-31 12:00:01")
 def test_create_transaction_event_from_request_triggers_webhooks_when_fully_paid(
     mock_order_fully_paid,
@@ -543,8 +543,8 @@ def test_create_transaction_event_from_request_triggers_webhooks_when_fully_paid
     mock_order_updated.assert_called_once_with(order)
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.order_fully_paid")
+@patch("saleor.plugins.manager.PluginsManager.order_updated")
+@patch("saleor.plugins.manager.PluginsManager.order_fully_paid")
 @freeze_time("2018-05-31 12:00:01")
 def test_create_transaction_event_from_request_triggers_webhooks_when_partially_paid(
     mock_order_fully_paid,
@@ -587,8 +587,8 @@ def test_create_transaction_event_from_request_triggers_webhooks_when_partially_
     mock_order_updated.assert_called_once_with(order_with_lines)
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.order_fully_paid")
+@patch("saleor.plugins.manager.PluginsManager.order_updated")
+@patch("saleor.plugins.manager.PluginsManager.order_fully_paid")
 @freeze_time("2018-05-31 12:00:01")
 def test_create_transaction_event_from_request_triggers_webhooks_when_authorized(
     mock_order_fully_paid,
@@ -1282,8 +1282,8 @@ def test_create_transaction_event_for_transaction_session_missing_reference_with
         TransactionEventType.CHARGE_SUCCESS,
     ],
 )
-@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.order_fully_paid")
+@patch("saleor.plugins.manager.PluginsManager.order_updated")
+@patch("saleor.plugins.manager.PluginsManager.order_fully_paid")
 def test_create_transaction_event_for_transaction_session_call_webhook_order_updated(
     mock_order_fully_paid,
     mock_order_updated,
@@ -1319,8 +1319,8 @@ def test_create_transaction_event_for_transaction_session_call_webhook_order_upd
     mock_order_updated.assert_called_once_with(order_with_lines)
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.order_fully_paid")
+@patch("saleor.plugins.manager.PluginsManager.order_updated")
+@patch("saleor.plugins.manager.PluginsManager.order_fully_paid")
 def test_create_transaction_event_for_transaction_session_call_webhook_for_fully_paid(
     mock_order_fully_paid,
     mock_order_updated,
@@ -1353,3 +1353,91 @@ def test_create_transaction_event_for_transaction_session_call_webhook_for_fully
     flush_post_commit_hooks()
     mock_order_fully_paid.assert_called_once_with(order_with_lines)
     mock_order_updated.assert_called_once_with(order_with_lines)
+
+
+@pytest.mark.parametrize(
+    "response_result,",
+    [
+        (TransactionEventType.AUTHORIZATION_REQUEST),
+        (TransactionEventType.AUTHORIZATION_SUCCESS),
+        (TransactionEventType.CHARGE_REQUEST),
+        (TransactionEventType.CHARGE_SUCCESS),
+    ],
+)
+def test_create_transaction_event_for_transaction_session_success_sets_actions(
+    response_result,
+    transaction_item_generator,
+    transaction_session_response,
+    webhook_app,
+    plugins_manager,
+):
+    # given
+    expected_amount = Decimal("15")
+    response = transaction_session_response.copy()
+    response["result"] = response_result.upper()
+    response["amount"] = expected_amount
+    response["actions"] = ["CANCEL", "CHARGE", "REFUND"]
+
+    transaction = transaction_item_generator()
+    request_event = TransactionEvent.objects.create(
+        transaction=transaction, include_in_calculations=False
+    )
+
+    # when
+    create_transaction_event_for_transaction_session(
+        request_event,
+        webhook_app,
+        manager=plugins_manager,
+        discounts=[],
+        transaction_webhook_response=response,
+    )
+
+    # then
+    transaction.refresh_from_db()
+    assert set(transaction.available_actions) == set(["refund", "charge", "cancel"])
+
+
+@pytest.mark.parametrize(
+    "response_result",
+    [
+        TransactionEventType.AUTHORIZATION_ACTION_REQUIRED,
+        TransactionEventType.CHARGE_ACTION_REQUIRED,
+        TransactionEventType.AUTHORIZATION_FAILURE,
+        TransactionEventType.CHARGE_FAILURE,
+        TransactionEventType.REFUND_FAILURE,
+        TransactionEventType.REFUND_SUCCESS,
+    ],
+)
+def test_create_transaction_event_for_transaction_session_failure_doesnt_set_actions(
+    response_result,
+    transaction_item_generator,
+    transaction_session_response,
+    webhook_app,
+    plugins_manager,
+):
+    # given
+    expected_amount = Decimal("15")
+    response = transaction_session_response.copy()
+    response["result"] = response_result.upper()
+    response["amount"] = expected_amount
+    response["actions"] = ["CANCEL", "CHARGE", "REFUND"]
+    transaction = transaction_item_generator(available_actions=["charge"])
+    request_event = TransactionEvent.objects.create(
+        transaction=transaction,
+        include_in_calculations=False,
+        amount_value=expected_amount,
+        type=TransactionEventType.CHARGE_REQUEST,
+    )
+
+    # when
+    create_transaction_event_for_transaction_session(
+        request_event,
+        webhook_app,
+        manager=plugins_manager,
+        discounts=[],
+        transaction_webhook_response=response,
+    )
+
+    # then
+    transaction.refresh_from_db()
+    assert transaction.available_actions == ["charge"]

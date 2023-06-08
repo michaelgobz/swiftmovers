@@ -86,11 +86,13 @@ CREATE_PRODUCT_MUTATION = """
 """
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.product_created")
+@patch("saleor.product.tasks.update_product_discounted_price_task.delay")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_created")
 def test_create_product(
     created_webhook_mock,
     updated_webhook_mock,
+    update_product_discounted_price_task_mock,
     staff_api_client,
     product_type,
     category,
@@ -184,6 +186,7 @@ def test_create_product(
 
     created_webhook_mock.assert_called_once_with(product)
     updated_webhook_mock.assert_not_called()
+    update_product_discounted_price_task_mock.assert_called_once_with(product.id)
 
 
 def test_create_product_use_tax_class_from_product_type(
@@ -861,7 +864,9 @@ def test_create_product_no_category_id(
     assert data["product"]["category"] is None
 
 
+@patch("saleor.product.tasks.update_product_discounted_price_task.delay")
 def test_create_product_with_negative_weight(
+    update_product_discounted_price_task_mock,
     staff_api_client,
     product_type,
     category,
@@ -890,6 +895,7 @@ def test_create_product_with_negative_weight(
     error = data["errors"][0]
     assert error["field"] == "weight"
     assert error["code"] == ProductErrorCode.INVALID.name
+    update_product_discounted_price_task_mock.assert_not_called()
 
 
 def test_create_product_with_unicode_in_slug_and_name(
@@ -1148,7 +1154,7 @@ def test_product_create_with_collections_webhook(
         assert product.collections.first() == published_collection
 
     monkeypatch.setattr(
-        "swiftmovers.plugins.manager.PluginsManager.product_created",
+        "saleor.plugins.manager.PluginsManager.product_created",
         lambda _, product: assert_product_has_collections(product),
     )
 

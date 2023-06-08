@@ -60,8 +60,8 @@ def test_delete_shipping_methods(
     ).exists()
 
 
-@mock.patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
-@mock.patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
+@mock.patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
+@mock.patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
 def test_delete_shipping_methods_trigger_multiple_webhook_events(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -73,7 +73,7 @@ def test_delete_shipping_methods_trigger_multiple_webhook_events(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
 
     variables = {
         "ids": [
@@ -127,8 +127,8 @@ def test_delete_shipping_zones(
     ).exists()
 
 
-@mock.patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
-@mock.patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
+@mock.patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
+@mock.patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
 def test_delete_shipping_zones_trigger_multiple_webhook_events(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -140,7 +140,7 @@ def test_delete_shipping_zones_trigger_multiple_webhook_events(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
 
     variables = {
         "ids": [

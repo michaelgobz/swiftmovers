@@ -105,10 +105,10 @@ def user_email_plugin(settings, channel_USD):
         order_refund_template=DEFAULT_EMAIL_VALUE,
         order_refund_subject=ORDER_REFUND_CONFIRMATION_DEFAULT_SUBJECT,
     ):
-        settings.PLUGINS = ["swiftmovers.plugins.user_email.plugin.UserEmailPlugin"]
+        settings.PLUGINS = ["saleor.plugins.user_email.plugin.UserEmailPlugin"]
         manager = get_plugins_manager()
         with patch(
-            "swiftmovers.plugins.user_email.plugin.validate_default_email_configuration"
+            "saleor.plugins.user_email.plugin.validate_default_email_configuration"
         ):
             manager.save_plugin_configuration(
                 UserEmailPlugin.PLUGIN_ID,

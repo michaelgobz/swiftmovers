@@ -734,8 +734,8 @@ def test_mutation_create_warehouse_shipping_zone_provided(
     assert errors[0]["field"] == "shippingZones"
 
 
-@patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
-@patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
+@patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
+@patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
 def test_mutation_create_warehouse_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -747,7 +747,7 @@ def test_mutation_create_warehouse_trigger_webhook(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
 
     variables = {
         "input": {
@@ -983,8 +983,8 @@ def test_mutation_update_warehouse_with_non_unique_external_reference(
     assert error["message"] == "Warehouse with this External reference already exists."
 
 
-@patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
-@patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
+@patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
+@patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
 def test_mutation_update_warehouse_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -996,7 +996,7 @@ def test_mutation_update_warehouse_trigger_webhook(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
 
     warehouse_id = graphene.Node.to_global_id("Warehouse", warehouse.id)
     variables = {
@@ -1324,8 +1324,8 @@ def test_delete_warehouse_mutation(
     assert not Warehouse.objects.exists()
 
 
-@patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
-@patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
+@patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
+@patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
 def test_delete_warehouse_mutation_trigger_webhook(
     mocked_webhook_trigger,
     mocked_get_webhooks_for_event,
@@ -1337,7 +1337,7 @@ def test_delete_warehouse_mutation_trigger_webhook(
 ):
     # given
     mocked_get_webhooks_for_event.return_value = [any_webhook]
-    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
 
     warehouse_id = graphene.Node.to_global_id("Warehouse", warehouse.pk)
     response = staff_api_client.post_graphql(
@@ -1364,7 +1364,7 @@ def test_delete_warehouse_mutation_trigger_webhook(
     )
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_out_of_stock")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_out_of_stock")
 def test_delete_warehouse_mutation_with_webhooks(
     product_variant_out_of_stock_webhook,
     staff_api_client,
@@ -1389,7 +1389,7 @@ def test_delete_warehouse_mutation_with_webhooks(
     product_variant_out_of_stock_webhook.assert_called_once_with(old_first_stock)
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_out_of_stock")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_out_of_stock")
 def test_delete_warehouse_mutation_with_webhooks_for_many_product_variants(
     product_variant_out_of_stock_webhook,
     staff_api_client,

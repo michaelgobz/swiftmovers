@@ -18,7 +18,7 @@ def test_collect_categories_tree_products(categories_tree):
     )
 
 
-@patch("swiftmovers.product.utils.update_products_discounted_prices_task")
+@patch("saleor.product.utils.update_products_discounted_prices_task")
 def test_delete_categories(
     mock_update_products_discounted_prices_task,
     categories_tree_with_published_products,
@@ -46,7 +46,7 @@ def test_delete_categories(
             assert not product_channel_listing.published_at
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_updated")
 def test_delete_categories_trigger_product_updated_webhook(
     product_updated_mock,
     categories_tree_with_published_products,

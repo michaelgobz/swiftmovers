@@ -133,8 +133,8 @@ def test_update_page(staff_api_client, permission_manage_pages, page):
         assert attr_data in expected_attributes
 
 
-@mock.patch("swiftmovers.plugins.webhook.plugin.get_webhooks_for_event")
-@mock.patch("swiftmovers.plugins.webhook.plugin.trigger_webhooks_async")
+@mock.patch("saleor.plugins.webhook.plugin.get_webhooks_for_event")
+@mock.patch("saleor.plugins.webhook.plugin.trigger_webhooks_async")
 @freeze_time("2020-03-18 12:00:00")
 def test_update_page_trigger_webhook(
     mocked_webhook_trigger,
@@ -147,7 +147,7 @@ def test_update_page_trigger_webhook(
 ):
     query = UPDATE_PAGE_MUTATION
 
-    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
     mocked_get_webhooks_for_event.return_value = [any_webhook]
 
     page_title = page.title

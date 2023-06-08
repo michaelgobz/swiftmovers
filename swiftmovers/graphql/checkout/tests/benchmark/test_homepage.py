@@ -146,7 +146,7 @@ def test_user_checkout_details(user_api_client, customer_checkout, count_queries
     get_graphql_content(user_api_client.post_graphql(query))
 
 
-@patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
+@patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
 def test_user_checkout_details_with_external_shipping_method(
     mock_send_request,
     app,
@@ -156,7 +156,7 @@ def test_user_checkout_details_with_external_shipping_method(
     settings,
 ):
     # given
-    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
     external_id = to_shipping_app_id(app, "abcd")
     mock_json_response = [
         {
@@ -200,7 +200,7 @@ def test_user_checkout_details_with_external_shipping_method(
 
 @pytest.mark.django_db
 @pytest.mark.count_queries(autouse=False)
-@patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_sync")
+@patch("saleor.plugins.webhook.tasks.send_webhook_request_sync")
 def test_user_checkout_details_with_tax_app(
     mock_send_request,
     user_api_client,
@@ -210,7 +210,7 @@ def test_user_checkout_details_with_tax_app(
     count_queries,
 ):
     # given
-    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
     mock_json_response = {
         "currency": "PLN",
         "total_net_amount": 1080,

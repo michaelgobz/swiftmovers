@@ -30,12 +30,12 @@ def authorize_net_payment(payment_dummy):
 
 @pytest.fixture
 @mock.patch(
-    "swiftmovers.payment.gateways.authorize_net.plugin.AuthorizeNetGatewayPlugin"
+    "saleor.payment.gateways.authorize_net.plugin.AuthorizeNetGatewayPlugin"
     ".validate_plugin_configuration"
 )
 def authorize_net_plugin(_, settings, channel_USD, authorize_net_gateway_config):
     settings.PLUGINS = [
-        "swiftmovers.payment.gateways.authorize_net.plugin.AuthorizeNetGatewayPlugin"
+        "saleor.payment.gateways.authorize_net.plugin.AuthorizeNetGatewayPlugin"
     ]
     manager = get_plugins_manager()
 

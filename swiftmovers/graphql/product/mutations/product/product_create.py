@@ -10,6 +10,7 @@ from .....permission.enums import ProductPermissions
 from .....product import models
 from .....product.error_codes import ProductErrorCode
 from .....product.search import update_product_search_vector
+from .....product.tasks import update_product_discounted_price_task
 from ....attribute.types import AttributeValueInput
 from ....attribute.utils import AttributeAssignmentMixin, AttrValuesInput
 from ....channel import ChannelContext
@@ -61,7 +62,7 @@ class ProductInput(BaseInputObjectType):
         description=(
             f"Tax rate for enabled tax gateway. {DEPRECATED_IN_3X_INPUT} "
             "Use tax classes to control the tax calculation for a product. "
-            "If taxCode is provided, swiftmovers will try to find a tax class with given "
+            "If taxCode is provided, Saleor will try to find a tax class with given "
             "code (codes are stored in metadata) and assign it. If no tax class is "
             "found, it would be created and assigned."
         )
@@ -220,6 +221,7 @@ class ProductCreate(ModelMutation):
     def post_save_action(cls, info: ResolveInfo, instance, _cleaned_input):
         product = models.Product.objects.prefetched_for_webhook().get(pk=instance.pk)
         update_product_search_vector(instance)
+        update_product_discounted_price_task.delay(instance.id)
         manager = get_plugin_manager_promise(info.context).get()
         cls.call_event(manager.product_created, product)
 

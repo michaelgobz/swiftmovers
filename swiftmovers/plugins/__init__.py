@@ -1,7 +1,7 @@
 import importlib
 from typing import List
 
-default_app_config = "swiftmovers.plugins.apps.PluginConfig"
+default_app_config = "saleor.plugins.apps.PluginConfig"
 
 
 def discover_plugins_modules(plugins: List[str]):

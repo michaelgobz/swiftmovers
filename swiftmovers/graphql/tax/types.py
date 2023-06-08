@@ -48,7 +48,7 @@ class TaxConfiguration(ModelObjectType[models.TaxConfiguration]):
         required=True,
     )
     countries = NonNullList(
-        "swiftmovers.graphql.tax.types.TaxConfigurationPerCountry",
+        "saleor.graphql.tax.types.TaxConfigurationPerCountry",
         required=True,
         description="List of country-specific exceptions in tax configuration.",
     )
@@ -118,7 +118,7 @@ class TaxConfigurationPerCountry(ModelObjectType[models.TaxConfigurationPerCount
 class TaxClass(ModelObjectType[models.TaxClass]):
     name = graphene.String(description="Name of the tax class.", required=True)
     countries = NonNullList(
-        "swiftmovers.graphql.tax.types.TaxClassCountryRate",
+        "saleor.graphql.tax.types.TaxClassCountryRate",
         required=True,
         description="Country-specific tax rates for this tax class.",
     )

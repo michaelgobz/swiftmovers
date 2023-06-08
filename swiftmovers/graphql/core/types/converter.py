@@ -1,4 +1,4 @@
-"""Form fields converter subset from graphene_django for use in swiftmovers."""
+"""Form fields converter subset from graphene_django for use in Saleor."""
 
 from functools import singledispatch
 

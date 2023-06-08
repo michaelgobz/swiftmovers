@@ -2,9 +2,9 @@ from typing import TYPE_CHECKING, List
 
 from django.core.exceptions import ValidationError
 
-from swiftmovers.account.models import User
-from swiftmovers.plugins.base_plugin import BasePlugin, ConfigurationTypeField
-from swiftmovers.plugins.error_codes import PluginErrorCode
+from saleor.account.models import User
+from saleor.plugins.base_plugin import BasePlugin, ConfigurationTypeField
+from saleor.plugins.error_codes import PluginErrorCode
 
 from ... import PaymentError
 from ...models import Payment
@@ -62,19 +62,19 @@ class AuthorizeNetGatewayPlugin(BasePlugin):
         "use_sandbox": {
             "type": ConfigurationTypeField.BOOLEAN,
             "help_text": (
-                "Determines if swiftmovers should use Authorize.Net sandbox environment."
+                "Determines if Saleor should use Authorize.Net sandbox environment."
             ),
             "label": "Use sandbox",
         },
         "store_customers_card": {
             "type": ConfigurationTypeField.BOOLEAN,
-            "help_text": "Determines if swiftmovers should store cards on payments "
+            "help_text": "Determines if Saleor should store cards on payments "
             "in Stripe customer.",
             "label": "Store customers card",
         },
         "automatic_payment_capture": {
             "type": ConfigurationTypeField.BOOLEAN,
-            "help_text": "Determines if swiftmovers should automatically capture payments.",
+            "help_text": "Determines if Saleor should automatically capture payments.",
             "label": "Automatic payment capture",
         },
         "supported_currencies": {

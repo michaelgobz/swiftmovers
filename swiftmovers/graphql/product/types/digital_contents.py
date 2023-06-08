@@ -45,7 +45,7 @@ class DigitalContent(ModelObjectType[models.DigitalContent]):
         description="List of URLs for the digital variant.",
     )
     product_variant = graphene.Field(
-        "swiftmovers.graphql.product.types.products.ProductVariant",
+        "saleor.graphql.product.types.products.ProductVariant",
         required=True,
         description="Product variant assigned to digital content.",
     )

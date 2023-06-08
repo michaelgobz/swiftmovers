@@ -14,7 +14,7 @@ from ..jwt import (
 def test_jwt_refresh_token_middleware(rf, customer_user, settings):
     refresh_token = create_refresh_token(customer_user)
     settings.MIDDLEWARE = [
-        "swiftmovers.core.middleware.jwt_refresh_token_middleware",
+        "saleor.core.middleware.jwt_refresh_token_middleware",
     ]
     request = rf.request()
     request.refresh_token = refresh_token
@@ -37,7 +37,7 @@ def test_jwt_refresh_token_middleware_token_without_expire(rf, customer_user, se
 
     refresh_token = jwt_encode(payload)
     settings.MIDDLEWARE = [
-        "swiftmovers.core.middleware.jwt_refresh_token_middleware",
+        "saleor.core.middleware.jwt_refresh_token_middleware",
     ]
     request = rf.request()
     request.refresh_token = refresh_token
@@ -52,7 +52,7 @@ def test_jwt_refresh_token_middleware_token_without_expire(rf, customer_user, se
 def test_jwt_refresh_token_middleware_samesite_debug_mode(rf, customer_user, settings):
     refresh_token = create_refresh_token(customer_user)
     settings.MIDDLEWARE = [
-        "swiftmovers.core.middleware.jwt_refresh_token_middleware",
+        "saleor.core.middleware.jwt_refresh_token_middleware",
     ]
     settings.DEBUG = True
     request = rf.request()
@@ -68,7 +68,7 @@ def test_jwt_refresh_token_middleware_samesite_debug_mode(rf, customer_user, set
 def test_jwt_refresh_token_middleware_samesite_none(rf, customer_user, settings):
     refresh_token = create_refresh_token(customer_user)
     settings.MIDDLEWARE = [
-        "swiftmovers.core.middleware.jwt_refresh_token_middleware",
+        "saleor.core.middleware.jwt_refresh_token_middleware",
     ]
     settings.DEBUG = False
     request = rf.request()

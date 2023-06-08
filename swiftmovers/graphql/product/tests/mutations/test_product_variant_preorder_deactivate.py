@@ -33,7 +33,7 @@ QUERY_VARIANT_DEACTIVATE_PREORDER = """
 """
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_updated")
 def test_product_variant_deactivate_preorder(
     updated_webhook_mock,
     staff_api_client,
@@ -85,7 +85,7 @@ def test_product_variant_deactivate_preorder_non_preorder_variant(
 
 
 @patch(
-    "swiftmovers.graphql.product.mutations.product_variant"
+    "saleor.graphql.product.mutations.product_variant"
     ".product_variant_preorder_deactivate.deactivate_preorder_for_variant"
 )
 def test_product_variant_deactivate_preorder_cannot_deactivate(

@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING
 
 import graphene
 
-from swiftmovers.tax.models import TaxClassCountryRate
+from saleor.tax.models import TaxClassCountryRate
 
 from ....tests.utils import assert_no_permission, get_graphql_content
 from ..fragments import TAX_COUNTRY_CONFIGURATION_FRAGMENT

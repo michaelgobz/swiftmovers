@@ -17,7 +17,7 @@ def test_app_middleware_accepts_app_requests(app, rf):
     assert request.app == app
 
 
-def test_app_middleware_accepts_swiftmoverss_header(app, rf):
+def test_app_middleware_accepts_saleors_header(app, rf):
     # given
     request = rf.get(reverse("api"))
     _, token = app.tokens.create()

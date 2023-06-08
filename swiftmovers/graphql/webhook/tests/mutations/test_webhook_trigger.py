@@ -27,7 +27,7 @@ WEBHOOK_TRIGGER_MUTATION = """
     """
 
 
-@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_using_scheme_method")
+@mock.patch("saleor.plugins.webhook.tasks.send_webhook_using_scheme_method")
 def test_webhook_trigger_success(
     mock_send_webhook_using_scheme_method,
     staff_api_client,
@@ -60,7 +60,7 @@ def test_webhook_trigger_success(
     assert not data["delivery"]["payload"]
 
 
-@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_using_scheme_method")
+@mock.patch("saleor.plugins.webhook.tasks.send_webhook_using_scheme_method")
 def test_webhook_trigger_fail(
     mock_send_webhook_using_scheme_method,
     staff_api_client,
@@ -94,7 +94,7 @@ def test_webhook_trigger_fail(
     assert payload["order"]["id"] == order_id
 
 
-@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_async")
+@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_async")
 def test_webhook_trigger_missing_user_permission(
     mocked_send_webhook_request,
     staff_api_client,
@@ -123,7 +123,7 @@ def test_webhook_trigger_missing_user_permission(
     )
 
 
-@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_async")
+@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_async")
 def test_webhook_trigger_staff_user_not_authorized(
     mocked_send_webhook_request,
     user_api_client,
@@ -148,7 +148,7 @@ def test_webhook_trigger_staff_user_not_authorized(
     assert_no_permission(response)
 
 
-@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_async")
+@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_async")
 def test_webhook_trigger_missing_subscription_query(
     mocked_send_webhook_request,
     staff_api_client,
@@ -180,7 +180,7 @@ def test_webhook_trigger_missing_subscription_query(
     assert error["message"] == "Missing subscription query for given webhook."
 
 
-@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_async")
+@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_async")
 def test_webhook_trigger_invalid_subscription_query(
     mocked_send_webhook_request,
     staff_api_client,
@@ -214,7 +214,7 @@ def test_webhook_trigger_invalid_subscription_query(
     assert 'Unknown type "UndefinedEvent"' in error["message"]
 
 
-@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_async")
+@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_async")
 def test_webhook_trigger_event_not_supported(
     mocked_send_webhook_request,
     staff_api_client,
@@ -247,7 +247,7 @@ def test_webhook_trigger_event_not_supported(
     )
 
 
-@mock.patch("swiftmovers.plugins.webhook.tasks.send_webhook_request_async")
+@mock.patch("saleor.plugins.webhook.tasks.send_webhook_request_async")
 def test_webhook_trigger_object_id_does_not_match_event(
     mocked_send_webhook_request,
     staff_api_client,

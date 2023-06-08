@@ -36,15 +36,15 @@ INVOICE_REQUEST_MUTATION = """
 @pytest.fixture(autouse=True)
 def setup_dummy_gateways(settings):
     settings.PLUGINS = [
-        "swiftmovers.payment.gateways.dummy.plugin.DummyGatewayPlugin",
+        "saleor.payment.gateways.dummy.plugin.DummyGatewayPlugin",
     ]
     return settings
 
 
 @patch(
-    "swiftmovers.graphql.invoice.mutations.is_event_active_for_any_plugin", return_value=True
+    "saleor.graphql.invoice.mutations.is_event_active_for_any_plugin", return_value=True
 )
-@patch("swiftmovers.plugins.manager.PluginsManager.invoice_request")
+@patch("saleor.plugins.manager.PluginsManager.invoice_request")
 def test_invoice_request(
     plugin_mock,
     active_event_check_mock,
@@ -131,7 +131,7 @@ def test_invoice_request_no_billing_address(
 
 
 @patch(
-    "swiftmovers.graphql.invoice.mutations.is_event_active_for_any_plugin", return_value=True
+    "saleor.graphql.invoice.mutations.is_event_active_for_any_plugin", return_value=True
 )
 def test_invoice_request_no_number(
     active_event_check_mock, staff_api_client, permission_manage_orders, order
@@ -160,7 +160,7 @@ def test_invoice_request_invalid_id(staff_api_client, permission_manage_orders):
 
 
 @patch(
-    "swiftmovers.graphql.invoice.mutations.is_event_active_for_any_plugin",
+    "saleor.graphql.invoice.mutations.is_event_active_for_any_plugin",
     return_value=False,
 )
 def test_invoice_request_no_invoice_plugin(

@@ -249,7 +249,7 @@ def test_mutation_plugin_perform_mutation_handles_graphql_error(
     the returned error "GraphQLError" is properly returned and transformed into a dict
     """
     settings.PLUGINS = [
-        "swiftmovers.plugins.tests.sample_plugins.PluginSample",
+        "saleor.plugins.tests.sample_plugins.PluginSample",
     ]
 
     schema_context = request.getfixturevalue("schema_context")
@@ -288,7 +288,7 @@ def test_mutation_plugin_perform_mutation_handles_custom_execution_result(
     if a "ExecutionResult" object is returned, then the GraphQL response contains it
     """
     settings.PLUGINS = [
-        "swiftmovers.plugins.tests.sample_plugins.PluginSample",
+        "saleor.plugins.tests.sample_plugins.PluginSample",
     ]
 
     schema_context = request.getfixturevalue("schema_context")
@@ -348,7 +348,7 @@ def test_mutation_calls_plugin_perform_mutation_after_permission_checks(
     """
 
     settings.PLUGINS = [
-        "swiftmovers.plugins.tests.sample_plugins.PluginSample",
+        "saleor.plugins.tests.sample_plugins.PluginSample",
     ]
 
     schema_context = request.getfixturevalue("schema_context")

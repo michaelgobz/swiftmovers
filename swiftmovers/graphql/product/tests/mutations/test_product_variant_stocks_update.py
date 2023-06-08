@@ -243,7 +243,7 @@ def test_update_or_create_variant_stocks(variant, warehouses):
     }
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_back_in_stock")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_back_in_stock")
 def test_update_or_create_variant_stocks_when_stock_out_of_quantity(
     back_in_stock_webhook_trigger, variant, warehouses
 ):
@@ -286,8 +286,8 @@ def test_update_or_create_variant_stocks_empty_stocks_data(variant, warehouses):
     assert stock.quantity == 5
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_back_in_stock")
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_out_of_stock")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_back_in_stock")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_out_of_stock")
 def test_update_or_create_variant_with_back_in_stock_webhooks_only_success(
     product_variant_stock_out_of_stock_webhook,
     product_variant_back_in_stock_webhook,
@@ -302,7 +302,7 @@ def test_update_or_create_variant_with_back_in_stock_webhooks_only_success(
         ]
     )
 
-    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
     plugins = get_plugins_manager()
     stocks_data = [
         {"quantity": 10, "warehouse": "123"},
@@ -322,9 +322,9 @@ def test_update_or_create_variant_with_back_in_stock_webhooks_only_success(
     product_variant_stock_out_of_stock_webhook.assert_not_called()
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_stock_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_back_in_stock")
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_out_of_stock")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_stock_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_back_in_stock")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_out_of_stock")
 def test_update_or_create_variant_with_back_in_stock_webhooks_only_failed(
     product_variant_stock_out_of_stock_webhook,
     product_variant_back_in_stock_webhook,
@@ -340,7 +340,7 @@ def test_update_or_create_variant_with_back_in_stock_webhooks_only_failed(
         ]
     )
 
-    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
     plugins = get_plugins_manager()
     stocks_data = [
         {"quantity": 0, "warehouse": "123"},
@@ -362,9 +362,9 @@ def test_update_or_create_variant_with_back_in_stock_webhooks_only_failed(
     product_variant_stock_update_webhook.assert_called_with(Stock.objects.all()[1])
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_stock_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_back_in_stock")
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_out_of_stock")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_stock_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_back_in_stock")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_out_of_stock")
 def test_update_or_create_variant_with_back_in_stock_webhooks_with_allocations(
     product_variant_stock_out_of_stock_webhook,
     product_variant_back_in_stock_webhook,
@@ -378,7 +378,7 @@ def test_update_or_create_variant_with_back_in_stock_webhooks_with_allocations(
     )
 
     # given
-    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
     plugins = get_plugins_manager()
     stock.quantity_allocated = stock_quantity
     stock.save(update_fields=["quantity_allocated"])
@@ -396,8 +396,8 @@ def test_update_or_create_variant_with_back_in_stock_webhooks_with_allocations(
     product_variant_stock_out_of_stock_webhook.assert_not_called()
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_back_in_stock")
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_out_of_stock")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_back_in_stock")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_out_of_stock")
 def test_update_or_create_variant_with_out_of_stock_webhooks_with_allocations(
     product_variant_stock_out_of_stock_webhook,
     product_variant_back_in_stock_webhook,
@@ -411,7 +411,7 @@ def test_update_or_create_variant_with_out_of_stock_webhooks_with_allocations(
     )
 
     # given
-    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
     plugins = get_plugins_manager()
     stock.quantity_allocated = stock_quantity - 1
     stock.save(update_fields=["quantity_allocated"])
@@ -429,9 +429,9 @@ def test_update_or_create_variant_with_out_of_stock_webhooks_with_allocations(
     product_variant_back_in_stock_webhook.assert_not_called()
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_stock_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_back_in_stock")
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_out_of_stock")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_stock_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_back_in_stock")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_out_of_stock")
 def test_update_or_create_variant_stocks_with_out_of_stock_webhook_only(
     product_variant_stock_out_of_stock_webhook,
     product_variant_back_in_stock_webhook,
@@ -447,7 +447,7 @@ def test_update_or_create_variant_stocks_with_out_of_stock_webhook_only(
         ]
     )
 
-    settings.PLUGINS = ["swiftmovers.plugins.webhook.plugin.WebhookPlugin"]
+    settings.PLUGINS = ["saleor.plugins.webhook.plugin.WebhookPlugin"]
 
     plugins = get_plugins_manager()
 

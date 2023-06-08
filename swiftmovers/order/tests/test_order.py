@@ -636,7 +636,7 @@ def test_get_order_weight_non_existing_product(
     assert old_weight == new_weight
 
 
-@patch("swiftmovers.discount.utils.validate_voucher")
+@patch("saleor.discount.utils.validate_voucher")
 def test_get_voucher_discount_for_order_voucher_validation(
     mock_validate_voucher, voucher, order_with_lines
 ):
@@ -658,7 +658,7 @@ def test_get_voucher_discount_for_order_voucher_validation(
     )
 
 
-@patch("swiftmovers.discount.utils.validate_voucher")
+@patch("saleor.discount.utils.validate_voucher")
 def test_validate_voucher_in_order_without_voucher(
     mock_validate_voucher, order_with_lines
 ):
@@ -932,7 +932,7 @@ def test_change_order_line_quantity_changes_total_prices(
     assert line_info.line.total_price == line_info.line.unit_price * new_quantity
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.notify")
+@patch("saleor.plugins.manager.PluginsManager.notify")
 @pytest.mark.parametrize(
     "has_standard,has_digital", ((True, True), (True, False), (False, True))
 )
@@ -976,7 +976,7 @@ def test_send_fulfillment_order_lines_mails_by_user(
     )
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.notify")
+@patch("saleor.plugins.manager.PluginsManager.notify")
 @pytest.mark.parametrize(
     "has_standard,has_digital", ((True, True), (True, False), (False, True))
 )

@@ -74,7 +74,9 @@ PRODUCT_BULK_CREATE_MUTATION = """
 """
 
 
+@patch("saleor.product.tasks.update_products_discounted_prices_task.delay")
 def test_product_bulk_create_with_base_data(
+    update_products_discounted_price_task_mock,
     staff_api_client,
     product_type,
     category,
@@ -141,8 +143,12 @@ def test_product_bulk_create_with_base_data(
         assert product.category == category
         assert product.product_type == product_type
 
+    update_products_discounted_price_task_mock.assert_called_once()
+    args = set(update_products_discounted_price_task_mock.call_args.args[0])
+    assert args == {product.id for product in products}
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_created")
+
+@patch("saleor.plugins.manager.PluginsManager.product_created")
 def test_product_bulk_create_send_product_created_webhook(
     created_webhook_mock,
     staff_api_client,
@@ -973,8 +979,8 @@ def test_product_bulk_create_with_variants_with_duplicated_sku(
     assert prod_2_errors[0]["code"] == ProductBulkCreateErrorCode.UNIQUE.name
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_created")
-@patch("swiftmovers.plugins.manager.PluginsManager.product_created")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_created")
+@patch("saleor.plugins.manager.PluginsManager.product_created")
 def test_product_bulk_create_with_variants_send_product_variant_created_event(
     product_created_webhook_mock,
     variant_created_webhook_mock,
@@ -1280,7 +1286,7 @@ def test_product_bulk_create_with_variants_and_invalid_stock(
     assert data["count"] == 0
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.channel_updated")
+@patch("saleor.plugins.manager.PluginsManager.channel_updated")
 def test_product_bulk_create_with_variants_and_channel_listings(
     channel_updated_webhook_mock,
     staff_api_client,

@@ -1,11 +1,11 @@
 class AppHeaders:
-    DOMAIN = "swiftmovers-Domain"
-    EVENT_TYPE = "swiftmovers-Event"
-    SIGNATURE = "swiftmovers-Signature"
-    API_URL = "swiftmovers-Api-Url"
+    DOMAIN = "Saleor-Domain"
+    EVENT_TYPE = "Saleor-Event"
+    SIGNATURE = "Saleor-Signature"
+    API_URL = "Saleor-Api-Url"
 
 
 class DeprecatedAppHeaders:
-    DOMAIN = "X-swiftmovers-Domain"
-    EVENT_TYPE = "X-swiftmovers-Event"
-    SIGNATURE = "X-swiftmovers-Signature"
+    DOMAIN = "X-Saleor-Domain"
+    EVENT_TYPE = "X-Saleor-Event"
+    SIGNATURE = "X-Saleor-Signature"

@@ -103,7 +103,7 @@ class AttributeEntityType:
     """Type of a reference entity type. Must match the name of the graphql type.
 
     After adding a new value the `ENTITY_TYPE_MAPPING` in
-    swiftmovers/graphql/attribute/utils.py must be updated.
+    saleor/graphql/attribute/utils.py must be updated.
     """
 
     PAGE = "Page"

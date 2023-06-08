@@ -62,7 +62,7 @@ ORDER_LINES_CREATE_MUTATION = """
 """
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_out_of_stock")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_out_of_stock")
 def test_order_lines_create_with_out_of_stock_webhook(
     product_variant_out_of_stock_webhook_mock,
     order_with_lines,
@@ -95,7 +95,7 @@ def test_order_lines_create_with_out_of_stock_webhook(
     )
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_out_of_stock")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_out_of_stock")
 def test_order_lines_create_for_variant_with_many_stocks_with_out_of_stock_webhook(
     product_variant_out_of_stock_webhook_mock,
     order_with_lines,
@@ -121,9 +121,9 @@ def test_order_lines_create_for_variant_with_many_stocks_with_out_of_stock_webho
 
 
 @pytest.mark.parametrize("status", (OrderStatus.DRAFT, OrderStatus.UNCONFIRMED))
-@patch("swiftmovers.plugins.manager.PluginsManager.draft_order_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_out_of_stock")
+@patch("saleor.plugins.manager.PluginsManager.draft_order_updated")
+@patch("saleor.plugins.manager.PluginsManager.order_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_out_of_stock")
 def test_order_lines_create(
     product_variant_out_of_stock_webhook_mock,
     order_updated_webhook_mock,
@@ -184,9 +184,9 @@ def test_order_lines_create(
 
 
 @pytest.mark.parametrize("status", (OrderStatus.DRAFT, OrderStatus.UNCONFIRMED))
-@patch("swiftmovers.plugins.manager.PluginsManager.draft_order_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_out_of_stock")
+@patch("saleor.plugins.manager.PluginsManager.draft_order_updated")
+@patch("saleor.plugins.manager.PluginsManager.order_updated")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_out_of_stock")
 def test_order_lines_create_for_just_published_product(
     product_variant_out_of_stock_webhook_mock,
     order_updated_webhook_mock,
@@ -229,8 +229,8 @@ def test_order_lines_create_for_just_published_product(
     assert data["orderLines"][0]["quantity"] == quantity
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.draft_order_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("saleor.plugins.manager.PluginsManager.draft_order_updated")
+@patch("saleor.plugins.manager.PluginsManager.order_updated")
 def test_order_lines_create_with_unavailable_variant(
     order_updated_webhook_mock,
     draft_order_updated_webhoook_mock,
@@ -262,8 +262,8 @@ def test_order_lines_create_with_unavailable_variant(
 
 
 @pytest.mark.parametrize("status", (OrderStatus.DRAFT, OrderStatus.UNCONFIRMED))
-@patch("swiftmovers.plugins.manager.PluginsManager.draft_order_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("saleor.plugins.manager.PluginsManager.draft_order_updated")
+@patch("saleor.plugins.manager.PluginsManager.order_updated")
 def test_order_lines_create_with_existing_variant(
     order_updated_webhook_mock,
     draft_order_updated_webhook_mock,
@@ -307,8 +307,8 @@ def test_order_lines_create_with_existing_variant(
 
 
 @pytest.mark.parametrize("status", (OrderStatus.DRAFT, OrderStatus.UNCONFIRMED))
-@patch("swiftmovers.plugins.manager.PluginsManager.draft_order_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("saleor.plugins.manager.PluginsManager.draft_order_updated")
+@patch("saleor.plugins.manager.PluginsManager.order_updated")
 def test_order_lines_create_with_same_variant_and_force_new_line(
     order_updated_webhook_mock,
     draft_order_updated_webhook_mock,
@@ -361,8 +361,8 @@ def test_order_lines_create_with_same_variant_and_force_new_line(
 
 
 @pytest.mark.parametrize("status", (OrderStatus.DRAFT, OrderStatus.UNCONFIRMED))
-@patch("swiftmovers.plugins.manager.PluginsManager.draft_order_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("saleor.plugins.manager.PluginsManager.draft_order_updated")
+@patch("saleor.plugins.manager.PluginsManager.order_updated")
 def test_order_lines_create_when_variant_already_in_multiple_lines(
     order_updated_webhook_mock,
     draft_order_updated_webhook_mock,
@@ -413,8 +413,8 @@ def test_order_lines_create_when_variant_already_in_multiple_lines(
 
 
 @pytest.mark.parametrize("status", (OrderStatus.DRAFT, OrderStatus.UNCONFIRMED))
-@patch("swiftmovers.plugins.manager.PluginsManager.draft_order_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("saleor.plugins.manager.PluginsManager.draft_order_updated")
+@patch("saleor.plugins.manager.PluginsManager.order_updated")
 def test_order_lines_create_variant_on_sale(
     order_updated_webhook_mock,
     draft_order_updated_webhook_mock,
@@ -479,8 +479,8 @@ def test_order_lines_create_variant_on_sale(
 
 
 @pytest.mark.parametrize("status", (OrderStatus.DRAFT, OrderStatus.UNCONFIRMED))
-@patch("swiftmovers.plugins.manager.PluginsManager.draft_order_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("saleor.plugins.manager.PluginsManager.draft_order_updated")
+@patch("saleor.plugins.manager.PluginsManager.order_updated")
 def test_order_lines_create_with_product_and_variant_not_assigned_to_channel(
     order_updated_webhook_mock,
     draft_order_updated_webhook_mock,
@@ -515,8 +515,8 @@ def test_order_lines_create_with_product_and_variant_not_assigned_to_channel(
 
 
 @pytest.mark.parametrize("status", (OrderStatus.DRAFT, OrderStatus.UNCONFIRMED))
-@patch("swiftmovers.plugins.manager.PluginsManager.draft_order_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("saleor.plugins.manager.PluginsManager.draft_order_updated")
+@patch("saleor.plugins.manager.PluginsManager.order_updated")
 def test_order_lines_create_with_variant_not_assigned_to_channel(
     order_update_webhook_mock,
     draft_order_update_webhook_mock,
@@ -553,7 +553,7 @@ def test_order_lines_create_with_variant_not_assigned_to_channel(
     draft_order_update_webhook_mock.assert_not_called()
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.product_variant_out_of_stock")
+@patch("saleor.plugins.manager.PluginsManager.product_variant_out_of_stock")
 @pytest.mark.parametrize("status", (OrderStatus.DRAFT, OrderStatus.UNCONFIRMED))
 def test_order_lines_create_without_sku(
     product_variant_out_of_stock_webhook_mock,
@@ -603,8 +603,8 @@ def test_order_lines_create_without_sku(
     product_variant_out_of_stock_webhook_mock.assert_not_called()
 
 
-@patch("swiftmovers.plugins.manager.PluginsManager.draft_order_updated")
-@patch("swiftmovers.plugins.manager.PluginsManager.order_updated")
+@patch("saleor.plugins.manager.PluginsManager.draft_order_updated")
+@patch("saleor.plugins.manager.PluginsManager.order_updated")
 def test_invalid_order_when_creating_lines(
     order_updated_webhook_mock,
     draft_order_updated_webhook_mock,
