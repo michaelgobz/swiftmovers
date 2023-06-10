@@ -2,7 +2,8 @@
 
 A swift-movers- resource controller project is a portfolio project for the alx Holberton final project 
 It a proof of concept for logistics as a service system. This includes all the activities and works 
-needed in the logistics industry. The api is fully rest in nature and is easy to run based both locally and deployment.
+needed in the logistics industry. This the controller for the resources provided by the system it handles all
+the scheduling and operations of each client and business that has the access to the paid servies.
 
 It uses a graphql server with python 3.9.13
 
