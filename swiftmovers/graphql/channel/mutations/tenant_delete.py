@@ -8,7 +8,7 @@ from ....tenant.error_codes import ChannelErrorCode
 from ....checkout.models import Checkout
 from ....core.tracing import traced_atomic_transaction
 from ....order.models import Order
-from ....permission.enums import ChannelPermissions
+from ....permission.enums import TenantPermissions
 from ...core import ResolveInfo
 from ...core.doc_category import DOC_CATEGORY_CHANNELS
 from ...core.mutations import ModelDeleteMutation
@@ -41,7 +41,7 @@ class ChannelDelete(ModelDeleteMutation):
         )
         model = models.Channel
         object_type = Channel
-        permissions = (ChannelPermissions.MANAGE_CHANNELS,)
+        permissions = (TenantPermissions.MANAGE_TENANTS,)
         error_type_class = ChannelError
         error_type_field = "channel_errors"
 

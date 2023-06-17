@@ -19,7 +19,7 @@ from ...plugins.dataloaders import get_plugin_manager_promise
 from ...utils.validators import check_for_duplicates
 from ..types import Channel
 from ..utils import delete_invalid_warehouse_to_shipping_zone_relations
-from .channel_create import ChannelInput
+from .tenant_create import ChannelInput
 
 
 class ChannelUpdateInput(ChannelInput):
