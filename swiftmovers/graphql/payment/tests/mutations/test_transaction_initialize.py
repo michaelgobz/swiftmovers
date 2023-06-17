@@ -14,7 +14,7 @@ from .....payment.interface import (
     TransactionProcessActionData,
     TransactionSessionData,
 )
-from ....channel.enums import TransactionFlowStrategyEnum
+from ....tenant.enums import TransactionFlowStrategyEnum
 from ....core.enums import TransactionInitializeErrorCode
 from ....core.utils import to_global_id_or_none
 from ....tests.utils import assert_no_permission, get_graphql_content

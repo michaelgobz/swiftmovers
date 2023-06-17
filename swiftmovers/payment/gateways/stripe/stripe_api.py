@@ -62,7 +62,7 @@ def _extra_log_data(error: StripeError, payment_intent_id: Optional[str] = None)
 def subscribe_webhook(api_key: str, channel_slug: str) -> Optional[StripeObject]:
     domain = Site.objects.get_current().domain
     api_path = reverse(
-        "plugins-per-channel",
+        "plugins-per-tenant",
         kwargs={"plugin_id": PLUGIN_ID, "channel_slug": channel_slug},
     )
 

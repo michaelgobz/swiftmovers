@@ -24,7 +24,7 @@ from ....shipping.utils import convert_to_shipping_method_data
 from ...account.i18n import I18nMixin
 from ...account.types import AddressInput
 from ...app.dataloaders import get_app_promise
-from ...channel.types import Channel
+from ...tenant.types import Channel
 from ...core import ResolveInfo
 from ...core.descriptions import ADDED_IN_36, ADDED_IN_310
 from ...core.doc_category import DOC_CATEGORY_ORDERS

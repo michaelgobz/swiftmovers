@@ -19,7 +19,7 @@ from ....shipping.utils import (
     default_shipping_zone_exists,
     get_countries_without_shipping_zone,
 )
-from ...channel.types import ChannelContext
+from ...tenant.types import ChannelContext
 from ...core import ResolveInfo
 from ...core.doc_category import DOC_CATEGORY_SHIPPING
 from ...core.fields import JSONString

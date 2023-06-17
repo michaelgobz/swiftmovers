@@ -20,8 +20,8 @@ from ....tax.utils import (
     get_tax_rate_for_tax_class,
 )
 from ...account import types as account_types
-from ...channel.dataloaders import ChannelByIdLoader
-from ...channel.types import Channel
+from ...tenant.dataloaders import ChannelByIdLoader
+from ...tenant.types import Channel
 from ...core.descriptions import ADDED_IN_31, ADDED_IN_33, DEPRECATED_IN_3X_FIELD
 from ...core.doc_category import DOC_CATEGORY_PRODUCTS
 from ...core.fields import PermissionsField

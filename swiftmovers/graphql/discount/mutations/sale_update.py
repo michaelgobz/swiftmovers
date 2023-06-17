@@ -9,7 +9,7 @@ from ....discount import models
 from ....discount.utils import CATALOGUE_FIELDS, fetch_catalogue_info
 from ....permission.enums import DiscountPermissions
 from ....product.tasks import update_products_discounted_prices_of_catalogues_task
-from ...channel import ChannelContext
+from ...tenant import ChannelContext
 from ...core import ResolveInfo
 from ...core.mutations import ModelMutation
 from ...core.types import DiscountError

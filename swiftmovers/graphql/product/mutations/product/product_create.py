@@ -13,7 +13,7 @@ from .....product.search import update_product_search_vector
 from .....product.tasks import update_product_discounted_price_task
 from ....attribute.types import AttributeValueInput
 from ....attribute.utils import AttributeAssignmentMixin, AttrValuesInput
-from ....channel import ChannelContext
+from ....tenant import ChannelContext
 from ....core import ResolveInfo
 from ....core.descriptions import (
     ADDED_IN_38,

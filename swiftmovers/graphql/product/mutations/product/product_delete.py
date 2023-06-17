@@ -9,7 +9,7 @@ from .....order.tasks import recalculate_orders_task
 from .....permission.enums import ProductPermissions
 from .....product import models
 from ....app.dataloaders import get_app_promise
-from ....channel import ChannelContext
+from ....tenant import ChannelContext
 from ....core import ResolveInfo
 from ....core.descriptions import ADDED_IN_310
 from ....core.mutations import ModelDeleteMutation, ModelWithExtRefMutation

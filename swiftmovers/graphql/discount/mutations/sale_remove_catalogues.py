@@ -3,7 +3,7 @@ from typing import cast
 from ....core.tracing import traced_atomic_transaction
 from ....discount import models
 from ....discount.utils import fetch_catalogue_info
-from ....graphql.channel import ChannelContext
+from ....graphql.tenant import ChannelContext
 from ....permission.enums import DiscountPermissions
 from ...core import ResolveInfo
 from ...core.doc_category import DOC_CATEGORY_DISCOUNTS

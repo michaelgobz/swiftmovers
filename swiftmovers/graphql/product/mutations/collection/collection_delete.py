@@ -3,7 +3,7 @@ import graphene
 from .....permission.enums import ProductPermissions
 from .....product import models
 from .....product.tasks import update_products_discounted_prices_task
-from ....channel import ChannelContext
+from ....tenant import ChannelContext
 from ....core import ResolveInfo
 from ....core.mutations import ModelDeleteMutation
 from ....core.types import CollectionError

@@ -6,7 +6,7 @@ from ....discount.utils import fetch_catalogue_info
 from ....graphql.core.mutations import ModelDeleteMutation
 from ....permission.enums import DiscountPermissions
 from ....product.tasks import update_products_discounted_prices_of_catalogues_task
-from ...channel import ChannelContext
+from ...tenant import ChannelContext
 from ...core import ResolveInfo
 from ...core.types import DiscountError
 from ...plugins.dataloaders import get_plugin_manager_promise

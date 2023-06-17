@@ -24,8 +24,8 @@ from graphql_relay.connection.connectiontypes import Edge, PageInfo
 from graphql_relay.utils import base64, unbase64
 
 from ...tenant.exceptions import ChannelNotDefined, NoDefaultChannel
-from ..channel import ChannelContext, ChannelQsContext
-from ..channel.utils import get_default_channel_slug_or_graphql_error
+from ..tenant import ChannelContext, ChannelQsContext
+from ..tenant.utils import get_default_channel_slug_or_graphql_error
 from ..core.enums import OrderDirection
 from ..core.types import BaseConnection, NonNullList
 from ..utils.sorting import sort_queryset_for_connection

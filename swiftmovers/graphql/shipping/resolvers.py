@@ -2,7 +2,7 @@ from prices import MoneyRange
 
 from ...shipping import models
 from ...shipping.interface import ShippingMethodData
-from ..channel import ChannelQsContext
+from ..tenant import ChannelQsContext
 from ..core import ResolveInfo
 from ..translations.resolvers import resolve_translation
 

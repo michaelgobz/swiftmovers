@@ -11,7 +11,7 @@ from ...menu.error_codes import MenuErrorCode
 from ...page import models as page_models
 from ...permission.enums import MenuPermissions, SitePermissions
 from ...product import models as product_models
-from ..channel import ChannelContext
+from ..tenant import ChannelContext
 from ..core import ResolveInfo
 from ..core.doc_category import DOC_CATEGORY_MENU
 from ..core.mutations import BaseMutation, ModelDeleteMutation, ModelMutation

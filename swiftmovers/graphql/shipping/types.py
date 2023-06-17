@@ -11,9 +11,9 @@ from ...product import models as product_models
 from ...shipping import models
 from ...shipping.interface import ShippingMethodData
 from ..account.enums import CountryCodeEnum
-from ..channel import ChannelQsContext
-from ..channel.dataloaders import ChannelByIdLoader
-from ..channel.types import (
+from ..tenant import ChannelQsContext
+from ..tenant.dataloaders import ChannelByIdLoader
+from ..tenant.types import (
     Channel,
     ChannelContext,
     ChannelContextType,

@@ -16,7 +16,7 @@ from .....product.tasks import update_product_discounted_price_task
 from .....product.utils.variants import generate_and_set_variant_name
 from ....attribute.types import AttributeValueInput
 from ....attribute.utils import AttributeAssignmentMixin, AttrValuesInput
-from ....channel import ChannelContext
+from ....tenant import ChannelContext
 from ....core import ResolveInfo
 from ....core.descriptions import ADDED_IN_31, ADDED_IN_38, ADDED_IN_310
 from ....core.doc_category import DOC_CATEGORY_PRODUCTS

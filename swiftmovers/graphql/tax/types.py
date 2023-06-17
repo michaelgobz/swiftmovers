@@ -1,8 +1,8 @@
 import graphene
 
 from ...tax import models
-from ..channel.dataloaders import ChannelByIdLoader
-from ..channel.types import Channel
+from ..tenant.dataloaders import ChannelByIdLoader
+from ..tenant.types import Channel
 from ..core import ResolveInfo
 from ..core.connection import CountableConnection
 from ..core.descriptions import ADDED_IN_39

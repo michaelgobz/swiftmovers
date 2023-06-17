@@ -43,10 +43,10 @@ from ...attribute.types import (
     AttributeCountableConnection,
     SelectedAttribute,
 )
-from ...channel import ChannelContext, ChannelQsContext
-from ...channel.dataloaders import ChannelBySlugLoader
-from ...channel.types import ChannelContextType, ChannelContextTypeWithMetadata
-from ...channel.utils import get_default_channel_slug_or_graphql_error
+from ...tenant import ChannelContext, ChannelQsContext
+from ...tenant.dataloaders import ChannelBySlugLoader
+from ...tenant.types import ChannelContextType, ChannelContextTypeWithMetadata
+from ...tenant.utils import get_default_channel_slug_or_graphql_error
 from ...core.connection import (
     CountableConnection,
     create_connection_slice,

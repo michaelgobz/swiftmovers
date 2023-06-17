@@ -75,8 +75,8 @@ from ...permission.auth_filters import AuthorizationFilters
 from ...permission.enums import OrderPermissions, PaymentPermissions
 from ..account.i18n import I18nMixin
 from ..app.dataloaders import get_app_promise
-from ..channel.enums import TransactionFlowStrategyEnum
-from ..channel.utils import validate_channel
+from ..tenant.enums import TransactionFlowStrategyEnum
+from ..tenant.utils import validate_channel
 from ..checkout.mutations.utils import get_checkout
 from ..checkout.types import Checkout
 from ..core import ResolveInfo

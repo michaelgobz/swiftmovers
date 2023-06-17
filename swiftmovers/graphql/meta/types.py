@@ -6,7 +6,7 @@ from graphene.types.generic import GenericScalar
 from ...checkout.models import Checkout
 from ...checkout.utils import get_or_create_checkout_metadata
 from ...core.models import ModelWithMetadata
-from ..channel import ChannelContext
+from ..tenant import ChannelContext
 from ..core import ResolveInfo
 from ..core.types import NonNullList
 from .resolvers import (

@@ -234,7 +234,7 @@ class AdyenGatewayPlugin(BasePlugin):
 
     def _generate_webhook_url(self, channel) -> str:
         api_path = reverse(
-            "plugins-per-channel",
+            "plugins-per-tenant",
             kwargs={"plugin_id": self.PLUGIN_ID, "channel_slug": channel.slug},
         )
         base_url = build_absolute_uri(api_path)

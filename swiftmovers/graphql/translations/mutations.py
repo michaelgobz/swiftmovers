@@ -18,7 +18,7 @@ from ...product import models as product_models
 from ...shipping import models as shipping_models
 from ...site.models import SiteSettings
 from ..attribute.types import Attribute, AttributeValue
-from ..channel import ChannelContext
+from ..tenant import ChannelContext
 from ..core import ResolveInfo
 from ..core.descriptions import RICH_CONTENT
 from ..core.doc_category import DOC_CATEGORY_SHOP

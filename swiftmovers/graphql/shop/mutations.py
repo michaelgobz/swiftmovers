@@ -11,7 +11,7 @@ from ...site.error_codes import GiftCardSettingsErrorCode, OrderSettingsErrorCod
 from ...site.models import DEFAULT_LIMIT_QUANTITY_PER_CHECKOUT
 from ..account.i18n import I18nMixin
 from ..account.types import AddressInput, StaffNotificationRecipient
-from ..channel.types import OrderSettings
+from ..tenant.types import OrderSettings
 from ..core import ResolveInfo
 from ..core.descriptions import ADDED_IN_31, DEPRECATED_IN_3X_INPUT
 from ..core.doc_category import (

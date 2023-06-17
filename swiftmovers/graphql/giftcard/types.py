@@ -16,8 +16,8 @@ from ..account.utils import (
 )
 from ..app.dataloaders import AppByIdLoader
 from ..app.types import App
-from ..channel import ChannelContext
-from ..channel.dataloaders import ChannelByIdLoader
+from ..tenant import ChannelContext
+from ..tenant.dataloaders import ChannelByIdLoader
 from ..core.connection import CountableConnection
 from ..core.descriptions import ADDED_IN_31, DEPRECATED_IN_3X_FIELD
 from ..core.doc_category import DOC_CATEGORY_GIFT_CARDS

@@ -6,7 +6,7 @@ from django.db.models import Exists, OuterRef, Q
 from ...account.models import User
 from ...checkout.models import Checkout
 from ...payment.models import Payment
-from ..channel.types import Channel
+from ..tenant.types import Channel
 from ..core.doc_category import DOC_CATEGORY_CHECKOUT
 from ..core.filters import (
     GlobalIDMultipleChoiceFilter,

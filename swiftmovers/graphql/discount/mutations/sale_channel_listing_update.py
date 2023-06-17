@@ -10,8 +10,8 @@ from ....discount.error_codes import DiscountErrorCode
 from ....discount.models import SaleChannelListing
 from ....permission.enums import DiscountPermissions
 from ....product.tasks import update_products_discounted_prices_of_sale_task
-from ...channel import ChannelContext
-from ...channel.mutations import BaseChannelListingMutation
+from ...tenant import ChannelContext
+from ...tenant.mutations import BaseChannelListingMutation
 from ...core import ResolveInfo
 from ...core.doc_category import DOC_CATEGORY_DISCOUNTS
 from ...core.scalars import PositiveDecimal

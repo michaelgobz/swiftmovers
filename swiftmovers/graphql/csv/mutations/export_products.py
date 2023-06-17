@@ -6,7 +6,7 @@ from ....csv.tasks import export_products_task
 from ....permission.enums import ProductPermissions
 from ...app.dataloaders import get_app_promise
 from ...attribute.types import Attribute
-from ...channel.types import Channel
+from ...tenant.types import Channel
 from ...core import ResolveInfo
 from ...core.doc_category import DOC_CATEGORY_PRODUCTS
 from ...core.types import BaseInputObjectType, ExportError, NonNullList

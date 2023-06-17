@@ -2,7 +2,7 @@ from typing import List, Optional
 
 import graphene
 
-from ..channel.types import Channel
+from ..tenant.types import Channel
 from ..core.types import NonNullList
 from ..utils import get_nodes
 from .enums import PluginConfigurationType

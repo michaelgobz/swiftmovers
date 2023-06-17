@@ -10,7 +10,7 @@ from ....discount.error_codes import DiscountErrorCode
 from ....discount.utils import fetch_catalogue_info
 from ....permission.enums import DiscountPermissions
 from ....product.tasks import update_products_discounted_prices_of_sale_task
-from ...channel import ChannelContext
+from ...tenant import ChannelContext
 from ...core import ResolveInfo
 from ...core.descriptions import ADDED_IN_31
 from ...core.doc_category import DOC_CATEGORY_DISCOUNTS

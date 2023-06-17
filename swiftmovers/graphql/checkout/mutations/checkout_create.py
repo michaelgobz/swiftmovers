@@ -12,7 +12,7 @@ from ....warehouse.reservations import get_reservation_length, is_reservation_en
 from ...account.i18n import I18nMixin
 from ...account.types import AddressInput
 from ...app.dataloaders import get_app_promise
-from ...channel.utils import clean_channel
+from ...tenant.utils import clean_channel
 from ...core import ResolveInfo
 from ...core.descriptions import (
     ADDED_IN_31,

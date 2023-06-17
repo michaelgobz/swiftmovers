@@ -2,7 +2,7 @@ import graphene
 
 from ...permission.enums import ShippingPermissions
 from ...shipping import models
-from ..channel.types import ChannelContext
+from ..tenant.types import ChannelContext
 from ..core import ResolveInfo
 from ..core.connection import create_connection_slice, filter_connection_queryset
 from ..core.doc_category import DOC_CATEGORY_SHIPPING

@@ -22,7 +22,7 @@ from ....product.tasks import update_products_discounted_prices_task
 from ....warehouse.models import Warehouse
 from ...attribute.types import AttributeValueInput
 from ...attribute.utils import AttributeAssignmentMixin
-from ...channel import ChannelContext
+from ...tenant import ChannelContext
 from ...core.descriptions import ADDED_IN_313, PREVIEW_FEATURE, RICH_CONTENT
 from ...core.doc_category import DOC_CATEGORY_PRODUCTS
 from ...core.enums import ErrorPolicyEnum

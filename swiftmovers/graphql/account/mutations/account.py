@@ -18,7 +18,7 @@ from ....core.utils.url import validate_storefront_url
 from ....giftcard.utils import assign_user_gift_cards
 from ....order.utils import match_orders_with_new_user
 from ....permission.auth_filters import AuthorizationFilters
-from ...channel.utils import clean_channel
+from ...tenant.utils import clean_channel
 from ...core import ResolveInfo
 from ...core.doc_category import DOC_CATEGORY_USERS
 from ...core.enums import LanguageCodeEnum

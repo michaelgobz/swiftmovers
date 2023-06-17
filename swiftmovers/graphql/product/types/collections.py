@@ -11,8 +11,8 @@ from ....thumbnail.utils import (
     get_thumbnail_format,
     get_thumbnail_size,
 )
-from ...channel import ChannelContext, ChannelQsContext
-from ...channel.types import ChannelContextType, ChannelContextTypeWithMetadata
+from ...tenant import ChannelContext, ChannelQsContext
+from ...tenant.types import ChannelContextType, ChannelContextTypeWithMetadata
 from ...core import ResolveInfo
 from ...core.connection import (
     CountableConnection,

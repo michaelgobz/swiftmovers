@@ -1,5 +1,5 @@
 from ...menu import models
-from ..channel import ChannelContext, ChannelQsContext
+from ..tenant import ChannelContext, ChannelQsContext
 from ..core.utils import from_global_id_or_error
 from ..core.validators import validate_one_of_args_is_in_query
 from .types import Menu

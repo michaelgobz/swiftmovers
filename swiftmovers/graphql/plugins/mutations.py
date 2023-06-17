@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from ...permission.enums import PluginsPermissions
 from ...plugins.error_codes import PluginErrorCode
 from ...plugins.manager import get_plugins_manager
-from ..channel.types import Channel
+from ..tenant.types import Channel
 from ..core import ResolveInfo
 from ..core.mutations import BaseMutation
 from ..core.types import NonNullList, PluginError

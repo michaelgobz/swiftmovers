@@ -3,7 +3,7 @@ import graphene
 from swiftmovers.discount import models
 
 from ....permission.enums import DiscountPermissions
-from ...channel import ChannelContext
+from ...tenant import ChannelContext
 from ...core import ResolveInfo
 from ...core.mutations import ModelDeleteMutation
 from ...core.types import DiscountError

@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING
 
 import graphene
 
-from ..channel.types import Channel
+from ..tenant.types import Channel
 from ..core import ResolveInfo
 from ..core.connection import CountableConnection
 from ..core.types import NonNullList

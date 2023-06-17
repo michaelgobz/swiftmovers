@@ -1,7 +1,7 @@
 import django_filters
 
 from ...shipping.models import ShippingZone
-from ..channel.types import Channel
+from ..tenant.types import Channel
 from ..core.doc_category import DOC_CATEGORY_SHIPPING
 from ..core.filters import GlobalIDMultipleChoiceFilter
 from ..core.types import FilterInputObjectType

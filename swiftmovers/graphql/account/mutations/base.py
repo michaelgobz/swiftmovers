@@ -29,7 +29,7 @@ from ....permission.enums import AccountPermissions
 from ...account.i18n import I18nMixin
 from ...account.types import Address, AddressInput, User
 from ...app.dataloaders import get_app_promise
-from ...channel.utils import clean_channel, validate_channel
+from ...tenant.utils import clean_channel, validate_channel
 from ...core import ResolveInfo
 from ...core.context import disallow_replica_in_context
 from ...core.descriptions import ADDED_IN_310

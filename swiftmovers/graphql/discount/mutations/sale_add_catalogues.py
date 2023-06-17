@@ -4,7 +4,7 @@ from ....core.tracing import traced_atomic_transaction
 from ....discount import models
 from ....discount.utils import fetch_catalogue_info
 from ....permission.enums import DiscountPermissions
-from ...channel import ChannelContext
+from ...tenant import ChannelContext
 from ...core import ResolveInfo
 from ...core.doc_category import DOC_CATEGORY_DISCOUNTS
 from ...core.types import DiscountError

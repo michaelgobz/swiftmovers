@@ -6,7 +6,7 @@ from django.conf import settings
 from graphene.utils.str_converters import to_snake_case
 from graphql import GraphQLArgument, GraphQLError, GraphQLField, GraphQLList
 
-from ...channel import ChannelContext
+from ...tenant import ChannelContext
 from ...schema_printer import print_schema
 from .. import ResolveInfo
 from .entities import federated_entities

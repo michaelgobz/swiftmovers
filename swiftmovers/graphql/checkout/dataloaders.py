@@ -210,7 +210,7 @@ class CheckoutInfoByCheckoutTokenLoader(DataLoader[str, CheckoutInfo]):
     def batch_load(self, keys):
         def with_checkout(data):
             checkouts, checkout_line_infos, manager = data
-            from ..channel.dataloaders import ChannelByIdLoader
+            from ..tenant.dataloaders import ChannelByIdLoader
 
             channel_pks = [checkout.channel_id for checkout in checkouts]
 

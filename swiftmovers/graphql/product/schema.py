@@ -6,8 +6,8 @@ from graphql import GraphQLError
 from ...permission.enums import ProductPermissions
 from ...permission.utils import has_one_of_permissions
 from ...product.models import ALL_PRODUCTS_PERMISSIONS
-from ..channel import ChannelContext
-from ..channel.utils import get_default_channel_slug_or_graphql_error
+from ..tenant import ChannelContext
+from ..tenant.utils import get_default_channel_slug_or_graphql_error
 from ..core import ResolveInfo
 from ..core.connection import create_connection_slice, filter_connection_queryset
 from ..core.descriptions import ADDED_IN_310

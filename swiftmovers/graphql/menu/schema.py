@@ -1,7 +1,7 @@
 import graphene
 
-from ..channel import ChannelQsContext
-from ..channel.utils import get_default_channel_slug_or_graphql_error
+from ..tenant import ChannelQsContext
+from ..tenant.utils import get_default_channel_slug_or_graphql_error
 from ..core import ResolveInfo
 from ..core.connection import create_connection_slice, filter_connection_queryset
 from ..core.descriptions import DEPRECATED_IN_3X_FIELD

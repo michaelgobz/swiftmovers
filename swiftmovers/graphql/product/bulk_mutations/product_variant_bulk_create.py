@@ -20,7 +20,7 @@ from ...attribute.types import (
     AttributeValueSelectableTypeInput,
 )
 from ...attribute.utils import AttributeAssignmentMixin
-from ...channel import ChannelContext
+from ...tenant import ChannelContext
 from ...core.descriptions import (
     ADDED_IN_311,
     ADDED_IN_312,

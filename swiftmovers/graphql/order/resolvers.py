@@ -7,7 +7,7 @@ from ...order import OrderStatus, models
 from ...order.events import OrderEvents
 from ...order.models import OrderEvent
 from ...order.utils import sum_order_totals
-from ..channel.utils import get_default_channel_slug_or_graphql_error
+from ..tenant.utils import get_default_channel_slug_or_graphql_error
 from ..core.context import get_database_connection_name
 from ..core.tracing import traced_resolver
 from ..utils.filters import filter_by_period

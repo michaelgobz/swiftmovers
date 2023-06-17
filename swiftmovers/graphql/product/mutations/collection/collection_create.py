@@ -8,7 +8,7 @@ from .....core.utils.date_time import convert_to_utc_date_time
 from .....permission.enums import ProductPermissions
 from .....product import models
 from .....product.error_codes import CollectionErrorCode
-from ....channel import ChannelContext
+from ....tenant import ChannelContext
 from ....core import ResolveInfo
 from ....core.descriptions import ADDED_IN_38, DEPRECATED_IN_3X_INPUT, RICH_CONTENT
 from ....core.doc_category import DOC_CATEGORY_PRODUCTS

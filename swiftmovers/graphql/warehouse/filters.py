@@ -6,7 +6,7 @@ from ...account.models import Address
 from ...product.models import Product, ProductVariant
 from ...warehouse import WarehouseClickAndCollectOption
 from ...warehouse.models import Stock, Warehouse
-from ..channel.types import Channel
+from ..tenant.types import Channel
 from ..core.doc_category import DOC_CATEGORY_PRODUCTS
 from ..core.filters import (
     EnumFilter,

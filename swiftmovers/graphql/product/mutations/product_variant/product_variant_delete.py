@@ -15,7 +15,7 @@ from .....product import models
 from .....product.search import update_product_search_vector
 from .....product.tasks import update_product_discounted_price_task
 from ....app.dataloaders import get_app_promise
-from ....channel import ChannelContext
+from ....tenant import ChannelContext
 from ....core import ResolveInfo
 from ....core.descriptions import ADDED_IN_38, ADDED_IN_310
 from ....core.mutations import ModelDeleteMutation, ModelWithExtRefMutation

@@ -3,9 +3,9 @@ from graphene import relay
 
 from ...discount import models
 from ...permission.enums import DiscountPermissions, OrderPermissions
-from ..channel import ChannelQsContext
-from ..channel.dataloaders import ChannelByIdLoader
-from ..channel.types import (
+from ..tenant import ChannelQsContext
+from ..tenant.dataloaders import ChannelByIdLoader
+from ..tenant.types import (
     Channel,
     ChannelContext,
     ChannelContextType,

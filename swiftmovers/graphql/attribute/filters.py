@@ -7,7 +7,7 @@ from ...attribute.models import Attribute, AttributeValue
 from ...permission.utils import has_one_of_permissions
 from ...product import models
 from ...product.models import ALL_PRODUCTS_PERMISSIONS
-from ..channel.filters import get_channel_slug_from_filter_data
+from ..tenant.filters import get_channel_slug_from_filter_data
 from ..core.descriptions import ADDED_IN_311, PREVIEW_FEATURE
 from ..core.doc_category import DOC_CATEGORY_ATTRIBUTES
 from ..core.enums import MeasurementUnitsEnum

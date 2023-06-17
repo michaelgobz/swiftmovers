@@ -18,9 +18,9 @@ from ....product.models import ProductChannelListing
 from ....product.models import ProductVariant as ProductVariantModel
 from ....product.models import ProductVariantChannelListing
 from ....product.tasks import update_product_discounted_price_task
-from ...channel import ChannelContext
-from ...channel.mutations import BaseChannelListingMutation
-from ...channel.types import Channel
+from ...tenant import ChannelContext
+from ...tenant.mutations import BaseChannelListingMutation
+from ...tenant.types import Channel
 from ...core import ResolveInfo
 from ...core.descriptions import (
     ADDED_IN_31,

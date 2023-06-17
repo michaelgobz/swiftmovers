@@ -8,8 +8,8 @@ from ....core.tracing import traced_atomic_transaction
 from ....discount import DiscountValueType, models
 from ....discount.error_codes import DiscountErrorCode
 from ....permission.enums import DiscountPermissions
-from ...channel import ChannelContext
-from ...channel.mutations import BaseChannelListingMutation
+from ...tenant import ChannelContext
+from ...tenant.mutations import BaseChannelListingMutation
 from ...core import ResolveInfo
 from ...core.doc_category import DOC_CATEGORY_DISCOUNTS
 from ...core.scalars import PositiveDecimal

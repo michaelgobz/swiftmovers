@@ -15,7 +15,7 @@ from ....shipping.models import ShippingMethod
 from ....site import GiftCardSettingsExpiryType
 from ....site.models import Site
 from ...account.enums import CountryCodeEnum
-from ...channel.enums import TransactionFlowStrategyEnum
+from ...tenant.enums import TransactionFlowStrategyEnum
 from ...core.utils import str_to_enum
 from ...tests.utils import assert_no_permission, get_graphql_content
 

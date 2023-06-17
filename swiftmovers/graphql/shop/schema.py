@@ -2,7 +2,7 @@ import graphene
 
 from ...tenant import models as channel_models
 from ...permission.enums import GiftcardPermissions, OrderPermissions
-from ..channel.types import OrderSettings
+from ..tenant.types import OrderSettings
 from ..core.descriptions import DEPRECATED_IN_3X_FIELD, DEPRECATED_IN_3X_MUTATION
 from ..core.doc_category import DOC_CATEGORY_GIFT_CARDS, DOC_CATEGORY_ORDERS
 from ..core.fields import PermissionsField

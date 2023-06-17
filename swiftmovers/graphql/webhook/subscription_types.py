@@ -23,9 +23,9 @@ from ...thumbnail.views import TYPE_TO_MODEL_DATA_MAPPING
 from ...webhook.event_types import WebhookEventAsyncType, WebhookEventSyncType
 from ..account.types import User as UserType
 from ..app.types import App as AppType
-from ..channel import ChannelContext
-from ..channel.dataloaders import ChannelByIdLoader
-from ..channel.enums import TransactionFlowStrategyEnum
+from ..tenant import ChannelContext
+from ..tenant.dataloaders import ChannelByIdLoader
+from ..tenant.enums import TransactionFlowStrategyEnum
 from ..core import ResolveInfo
 from ..core.descriptions import (
     ADDED_IN_32,

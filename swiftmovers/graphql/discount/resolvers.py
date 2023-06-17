@@ -1,5 +1,5 @@
 from ...discount import models
-from ..channel import ChannelContext, ChannelQsContext
+from ..tenant import ChannelContext, ChannelQsContext
 from .filters import filter_sale_search, filter_voucher_search
 
 

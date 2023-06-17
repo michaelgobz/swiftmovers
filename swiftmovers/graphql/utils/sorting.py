@@ -3,7 +3,7 @@ from typing import Optional, Tuple
 from django.db.models import QuerySet
 from graphql.error import GraphQLError
 
-from ..channel.utils import get_default_channel_slug_or_graphql_error
+from ..tenant.utils import get_default_channel_slug_or_graphql_error
 from ..core.enums import OrderDirection
 from ..core.types import SortInputObjectType
 from ..core.utils import from_global_id_or_error

@@ -16,7 +16,7 @@ from ...menu import models as menu_models
 from ...order import models as order_models
 from ...product import models as product_models
 from ...shipping import models as shipping_models
-from ..channel import ChannelContext
+from ..tenant import ChannelContext
 from ..core import ResolveInfo
 from ..core.mutations import BaseMutation
 from ..core.types import MetadataError, NonNullList

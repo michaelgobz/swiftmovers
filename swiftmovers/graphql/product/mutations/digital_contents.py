@@ -5,7 +5,7 @@ from ....core.exceptions import PermissionDenied
 from ....permission.enums import ProductPermissions
 from ....product import models
 from ....product.error_codes import ProductErrorCode
-from ...channel import ChannelContext
+from ...tenant import ChannelContext
 from ...core import ResolveInfo
 from ...core.context import disallow_replica_in_context
 from ...core.descriptions import ADDED_IN_38

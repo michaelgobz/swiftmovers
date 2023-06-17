@@ -35,7 +35,7 @@ from ...product.models import (
 )
 from ...product.search import search_products
 from ...warehouse.models import Allocation, Reservation, Stock, Warehouse
-from ..channel.filters import get_channel_slug_from_filter_data
+from ..tenant.filters import get_channel_slug_from_filter_data
 from ..core.descriptions import ADDED_IN_38
 from ..core.doc_category import DOC_CATEGORY_PRODUCTS
 from ..core.filters import (

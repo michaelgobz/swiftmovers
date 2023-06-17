@@ -2,7 +2,7 @@ import graphene
 from graphene import relay
 
 from ....product import models
-from ...channel import ChannelContext
+from ...tenant import ChannelContext
 from ...core import ResolveInfo
 from ...core.connection import CountableConnection
 from ...core.doc_category import DOC_CATEGORY_PRODUCTS

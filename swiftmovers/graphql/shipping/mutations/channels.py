@@ -11,8 +11,8 @@ from ....shipping.models import ShippingMethodChannelListing
 from ....shipping.tasks import (
     drop_invalid_shipping_methods_relations_for_given_channels,
 )
-from ...channel import ChannelContext
-from ...channel.mutations import BaseChannelListingMutation
+from ...tenant import ChannelContext
+from ...tenant.mutations import BaseChannelListingMutation
 from ...core import ResolveInfo
 from ...core.doc_category import DOC_CATEGORY_SHIPPING
 from ...core.scalars import PositiveDecimal
