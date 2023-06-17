@@ -44,7 +44,7 @@ def collections_for_sorting_with_channels(channel_USD, channel_PLN):
                 is_published=False,
                 channel=channel_USD,
             ),
-            # second channel
+            # second tenant
             CollectionChannelListing(
                 collection=collections[0],
                 published_at=None,
@@ -76,10 +76,10 @@ def collections_for_sorting_with_channels(channel_USD, channel_PLN):
 QUERY_COLLECTIONS_WITH_SORTING_AND_FILTERING = """
     query (
         $sortBy: CollectionSortingInput,
-        $filter: CollectionFilterInput, $channel: String
+        $filter: CollectionFilterInput, $tenant: String
     ){
         collections (
-            first: 10, sortBy: $sortBy, filter: $filter, channel: $channel
+            first: 10, sortBy: $sortBy, filter: $filter, tenant: $tenant
         ) {
             edges {
                 node {
@@ -116,7 +116,7 @@ def test_collections_with_sorting_and_without_channel(
     )
 
     # then
-    assert_graphql_error_with_message(response, "A default channel does not exist.")
+    assert_graphql_error_with_message(response, "A default tenant does not exist.")
 
 
 @pytest.mark.parametrize(
@@ -141,7 +141,7 @@ def test_collections_with_sorting_and_channel_USD(
     channel_USD,
 ):
     # given
-    variables = {"sortBy": sort_by, "channel": channel_USD.slug}
+    variables = {"sortBy": sort_by, "tenant": channel_USD.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -180,7 +180,7 @@ def test_collections_with_sorting_and_channel_PLN(
     channel_PLN,
 ):
     # given
-    variables = {"sortBy": sort_by, "channel": channel_PLN.slug}
+    variables = {"sortBy": sort_by, "tenant": channel_PLN.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -213,7 +213,7 @@ def test_collections_with_sorting_and_not_existing_channel_asc(
     channel_USD,
 ):
     # given
-    variables = {"sortBy": sort_by, "channel": "Not-existing"}
+    variables = {"sortBy": sort_by, "tenant": "Not-existing"}
 
     # when
     response = staff_api_client.post_graphql(
@@ -243,7 +243,7 @@ def test_collections_with_sorting_and_not_existing_channel_desc(
     channel_USD,
 ):
     # given
-    variables = {"sortBy": sort_by, "channel": "Not-existing"}
+    variables = {"sortBy": sort_by, "tenant": "Not-existing"}
 
     # when
     response = staff_api_client.post_graphql(

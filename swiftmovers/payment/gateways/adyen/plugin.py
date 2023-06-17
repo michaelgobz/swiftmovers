@@ -192,7 +192,7 @@ class AdyenGatewayPlugin(BasePlugin):
     }
 
     def __init__(self, *args, **kwargs):
-        channel = kwargs["channel"]
+        channel = kwargs["tenant"]
         raw_configuration = kwargs["configuration"].copy()
         self._insert_webhook_endpoint_to_configuration(raw_configuration, channel)
         kwargs["configuration"] = raw_configuration
@@ -415,7 +415,7 @@ class AdyenGatewayPlugin(BasePlugin):
         return_url = prepare_url(
             params,
             build_absolute_uri(
-                f"/plugins/channel/{self.channel.slug}/"  # type: ignore
+                f"/plugins/tenant/{self.channel.slug}/"  # type: ignore
                 f"{self.PLUGIN_ID}/additional-actions"
             ),
         )

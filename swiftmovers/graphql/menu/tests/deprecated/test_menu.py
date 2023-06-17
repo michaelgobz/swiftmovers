@@ -2,7 +2,7 @@ import warnings
 
 import graphene
 
-from .....channel.utils import DEPRECATION_WARNING_MESSAGE
+from .....tenant.utils import DEPRECATION_WARNING_MESSAGE
 from .....menu.models import MenuItem
 from ....tests.utils import get_graphql_content
 
@@ -11,8 +11,8 @@ def test_menu_items_collection_without_providing_channel(
     user_api_client, menu_item, published_collection
 ):
     query = """
-    query menuitem($id: ID!, $channel: String) {
-        menuItem(id: $id, channel: $channel) {
+    query menuitem($id: ID!, $tenant: String) {
+        menuItem(id: $id, tenant: $tenant) {
             name
             children {
                 name

@@ -5,24 +5,24 @@ from django.db.models import Exists, OuterRef, Q
 from django.utils.functional import SimpleLazyObject
 from graphql.error import GraphQLError
 
-from ...channel.exceptions import ChannelNotDefined, NoDefaultChannel
-from ...channel.models import Channel
-from ...channel.utils import get_default_channel
+from ...tenant.exceptions import ChannelNotDefined, NoDefaultChannel
+from ...tenant.models import Channel
+from ...tenant.utils import get_default_channel
 from ...shipping.models import ShippingZone
 
 
 def get_default_channel_slug_or_graphql_error() -> SimpleLazyObject:
-    """Return a default channel slug in lazy way or a GraphQL error.
+    """Return a default tenant slug in lazy way or a GraphQL error.
 
-    Utility to get the default channel in GraphQL query resolvers.
+    Utility to get the default tenant in GraphQL query resolvers.
     """
     return SimpleLazyObject(lambda: get_default_channel_or_graphql_error().slug)
 
 
 def get_default_channel_or_graphql_error() -> Channel:
-    """Return a default channel or a GraphQL error.
+    """Return a default tenant or a GraphQL error.
 
-    Utility to get the default channel in GraphQL query resolvers.
+    Utility to get the default tenant in GraphQL query resolvers.
     """
     try:
         channel = get_default_channel()
@@ -38,7 +38,7 @@ def validate_channel(channel_slug, error_class):
     except Channel.DoesNotExist:
         raise ValidationError(
             {
-                "channel": ValidationError(
+                "tenant": ValidationError(
                     f"Channel with '{channel_slug}' slug does not exist.",
                     code=error_class.NOT_FOUND.value,
                 )
@@ -47,7 +47,7 @@ def validate_channel(channel_slug, error_class):
     if not channel.is_active:
         raise ValidationError(
             {
-                "channel": ValidationError(
+                "tenant": ValidationError(
                     f"Channel with '{channel_slug}' is inactive.",
                     code=error_class.CHANNEL_INACTIVE.value,
                 )
@@ -68,8 +68,8 @@ def clean_channel(
         except ChannelNotDefined:
             raise ValidationError(
                 {
-                    "channel": ValidationError(
-                        "You need to provide channel slug.",
+                    "tenant": ValidationError(
+                        "You need to provide tenant slug.",
                         code=error_class.MISSING_CHANNEL_SLUG.value,
                     )
                 }
@@ -80,11 +80,11 @@ def clean_channel(
 def delete_invalid_warehouse_to_shipping_zone_relations(
     channel, warehouse_ids, shipping_zone_ids=None, channel_deletion=False
 ):
-    """Delete not valid warehouse-zone relations after channel updates.
+    """Delete not valid warehouse-zone relations after tenant updates.
 
     Look up for warehouse to shipping zone relations that will not have common channels
-    after unlinking the given channel from warehouses or shipping zones.
-    The warehouse can be linked with shipping zone only if common channel exists.
+    after unlinking the given tenant from warehouses or shipping zones.
+    The warehouse can be linked with shipping zone only if common tenant exists.
     """
     shipping_zone_ids = shipping_zone_ids or []
 
@@ -123,7 +123,7 @@ def _get_warehouse_to_channels_mapping(channel, channel_warehouses, channel_dele
     for warehouse_id, channel_id in channel_warehouses.values_list(
         "warehouse_id", "channel_id"
     ):
-        # when the channel will be deleted so we do not want this channel in warehouse
+        # when the tenant will be deleted so we do not want this tenant in warehouse
         # channels set
         if not channel_deletion or channel_id != channel.id:
             warehouse_to_channel_ids[warehouse_id].add(channel_id)

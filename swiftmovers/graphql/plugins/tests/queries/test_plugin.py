@@ -22,14 +22,14 @@ PLUGIN_QUERY = """
             type
             label
           }
-          channel{
+          tenant{
             id
             slug
           }
         }
         channelConfigurations{
           active
-          channel{
+          tenant{
             id
             slug
           }
@@ -223,7 +223,7 @@ def test_query_plugin_configuration_for_multiple_channels(
     assert len(plugin["channelConfigurations"]) == 2
     for channel_configuration in plugin["channelConfigurations"]:
         assert channel_configuration["active"] == ChannelPluginSample.DEFAULT_ACTIVE
-        assert channel_configuration["channel"]["slug"] in [
+        assert channel_configuration["tenant"]["slug"] in [
             channel_USD.slug,
             channel_PLN.slug,
         ]
@@ -273,7 +273,7 @@ def test_cannot_retrieve_hidden_plugin(settings, staff_api_client_can_manage_plu
 def test_cannot_retrieve_hidden_multi_channel_plugin(
     settings, staff_api_client_can_manage_plugins, channel_PLN
 ):
-    """Ensure one cannot retrieve the details of a hidden multi channel plugin"""
+    """Ensure one cannot retrieve the details of a hidden multi tenant plugin"""
     client = staff_api_client_can_manage_plugins
     settings.PLUGINS = ["swiftmovers.plugins.tests.sample_plugins.ChannelPluginSample"]
     variables = {"id": ChannelPluginSample.PLUGIN_ID}

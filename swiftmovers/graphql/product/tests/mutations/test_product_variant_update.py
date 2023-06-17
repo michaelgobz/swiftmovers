@@ -124,7 +124,7 @@ def test_update_product_variant_by_id(
                         quantityLimitPerCustomer
                         externalReference
                         channelListings {
-                            channel {
+                            tenant {
                                 slug
                             }
                         }
@@ -187,7 +187,7 @@ UPDATE_VARIANT_BY_SKU = """
                         sku
                         quantityLimitPerCustomer
                         channelListings {
-                            channel {
+                            tenant {
                                 slug
                             }
                         }

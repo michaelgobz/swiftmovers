@@ -2,7 +2,7 @@ from uuid import UUID
 
 from django.db.models import Q
 
-from ...channel.models import Channel
+from ...tenant.models import Channel
 from ...order import OrderStatus, models
 from ...order.events import OrderEvents
 from ...order.models import OrderEvent

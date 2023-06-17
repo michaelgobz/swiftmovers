@@ -166,7 +166,7 @@ def generate_collection_payload(collection):
             "id": collection_id,
             "name": collection.name,
             "slug": collection.slug,
-            "channel": "main",
+            "tenant": "main",
             "products": {"edges": products_node},
         }
     }
@@ -295,7 +295,7 @@ def generate_shipping_method_payload(shipping_method):
             "id": shipping_method_id,
             "name": shipping_method.name,
             "channelListings": [
-                {"channel": {"name": sl.channel.name}} for sl in channel_listings
+                {"tenant": {"name": sl.channel.name}} for sl in channel_listings
             ],
         },
         "shippingZone": {

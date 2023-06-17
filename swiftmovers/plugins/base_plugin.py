@@ -40,7 +40,7 @@ if TYPE_CHECKING:
     from ..account.models import Address, Group, User
     from ..app.models import App
     from ..attribute.models import Attribute, AttributeValue
-    from ..channel.models import Channel
+    from ..tenant.models import Channel
     from ..checkout.fetch import CheckoutInfo, CheckoutLineInfo
     from ..checkout.models import Checkout
     from ..core.middleware import Requestor
@@ -186,7 +186,7 @@ class BasePlugin:
     # updated.
     app_updated: Callable[["App", None], None]
 
-    # Trigger when channel status is changed.
+    # Trigger when tenant status is changed.
     #
     # Overwrite this method if you need to trigger specific logic after an app
     # status is changed.
@@ -349,27 +349,27 @@ class BasePlugin:
     # updated.
     category_updated: Callable[["Category", None], None]
 
-    # Trigger when channel is created.
+    # Trigger when tenant is created.
     #
-    # Overwrite this method if you need to trigger specific logic after a channel is
+    # Overwrite this method if you need to trigger specific logic after a tenant is
     # created.
     channel_created: Callable[["Channel", None], None]
 
-    # Trigger when channel is deleted.
+    # Trigger when tenant is deleted.
     #
-    # Overwrite this method if you need to trigger specific logic after a channel is
+    # Overwrite this method if you need to trigger specific logic after a tenant is
     # deleted.
     channel_deleted: Callable[["Channel", None], None]
 
-    # Trigger when channel is updated.
+    # Trigger when tenant is updated.
     #
-    # Overwrite this method if you need to trigger specific logic after a channel is
+    # Overwrite this method if you need to trigger specific logic after a tenant is
     # updated.
     channel_updated: Callable[["Channel", None], None]
 
-    # Trigger when channel status is changed.
+    # Trigger when tenant status is changed.
     #
-    # Overwrite this method if you need to trigger specific logic after a channel
+    # Overwrite this method if you need to trigger specific logic after a tenant
     # status is changed.
     channel_status_changed: Callable[["Channel", None], None]
 

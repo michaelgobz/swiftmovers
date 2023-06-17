@@ -4,8 +4,8 @@ import graphene
 from django.db.models import Q
 
 from .....attribute.models import Attribute
-from .....channel.models import Channel
-from .....channel.utils import DEPRECATION_WARNING_MESSAGE
+from .....tenant.models import Channel
+from .....tenant.utils import DEPRECATION_WARNING_MESSAGE
 from .....product import ProductTypeKind
 from .....product.models import Category, Product, ProductType
 from ....tests.utils import get_graphql_content

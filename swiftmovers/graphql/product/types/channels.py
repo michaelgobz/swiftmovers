@@ -111,7 +111,7 @@ class ProductChannelListing(ModelObjectType[models.ProductChannelListing]):
     )
 
     class Meta:
-        description = "Represents product channel listing."
+        description = "Represents product tenant listing."
         model = models.ProductChannelListing
         interfaces = [graphene.relay.Node]
 
@@ -325,16 +325,16 @@ class ProductChannelListing(ModelObjectType[models.ProductChannelListing]):
 class PreorderThreshold(BaseObjectType):
     quantity = graphene.Int(
         required=False,
-        description="Preorder threshold for product variant in this channel.",
+        description="Preorder threshold for product variant in this tenant.",
     )
     sold_units = graphene.Int(
         required=True,
-        description="Number of sold product variant in this channel.",
+        description="Number of sold product variant in this tenant.",
     )
 
     class Meta:
         doc_category = DOC_CATEGORY_PRODUCTS
-        description = "Represents preorder variant data for channel."
+        description = "Represents preorder variant data for tenant."
 
 
 class ProductVariantChannelListing(
@@ -356,7 +356,7 @@ class ProductVariantChannelListing(
     )
 
     class Meta:
-        description = "Represents product varaint channel listing."
+        description = "Represents product varaint tenant listing."
         model = models.ProductVariantChannelListing
         interfaces = [graphene.relay.Node]
 
@@ -393,7 +393,7 @@ class CollectionChannelListing(ModelObjectType[models.CollectionChannelListing])
     channel = graphene.Field(Channel, required=True)
 
     class Meta:
-        description = "Represents collection channel listing."
+        description = "Represents collection tenant listing."
         model = models.CollectionChannelListing
         interfaces = [graphene.relay.Node]
 

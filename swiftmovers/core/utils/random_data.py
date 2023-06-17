@@ -40,7 +40,7 @@ from ...attribute.models import (
     AttributeValue,
     AttributeVariant,
 )
-from ...channel.models import Channel
+from ...tenant.models import Channel
 from ...checkout import AddressType
 from ...checkout.fetch import fetch_checkout_info
 from ...checkout.models import Checkout
@@ -210,12 +210,12 @@ def create_categories(categories_data, placeholder_dir):
 
 def create_collection_channel_listings(collection_channel_listings_data):
     channel_USD = Channel.objects.get(slug=settings.DEFAULT_CHANNEL_SLUG)
-    channel_PLN = Channel.objects.get(slug="channel-pln")
+    channel_PLN = Channel.objects.get(slug="tenant-pln")
     for collection_channel_listing in collection_channel_listings_data:
         pk = collection_channel_listing["pk"]
         defaults = dict(collection_channel_listing["fields"])
         defaults["collection_id"] = defaults.pop("collection")
-        channel = defaults.pop("channel")
+        channel = defaults.pop("tenant")
         defaults["channel_id"] = channel_USD.pk if channel == 1 else channel_PLN.pk
         CollectionChannelListing.objects.update_or_create(pk=pk, defaults=defaults)
 
@@ -280,12 +280,12 @@ def create_products(products_data, placeholder_dir, create_images):
 
 def create_product_channel_listings(product_channel_listings_data):
     channel_USD = Channel.objects.get(slug=settings.DEFAULT_CHANNEL_SLUG)
-    channel_PLN = Channel.objects.get(slug="channel-pln")
+    channel_PLN = Channel.objects.get(slug="tenant-pln")
     for product_channel_listing in product_channel_listings_data:
         pk = product_channel_listing["pk"]
         defaults = dict(product_channel_listing["fields"])
         defaults["product_id"] = defaults.pop("product")
-        channel = defaults.pop("channel")
+        channel = defaults.pop("tenant")
         defaults["channel_id"] = channel_USD.pk if channel == 1 else channel_PLN.pk
         ProductChannelListing.objects.update_or_create(pk=pk, defaults=defaults)
 
@@ -327,13 +327,13 @@ def create_product_variants(variants_data, create_images):
 
 def create_product_variant_channel_listings(product_variant_channel_listings_data):
     channel_USD = Channel.objects.get(slug=settings.DEFAULT_CHANNEL_SLUG)
-    channel_PLN = Channel.objects.get(slug="channel-pln")
+    channel_PLN = Channel.objects.get(slug="tenant-pln")
     for variant_channel_listing in product_variant_channel_listings_data:
         pk = variant_channel_listing["pk"]
         defaults = dict(variant_channel_listing["fields"])
 
         defaults["variant_id"] = defaults.pop("variant")
-        channel = defaults.pop("channel")
+        channel = defaults.pop("tenant")
         defaults["channel_id"] = channel_USD.pk if channel == 1 else channel_PLN.pk
         ProductVariantChannelListing.objects.update_or_create(pk=pk, defaults=defaults)
 
@@ -773,12 +773,12 @@ def create_fulfillments(order):
 
 def create_fake_order(discounts, max_order_lines=5, create_preorder_lines=False):
     channel = (
-        Channel.objects.filter(slug__in=[settings.DEFAULT_CHANNEL_SLUG, "channel-pln"])
+        Channel.objects.filter(slug__in=[settings.DEFAULT_CHANNEL_SLUG, "tenant-pln"])
         .order_by("?")
         .first()
     )
     if not channel:
-        raise ValueError("No channel found.")
+        raise ValueError("No tenant found.")
     customers = (
         User.objects.filter(is_superuser=False)
         .exclude(default_billing_address=None)
@@ -811,13 +811,13 @@ def create_fake_order(discounts, max_order_lines=5, create_preorder_lines=False)
         .first()
     )
     if not shipping_method_channel_listing:
-        raise Exception(f"No shipping method found for channel {channel.slug}")
+        raise Exception(f"No shipping method found for tenant {channel.slug}")
     shipping_method = shipping_method_channel_listing.shipping_method
     shipping_price = shipping_method_channel_listing.price
     shipping_price = TaxedMoney(net=shipping_price, gross=shipping_price)
     order_data.update(
         {
-            "channel": channel,
+            "tenant": channel,
             "shipping_method": shipping_method,
             "shipping_method_name": shipping_method.name,
             "shipping_price": shipping_price,
@@ -1009,7 +1009,7 @@ def create_channels():
     yield create_channel(
         channel_name="Channel-PLN",
         currency_code="PLN",
-        slug="channel-pln",
+        slug="tenant-pln",
         country="PL",
     )
 

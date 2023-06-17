@@ -27,7 +27,7 @@ from ...tests.utils import (
 )
 
 QUERY_CATEGORY = """
-    query ($id: ID, $slug: String, $channel: String){
+    query ($id: ID, $slug: String, $tenant: String){
         category(
             id: $id,
             slug: $slug,
@@ -48,7 +48,7 @@ QUERY_CATEGORY = """
                     }
                 }
             }
-            products(first: 10, channel: $channel) {
+            products(first: 10, tenant: $tenant) {
                 edges {
                     node {
                         id
@@ -64,7 +64,7 @@ def test_category_query_by_id(user_api_client, product, channel_USD):
     category = Category.objects.first()
     variables = {
         "id": graphene.Node.to_global_id("Category", category.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = user_api_client.post_graphql(QUERY_CATEGORY, variables=variables)
@@ -80,7 +80,7 @@ def test_category_query_invalid_id(user_api_client, product, channel_USD):
     category_id = "'"
     variables = {
         "id": category_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(QUERY_CATEGORY, variables)
     content = get_graphql_content_from_response(response)
@@ -95,7 +95,7 @@ def test_category_query_object_with_given_id_does_not_exist(
     category_id = graphene.Node.to_global_id("Category", -1)
     variables = {
         "id": category_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(QUERY_CATEGORY, variables)
     content = get_graphql_content(response)
@@ -109,7 +109,7 @@ def test_category_query_object_with_invalid_object_type(
     category_id = graphene.Node.to_global_id("Product", category.pk)
     variables = {
         "id": category_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(QUERY_CATEGORY, variables)
     content = get_graphql_content(response)
@@ -126,7 +126,7 @@ def test_category_query_doesnt_show_not_available_products(
 
     variables = {
         "id": graphene.Node.to_global_id("Category", category.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = user_api_client.post_graphql(QUERY_CATEGORY, variables=variables)
@@ -144,7 +144,7 @@ def test_category_query_description(user_api_client, product, channel_USD):
     category.save()
     variables = {
         "id": graphene.Node.to_global_id("Category", category.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     query = """
     query ($id: ID, $slug: String){
@@ -171,7 +171,7 @@ def test_category_query_without_description(user_api_client, product, channel_US
     category.save()
     variables = {
         "id": graphene.Node.to_global_id("Category", category.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     query = """
     query ($id: ID, $slug: String){
@@ -195,7 +195,7 @@ def test_category_query_without_description(user_api_client, product, channel_US
 
 def test_category_query_by_slug(user_api_client, product, channel_USD):
     category = Category.objects.first()
-    variables = {"slug": category.slug, "channel": channel_USD.slug}
+    variables = {"slug": category.slug, "tenant": channel_USD.slug}
     response = user_api_client.post_graphql(QUERY_CATEGORY, variables=variables)
     content = get_graphql_content(response)
     category_data = content["data"]["category"]
@@ -212,7 +212,7 @@ def test_category_query_error_when_id_and_slug_provided(
     variables = {
         "id": graphene.Node.to_global_id("Category", category.pk),
         "slug": category.slug,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(QUERY_CATEGORY, variables=variables)
     assert graphql_log_handler.messages == [
@@ -246,7 +246,7 @@ def test_query_category_product_only_visible_in_listings_as_customer(
 
     variables = {
         "id": graphene.Node.to_global_id("Category", category.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -269,7 +269,7 @@ def test_query_category_product_visible_in_listings_as_staff_without_manage_prod
 
     variables = {
         "id": graphene.Node.to_global_id("Category", category.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -316,7 +316,7 @@ def test_query_category_product_only_visible_in_listings_as_app_without_manage_p
 
     variables = {
         "id": graphene.Node.to_global_id("Category", category.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -1648,9 +1648,9 @@ def test_query_products_no_channel_shipping_zones(
     category = Category.objects.first()
     product = category.products.first()
     query = """
-    query CategoryProducts($id: ID, $channel: String, $address: AddressInput) {
+    query CategoryProducts($id: ID, $tenant: String, $address: AddressInput) {
         category(id: $id) {
-            products(first: 20, channel: $channel) {
+            products(first: 20, tenant: $tenant) {
                 edges {
                     node {
                         id
@@ -1665,7 +1665,7 @@ def test_query_products_no_channel_shipping_zones(
     staff_api_client.user.user_permissions.add(permission_manage_products)
     variables = {
         "id": graphene.Node.to_global_id("Category", category.id),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "address": {"country": "US"},
     }
     response = staff_api_client.post_graphql(query, variables)
@@ -1845,9 +1845,9 @@ def test_fetch_product_from_category_query(
     category = Category.objects.first()
     product = category.products.first()
     query = """
-    query CategoryProducts($id: ID, $channel: String, $address: AddressInput) {
+    query CategoryProducts($id: ID, $tenant: String, $address: AddressInput) {
         category(id: $id) {
-            products(first: 20, channel: $channel) {
+            products(first: 20, tenant: $tenant) {
                 edges {
                     node {
                         id
@@ -1907,7 +1907,7 @@ def test_fetch_product_from_category_query(
     staff_api_client.user.user_permissions.add(permission_manage_products)
     variables = {
         "id": graphene.Node.to_global_id("Category", category.id),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "address": {"country": "US"},
     }
     response = staff_api_client.post_graphql(query, variables)

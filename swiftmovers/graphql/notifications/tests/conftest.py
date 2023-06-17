@@ -7,12 +7,12 @@ def external_notification_trigger_query():
       mutation ExternalNotificationTrigger(
         $input: ExternalNotificationTriggerInput!
         $pluginId: String
-        $channel: String!
+        $tenant: String!
       ) {
           externalNotificationTrigger(
             input: $input,
             pluginId: $pluginId
-            channel: $channel
+            tenant: $tenant
           ) {
             errors {
               message

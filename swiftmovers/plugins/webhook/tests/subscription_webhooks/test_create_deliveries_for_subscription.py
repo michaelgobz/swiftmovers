@@ -5,7 +5,7 @@ import graphene
 import pytest
 from freezegun import freeze_time
 
-from .....channel.models import Channel
+from .....tenant.models import Channel
 from .....giftcard.models import GiftCard
 from .....graphql.webhook.subscription_query import SubscriptionQuery
 from .....menu.models import Menu, MenuItem
@@ -398,7 +398,7 @@ def test_channel_created(channel_USD, subscription_channel_created_webhook):
     deliveries = create_deliveries_for_subscriptions(event_type, channel_USD, webhooks)
 
     # then
-    expected_payload = json.dumps({"channel": {"id": channel_id}})
+    expected_payload = json.dumps({"tenant": {"id": channel_id}})
     assert deliveries[0].payload.payload == expected_payload
     assert len(deliveries) == len(webhooks)
     assert deliveries[0].webhook == webhooks[0]
@@ -414,7 +414,7 @@ def test_channel_updated(channel_USD, subscription_channel_updated_webhook):
     deliveries = create_deliveries_for_subscriptions(event_type, channel_USD, webhooks)
 
     # then
-    expected_payload = json.dumps({"channel": {"id": channel_id}})
+    expected_payload = json.dumps({"tenant": {"id": channel_id}})
     assert deliveries[0].payload.payload == expected_payload
     assert len(deliveries) == len(webhooks)
     assert deliveries[0].webhook == webhooks[0]
@@ -437,7 +437,7 @@ def test_channel_deleted(channel_USD, subscription_channel_deleted_webhook):
     )
 
     # then
-    expected_payload = json.dumps({"channel": {"id": channel_id}})
+    expected_payload = json.dumps({"tenant": {"id": channel_id}})
     assert channel_instances[0].id is not None
     assert deliveries[0].payload.payload == expected_payload
     assert len(deliveries) == len(webhooks)
@@ -461,7 +461,7 @@ def test_channel_status_changed(
     deliveries = create_deliveries_for_subscriptions(event_type, channel_USD, webhooks)
 
     # then
-    expected_payload = json.dumps({"channel": {"id": channel_id, "isActive": status}})
+    expected_payload = json.dumps({"tenant": {"id": channel_id, "isActive": status}})
     assert deliveries[0].payload.payload == expected_payload
     assert len(deliveries) == len(webhooks)
     assert deliveries[0].webhook == webhooks[0]
@@ -547,7 +547,7 @@ def test_gift_card_sent(gift_card, channel_USD, subscription_gift_card_sent_webh
 
     # then
     expected_payload = json.loads(generate_gift_card_payload(gift_card, gift_card_id))
-    expected_payload["channel"] = channel_USD.slug
+    expected_payload["tenant"] = channel_USD.slug
     expected_payload["sentToEmail"] = "client@example.com"
 
     assert gift_card_instances[0].id is not None

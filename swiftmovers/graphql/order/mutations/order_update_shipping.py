@@ -147,7 +147,7 @@ class OrderUpdateShipping(EditableOrderValidationMixin, BaseMutation):
             raise ValidationError(
                 {
                     "shipping_method": ValidationError(
-                        "Shipping method not available in the given channel.",
+                        "Shipping method not available in the given tenant.",
                         code=OrderErrorCode.SHIPPING_METHOD_NOT_APPLICABLE.value,
                     )
                 }

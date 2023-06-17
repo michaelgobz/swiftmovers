@@ -11,7 +11,7 @@ from prices import TaxedMoney
 
 from ...account import CustomerEvents
 from ...account.models import CustomerEvent
-from ...channel import MarkAsPaidStrategy
+from ...tenant import MarkAsPaidStrategy
 from ...core.exceptions import InsufficientStock
 from ...core.notify_events import NotifyEventType
 from ...core.taxes import zero_money, zero_taxed_money

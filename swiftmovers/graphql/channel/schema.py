@@ -22,14 +22,14 @@ class ChannelQueries(graphene.ObjectType):
     channel = BaseField(
         Channel,
         id=graphene.Argument(
-            graphene.ID, description="ID of the channel.", required=False
+            graphene.ID, description="ID of the tenant.", required=False
         ),
         slug=graphene.Argument(
             graphene.String,
-            description="Slug of the channel." + ADDED_IN_36,
+            description="Slug of the tenant." + ADDED_IN_36,
             required=False,
         ),
-        description="Look up a channel by ID or slug.",
+        description="Look up a tenant by ID or slug.",
         doc_category=DOC_CATEGORY_CHANNELS,
     )
     channels = PermissionsField(

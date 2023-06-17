@@ -132,8 +132,8 @@ def validate_checkout(
     if not checkout_info.channel.is_active:
         raise ValidationError(
             {
-                "channel": ValidationError(
-                    "Cannot complete checkout with inactive channel.",
+                "tenant": ValidationError(
+                    "Cannot complete checkout with inactive tenant.",
                     code=OrderCreateFromCheckoutErrorCode.CHANNEL_INACTIVE.value,
                 )
             }

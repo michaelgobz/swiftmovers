@@ -45,7 +45,7 @@ from .types import (
 class CheckoutQueries(graphene.ObjectType):
     checkout = BaseField(
         Checkout,
-        description="Look up a checkout by token and slug of channel.",
+        description="Look up a checkout by token and slug of tenant.",
         id=graphene.Argument(
             graphene.ID, description="The checkout's ID." + ADDED_IN_34
         ),
@@ -65,7 +65,7 @@ class CheckoutQueries(graphene.ObjectType):
             description="Filtering options for checkouts." + ADDED_IN_31
         ),
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         permissions=[
             CheckoutPermissions.MANAGE_CHECKOUTS,

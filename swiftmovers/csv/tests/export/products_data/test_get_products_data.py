@@ -5,7 +5,7 @@ from measurement.measures import Weight
 
 from .....attribute.models import Attribute, AttributeValue
 from .....attribute.utils import associate_attribute_values_to_instance
-from .....channel.models import Channel
+from .....tenant.models import Channel
 from .....product.models import Product, ProductVariant, VariantMedia
 from .....warehouse.models import Warehouse
 from ....utils import ProductExportFields

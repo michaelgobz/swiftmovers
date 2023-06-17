@@ -6,7 +6,7 @@ interactions:
       24, "language": "en-US", "javaEnabled": false, "screenHeight": 1080, "screenWidth":
       1920, "userAgent": ["Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML,
       like Gecko)", "Chrome/89.0.4389.90 Safari/537.36"], "timeZoneOffset": -120},
-      "channel": "web", "shopperEmail": "", "shopperLocale": "en_US", "shopperReference":
+      "tenant": "web", "shopperEmail": "", "shopperLocale": "en_US", "shopperReference":
       "", "countryCode": "US", "lineItems": [{"quantity": 2, "amountExcludingTax":
       "1000", "taxPercentage": 0, "description": "Test product, ", "id": "123", "taxAmount":
       "0", "amountIncludingTax": "1000"}, {"quantity": 1, "amountExcludingTax": "1000",

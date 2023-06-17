@@ -34,7 +34,7 @@ class MenuQueries(graphene.ObjectType):
     menu = graphene.Field(
         Menu,
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         id=graphene.Argument(graphene.ID, description="ID of the menu."),
         name=graphene.Argument(graphene.String, description="The menu's name."),
@@ -44,7 +44,7 @@ class MenuQueries(graphene.ObjectType):
     menus = FilterConnectionField(
         MenuCountableConnection,
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         sort_by=MenuSortingInput(description="Sort menus."),
         filter=MenuFilterInput(
@@ -61,14 +61,14 @@ class MenuQueries(graphene.ObjectType):
             graphene.ID, description="ID of the menu item.", required=True
         ),
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description="Look up a menu item by ID.",
     )
     menu_items = FilterConnectionField(
         MenuItemCountableConnection,
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         sort_by=MenuItemSortingInput(description="Sort menus items."),
         filter=MenuItemFilterInput(description="Filtering options for menu items."),

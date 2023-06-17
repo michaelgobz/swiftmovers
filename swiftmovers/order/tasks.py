@@ -5,7 +5,7 @@ from django.db.models import Exists, F, Func, OuterRef, Subquery, Value
 from django.utils import timezone
 
 from ..celeryconf import app
-from ..channel.models import Channel
+from ..tenant.models import Channel
 from ..core.tracing import traced_atomic_transaction
 from ..core.utils.events import call_event
 from ..discount.models import Voucher, VoucherCustomer
@@ -90,7 +90,7 @@ def _expire_orders(manager, now):
     ) + Func(Value("minute"), now - OuterRef("created_at"), function="DATE_PART")
 
     channels = Channel.objects.filter(
-        id=OuterRef("channel"),
+        id=OuterRef("tenant"),
         expire_orders_after__isnull=False,
         expire_orders_after__gt=0,
         expire_orders_after__lte=time_diff_func_in_minutes,

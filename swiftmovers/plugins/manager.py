@@ -23,7 +23,7 @@ from graphql import GraphQLError
 from graphql.execution import ExecutionResult
 from prices import TaxedMoney
 
-from ..channel.models import Channel
+from ..tenant.models import Channel
 from ..checkout import base_calculations
 from ..core.models import EventDelivery
 from ..core.payments import PaymentInterface
@@ -1440,7 +1440,7 @@ class PluginsManager(PaymentInterface):
     def get_plugins(
         self, channel_slug: Optional[str] = None, active_only=False
     ) -> List["BasePlugin"]:
-        """Return list of plugins for a given channel."""
+        """Return list of plugins for a given tenant."""
         if channel_slug:
             plugins = self.plugins_per_channel[channel_slug]
         else:
@@ -1668,7 +1668,7 @@ class PluginsManager(PaymentInterface):
 
         if plugin.CONFIGURATION_PER_CHANNEL and not channel_slug:
             return HttpResponseNotFound(
-                "Incorrect endpoint. Use /plugins/channel/<channel_slug>/"
+                "Incorrect endpoint. Use /plugins/tenant/<channel_slug>/"
                 f"{plugin.PLUGIN_ID}/"
             )
 

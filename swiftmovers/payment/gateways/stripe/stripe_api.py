@@ -191,7 +191,7 @@ def update_payment_method(
             )
         except StripeError as error:
             logger.warning(
-                "Failed to assign channel slug to payment method",
+                "Failed to assign tenant slug to payment method",
                 extra=_extra_log_data(error),
             )
 

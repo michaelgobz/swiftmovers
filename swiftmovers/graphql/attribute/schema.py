@@ -37,7 +37,7 @@ class AttributeQueries(graphene.ObjectType):
         ),
         sort_by=AttributeSortingInput(description="Sorting options for attributes."),
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         doc_category=DOC_CATEGORY_ATTRIBUTES,
     )

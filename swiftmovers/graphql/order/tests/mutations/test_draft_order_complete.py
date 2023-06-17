@@ -296,7 +296,7 @@ def test_draft_order_complete_with_inactive_channel(
     content = get_graphql_content(response)
     data = content["data"]["draftOrderComplete"]
     assert data["errors"][0]["code"] == OrderErrorCode.CHANNEL_INACTIVE.name
-    assert data["errors"][0]["field"] == "channel"
+    assert data["errors"][0]["field"] == "tenant"
 
 
 def test_draft_order_complete_with_unavailable_variant(

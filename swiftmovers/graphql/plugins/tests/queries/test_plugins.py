@@ -29,7 +29,7 @@ PLUGINS_QUERY = """
             }
             channelConfigurations{
               active
-              channel{
+              tenant{
                 id
                 slug
               }
@@ -396,13 +396,13 @@ def test_cannot_retrieve_hidden_plugins(
     }
     assert plugin_ids == {
         "mirumee.x.plugin.active",
-        "channel.plugin.sample",
+        "tenant.plugin.sample",
         "plugin.sample",
     }
 
     # Hide global plugin
     with mock.patch.object(PluginSample, "HIDDEN", new=True):
-        # Hide per-channel plugin
+        # Hide per-tenant plugin
         with mock.patch.object(ChannelPluginSample, "HIDDEN", new=True):
             response = staff_api_client_can_manage_plugins.post_graphql(query)
 

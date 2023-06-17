@@ -23,11 +23,11 @@ from ....core.enums import ThumbnailFormatEnum
 from ....tests.utils import get_graphql_content, get_graphql_content_from_response
 
 QUERY_PRODUCT = """
-    query ($id: ID, $slug: String, $channel:String){
+    query ($id: ID, $slug: String, $tenant:String){
         product(
             id: $id,
             slug: $slug,
-            channel: $channel
+            tenant: $tenant
         ) {
             id
             name
@@ -49,7 +49,7 @@ def test_product_query_by_id_available_as_staff_user(
 ):
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = staff_api_client.post_graphql(
@@ -68,11 +68,11 @@ def test_product_query_description(
     staff_api_client, permission_manage_products, product, channel_USD
 ):
     query = """
-        query ($id: ID, $slug: String, $channel:String){
+        query ($id: ID, $slug: String, $tenant:String){
             product(
                 id: $id,
                 slug: $slug,
-                channel: $channel
+                tenant: $tenant
             ) {
                 id
                 name
@@ -86,7 +86,7 @@ def test_product_query_description(
     product.save()
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = staff_api_client.post_graphql(
@@ -106,11 +106,11 @@ def test_product_query_with_no_description(
     staff_api_client, permission_manage_products, product, channel_USD
 ):
     query = """
-        query ($id: ID, $slug: String, $channel:String){
+        query ($id: ID, $slug: String, $tenant:String){
             product(
                 id: $id,
                 slug: $slug,
-                channel: $channel
+                tenant: $tenant
             ) {
                 id
                 name
@@ -121,7 +121,7 @@ def test_product_query_with_no_description(
         """
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = staff_api_client.post_graphql(
@@ -142,7 +142,7 @@ def test_product_query_by_id_not_available_as_staff_user(
 ):
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     ProductChannelListing.objects.filter(product=product, channel=channel_USD).update(
         is_published=False
@@ -165,7 +165,7 @@ def test_product_query_by_id_not_existing_in_channel_as_staff_user(
 ):
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     ProductChannelListing.objects.filter(product=product, channel=channel_USD).delete()
 
@@ -205,7 +205,7 @@ def test_product_query_by_id_available_as_app(
 ):
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = app_api_client.post_graphql(
@@ -226,7 +226,7 @@ def test_product_query_by_invalid_id(
 ):
     variables = {
         "id": id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     ProductChannelListing.objects.filter(product=product, channel=channel_USD).delete()
 
@@ -242,8 +242,8 @@ def test_product_query_by_invalid_id(
 
 
 QUERY_PRODUCT_BY_ID = """
-    query ($id: ID, $channel: String){
-        product(id: $id, channel: $channel) {
+    query ($id: ID, $tenant: String){
+        product(id: $id, tenant: $tenant) {
             id
             variants {
                 id
@@ -259,7 +259,7 @@ def test_product_query_by_id_as_user(
     query = QUERY_PRODUCT_BY_ID
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = user_api_client.post_graphql(
@@ -285,7 +285,7 @@ def test_product_query_invalid_id(user_api_client, product, channel_USD):
     product_id = "'"
     variables = {
         "id": product_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(QUERY_PRODUCT_BY_ID, variables)
     content = get_graphql_content_from_response(response)
@@ -300,7 +300,7 @@ def test_product_query_object_with_given_id_does_not_exist(
     product_id = graphene.Node.to_global_id("Product", -1)
     variables = {
         "id": product_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(QUERY_PRODUCT_BY_ID, variables)
     content = get_graphql_content(response)
@@ -311,7 +311,7 @@ def test_product_query_with_invalid_object_type(user_api_client, product, channe
     product_id = graphene.Node.to_global_id("Collection", product.pk)
     variables = {
         "id": product_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(QUERY_PRODUCT_BY_ID, variables)
     content = get_graphql_content(response)
@@ -323,7 +323,7 @@ def test_product_query_by_id_not_available_as_app(
 ):
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     ProductChannelListing.objects.filter(product=product, channel=channel_USD).update(
         is_published=False
@@ -346,7 +346,7 @@ def test_product_query_by_id_not_existing_in_channel_as_app(
 ):
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     ProductChannelListing.objects.filter(product=product, channel=channel_USD).delete()
 
@@ -389,7 +389,7 @@ def test_product_variants_without_sku_query_by_staff(
 
     variables = {
         "id": product_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = staff_api_client.post_graphql(
@@ -415,7 +415,7 @@ def test_product_only_with_variants_without_sku_query_by_customer(
 
     variables = {
         "id": product_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = user_api_client.post_graphql(
@@ -441,7 +441,7 @@ def test_product_only_with_variants_without_sku_query_by_anonymous(
 
     variables = {
         "id": product_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = api_client.post_graphql(
@@ -460,8 +460,8 @@ def test_product_only_with_variants_without_sku_query_by_anonymous(
 
 
 QUERY_PRODUCT_BY_ID_WITH_MEDIA = """
-    query ($id: ID, $channel: String, $size: Int, $format: ThumbnailFormatEnum){
-        product(id: $id, channel: $channel) {
+    query ($id: ID, $tenant: String, $size: Int, $format: ThumbnailFormatEnum){
+        product(id: $id, tenant: $tenant) {
             media {
                 id
             }
@@ -492,7 +492,7 @@ def test_query_product_thumbnail_with_size_and_format_proxy_url_returned(
         "id": id,
         "size": 120,
         "format": format,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -519,7 +519,7 @@ def test_query_product_thumbnail_with_size_and_proxy_url_returned(
     variables = {
         "id": id,
         "size": 120,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -553,7 +553,7 @@ def test_query_product_thumbnail_with_size_and_thumbnail_url_returned(
     variables = {
         "id": id,
         "size": 120,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -578,7 +578,7 @@ def test_query_product_thumbnail_only_format_provided_default_size_is_used(
     variables = {
         "id": id,
         "format": format,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -604,7 +604,7 @@ def test_query_product_thumbnail_no_product_media(
     id = graphene.Node.to_global_id("Product", product.pk)
     variables = {
         "id": id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -617,10 +617,10 @@ def test_query_product_thumbnail_no_product_media(
 
 
 QUERY_COLLECTION_FROM_PRODUCT = """
-    query ($id: ID, $channel:String){
+    query ($id: ID, $tenant:String){
         product(
             id: $id,
-            channel: $channel
+            tenant: $tenant
         ) {
             collections {
                 name
@@ -689,7 +689,7 @@ def test_get_collections_from_product_as_customer(
     product = product_with_collections
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -714,7 +714,7 @@ def test_get_collections_from_product_as_anonymous(
     product = product_with_collections
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -737,7 +737,7 @@ def test_product_query_by_id_available_as_customer(
 ):
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -755,7 +755,7 @@ def test_product_query_by_id_not_available_as_customer(
 ):
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     ProductChannelListing.objects.filter(product=product, channel=channel_USD).update(
         is_published=False
@@ -773,7 +773,7 @@ def test_product_unpublished_query_by_id_as_app(
     # given
     variables = {
         "id": graphene.Node.to_global_id("Product", unavailable_product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -804,7 +804,7 @@ def test_product_query_by_id_weight_returned_in_default_unit(
 
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -831,7 +831,7 @@ def test_product_query_by_id_weight_is_rounded(
 
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -849,7 +849,7 @@ def test_product_query_by_id_weight_is_rounded(
 def test_product_query_by_slug(user_api_client, product, channel_USD):
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     ProductChannelListing.objects.filter(product=product, channel=channel_USD).update(
         is_published=False
@@ -866,7 +866,7 @@ def test_product_query_by_id_not_existing_in_channel_as_customer(
 ):
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     ProductChannelListing.objects.filter(product=product, channel=channel_USD).delete()
 
@@ -881,7 +881,7 @@ def test_product_query_by_slug_available_as_staff_user(
 ):
     variables = {
         "slug": product.slug,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = staff_api_client.post_graphql(
@@ -901,7 +901,7 @@ def test_product_query_by_slug_not_available_as_staff_user(
 ):
     variables = {
         "slug": product.slug,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     ProductChannelListing.objects.filter(product=product, channel=channel_USD).update(
         is_published=False
@@ -924,7 +924,7 @@ def test_product_query_by_slug_not_existing_in_channel_as_staff_user(
 ):
     variables = {
         "slug": product.slug,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     ProductChannelListing.objects.filter(product=product, channel=channel_USD).delete()
 
@@ -964,7 +964,7 @@ def test_product_query_by_slug_available_as_app(
 ):
     variables = {
         "slug": product.slug,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = app_api_client.post_graphql(
@@ -984,7 +984,7 @@ def test_product_query_by_slug_not_available_as_app(
 ):
     variables = {
         "slug": product.slug,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     ProductChannelListing.objects.filter(product=product, channel=channel_USD).update(
         is_published=False
@@ -1007,7 +1007,7 @@ def test_product_query_by_slug_not_existing_in_channel_as_app(
 ):
     variables = {
         "slug": product.slug,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     ProductChannelListing.objects.filter(product=product, channel=channel_USD).delete()
 
@@ -1047,7 +1047,7 @@ def test_product_query_by_slug_available_as_customer(
 ):
     variables = {
         "slug": product.slug,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = user_api_client.post_graphql(QUERY_PRODUCT, variables=variables)
@@ -1062,7 +1062,7 @@ def test_product_query_by_slug_not_available_as_customer(
 ):
     variables = {
         "slug": product.slug,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     ProductChannelListing.objects.filter(product=product, channel=channel_USD).update(
         is_published=False
@@ -1083,7 +1083,7 @@ def test_product_query_is_available_for_purchase_true(
 
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -1109,7 +1109,7 @@ def test_product_query_is_available_for_purchase_false(
 
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -1135,7 +1135,7 @@ def test_product_query_is_available_for_purchase_false_no_available_for_purchase
 
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -1163,7 +1163,7 @@ def test_product_query_unpublished_products_by_slug(
     )
     variables = {
         "slug": product.slug,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -1185,7 +1185,7 @@ def test_product_query_unpublished_products_by_slug_and_anonymous_user(
     )
     variables = {
         "slug": product.slug,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -1202,7 +1202,7 @@ def test_product_query_by_slug_not_existing_in_channel_as_customer(
 ):
     variables = {
         "slug": product.slug,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     ProductChannelListing.objects.filter(product=product, channel=channel_USD).delete()
 
@@ -1276,8 +1276,8 @@ def test_product_query_error_when_no_param(
 
 
 QUERY_PRODUCT_IS_AVAILABLE = """
-    query Product($id: ID, $channel: String, $address: AddressInput) {
-        product(id: $id, channel: $channel) {
+    query Product($id: ID, $tenant: String, $address: AddressInput) {
+        product(id: $id, tenant: $tenant) {
             isAvailableNoAddress: isAvailable
             isAvailableAddress: isAvailable(address: $address)
         }
@@ -1293,7 +1293,7 @@ def test_query_product_is_available(
     product = variant.product
     variables = {
         "id": graphene.Node.to_global_id("Product", product.id),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "address": {"country": "PL"},
     }
 
@@ -1319,7 +1319,7 @@ def test_query_product_is_available_with_one_variant(
 
     variables = {
         "id": graphene.Node.to_global_id("Product", product.id),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "address": {"country": "PL"},
     }
 
@@ -1342,7 +1342,7 @@ def test_query_product_is_available_no_shipping_zones(
     product = variant.product
     variables = {
         "id": graphene.Node.to_global_id("Product", product.id),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "address": {"country": "PL"},
     }
 
@@ -1367,15 +1367,15 @@ def test_product_restricted_fields_permissions(
     the 'manage_products' permission.
     """
     query = """
-    query Product($id: ID!, $channel: String) {
-        product(id: $id, channel: $channel) {
+    query Product($id: ID!, $tenant: String) {
+        product(id: $id, tenant: $tenant) {
             privateMetadata { __typename}
         }
     }
     """
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     permissions = [permission_manage_orders, permission_manage_products]
     response = staff_api_client.post_graphql(query, variables, permissions)
@@ -1384,8 +1384,8 @@ def test_product_restricted_fields_permissions(
 
 
 QUERY_GET_PRODUCT_VARIANTS_PRICING = """
-    query getProductVariants($id: ID!, $channel: String, $address: AddressInput) {
-        product(id: $id, channel: $channel) {
+    query getProductVariants($id: ID!, $tenant: String, $address: AddressInput) {
+        product(id: $id, tenant: $tenant) {
             variants {
                 id
                 pricingNoAddress: pricing {
@@ -1428,7 +1428,7 @@ def test_product_variant_price(
     product_id = graphene.Node.to_global_id("Product", variant.product.id)
     variables = {
         "id": product_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "address": {"country": "US"},
     }
     response = user_api_client.post_graphql(
@@ -1451,7 +1451,7 @@ def test_product_variant_without_price_as_user(
     variant_id = graphene.Node.to_global_id("ProductVariant", variant.id)
     variables = {
         "id": product_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "address": {"country": "US"},
     }
 
@@ -1479,7 +1479,7 @@ def test_product_variant_without_price_as_staff_without_permission(
     variant_id = graphene.Node.to_global_id("ProductVariant", variant.id)
     variables = {
         "id": product_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "address": {"country": "US"},
     }
     response = staff_api_client.post_graphql(
@@ -1505,7 +1505,7 @@ def test_product_variant_without_price_as_staff_with_permission(
     variant_id = graphene.Node.to_global_id("ProductVariant", variant.id)
     variables = {
         "id": product_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "address": {"country": "US"},
     }
     response = staff_api_client.post_graphql(
@@ -1586,8 +1586,8 @@ def test_get_product_with_sorted_attribute_values(
 
 
 QUERY_PRODUCT_IMAGE_BY_ID = """
-    query productImageById($imageId: ID!, $productId: ID!, $channel: String) {
-        product(id: $productId, channel: $channel) {
+    query productImageById($imageId: ID!, $productId: ID!, $tenant: String) {
+        product(id: $productId, tenant: $tenant) {
             imageById(id: $imageId) {
                 id
                 url
@@ -1603,7 +1603,7 @@ def test_query_product_image_by_id(user_api_client, product_with_image, channel_
     variables = {
         "productId": graphene.Node.to_global_id("Product", product_with_image.pk),
         "imageId": graphene.Node.to_global_id("ProductImage", media.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = user_api_client.post_graphql(query, variables)
@@ -1620,7 +1620,7 @@ def test_query_product_image_by_id_missing_id(
     variables = {
         "productId": graphene.Node.to_global_id("Product", product_with_image.pk),
         "imageId": graphene.Node.to_global_id("ProductMedia", -1),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = user_api_client.post_graphql(query, variables)
@@ -1636,7 +1636,7 @@ def test_query_product_image_by_id_not_media_id(
     variables = {
         "productId": graphene.Node.to_global_id("Product", product_with_image.pk),
         "imageId": graphene.Node.to_global_id("Product", -1),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = user_api_client.post_graphql(query, variables)
@@ -1653,7 +1653,7 @@ def test_query_product_image_by_invalid_id(
     variables = {
         "productId": graphene.Node.to_global_id("Product", product_with_image.pk),
         "imageId": id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = user_api_client.post_graphql(query, variables)
@@ -1693,11 +1693,11 @@ QUERY_PRODUCT_MEDIA_BY_ID = """
     query productMediaById(
         $mediaId: ID!,
         $productId: ID!,
-        $channel: String,
+        $tenant: String,
         $size: Int,
         $format: ThumbnailFormatEnum,
     ) {
-        product(id: $productId, channel: $channel) {
+        product(id: $productId, tenant: $tenant) {
             mediaById(id: $mediaId) {
                 id
                 url(size: $size, format: $format)
@@ -1713,7 +1713,7 @@ def test_query_product_media_by_id(user_api_client, product_with_image, channel_
     variables = {
         "productId": graphene.Node.to_global_id("Product", product_with_image.pk),
         "mediaId": graphene.Node.to_global_id("ProductMedia", media.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = user_api_client.post_graphql(query, variables)
@@ -1730,7 +1730,7 @@ def test_query_product_media_by_id_missing_id(
     variables = {
         "productId": graphene.Node.to_global_id("Product", product_with_image.pk),
         "mediaId": graphene.Node.to_global_id("ProductMedia", -1),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = user_api_client.post_graphql(query, variables)
@@ -1745,7 +1745,7 @@ def test_query_product_media_by_id_not_media_id(
     variables = {
         "productId": graphene.Node.to_global_id("Product", product_with_image.pk),
         "mediaId": graphene.Node.to_global_id("Product", -1),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = user_api_client.post_graphql(query, variables)
@@ -1761,7 +1761,7 @@ def test_query_product_media_by_invalid_id(
     variables = {
         "productId": graphene.Node.to_global_id("Product", product_with_image.pk),
         "mediaId": id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = user_api_client.post_graphql(query, variables)
@@ -1783,7 +1783,7 @@ def test_query_product_media_by_id_with_size_and_format_proxy_url_returned(
     variables = {
         "productId": graphene.Node.to_global_id("Product", product_with_image.pk),
         "mediaId": media_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "size": 120,
         "format": format,
     }
@@ -1810,7 +1810,7 @@ def test_query_product_media_by_id_with_size_proxy_url_returned(
     variables = {
         "productId": graphene.Node.to_global_id("Product", product_with_image.pk),
         "mediaId": media_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "size": 120,
     }
 
@@ -1840,7 +1840,7 @@ def test_query_product_media_by_id_with_size_thumbnail_url_returned(
     variables = {
         "productId": graphene.Node.to_global_id("Product", product_with_image.pk),
         "mediaId": media_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "size": 120,
     }
 
@@ -1866,7 +1866,7 @@ def test_query_product_media_by_id_zero_size_custom_format_provided(
     variables = {
         "productId": graphene.Node.to_global_id("Product", product_with_image.pk),
         "mediaId": media_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "format": format,
         "size": 0,
     }
@@ -1893,7 +1893,7 @@ def test_query_product_media_by_id_original_format(
     variables = {
         "productId": graphene.Node.to_global_id("Product", product_with_image.pk),
         "mediaId": media_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "format": format,
         "size": 128,
     }
@@ -1920,7 +1920,7 @@ def test_query_product_media_by_id_avif_format(
     variables = {
         "productId": graphene.Node.to_global_id("Product", product_with_image.pk),
         "mediaId": media_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "format": format,
         "size": 128,
     }
@@ -1946,7 +1946,7 @@ def test_query_product_media_by_id_zero_size_value_original_image_returned(
     variables = {
         "productId": graphene.Node.to_global_id("Product", product_with_image.pk),
         "mediaId": media_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "size": 0,
     }
 
@@ -1967,7 +1967,7 @@ def test_query_product_for_federation(api_client, product, channel_USD):
             {
                 "__typename": "Product",
                 "id": product_id,
-                "channel": channel_USD.slug,
+                "tenant": channel_USD.slug,
             },
         ],
     }
@@ -2031,8 +2031,8 @@ def test_query_product_media_for_federation(
 
 
 QUERY_PRODUCT_WITH_VARIANT = """
-    query Product($id: ID!, $channel: String, $variant_id: ID, $sku: String){
-        product(id: $id, channel: $channel){
+    query Product($id: ID!, $tenant: String, $variant_id: ID, $sku: String){
+        product(id: $id, tenant: $tenant){
            variant(id: $variant_id, sku: $sku){
             id
             sku
@@ -2064,7 +2064,7 @@ def test_product_variant_field_filtering(
             else None
         ),
         "sku": sku,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -2091,7 +2091,7 @@ def test_product_variant_field_filtering_null_response(
         "id": graphene.Node.to_global_id("Product", product.pk),
         "variant_id": variant_id,
         "sku": sku,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -2118,7 +2118,7 @@ def test_product_variant_field_filtering_argument_required_error(
         "id": graphene.Node.to_global_id("Product", product.pk),
         "variant_id": variant_id,
         "sku": sku,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -2147,7 +2147,7 @@ def test_product_variant_field_filtering_argument_cannot_be_combined_error(
         "id": graphene.Node.to_global_id("Product", product.pk),
         "variant_id": variant_id,
         "sku": sku,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -2163,8 +2163,8 @@ def test_product_variant_field_filtering_argument_cannot_be_combined_error(
 
 
 QUERY_PRODUCT_WITH_SORTED_MEDIA = """
-        query Product($id: ID!, $channel: String, $sort_by: MediaSortingInput){
-            product(id: $id, channel: $channel){
+        query Product($id: ID!, $tenant: String, $sort_by: MediaSortingInput){
+            product(id: $id, tenant: $tenant){
                 media(sortBy: $sort_by){
                     id
                     sortOrder
@@ -2183,7 +2183,7 @@ def test_query_product_media_sorting_asc(
     sort_by = {"field": "ID", "direction": "ASC"}
     variables = {
         "id": graphene.Node.to_global_id("Product", product_with_image_list.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "sort_by": sort_by,
     }
 
@@ -2208,7 +2208,7 @@ def test_query_product_media_sorting_desc(
     sort_by = {"field": "ID", "direction": "DESC"}
     variables = {
         "id": graphene.Node.to_global_id("Product", product_with_image_list.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "sort_by": sort_by,
     }
 
@@ -2233,7 +2233,7 @@ def test_query_product_media_sorting_default(
     sort_by = None
     variables = {
         "id": graphene.Node.to_global_id("Product", product_with_image_list.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "sort_by": sort_by,
     }
 
@@ -2260,7 +2260,7 @@ def test_query_product_media_sorting_default_and_one_sort_order_null(
         "id": graphene.Node.to_global_id(
             "Product", product_with_image_list_and_one_null_sort_order.pk
         ),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "sort_by": sort_by,
     }
 
@@ -2280,8 +2280,8 @@ def test_query_product_media_sorting_default_and_one_sort_order_null(
 
 
 QUERY_PRODUCT_WITH_ATTRIBUTE = """
-query Product($id: ID!, $channel: String, $slug: String!){
-        product(id: $id, channel: $channel){
+query Product($id: ID!, $tenant: String, $slug: String!){
+        product(id: $id, tenant: $tenant){
            attribute(slug: $slug){
             attribute{
                 id
@@ -2300,7 +2300,7 @@ def test_product_attribute_field_filtering(staff_api_client, product, channel_US
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
         "slug": slug,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -2325,7 +2325,7 @@ def test_product_attribute_field_filtering_not_found(
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
         "slug": slug,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -2340,8 +2340,8 @@ def test_product_attribute_field_filtering_not_found(
 
 
 QUERY_PRODUCTS_AVAILABILITY = """
-    query ($channel:String){
-        products(first: 10, channel: $channel) {
+    query ($tenant:String){
+        products(first: 10, tenant: $tenant) {
             totalCount
             edges {
                 node {
@@ -2402,7 +2402,7 @@ def test_fetch_all_products_with_availability_data(
 
     Allocation.objects.bulk_create(allocations)
 
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -2440,12 +2440,12 @@ def test_fetch_all_products_with_availability_data(
 
 
 QUERY_PRODUCT_BY_EXTERNAL_REFERENCE = """
-    query ($id: ID, $externalReference: String, $slug: String, $channel:String){
+    query ($id: ID, $externalReference: String, $slug: String, $tenant:String){
         product(
             id: $id,
             slug: $slug,
             externalReference: $externalReference,
-            channel: $channel
+            tenant: $tenant
         ) {
             id
             name
@@ -2463,7 +2463,7 @@ def test_product_query_by_external_reference(
     product.save(update_fields=["external_reference"])
     variables = {
         "externalReference": product.external_reference,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when

@@ -117,8 +117,8 @@ def test_mutation_without_error_type_class_raises_error():
 
 
 TEST_MUTATION = """
-    mutation testMutation($productId: ID!, $channel: String) {
-        test(productId: $productId, channel: $channel) {
+    mutation testMutation($productId: ID!, $tenant: String) {
+        test(productId: $productId, tenant: $tenant) {
             name
             errors {
                 field
@@ -131,7 +131,7 @@ TEST_MUTATION = """
 
 def test_resolve_id(product, schema_context, channel_USD):
     product_id = graphene.Node.to_global_id("Product", product.pk)
-    variables = {"productId": product_id, "channel": channel_USD.slug}
+    variables = {"productId": product_id, "tenant": channel_USD.slug}
     result = schema.execute(
         TEST_MUTATION, variables=variables, context_value=schema_context
     )
@@ -140,7 +140,7 @@ def test_resolve_id(product, schema_context, channel_USD):
 
 
 def test_user_error_nonexistent_id(schema_context, channel_USD):
-    variables = {"productId": "not-really", "channel": channel_USD.slug}
+    variables = {"productId": "not-really", "tenant": channel_USD.slug}
     result = schema.execute(
         TEST_MUTATION, variables=variables, context_value=schema_context
     )
@@ -152,8 +152,8 @@ def test_user_error_nonexistent_id(schema_context, channel_USD):
 
 
 TEST_ORDER_MUTATION = """
-    mutation TestOrderMutation($id: ID!, $channel: String) {
-        testOrderMutation(id: $id, channel: $channel) {
+    mutation TestOrderMutation($id: ID!, $tenant: String) {
+        testOrderMutation(id: $id, tenant: $tenant) {
             number
             errors {
                 field
@@ -168,7 +168,7 @@ def test_order_mutation_resolve_uuid_id(order, schema_context, channel_USD):
     """Ensure that order migrations can be perfromed with use of
     new order id (uuid type)."""
     order_id = graphene.Node.to_global_id("Order", order.pk)
-    variables = {"id": order_id, "channel": channel_USD.slug}
+    variables = {"id": order_id, "tenant": channel_USD.slug}
     result = schema.execute(
         TEST_ORDER_MUTATION, variables=variables, context_value=schema_context
     )
@@ -183,7 +183,7 @@ def test_order_mutation_for_old_int_id(order, schema_context, channel_USD):
     order.save(update_fields=["use_old_id"])
 
     order_id = graphene.Node.to_global_id("Order", order.number)
-    variables = {"id": order_id, "channel": channel_USD.slug}
+    variables = {"id": order_id, "tenant": channel_USD.slug}
     result = schema.execute(
         TEST_ORDER_MUTATION, variables=variables, context_value=schema_context
     )
@@ -194,8 +194,8 @@ def test_order_mutation_for_old_int_id(order, schema_context, channel_USD):
 def test_mutation_custom_errors_default_value(product, schema_context, channel_USD):
     product_id = graphene.Node.to_global_id("Product", product.pk)
     query = """
-        mutation testMutation($productId: ID!, $channel: String) {
-            testWithCustomErrors(productId: $productId, channel: $channel) {
+        mutation testMutation($productId: ID!, $tenant: String) {
+            testWithCustomErrors(productId: $productId, tenant: $tenant) {
                 name
                 errors {
                     field
@@ -208,7 +208,7 @@ def test_mutation_custom_errors_default_value(product, schema_context, channel_U
             }
         }
     """
-    variables = {"productId": product_id, "channel": channel_USD.slug}
+    variables = {"productId": product_id, "tenant": channel_USD.slug}
     result = schema.execute(query, variables=variables, context_value=schema_context)
     assert result.data["testWithCustomErrors"]["errors"] == []
     assert result.data["testWithCustomErrors"]["customErrors"] == []
@@ -221,7 +221,7 @@ def test_user_error_id_of_different_type(product, schema_context, channel_USD):
     variant = product.variants.first()
     variant_id = graphene.Node.to_global_id("ProductVariant", variant.pk)
 
-    variables = {"productId": variant_id, "channel": channel_USD.slug}
+    variables = {"productId": variant_id, "tenant": channel_USD.slug}
     result = schema.execute(
         TEST_MUTATION, variables=variables, context_value=schema_context
     )
@@ -255,7 +255,7 @@ def test_mutation_plugin_perform_mutation_handles_graphql_error(
     schema_context = request.getfixturevalue("schema_context")
 
     product_id = graphene.Node.to_global_id("Product", product.pk)
-    variables = {"productId": product_id, "channel": channel_USD.slug}
+    variables = {"productId": product_id, "tenant": channel_USD.slug}
 
     with mock.patch.object(
         PluginSample,
@@ -294,7 +294,7 @@ def test_mutation_plugin_perform_mutation_handles_custom_execution_result(
     schema_context = request.getfixturevalue("schema_context")
 
     product_id = graphene.Node.to_global_id("Product", product.pk)
-    variables = {"productId": product_id, "channel": channel_USD.slug}
+    variables = {"productId": product_id, "tenant": channel_USD.slug}
 
     with mock.patch.object(
         PluginSample,
@@ -336,8 +336,8 @@ def test_mutation_calls_plugin_perform_mutation_after_permission_checks(
     user/app permissions are verified
     """
     mutation_query = """
-        mutation testRestrictedMutation($productId: ID!, $channel: String) {
-            restrictedMutation(productId: $productId, channel: $channel) {
+        mutation testRestrictedMutation($productId: ID!, $tenant: String) {
+            restrictedMutation(productId: $productId, tenant: $tenant) {
                 name
                 errors {
                     field
@@ -355,7 +355,7 @@ def test_mutation_calls_plugin_perform_mutation_after_permission_checks(
     schema_context.user = SimpleLazyObject(lambda: staff_user)
 
     product_id = graphene.Node.to_global_id("Product", product.pk)
-    variables = {"productId": product_id, "channel": channel_USD.slug}
+    variables = {"productId": product_id, "tenant": channel_USD.slug}
 
     # When permission is missing, it should not return the custom error from plugin
     result = schema.execute(
@@ -447,7 +447,7 @@ def test_expired_token_error(user_api_client, channel_USD):
     """
 
     # when
-    variables = {"checkoutInput": {"channel": channel_USD.slug, "lines": []}}
+    variables = {"checkoutInput": {"tenant": channel_USD.slug, "lines": []}}
     response = user_api_client.post_graphql(mutation, variables)
     content = get_graphql_content(response, ignore_errors=True)
 

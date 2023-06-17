@@ -29,7 +29,7 @@ def resolve_checkout(info, token, id):
     if checkout is None:
         return None
 
-    # resolve checkout in active channel
+    # resolve checkout in active tenant
     if checkout.channel.is_active:
         # resolve checkout for anonymous customer
         if not checkout.user:

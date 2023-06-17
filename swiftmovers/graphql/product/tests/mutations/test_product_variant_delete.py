@@ -380,8 +380,8 @@ def test_delete_variant_delete_product_channel_listing_without_available_channel
     product,
     permission_manage_products,
 ):
-    """Ensure that when the last available variant for channel is removed,
-    the corresponging product channel listings will be removed too."""
+    """Ensure that when the last available variant for tenant is removed,
+    the corresponging product tenant listings will be removed too."""
     # given
     query = DELETE_VARIANT_MUTATION
     variant = product.variants.first()
@@ -422,8 +422,8 @@ def test_delete_variant_delete_product_channel_listing_not_deleted(
     product_with_two_variants,
     permission_manage_products,
 ):
-    """Ensure that any other available variant for channel exist,
-    the corresponging product channel listings will be not removed."""
+    """Ensure that any other available variant for tenant exist,
+    the corresponging product tenant listings will be not removed."""
     # given
     query = DELETE_VARIANT_MUTATION
     product = product_with_two_variants

@@ -7,7 +7,7 @@ from django.utils.functional import SimpleLazyObject
 from django.utils.text import slugify
 from freezegun import freeze_time
 
-from .....channel.error_codes import ChannelErrorCode
+from .....tenant.error_codes import ChannelErrorCode
 from .....core.utils.json_serializer import CustomJsonEncoder
 from .....webhook.event_types import WebhookEventAsyncType
 from .....webhook.payloads import generate_meta, generate_requestor
@@ -21,7 +21,7 @@ from ...enums import (
 CHANNEL_UPDATE_MUTATION = """
     mutation UpdateChannel($id: ID!,$input: ChannelUpdateInput!){
         channelUpdate(id: $id, input: $input){
-            channel{
+            tenant{
                 id
                 name
                 slug
@@ -91,7 +91,7 @@ def test_channel_update_mutation_as_staff_user(
     # then
     data = content["data"]["channelUpdate"]
     assert not data["errors"]
-    channel_data = data["channel"]
+    channel_data = data["tenant"]
     channel_USD.refresh_from_db()
     assert channel_data["name"] == channel_USD.name == name
     assert channel_data["slug"] == channel_USD.slug == slug
@@ -130,7 +130,7 @@ def test_channel_update_mutation_as_app(
     # then
     data = content["data"]["channelUpdate"]
     assert not data["errors"]
-    channel_data = data["channel"]
+    channel_data = data["tenant"]
     channel_USD.refresh_from_db()
     assert channel_data["name"] == channel_USD.name == name
     assert channel_data["slug"] == channel_USD.slug == slug
@@ -191,7 +191,7 @@ def test_channel_update_mutation_slugify_slug_field(
     content = get_graphql_content(response)
 
     # then
-    channel_data = content["data"]["channelUpdate"]["channel"]
+    channel_data = content["data"]["channelUpdate"]["tenant"]
     assert channel_data["slug"] == slugify(slug)
 
 
@@ -238,7 +238,7 @@ def test_channel_update_mutation_only_name(
     # then
     data = content["data"]["channelUpdate"]
     assert not data["errors"]
-    channel_data = data["channel"]
+    channel_data = data["tenant"]
     channel_USD.refresh_from_db()
     assert channel_data["name"] == channel_USD.name == name
     assert channel_data["slug"] == channel_USD.slug == slug
@@ -265,7 +265,7 @@ def test_channel_update_mutation_only_slug(
     # then
     data = content["data"]["channelUpdate"]
     assert not data["errors"]
-    channel_data = data["channel"]
+    channel_data = data["tenant"]
     channel_USD.refresh_from_db()
     assert channel_data["name"] == channel_USD.name == name
     assert channel_data["slug"] == channel_USD.slug == slug
@@ -296,7 +296,7 @@ def test_channel_update_mutation_add_shipping_zone(
     # then
     data = content["data"]["channelUpdate"]
     assert not data["errors"]
-    channel_data = data["channel"]
+    channel_data = data["tenant"]
     channel_USD.refresh_from_db()
     shipping_zone.refresh_from_db()
     assert channel_data["name"] == channel_USD.name == name
@@ -307,7 +307,7 @@ def test_channel_update_mutation_add_shipping_zone(
 
 
 @patch(
-    "swiftmovers.graphql.channel.mutations.channel_update."
+    "swiftmovers.graphql.tenant.mutations.channel_update."
     "drop_invalid_shipping_methods_relations_for_given_channels.delay"
 )
 def test_channel_update_mutation_remove_shipping_zone(
@@ -326,7 +326,7 @@ def test_channel_update_mutation_remove_shipping_zone(
     for warehouse in warehouses:
         warehouse.shipping_zones.add(*shipping_zones)
 
-    # add another common channel with zone to warehouses on index 1
+    # add another common tenant with zone to warehouses on index 1
     channel_PLN.warehouses.add(warehouses[0])
 
     channel_id = graphene.Node.to_global_id("Channel", channel_USD.id)
@@ -358,7 +358,7 @@ def test_channel_update_mutation_remove_shipping_zone(
     # then
     data = content["data"]["channelUpdate"]
     assert not data["errors"]
-    channel_data = data["channel"]
+    channel_data = data["tenant"]
     channel_USD.refresh_from_db()
     assert channel_data["name"] == channel_USD.name == name
     assert channel_data["slug"] == channel_USD.slug == slug
@@ -370,7 +370,7 @@ def test_channel_update_mutation_remove_shipping_zone(
         list(shipping_method_ids), [channel_USD.id]
     )
     # ensure one warehouse was removed from shipping zone as they do not have
-    # common channel anymore
+    # common tenant anymore
     assert warehouses[0].id not in shipping_zones[0].warehouses.values("id")
 
     # ensure another shipping zone has all warehouses assigned
@@ -415,7 +415,7 @@ def test_channel_update_mutation_add_and_remove_shipping_zone(
     # then
     data = content["data"]["channelUpdate"]
     assert not data["errors"]
-    channel_data = data["channel"]
+    channel_data = data["tenant"]
     channel_USD.refresh_from_db()
     assert channel_data["name"] == channel_USD.name == name
     assert channel_data["slug"] == channel_USD.slug == slug
@@ -460,7 +460,7 @@ def test_channel_update_mutation_duplicated_shipping_zone(
 
     # then
     data = content["data"]["channelUpdate"]
-    assert not data["channel"]
+    assert not data["tenant"]
     errors = data["errors"]
     assert len(errors) == 1
     assert errors[0]["field"] == "shippingZones"
@@ -504,7 +504,7 @@ def test_channel_update_mutation_trigger_webhook(
     # then
     data = content["data"]["channelUpdate"]
     assert not data["errors"]
-    assert data["channel"]
+    assert data["tenant"]
 
     mocked_webhook_trigger.assert_called_once_with(
         json.dumps(
@@ -550,7 +550,7 @@ def test_channel_update_mutation_add_warehouse(
     # then
     data = content["data"]["channelUpdate"]
     assert not data["errors"]
-    channel_data = data["channel"]
+    channel_data = data["tenant"]
     channel_USD.refresh_from_db()
     warehouse.refresh_from_db()
     assert channel_data["name"] == channel_USD.name == name
@@ -573,10 +573,10 @@ def test_channel_update_mutation_remove_warehouse(
     shipping_zones,
     count_queries,
 ):
-    """Ensure that removing warehouses from channel works properly.
+    """Ensure that removing warehouses from tenant works properly.
 
-    Also, ensure that when the warehouse is removed from the channel it's also removed
-    from shipping zones with which the warehouse do not have a common channel anymore.
+    Also, ensure that when the warehouse is removed from the tenant it's also removed
+    from shipping zones with which the warehouse do not have a common tenant anymore.
     """
     # given
     channel_USD.warehouses.add(*(warehouses + [warehouse_JPY]))
@@ -585,7 +585,7 @@ def test_channel_update_mutation_remove_warehouse(
     for shipping_zone in shipping_zones:
         shipping_zone.warehouses.add(*warehouses)
 
-    # add additional common channel for warehouse[1]
+    # add additional common tenant for warehouse[1]
     shipping_zones[0].channels.add(channel_JPY)
 
     channel_id = graphene.Node.to_global_id("Channel", channel_USD.id)
@@ -617,7 +617,7 @@ def test_channel_update_mutation_remove_warehouse(
     # then
     data = content["data"]["channelUpdate"]
     assert not data["errors"]
-    channel_data = data["channel"]
+    channel_data = data["tenant"]
     channel_USD.refresh_from_db()
     assert channel_data["name"] == channel_USD.name == name
     assert channel_data["slug"] == channel_USD.slug == slug
@@ -631,10 +631,10 @@ def test_channel_update_mutation_remove_warehouse(
         zone.refresh_from_db()
         assert warehouses[0] in zone.warehouses.all()
     # ensure warehouse from index 1 has not been deleted from shipping zone
-    # with JPY channel
+    # with JPY tenant
     assert warehouses[1] in shipping_zones[0].warehouses.all()
     # ensure warehouse from index 1 has been deleted from shipping zone
-    # without JPY channel
+    # without JPY tenant
     assert warehouses[1] not in shipping_zones[1].warehouses.all()
 
 
@@ -673,7 +673,7 @@ def test_channel_update_mutation_add_and_remove_warehouse(
     # then
     data = content["data"]["channelUpdate"]
     assert not data["errors"]
-    channel_data = data["channel"]
+    channel_data = data["tenant"]
     channel_USD.refresh_from_db()
     assert channel_data["name"] == channel_USD.name == name
     assert channel_data["slug"] == channel_USD.slug == slug
@@ -717,7 +717,7 @@ def test_channel_update_mutation_duplicated_warehouses(
 
     # then
     data = content["data"]["channelUpdate"]
-    assert not data["channel"]
+    assert not data["tenant"]
     errors = data["errors"]
     assert len(errors) == 1
     assert errors[0]["field"] == "warehouses"
@@ -755,7 +755,7 @@ def test_channel_update_mutation_disable_expire_orders(
     content = get_graphql_content(response)
     data = content["data"]["channelUpdate"]
     assert not data["errors"]
-    assert data["channel"]["orderSettings"]["expireOrdersAfter"] is None
+    assert data["tenant"]["orderSettings"]["expireOrdersAfter"] is None
 
     channel_USD.refresh_from_db()
     assert channel_USD.expire_orders_after is None
@@ -818,7 +818,7 @@ def test_channel_update_order_settings_manage_orders(
     # then
     data = content["data"]["channelUpdate"]
     assert not data["errors"]
-    channel_data = data["channel"]
+    channel_data = data["tenant"]
     assert channel_data["orderSettings"]["automaticallyConfirmAllNewOrders"] is False
     assert (
         channel_data["orderSettings"]["automaticallyFulfillNonShippableGiftCard"]
@@ -854,7 +854,7 @@ def test_channel_update_order_settings_empty_order_settings(
     # then
     data = content["data"]["channelUpdate"]
     assert not data["errors"]
-    channel_data = data["channel"]
+    channel_data = data["tenant"]
     assert channel_data["orderSettings"]["automaticallyConfirmAllNewOrders"] is True
     assert (
         channel_data["orderSettings"]["automaticallyFulfillNonShippableGiftCard"]
@@ -896,7 +896,7 @@ def test_channel_update_order_settings_manage_orders_as_app(
     # then
     data = content["data"]["channelUpdate"]
     assert not data["errors"]
-    channel_data = data["channel"]
+    channel_data = data["tenant"]
     assert channel_data["orderSettings"]["automaticallyConfirmAllNewOrders"] is False
     assert (
         channel_data["orderSettings"]["automaticallyFulfillNonShippableGiftCard"]
@@ -991,7 +991,7 @@ def test_channel_update_order_mark_as_paid_strategy(
     # then
     data = content["data"]["channelUpdate"]
     assert not data["errors"]
-    channel_data = data["channel"]
+    channel_data = data["tenant"]
     assert (
         channel_data["orderSettings"]["markAsPaidStrategy"]
         == MarkAsPaidStrategyEnum.TRANSACTION_FLOW.name
@@ -1032,7 +1032,7 @@ def test_channel_update_default_transaction_flow_strategy(
     # then
     data = content["data"]["channelUpdate"]
     assert not data["errors"]
-    channel_data = data["channel"]
+    channel_data = data["tenant"]
     assert (
         channel_data["orderSettings"]["defaultTransactionFlowStrategy"]
         == TransactionFlowStrategyEnum.AUTHORIZATION.name

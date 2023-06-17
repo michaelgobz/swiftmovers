@@ -36,8 +36,8 @@ fragment VariantPricingInfo on VariantPricingInfo {
     }
   }
 }
-query ($channel: String, $address: AddressInput) {
-  products(first: 1, channel: $channel) {
+query ($tenant: String, $address: AddressInput) {
+  products(first: 1, tenant: $tenant) {
     edges {
       node {
         variants {
@@ -60,7 +60,7 @@ def test_get_variant_pricing_on_sale(api_client, sale, product, channel_USD):
     sale_discounted_value = sale.channel_listings.get().discount_value
     discounted_price = price.amount - sale_discounted_value
 
-    variables = {"channel": channel_USD.slug, "address": {"country": "US"}}
+    variables = {"tenant": channel_USD.slug, "address": {"country": "US"}}
     response = api_client.post_graphql(QUERY_GET_VARIANT_PRICING, variables)
     content = get_graphql_content(response)
 
@@ -88,7 +88,7 @@ def test_get_variant_pricing_on_sale(api_client, sale, product, channel_USD):
 def test_get_variant_pricing_not_on_sale(api_client, product, channel_USD):
     price = product.variants.first().channel_listings.get().price
 
-    variables = {"channel": channel_USD.slug, "address": {"country": "US"}}
+    variables = {"tenant": channel_USD.slug, "address": {"country": "US"}}
     response = api_client.post_graphql(QUERY_GET_VARIANT_PRICING, variables)
     content = get_graphql_content(response)
 
@@ -187,8 +187,8 @@ def test_variant_pricing(
 
 
 QUERY_GET_PRODUCT_VARIANTS_PRICING = """
-    query getProductVariants($id: ID!, $channel: String, $address: AddressInput) {
-        product(id: $id, channel: $channel) {
+    query getProductVariants($id: ID!, $tenant: String, $address: AddressInput) {
+        product(id: $id, tenant: $tenant) {
             variants {
                 id
                 pricingNoAddress: pricing {
@@ -231,7 +231,7 @@ def test_product_variant_price(
     product_id = graphene.Node.to_global_id("Product", variant.product.id)
     variables = {
         "id": product_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "address": {"country": "US"},
     }
     response = user_api_client.post_graphql(
@@ -254,7 +254,7 @@ def test_product_variant_without_price_as_user(
     variant_id = graphene.Node.to_global_id("ProductVariant", variant.id)
     variables = {
         "id": product_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "address": {"country": "US"},
     }
 
@@ -282,7 +282,7 @@ def test_product_variant_without_price_as_staff_without_permission(
     variant_id = graphene.Node.to_global_id("ProductVariant", variant.id)
     variables = {
         "id": product_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "address": {"country": "US"},
     }
     response = staff_api_client.post_graphql(
@@ -318,7 +318,7 @@ def test_product_variant_without_price_as_staff_with_permission(
 
     variables = {
         "id": product_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "address": {"country": "US"},
     }
     response = staff_api_client.post_graphql(
@@ -346,8 +346,8 @@ def test_product_variant_without_price_as_staff_with_permission(
 
 
 QUERY_GET_PRODUCT_VARIANTS_PRICING_NO_ADDRESS = """
-    query getProductVariants($id: ID!, $channel: String) {
-        product(id: $id, channel: $channel) {
+    query getProductVariants($id: ID!, $tenant: String) {
+        product(id: $id, tenant: $tenant) {
             variants {
                 id
                 pricing {
@@ -372,7 +372,7 @@ def test_product_variant_price_no_address(
     channel_USD.default_country = "FR"
     channel_USD.save()
     product_id = graphene.Node.to_global_id("Product", variant.product.id)
-    variables = {"id": product_id, "channel": channel_USD.slug}
+    variables = {"id": product_id, "tenant": channel_USD.slug}
     user_api_client.post_graphql(
         QUERY_GET_PRODUCT_VARIANTS_PRICING_NO_ADDRESS, variables
     )
@@ -412,8 +412,8 @@ FRAGMENT_PRICING = (
 
 QUERY_PRODUCT_VARIANT_PRICING = (
     """
-  query Variant($id:ID!, $channel: String!) {
-    productVariant(id: $id, channel: $channel) {
+  query Variant($id:ID!, $tenant: String!) {
+    productVariant(id: $id, tenant: $tenant) {
       pricingPL: pricing(address: { country: PL }) {
         ...Pricing
       }
@@ -481,7 +481,7 @@ def test_product_variant_pricing(
     # when
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.id),
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
     response = user_api_client.post_graphql(QUERY_PRODUCT_VARIANT_PRICING, variables)
     content = get_graphql_content(response)
@@ -520,7 +520,7 @@ def test_product_variant_pricing_default_country_default_rate(
     # when
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.id),
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
     response = user_api_client.post_graphql(QUERY_PRODUCT_VARIANT_PRICING, variables)
     content = get_graphql_content(response)
@@ -560,7 +560,7 @@ def test_product_variant_pricing_use_tax_class_from_product_type(
     # when
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.id),
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
     response = user_api_client.post_graphql(QUERY_PRODUCT_VARIANT_PRICING, variables)
     content = get_graphql_content(response)
@@ -598,7 +598,7 @@ def test_product_variant_pricing_no_flat_rates_in_one_country(
     # when
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.id),
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
     response = user_api_client.post_graphql(QUERY_PRODUCT_VARIANT_PRICING, variables)
     content = get_graphql_content(response)

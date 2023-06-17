@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from django_countries.fields import CountryField
 
-from ..channel.models import Channel
+from ..tenant.models import Channel
 from ..core.models import ModelWithMetadata
 from . import TaxCalculationStrategy
 

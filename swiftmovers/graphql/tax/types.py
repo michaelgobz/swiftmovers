@@ -20,18 +20,18 @@ from .enums import TaxCalculationStrategy
 class TaxConfiguration(ModelObjectType[models.TaxConfiguration]):
     channel = graphene.Field(
         Channel,
-        description="A channel to which the tax configuration applies to.",
+        description="A tenant to which the tax configuration applies to.",
         required=True,
     )
     charge_taxes = graphene.Boolean(
-        description="Determines whether taxes are charged in the given channel.",
+        description="Determines whether taxes are charged in the given tenant.",
         required=True,
     )
     tax_calculation_strategy = graphene.Field(
         TaxCalculationStrategy,
         required=False,
         description=(
-            "The default strategy to use for tax calculation in the given channel. "
+            "The default strategy to use for tax calculation in the given tenant. "
             "Taxes can be calculated either using user-defined flat rates or with "
             "a tax app. Empty value means that no method is selected and taxes are "
             "not calculated."
@@ -91,7 +91,7 @@ class TaxConfigurationPerCountry(ModelObjectType[models.TaxConfigurationPerCount
         description=(
             "A country-specific strategy to use for tax calculation. Taxes can be "
             "calculated either using user-defined flat rates or with a tax app. If "
-            "not provided, use the value from the channel's tax configuration."
+            "not provided, use the value from the tenant's tax configuration."
         ),
     )
     display_gross_prices = graphene.Boolean(
@@ -104,7 +104,7 @@ class TaxConfigurationPerCountry(ModelObjectType[models.TaxConfigurationPerCount
 
     class Meta:
         description = (
-            "Country-specific exceptions of a channel's tax configuration."
+            "Country-specific exceptions of a tenant's tax configuration."
             + ADDED_IN_39
         )
         interface = [graphene.relay.Node]

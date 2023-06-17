@@ -35,7 +35,7 @@ def test_checkout_create(api_client, stock, graphql_address_data, channel_USD):
     shipping_address = graphql_address_data
     variables = {
         "checkoutInput": {
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
             "lines": [{"quantity": 1, "variantId": variant_id}],
             "email": test_email,
             "shippingAddress": shipping_address,

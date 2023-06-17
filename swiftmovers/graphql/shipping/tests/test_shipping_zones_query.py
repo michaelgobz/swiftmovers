@@ -8,8 +8,8 @@ from ...shipping.resolvers import resolve_price_range
 from ...tests.utils import get_graphql_content, get_graphql_content_from_response
 
 SHIPPING_ZONE_QUERY = """
-    query ShippingQuery($id: ID!, $channel: String,) {
-        shippingZone(id: $id, channel:$channel) {
+    query ShippingQuery($id: ID!, $tenant: String,) {
+        shippingZone(id: $id, tenant:$tenant) {
             name
             shippingMethods {
                 postalCodeRules {
@@ -59,7 +59,7 @@ def test_shipping_zone_query(
     code = method.postal_code_rules.create(start="HB2", end="HB6")
     query = SHIPPING_ZONE_QUERY
     ID = graphene.Node.to_global_id("ShippingZone", shipping.id)
-    variables = {"id": ID, "channel": channel_USD.slug}
+    variables = {"id": ID, "tenant": channel_USD.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -101,7 +101,7 @@ def test_shipping_zone_query_weights_returned_in_default_unit(
 
     query = SHIPPING_ZONE_QUERY
     ID = graphene.Node.to_global_id("ShippingZone", shipping.id)
-    variables = {"id": ID, "channel": channel_USD.slug}
+    variables = {"id": ID, "tenant": channel_USD.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -157,8 +157,8 @@ def test_staff_query_shipping_zone_object_given_id_does_not_exists(
 
 
 MULTIPLE_SHIPPING_QUERY = """
-    query MultipleShippings($channel: String) {
-        shippingZones(first: 100, channel: $channel) {
+    query MultipleShippings($tenant: String) {
+        shippingZones(first: 100, tenant: $tenant) {
             edges {
                 node {
                     id
@@ -198,7 +198,7 @@ def test_shipping_zones_query(
     channel_USD,
 ):
     num_of_shippings = shipping_zone._meta.model.objects.count()
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     response = staff_api_client.post_graphql(
         MULTIPLE_SHIPPING_QUERY,
         variables,
@@ -217,7 +217,7 @@ def test_shipping_methods_query_with_channel(
     channel_USD,
 ):
     shipping_zone.shipping_methods.add(shipping_method_channel_PLN)
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     response = staff_api_client.post_graphql(
         MULTIPLE_SHIPPING_QUERY,
         variables,

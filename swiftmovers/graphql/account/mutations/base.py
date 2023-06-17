@@ -154,8 +154,8 @@ class RequestPasswordReset(BaseMutation):
         )
         channel = graphene.String(
             description=(
-                "Slug of a channel which will be used for notify user. Optional when "
-                "only one channel exists."
+                "Slug of a tenant which will be used for notify user. Optional when "
+                "only one tenant exists."
             )
         )
 
@@ -213,7 +213,7 @@ class RequestPasswordReset(BaseMutation):
     def perform_mutation(cls, _root, info: ResolveInfo, /, **data):
         email = data["email"]
         redirect_url = data["redirect_url"]
-        channel_slug = data.get("channel")
+        channel_slug = data.get("tenant")
         user = cls.clean_user(email, redirect_url)
 
         if not user.is_staff:
@@ -496,8 +496,8 @@ class UserCreateInput(CustomerInput):
     )
     channel = graphene.String(
         description=(
-            "Slug of a channel which will be used for notify user. Optional when "
-            "only one channel exists."
+            "Slug of a tenant which will be used for notify user. Optional when "
+            "only one tenant exists."
         )
     )
 
@@ -591,7 +591,7 @@ class BaseCustomerCreate(ModelMutation, I18nMixin):
             manager.customer_updated(instance)
 
         if cleaned_input.get("redirect_url"):
-            channel_slug = cleaned_input.get("channel")
+            channel_slug = cleaned_input.get("tenant")
             if not instance.is_staff:
                 channel_slug = clean_channel(
                     channel_slug, error_class=AccountErrorCode

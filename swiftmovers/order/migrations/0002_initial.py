@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
         ('giftcard', '0002_initial'),
         ('shipping', '0001_initial'),
         ('order', '0001_initial'),
-        ('channel', '0001_initial'),
+        ('tenant', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
@@ -67,8 +67,8 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='order',
-            name='channel',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='orders', to='channel.channel'),
+            name='tenant',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='orders', to='tenant.tenant'),
         ),
         migrations.AddField(
             model_name='order',

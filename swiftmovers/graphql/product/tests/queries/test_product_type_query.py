@@ -15,14 +15,14 @@ from ...enums import VariantAttributeScope
 
 PRODUCT_TYPE_QUERY = """
     query getProductType(
-        $id: ID!, $variantSelection: VariantAttributeScope, $channel: String
+        $id: ID!, $variantSelection: VariantAttributeScope, $tenant: String
     ) {
         productType(id: $id) {
             name
             variantAttributes(variantSelection: $variantSelection) {
                 slug
             }
-            products(first: 20, channel:$channel) {
+            products(first: 20, tenant:$tenant) {
                 totalCount
                 edges {
                     node {
@@ -69,7 +69,7 @@ def test_product_type_query(
 
     variables = {
         "id": graphene.Node.to_global_id("ProductType", product_type.id),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = user_api_client.post_graphql(query, variables)
@@ -93,7 +93,7 @@ def test_product_type_query_invalid_id(
     product_type_id = "'"
     variables = {
         "id": product_type_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = staff_api_client.post_graphql(PRODUCT_TYPE_QUERY, variables)
     content = get_graphql_content_from_response(response)
@@ -108,7 +108,7 @@ def test_product_type_query_object_with_given_id_does_not_exist(
     product_type_id = graphene.Node.to_global_id("ProductType", -1)
     variables = {
         "id": product_type_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = staff_api_client.post_graphql(PRODUCT_TYPE_QUERY, variables)
     content = get_graphql_content(response)
@@ -121,7 +121,7 @@ def test_product_type_query_with_invalid_object_type(
     product_type_id = graphene.Node.to_global_id("Product", product.product_type.pk)
     variables = {
         "id": product_type_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = staff_api_client.post_graphql(PRODUCT_TYPE_QUERY, variables)
     content = get_graphql_content(response)
@@ -170,7 +170,7 @@ def test_product_type_query_only_variant_selections_value_set(
     variables = {
         "id": graphene.Node.to_global_id("ProductType", product_type.id),
         "variantSelection": variant_selection,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = user_api_client.post_graphql(query, variables)
@@ -209,7 +209,7 @@ def test_product_type_query_only_variant_selections_value_set(
 
 PRODUCT_TYPE_QUERY_ASSIGNED_VARIANT_ATTRIBUTES = """
     query getProductType(
-        $id: ID!, $variantSelection: VariantAttributeScope, $channel: String
+        $id: ID!, $variantSelection: VariantAttributeScope, $tenant: String
     ) {
         productType(id: $id) {
             name
@@ -219,7 +219,7 @@ PRODUCT_TYPE_QUERY_ASSIGNED_VARIANT_ATTRIBUTES = """
                 }
                 variantSelection
             }
-            products(first: 20, channel:$channel) {
+            products(first: 20, tenant:$tenant) {
                 totalCount
                 edges {
                     node {
@@ -278,7 +278,7 @@ def test_product_type_query_only_assigned_variant_selections_value_set(
     variables = {
         "id": graphene.Node.to_global_id("ProductType", product_type.id),
         "variantSelection": variant_selection,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = user_api_client.post_graphql(query, variables)

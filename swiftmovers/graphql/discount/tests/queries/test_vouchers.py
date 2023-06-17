@@ -31,7 +31,7 @@ VOUCHERS_QUERY = """
                     }
                     channelListings {
                         id
-                        channel {
+                        tenant {
                             slug
                         }
                         discountValue
@@ -84,7 +84,7 @@ def test_voucher_query(
     channel_listing = voucher.channel_listings.first()
     assert {
         "id": ANY,
-        "channel": {"slug": channel_listing.channel.slug},
+        "tenant": {"slug": channel_listing.channel.slug},
         "discountValue": channel_listing.discount_value,
         "currency": channel_listing.channel.currency_code,
     } in data["channelListings"]
@@ -101,7 +101,7 @@ def test_voucher_query_with_channel_slug(
     voucher.products.add(product)
 
     query = VOUCHERS_QUERY
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
 
     response = staff_api_client.post_graphql(
         query, variables, permissions=[permission_manage_discounts]
@@ -125,7 +125,7 @@ def test_voucher_query_with_channel_slug(
     for channel_listing in voucher.channel_listings.all():
         assert {
             "id": ANY,
-            "channel": {"slug": channel_listing.channel.slug},
+            "tenant": {"slug": channel_listing.channel.slug},
             "discountValue": channel_listing.discount_value,
             "currency": channel_listing.channel.currency_code,
         } in data["channelListings"]
@@ -140,8 +140,8 @@ def test_vouchers_query_with_channel_slug(
     product,
 ):
     query = """
-    query vouchers($channel: String) {
-        vouchers(first: 2, channel: $channel) {
+    query vouchers($tenant: String) {
+        vouchers(first: 2, tenant: $tenant) {
             edges {
                 node {
                     name
@@ -150,7 +150,7 @@ def test_vouchers_query_with_channel_slug(
         }
     }
     """
-    variables = {"channel": channel_PLN.slug}
+    variables = {"tenant": channel_PLN.slug}
 
     response = staff_api_client.post_graphql(
         query, variables, permissions=[permission_manage_discounts]

@@ -4,8 +4,8 @@ import pytest
 from ....tests.utils import get_graphql_content
 
 SHIPPING_METHODS_QUERY = """
-query GetShippingMethods($channel: String) {
-  shippingZones(first: 10, channel: $channel) {
+query GetShippingMethods($tenant: String) {
+  shippingZones(first: 10, tenant: $tenant) {
     edges {
       node {
         shippingMethods {
@@ -22,7 +22,7 @@ query GetShippingMethods($channel: String) {
           type
           channelListings {
             id
-            channel {
+            tenant {
               id
               name
             }
@@ -44,7 +44,7 @@ def test_vouchers_query_with_channel_slug(
     permission_manage_shipping,
     count_queries,
 ):
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     get_graphql_content(
         staff_api_client.post_graphql(
             SHIPPING_METHODS_QUERY,

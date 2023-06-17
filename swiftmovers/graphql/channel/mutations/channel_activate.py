@@ -1,7 +1,7 @@
 import graphene
 from django.core.exceptions import ValidationError
 
-from ....channel.error_codes import ChannelErrorCode
+from ....tenant.error_codes import ChannelErrorCode
 from ....permission.enums import ChannelPermissions
 from ...core import ResolveInfo
 from ...core.doc_category import DOC_CATEGORY_CHANNELS
@@ -12,13 +12,13 @@ from ..types import Channel
 
 
 class ChannelActivate(BaseMutation):
-    channel = graphene.Field(Channel, description="Activated channel.")
+    channel = graphene.Field(Channel, description="Activated tenant.")
 
     class Arguments:
-        id = graphene.ID(required=True, description="ID of the channel to activate.")
+        id = graphene.ID(required=True, description="ID of the tenant to activate.")
 
     class Meta:
-        description = "Activate a channel."
+        description = "Activate a tenant."
         doc_category = DOC_CATEGORY_CHANNELS
         permissions = (ChannelPermissions.MANAGE_CHANNELS,)
         error_type_class = ChannelError
@@ -30,7 +30,7 @@ class ChannelActivate(BaseMutation):
             raise ValidationError(
                 {
                     "id": ValidationError(
-                        "This channel is already activated.",
+                        "This tenant is already activated.",
                         code=ChannelErrorCode.INVALID.value,
                     )
                 }

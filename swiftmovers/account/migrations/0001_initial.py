@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('channel', '0001_initial'),
+        ('tenant', '0001_initial'),
     ]
 
     operations = [
@@ -115,7 +115,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=150, unique=True, verbose_name='name')),
                 ('restricted_access_to_channels', models.BooleanField(default=False)),
-                ('channels', models.ManyToManyField(blank=True, to='channel.Channel')),
+                ('channels', models.ManyToManyField(blank=True, to='tenant.Channel')),
             ],
             options={
                 'verbose_name': 'group',

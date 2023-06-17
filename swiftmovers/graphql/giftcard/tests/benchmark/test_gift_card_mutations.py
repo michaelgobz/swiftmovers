@@ -12,11 +12,11 @@ CREATE_GIFT_CARD_MUTATION = (
     + """
     mutation giftCardCreate(
         $balance: PriceInput!, $userEmail: String, $addTags: [String!],
-         $channel: String, $note: String, $expiryDate: Date, $isActive: Boolean!
+         $tenant: String, $note: String, $expiryDate: Date, $isActive: Boolean!
     ){
         giftCardCreate(input: {
                 balance: $balance, userEmail: $userEmail, addTags: $addTags,
-                channel: $channel, expiryDate: $expiryDate, note: $note,
+                tenant: $tenant, expiryDate: $expiryDate, note: $note,
                 isActive: $isActive
         }) {
             giftCard {
@@ -54,7 +54,7 @@ def test_create_never_expiry_gift_card(
             "currency": currency,
         },
         "userEmail": customer_user.email,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "addTags": [tag],
         "note": "This is gift card note that will be save in gift card event.",
         "expiry_date": None,

@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"merchantAccount": "swiftmoversECOM", "countryCode": "PL", "channel": "web",
+    body: '{"merchantAccount": "swiftmoversECOM", "countryCode": "PL", "tenant": "web",
       "amount": {"value": "1000", "currency": "USD"}}'
     headers:
       Accept:

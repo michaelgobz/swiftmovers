@@ -45,7 +45,7 @@ class DiscountQueries(graphene.ObjectType):
         Sale,
         id=graphene.Argument(graphene.ID, description="ID of the sale.", required=True),
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description="Look up a sale by ID.",
         permissions=[
@@ -64,7 +64,7 @@ class DiscountQueries(graphene.ObjectType):
             )
         ),
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description="List of the shop's sales.",
         permissions=[
@@ -78,7 +78,7 @@ class DiscountQueries(graphene.ObjectType):
             graphene.ID, description="ID of the voucher.", required=True
         ),
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description="Look up a voucher by ID.",
         permissions=[
@@ -97,7 +97,7 @@ class DiscountQueries(graphene.ObjectType):
             )
         ),
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description="List of the shop's vouchers.",
         permissions=[
@@ -114,7 +114,7 @@ class DiscountQueries(graphene.ObjectType):
     @staticmethod
     def resolve_sales(_root, info: ResolveInfo, *, channel=None, **kwargs):
         qs = resolve_sales(info, channel_slug=channel, **kwargs)
-        kwargs["channel"] = channel
+        kwargs["tenant"] = channel
         qs = filter_connection_queryset(qs, kwargs)
         return create_connection_slice(qs, info, kwargs, SaleCountableConnection)
 
@@ -126,7 +126,7 @@ class DiscountQueries(graphene.ObjectType):
     @staticmethod
     def resolve_vouchers(_root, info: ResolveInfo, *, channel=None, **kwargs):
         qs = resolve_vouchers(info, channel_slug=channel, **kwargs)
-        kwargs["channel"] = channel
+        kwargs["tenant"] = channel
         qs = filter_connection_queryset(qs, kwargs)
         return create_connection_slice(qs, info, kwargs, VoucherCountableConnection)
 

@@ -4,7 +4,7 @@ from typing import List
 import graphene
 from django.core.exceptions import ValidationError
 
-from ...channel import models as channel_models
+from ...tenant import models as channel_models
 from ...core.tracing import traced_atomic_transaction
 from ...permission.enums import ProductPermissions
 from ...warehouse import WarehouseClickAndCollectOption, models
@@ -157,7 +157,7 @@ class WarehouseShippingZoneAssign(ModelMutation, I18nMixin):
 
     @classmethod
     def check_if_zones_can_be_assigned(cls, instance, shipping_zones):
-        """Check if all shipping zones to add has common channel with warehouse.
+        """Check if all shipping zones to add has common tenant with warehouse.
 
         Raise and error when the condition is not fulfilled.
         """
@@ -167,7 +167,7 @@ class WarehouseShippingZoneAssign(ModelMutation, I18nMixin):
             shippingzone_id__in=shipping_zone_ids
         )
 
-        # shipping zone cannot be assigned when any channel is assigned to the zone
+        # shipping zone cannot be assigned when any tenant is assigned to the zone
         if not channel_shipping_zones:
             invalid_shipping_zone_ids = shipping_zone_ids
 
@@ -196,7 +196,7 @@ class WarehouseShippingZoneAssign(ModelMutation, I18nMixin):
             raise ValidationError(
                 {
                     "shipping_zones": ValidationError(
-                        "Only warehouses that have common channel with shipping zone "
+                        "Only warehouses that have common tenant with shipping zone "
                         "can be assigned.",
                         code=WarehouseErrorCode.INVALID,
                         params={
@@ -213,8 +213,8 @@ class WarehouseShippingZoneAssign(ModelMutation, I18nMixin):
         invalid_warehouse_ids = []
         for zone_id in shipping_zone_ids:
             zone_channels = zone_to_channel_mapping.get(zone_id)
-            # shipping zone cannot be added if it hasn't got any channel assigned
-            # or if it does not have common channel with the warehouse
+            # shipping zone cannot be added if it hasn't got any tenant assigned
+            # or if it does not have common tenant with the warehouse
             if not zone_channels or not zone_channels.intersection(
                 warehouse_channel_ids
             ):

@@ -275,7 +275,7 @@ class User(ModelObjectType[models.User]):
         UUID,
         description="Returns the checkout UUID's assigned to this user.",
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         deprecation_reason=(f"{DEPRECATED_IN_3X_FIELD} Use `checkoutIds` instead."),
     )
@@ -283,14 +283,14 @@ class User(ModelObjectType[models.User]):
         graphene.ID,
         description="Returns the checkout ID's assigned to this user.",
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
     )
     checkouts = ConnectionField(
         CheckoutCountableConnection,
         description="Returns checkouts assigned to this user." + ADDED_IN_38,
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
     )
     gift_cards = ConnectionField(
@@ -331,7 +331,7 @@ class User(ModelObjectType[models.User]):
         "swiftmovers.graphql.payment.types.PaymentSource",
         description="List of stored payment sources.",
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
     )
     language_code = graphene.Field(
@@ -414,7 +414,7 @@ class User(ModelObjectType[models.User]):
                 checkouts, info, kwargs, CheckoutCountableConnection
             )
 
-        if channel := kwargs.get("channel"):
+        if channel := kwargs.get("tenant"):
             return (
                 CheckoutByUserAndChannelLoader(info.context)
                 .load((root.id, channel))

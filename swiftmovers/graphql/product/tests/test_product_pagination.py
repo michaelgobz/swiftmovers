@@ -186,12 +186,12 @@ def collections_for_pagination(product, product_with_single_variant, channel_USD
 
 QUERY_COLLECTIONS_PAGINATION = """
     query (
-        $first: Int, $last: Int, $after: String, $before: String, $channel: String,
+        $first: Int, $last: Int, $after: String, $before: String, $tenant: String,
         $sortBy: CollectionSortingInput, $filter: CollectionFilterInput
     ){
         collections (
             first: $first, last: $last, after: $after, before: $before,
-            sortBy: $sortBy, filter: $filter, channel: $channel
+            sortBy: $sortBy, filter: $filter, tenant: $tenant
         ) {
             edges {
                 node {
@@ -246,7 +246,7 @@ def test_collections_pagination_with_sorting(
         "first": page_size,
         "after": None,
         "sortBy": sort_by,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = staff_api_client.post_graphql(
         QUERY_COLLECTIONS_PAGINATION,
@@ -287,7 +287,7 @@ def test_collections_pagination_with_filtering(
         "first": page_size,
         "after": None,
         "filter": filter_by,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = staff_api_client.post_graphql(
         QUERY_COLLECTIONS_PAGINATION,
@@ -453,12 +453,12 @@ def products_for_pagination(
 
 QUERY_PRODUCTS_PAGINATION = """
     query (
-        $first: Int, $last: Int, $after: String, $before: String, $channel: String,
+        $first: Int, $last: Int, $after: String, $before: String, $tenant: String,
         $sortBy: ProductOrder, $filter: ProductFilterInput
     ){
         products (
             first: $first, last: $last, after: $after, before: $before,
-            sortBy: $sortBy, filter: $filter, channel: $channel
+            sortBy: $sortBy, filter: $filter, tenant: $tenant
         ) {
             edges {
                 node {
@@ -546,7 +546,7 @@ def test_products_pagination_with_sorting_and_channel(
         "first": page_size,
         "after": None,
         "sortBy": sort_by,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = staff_api_client.post_graphql(
         QUERY_PRODUCTS_PAGINATION,
@@ -721,7 +721,7 @@ def test_products_pagination_with_filtering(
         "first": page_size,
         "after": None,
         "filter": filter_by,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = staff_api_client.post_graphql(
         QUERY_PRODUCTS_PAGINATION,
@@ -757,7 +757,7 @@ def test_products_pagination_with_filtering_and_channel(
         "first": page_size,
         "after": None,
         "filter": filter_by,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = staff_api_client.post_graphql(
         QUERY_PRODUCTS_PAGINATION,
@@ -785,7 +785,7 @@ def test_products_pagination_with_filtering_by_attribute(
         "first": page_size,
         "after": None,
         "filter": filter_by,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = staff_api_client.post_graphql(
         QUERY_PRODUCTS_PAGINATION,

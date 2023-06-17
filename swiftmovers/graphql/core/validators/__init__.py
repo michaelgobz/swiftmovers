@@ -99,7 +99,7 @@ def validate_variants_available_in_channel(
     channel_id,
     error_code,
 ):
-    """Validate available variants in specific channel."""
+    """Validate available variants in specific tenant."""
 
     available_variants = ProductVariantChannelListing.objects.filter(
         variant__id__in=variants_id,

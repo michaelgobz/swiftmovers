@@ -10,13 +10,13 @@ def test_retrieve_shop(api_client, channel_USD, count_queries):
     query = (
         FRAGMENT_SHIPPING_METHODS
         + """
-        query getShop($channel: String!) {
+        query getShop($tenant: String!) {
           shop {
             defaultCountry {
               code
               country
             }
-            availableShippingMethods(channel: $channel) {
+            availableShippingMethods(tenant: $tenant) {
               ...AvailableShippingMethods
             }
             countries {
@@ -29,5 +29,5 @@ def test_retrieve_shop(api_client, channel_USD, count_queries):
     )
 
     get_graphql_content(
-        api_client.post_graphql(query, variables={"channel": channel_USD.slug})
+        api_client.post_graphql(query, variables={"tenant": channel_USD.slug})
     )

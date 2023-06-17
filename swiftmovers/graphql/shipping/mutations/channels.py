@@ -29,9 +29,9 @@ ErrorType = DefaultDict[str, List[ValidationError]]
 
 
 class ShippingMethodChannelListingAddInput(BaseInputObjectType):
-    channel_id = graphene.ID(required=True, description="ID of a channel.")
+    channel_id = graphene.ID(required=True, description="ID of a tenant.")
     price = PositiveDecimal(
-        description="Shipping price of the shipping method in this channel."
+        description="Shipping price of the shipping method in this tenant."
     )
     minimum_order_price = PositiveDecimal(
         description="Minimum order price to use this shipping method."
@@ -73,7 +73,7 @@ class ShippingMethodChannelListingUpdate(BaseChannelListingMutation):
         )
         input = ShippingMethodChannelListingInput(
             required=True,
-            description="Fields required to update shipping method channel listings.",
+            description="Fields required to update shipping method tenant listings.",
         )
 
     class Meta:
@@ -88,7 +88,7 @@ class ShippingMethodChannelListingUpdate(BaseChannelListingMutation):
         cls, shipping_method: "ShippingMethodModel", add_channels: List[Dict]
     ):
         for add_channel in add_channels:
-            channel = add_channel["channel"]
+            channel = add_channel["tenant"]
             defaults = {"currency": channel.currency_code}
             if "minimum_order_price_amount" in add_channel.keys():
                 defaults["minimum_order_price_amount"] = add_channel.get(
@@ -102,7 +102,7 @@ class ShippingMethodChannelListingUpdate(BaseChannelListingMutation):
                 defaults["price_amount"] = add_channel.get("price_amount")
             ShippingMethodChannelListing.objects.update_or_create(
                 shipping_method=shipping_method,
-                channel=add_channel["channel"],
+                channel=add_channel["tenant"],
                 defaults=defaults,
             )
 
@@ -137,14 +137,14 @@ class ShippingMethodChannelListingUpdate(BaseChannelListingMutation):
         shipping_method_id,
         input,
     ):
-        channels = [data.get("channel") for data in input]
+        channels = [data.get("tenant") for data in input]
         channel_listings = ShippingMethodChannelListing.objects.filter(
             shipping_method_id=shipping_method_id, channel_id__in=channels
         ).values_list("channel_id", flat=True)
         return [
             data["channel_id"]
             for data in input
-            if data["channel"].id in channel_listings
+            if data["tenant"].id in channel_listings
         ]
 
     @classmethod
@@ -160,7 +160,7 @@ class ShippingMethodChannelListingUpdate(BaseChannelListingMutation):
             if price_amount is not None:
                 try:
                     validate_price_precision(
-                        price_amount, channel_input["channel"].currency_code
+                        price_amount, channel_input["tenant"].currency_code
                     )
                     validate_decimal_max_value(price_amount)
                     channel_input["price_amount"] = price_amount
@@ -188,7 +188,7 @@ class ShippingMethodChannelListingUpdate(BaseChannelListingMutation):
             if min_price is not None:
                 try:
                     validate_price_precision(
-                        min_price, channel_input["channel"].currency_code
+                        min_price, channel_input["tenant"].currency_code
                     )
                     validate_decimal_max_value(min_price)
                 except ValidationError as error:
@@ -204,7 +204,7 @@ class ShippingMethodChannelListingUpdate(BaseChannelListingMutation):
             if max_price is not None:
                 try:
                     validate_price_precision(
-                        max_price, channel_input["channel"].currency_code
+                        max_price, channel_input["tenant"].currency_code
                     )
                     validate_decimal_max_value(max_price)
                 except ValidationError as error:
@@ -235,7 +235,7 @@ class ShippingMethodChannelListingUpdate(BaseChannelListingMutation):
     @classmethod
     def clean_add_channels(cls, shipping_method, input):
         """Ensure that only channels allowed in the method's shipping zone are added."""
-        channels = {data.get("channel").id for data in input}
+        channels = {data.get("tenant").id for data in input}
         available_channels = set(
             shipping_method.shipping_zone.channels.values_list("id", flat=True)
         )

@@ -36,7 +36,7 @@ SHIPPING_METHOD_DETAILS = """
       id
       name
       channelListings {
-        channel {
+        tenant {
           name
         }
       }
@@ -90,7 +90,7 @@ fragment CategoryDetails on Category {
       }
     }
   }
-  products(first: 10 channel: "main") {
+  products(first: 10 tenant: "main") {
     edges {
       node {
         id
@@ -276,7 +276,7 @@ COLLECTION = (
       id
       name
       slug
-      channel
+      tenant
       products(first: 10) {
         edges {
           node {

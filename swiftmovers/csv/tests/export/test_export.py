@@ -166,7 +166,7 @@ def test_export_products_filter_is_published(
     # when
     export_products(
         user_export_file,
-        {"filter": {"is_published": True, "channel": channel_USD.slug}},
+        {"filter": {"is_published": True, "tenant": channel_USD.slug}},
         export_info,
         file_type,
     )

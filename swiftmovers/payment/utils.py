@@ -14,7 +14,7 @@ from django.utils import timezone
 
 from ..account.models import User
 from ..app.models import App
-from ..channel import TransactionFlowStrategy
+from ..tenant import TransactionFlowStrategy
 from ..checkout.actions import transaction_amounts_for_checkout_updated
 from ..checkout.fetch import fetch_checkout_info, fetch_checkout_lines
 from ..checkout.models import Checkout

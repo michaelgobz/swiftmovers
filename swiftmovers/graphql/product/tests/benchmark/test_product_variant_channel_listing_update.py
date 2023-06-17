@@ -34,7 +34,7 @@ def test_variant_channel_listing_update(
                 variant {
                     id
                     channelListings {
-                        channel {
+                        tenant {
                             id
                             slug
                             currencyCode

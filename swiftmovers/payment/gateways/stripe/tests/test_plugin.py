@@ -206,7 +206,7 @@ def test_process_payment(
         currency=payment_info.currency,
         capture_method=AUTOMATIC_CAPTURE_METHOD,
         metadata={
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
             "payment_id": payment_info.graphql_payment_id,
         },
         receipt_email=payment_stripe_for_checkout.checkout.email,
@@ -266,7 +266,7 @@ def test_process_payment_with_disabled_include_receipt_email(
         currency=payment_info.currency,
         capture_method=AUTOMATIC_CAPTURE_METHOD,
         metadata={
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
             "payment_id": payment_info.graphql_payment_id,
         },
     )
@@ -325,7 +325,7 @@ def test_process_payment_with_enabled_include_receipt_email(
         currency=payment_info.currency,
         capture_method=AUTOMATIC_CAPTURE_METHOD,
         metadata={
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
             "payment_id": payment_info.graphql_payment_id,
         },
         receipt_email=payment_stripe_for_checkout.checkout.email,
@@ -392,7 +392,7 @@ def test_process_payment_with_customer(
         capture_method=AUTOMATIC_CAPTURE_METHOD,
         customer=customer,
         metadata={
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
             "payment_id": payment_info.graphql_payment_id,
         },
         receipt_email=customer_user.email,
@@ -490,7 +490,7 @@ def test_process_payment_with_customer_and_future_usage(
         customer=customer,
         setup_future_usage=store_payment_method.lower(),
         metadata={
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
             "payment_id": payment_info.graphql_payment_id,
         },
         receipt_email=payment_stripe_for_checkout.checkout.email,
@@ -567,7 +567,7 @@ def test_process_payment_with_customer_and_future_usage_no_store(
         capture_method=AUTOMATIC_CAPTURE_METHOD,
         customer=customer,
         metadata={
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
             "payment_id": payment_info.graphql_payment_id,
         },
         receipt_email=payment_stripe_for_checkout.checkout.email,
@@ -664,7 +664,7 @@ def test_process_payment_with_customer_and_payment_method(
         payment_method="pm_ID",
         off_session=False,
         metadata={
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
             "payment_id": payment_info.graphql_payment_id,
         },
         receipt_email=payment_stripe_for_checkout.checkout.email,
@@ -760,7 +760,7 @@ def test_process_payment_with_payment_method_types(
         capture_method=AUTOMATIC_CAPTURE_METHOD,
         customer=customer,
         metadata={
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
             "payment_id": payment_info.graphql_payment_id,
         },
         payment_method_types=["p24", "card"],
@@ -859,7 +859,7 @@ def test_process_payment_offline(
         confirm=True,
         off_session=True,
         metadata={
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
             "payment_id": payment_info.graphql_payment_id,
         },
         receipt_email=payment_stripe_for_checkout.checkout.email,
@@ -962,7 +962,7 @@ def test_process_payment_with_customer_and_payment_method_raises_authentication_
         confirm=True,
         off_session=True,
         metadata={
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
             "payment_id": payment_info.graphql_payment_id,
         },
         receipt_email=payment_stripe_for_checkout.checkout.email,
@@ -1040,7 +1040,7 @@ def test_process_payment_with_customer_and_payment_method_raises_error(
         confirm=True,
         off_session=True,
         metadata={
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
             "payment_id": payment_info.graphql_payment_id,
         },
         receipt_email=payment_stripe_for_checkout.checkout.email,
@@ -1102,7 +1102,7 @@ def test_process_payment_with_disabled_order_auto_confirmation(
         currency=payment_info.currency,
         capture_method=MANUAL_CAPTURE_METHOD,
         metadata={
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
             "payment_id": payment_info.graphql_payment_id,
         },
         receipt_email=payment_stripe_for_checkout.checkout.email,
@@ -1157,7 +1157,7 @@ def test_process_payment_with_manual_capture(
         currency=payment_info.currency,
         capture_method=MANUAL_CAPTURE_METHOD,
         metadata={
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
             "payment_id": payment_info.graphql_payment_id,
         },
         receipt_email=payment_stripe_for_checkout.checkout.email,
@@ -1197,7 +1197,7 @@ def test_process_payment_with_error(
         currency=payment_info.currency,
         capture_method=AUTOMATIC_CAPTURE_METHOD,
         metadata={
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
             "payment_id": payment_info.graphql_payment_id,
         },
         receipt_email=payment_stripe_for_checkout.checkout.email,

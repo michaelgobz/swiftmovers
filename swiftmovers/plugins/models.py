@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models import JSONField
 
-from ..channel.models import Channel
+from ..tenant.models import Channel
 from ..core.utils.json_serializer import CustomJsonEncoder
 from ..permission.enums import PluginsPermissions
 
@@ -19,7 +19,7 @@ class PluginConfiguration(models.Model):
     )
 
     class Meta:
-        unique_together = ("identifier", "channel")
+        unique_together = ("identifier", "tenant")
         permissions = ((PluginsPermissions.MANAGE_PLUGINS.codename, "Manage plugins"),)
 
     def __str__(self):

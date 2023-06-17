@@ -7,9 +7,9 @@ from ....core.enums import WeightUnitsEnum
 from ....tests.utils import assert_no_permission, get_graphql_content
 
 QUERY_VARIANT = """query ProductVariantDetails(
-        $id: ID!, $address: AddressInput, $countryCode: CountryCode, $channel: String
+        $id: ID!, $address: AddressInput, $countryCode: CountryCode, $tenant: String
     ) {
-        productVariant(id: $id, channel: $channel) {
+        productVariant(id: $id, tenant: $tenant) {
             id
             deprecatedStocksByCountry: stocks(countryCode: $countryCode) {
                 id
@@ -43,7 +43,7 @@ QUERY_VARIANT = """query ProductVariantDetails(
             }
             name
             channelListings {
-                channel {
+                tenant {
                     slug
                 }
                 price {
@@ -87,7 +87,7 @@ def test_fetch_variant(
     Site.objects.clear_cache()
 
     variant_id = graphene.Node.to_global_id("ProductVariant", variant.pk)
-    variables = {"id": variant_id, "countryCode": "EU", "channel": channel_USD.slug}
+    variables = {"id": variant_id, "countryCode": "EU", "tenant": channel_USD.slug}
     staff_api_client.user.user_permissions.add(permission_manage_products)
 
     # when
@@ -107,7 +107,7 @@ def test_fetch_variant(
     assert data["weight"]["unit"] == WeightUnitsEnum.G.name
     channel_listing_data = data["channelListings"][0]
     channel_listing = variant.channel_listings.get()
-    assert channel_listing_data["channel"]["slug"] == channel_listing.channel.slug
+    assert channel_listing_data["tenant"]["slug"] == channel_listing.channel.slug
     assert channel_listing_data["price"]["currency"] == channel_listing.currency
     assert channel_listing_data["price"]["amount"] == channel_listing.price_amount
     assert channel_listing_data["costPrice"]["currency"] == channel_listing.currency
@@ -139,7 +139,7 @@ def test_fetch_variant_no_stocks(
     warehouse.channels.clear()
 
     variant_id = graphene.Node.to_global_id("ProductVariant", variant.pk)
-    variables = {"id": variant_id, "countryCode": "EU", "channel": channel_USD.slug}
+    variables = {"id": variant_id, "countryCode": "EU", "tenant": channel_USD.slug}
     staff_api_client.user.user_permissions.add(permission_manage_products)
 
     # when
@@ -158,7 +158,7 @@ def test_fetch_variant_no_stocks(
     assert data["weight"]["unit"] == WeightUnitsEnum.G.name
     channel_listing_data = data["channelListings"][0]
     channel_listing = variant.channel_listings.get()
-    assert channel_listing_data["channel"]["slug"] == channel_listing.channel.slug
+    assert channel_listing_data["tenant"]["slug"] == channel_listing.channel.slug
     assert channel_listing_data["price"]["currency"] == channel_listing.currency
     assert channel_listing_data["price"]["amount"] == channel_listing.price_amount
     assert channel_listing_data["costPrice"]["currency"] == channel_listing.currency
@@ -168,11 +168,11 @@ def test_fetch_variant_no_stocks(
 
 
 QUERY_PRODUCT_VARIANT_CHANNEL_LISTING = """
-    query ProductVariantDetails($id: ID!, $channel: String) {
-        productVariant(id: $id, channel: $channel) {
+    query ProductVariantDetails($id: ID!, $tenant: String) {
+        productVariant(id: $id, tenant: $tenant) {
             id
             channelListings {
-                channel {
+                tenant {
                     slug
                 }
                 price {
@@ -201,7 +201,7 @@ def test_get_product_variant_channel_listing_as_staff_user(
     # given
     variant = product_available_in_many_channels.variants.get()
     variant_id = graphene.Node.to_global_id("ProductVariant", variant.pk)
-    variables = {"id": variant_id, "channel": channel_USD.slug}
+    variables = {"id": variant_id, "tenant": channel_USD.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -215,7 +215,7 @@ def test_get_product_variant_channel_listing_as_staff_user(
     channel_listings = variant.channel_listings.all()
     for channel_listing in channel_listings:
         assert {
-            "channel": {"slug": channel_listing.channel.slug},
+            "tenant": {"slug": channel_listing.channel.slug},
             "price": {
                 "currency": channel_listing.currency,
                 "amount": channel_listing.price_amount,
@@ -240,7 +240,7 @@ def test_get_product_variant_channel_listing_as_app(
     # given
     variant = product_available_in_many_channels.variants.get()
     variant_id = graphene.Node.to_global_id("ProductVariant", variant.pk)
-    variables = {"id": variant_id, "channel": channel_USD.slug}
+    variables = {"id": variant_id, "tenant": channel_USD.slug}
 
     # when
     response = app_api_client.post_graphql(
@@ -254,7 +254,7 @@ def test_get_product_variant_channel_listing_as_app(
     channel_listings = variant.channel_listings.all()
     for channel_listing in channel_listings:
         assert {
-            "channel": {"slug": channel_listing.channel.slug},
+            "tenant": {"slug": channel_listing.channel.slug},
             "price": {
                 "currency": channel_listing.currency,
                 "amount": channel_listing.price_amount,
@@ -279,7 +279,7 @@ def test_get_product_variant_channel_listing_as_customer(
     # given
     variant = product_available_in_many_channels.variants.get()
     variant_id = graphene.Node.to_global_id("ProductVariant", variant.pk)
-    variables = {"id": variant_id, "channel": channel_USD.slug}
+    variables = {"id": variant_id, "tenant": channel_USD.slug}
 
     # when
     response = user_api_client.post_graphql(
@@ -299,7 +299,7 @@ def test_get_product_variant_channel_listing_as_anonymous(
     # given
     variant = product_available_in_many_channels.variants.get()
     variant_id = graphene.Node.to_global_id("ProductVariant", variant.pk)
-    variables = {"id": variant_id, "channel": channel_USD.slug}
+    variables = {"id": variant_id, "tenant": channel_USD.slug}
 
     # when
     response = api_client.post_graphql(
@@ -321,10 +321,10 @@ QUERY_PRODUCT_VARIANT_STOCKS = """
   }
   query ProductVariantDetails(
     $id: ID!
-    $channel: String
+    $tenant: String
     $address: AddressInput
   ) {
-    productVariant(id: $id, channel: $channel) {
+    productVariant(id: $id, tenant: $tenant) {
       id
       stocksNoAddress: stocks {
         ...Stock
@@ -348,7 +348,7 @@ def test_get_product_variant_stocks(
     variant_id = graphene.Node.to_global_id("ProductVariant", variant.pk)
     variables = {
         "id": variant_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "address": {"country": "PL"},
     }
 
@@ -368,7 +368,7 @@ def test_get_product_variant_stocks(
     data = content["data"]["productVariant"]
 
     # When no address is provided, it should return all stocks of the variant available
-    # in given channel.
+    # in given tenant.
     assert len(data["stocksNoAddress"]) == all_stocks.count()
     no_address_stocks_ids = [stock["id"] for stock in data["stocksNoAddress"]]
     assert all(
@@ -402,7 +402,7 @@ def test_get_product_variant_stocks_no_channel_shipping_zones(
     variant_id = graphene.Node.to_global_id("ProductVariant", variant.pk)
     variables = {
         "id": variant_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "address": {"country": "PL"},
     }
 
@@ -423,8 +423,8 @@ def test_get_product_variant_stocks_no_channel_shipping_zones(
 
 
 QUERY_PRODUCT_VARIANT_PREORDER = """
-    query ProductVariantDetails($id: ID!, $channel: String) {
-        productVariant(id: $id, channel: $channel) {
+    query ProductVariantDetails($id: ID!, $tenant: String) {
+        productVariant(id: $id, tenant: $tenant) {
             preorder {
                 globalThreshold
                 globalSoldUnits
@@ -445,7 +445,7 @@ def test_get_product_variant_preorder_as_staff(
     # given
     variant = preorder_variant_global_and_channel_threshold
     variant_id = graphene.Node.to_global_id("ProductVariant", variant.pk)
-    variables = {"id": variant_id, "channel": channel_USD.slug}
+    variables = {"id": variant_id, "tenant": channel_USD.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -471,7 +471,7 @@ def test_get_product_variant_preorder_as_customer_not_allowed_fields(
     # given
     variant = preorder_variant_global_threshold
     variant_id = graphene.Node.to_global_id("ProductVariant", variant.pk)
-    variables = {"id": variant_id, "channel": channel_USD.slug}
+    variables = {"id": variant_id, "tenant": channel_USD.slug}
 
     # when
     response = user_api_client.post_graphql(
@@ -492,15 +492,15 @@ def test_get_product_variant_preorder_as_customer_allowed_fields(
     variant = preorder_variant_global_threshold
     variant_id = graphene.Node.to_global_id("ProductVariant", variant.pk)
     query = """
-        query ProductVariantDetails($id: ID!, $channel: String) {
-            productVariant(id: $id, channel: $channel) {
+        query ProductVariantDetails($id: ID!, $tenant: String) {
+            productVariant(id: $id, tenant: $tenant) {
                 preorder {
                     endDate
                 }
             }
         }
     """
-    variables = {"id": variant_id, "channel": channel_USD.slug}
+    variables = {"id": variant_id, "tenant": channel_USD.slug}
 
     # when
     response = user_api_client.post_graphql(
@@ -516,8 +516,8 @@ def test_get_product_variant_preorder_as_customer_allowed_fields(
 
 def _fetch_variant(client, variant, channel_slug=None, permissions=None):
     query = """
-    query ProductVariantDetails($variantId: ID!, $channel: String) {
-        productVariant(id: $variantId, channel: $channel) {
+    query ProductVariantDetails($variantId: ID!, $tenant: String) {
+        productVariant(id: $variantId, tenant: $tenant) {
             id
             product {
                 id
@@ -527,7 +527,7 @@ def _fetch_variant(client, variant, channel_slug=None, permissions=None):
     """
     variables = {"variantId": graphene.Node.to_global_id("ProductVariant", variant.id)}
     if channel_slug:
-        variables["channel"] = channel_slug
+        variables["tenant"] = channel_slug
     response = client.post_graphql(
         query, variables, permissions=permissions, check_no_permissions=False
     )
@@ -632,7 +632,7 @@ def test_query_product_variant_for_federation(api_client, variant, channel_USD):
             {
                 "__typename": "ProductVariant",
                 "id": variant_id,
-                "channel": channel_USD.slug,
+                "tenant": channel_USD.slug,
             },
         ],
     }

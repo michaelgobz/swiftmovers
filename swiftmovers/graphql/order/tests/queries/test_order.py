@@ -39,7 +39,7 @@ query OrdersQuery {
                 number
                 canFinalize
                 status
-                channel {
+                tenant {
                     slug
                 }
                 languageCodeEnum
@@ -299,7 +299,7 @@ def test_order_query(
     # then
     order_data = content["data"]["orders"]["edges"][0]["node"]
     assert order_data["number"] == str(order.number)
-    assert order_data["channel"]["slug"] == order.channel.slug
+    assert order_data["tenant"]["slug"] == order.channel.slug
     assert order_data["canFinalize"] is True
     assert order_data["status"] == order.status.upper()
     assert order_data["statusDisplay"] == order.get_status_display()
@@ -451,7 +451,7 @@ def test_order_query_total_price_is_0(
     # then
     order_data = content["data"]["orders"]["edges"][0]["node"]
     assert order_data["number"] == str(order.number)
-    assert order_data["channel"]["slug"] == order.channel.slug
+    assert order_data["tenant"]["slug"] == order.channel.slug
     assert order_data["canFinalize"] is True
     assert order_data["status"] == order.status.upper()
     assert order_data["statusDisplay"] == order.get_status_display()
@@ -489,8 +489,8 @@ def test_orders_with_channel(
     staff_api_client, permission_manage_orders, orders, channel_USD
 ):
     query = """
-    query OrdersQuery($channel: String) {
-        orders(first: 10, channel: $channel) {
+    query OrdersQuery($tenant: String) {
+        orders(first: 10, tenant: $tenant) {
             edges {
                 node {
                     id
@@ -501,7 +501,7 @@ def test_orders_with_channel(
     """
 
     staff_api_client.user.user_permissions.add(permission_manage_orders)
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     response = staff_api_client.post_graphql(query, variables)
     edges = get_graphql_content(response)["data"]["orders"]["edges"]
 
@@ -941,7 +941,7 @@ def test_order_query_in_pln_channel(
     # then
     order_data = content["data"]["orders"]["edges"][0]["node"]
     assert order_data["number"] == str(order.number)
-    assert order_data["channel"]["slug"] == order.channel.slug
+    assert order_data["tenant"]["slug"] == order.channel.slug
     assert order_data["canFinalize"] is True
     assert order_data["status"] == order.status.upper()
     assert order_data["statusDisplay"] == order.get_status_display()

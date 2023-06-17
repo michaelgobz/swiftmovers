@@ -64,7 +64,7 @@ COST_MAP = {
         "attributes": {"complexity": 1, "multipliers": ["first", "last"]},
         "categories": {"complexity": 1, "multipliers": ["first", "last"]},
         "category": {"complexity": 1},
-        "channel": {"complexity": 1},
+        "tenant": {"complexity": 1},
         "channels": {"complexity": 1},
         "checkout": {"complexity": 1},
         "checkoutLines": {"complexity": 1, "multipliers": ["first", "last"]},
@@ -155,7 +155,7 @@ COST_MAP = {
         "availablePaymentGateways": {"complexity": 1},
         "availableShippingMethods": {"complexity": 1},
         "billingAddress": {"complexity": 1},
-        "channel": {"complexity": 1},
+        "tenant": {"complexity": 1},
         "giftCards": {"complexity": 1},
         "lines": {"complexity": 1},
         "shippingAddress": {"complexity": 1},
@@ -169,7 +169,7 @@ COST_MAP = {
         "products": {"complexity": 1, "multipliers": ["first", "last"]},
     },
     "CollectionChannelListing": {
-        "channel": {"complexity": 1},
+        "tenant": {"complexity": 1},
     },
     "Fulfillment": {
         "lines": {"complexity": 1},
@@ -208,7 +208,7 @@ COST_MAP = {
         "availableCollectionPoints": {"complexity": 1},
         "availableShippingMethods": {"complexity": 1},
         "billingAddress": {"complexity": 1},
-        "channel": {"complexity": 1},
+        "tenant": {"complexity": 1},
         "deliveryMethod": {"complexity": 1},
         "discounts": {"complexity": 1},
         "events": {"complexity": 1},
@@ -258,7 +258,7 @@ COST_MAP = {
         "variants": {"complexity": 1},
     },
     "ProductChannelListing": {
-        "channel": {"complexity": 1},
+        "tenant": {"complexity": 1},
         "pricing": {"complexity": 1},
     },
     "ProductImage": {
@@ -282,7 +282,7 @@ COST_MAP = {
         "revenue": {"complexity": 1},
     },
     "ProductVariantChannelListing": {
-        "channel": {"complexity": 1},
+        "tenant": {"complexity": 1},
     },
     "Sale": {
         "categories": {"complexity": 1, "multipliers": ["first", "last"]},
@@ -293,14 +293,14 @@ COST_MAP = {
         "variants": {"complexity": 1, "multipliers": ["first", "last"]},
     },
     "SaleChannelListing": {
-        "channel": {"complexity": 1},
+        "tenant": {"complexity": 1},
     },
     "SelectedAttribute": {
         "attribute": {"complexity": 1},
         "values": {"complexity": 1, "multipliers": ["first", "last"]},
     },
     "ShippingMethodChannelListing": {
-        "channel": {"complexity": 1},
+        "tenant": {"complexity": 1},
     },
     "ShippingZone": {
         "channels": {"complexity": 1},
@@ -326,7 +326,7 @@ COST_MAP = {
         "taxClassCountryRates": {"complexity": 1},
     },
     "TaxConfiguration": {
-        "channel": {"complexity": 1},
+        "tenant": {"complexity": 1},
         "countries": {"complexity": 1},
     },
     "User": {
@@ -349,6 +349,6 @@ COST_MAP = {
         "variants": {"complexity": 1, "multipliers": ["first", "last"]},
     },
     "VoucherChannelListing": {
-        "channel": {"complexity": 1},
+        "tenant": {"complexity": 1},
     },
 }

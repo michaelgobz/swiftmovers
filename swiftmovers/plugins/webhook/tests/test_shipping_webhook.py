@@ -881,4 +881,4 @@ def test_generate_excluded_shipping_methods_for_checkout_payload(
         "ShippingMethod", methods[2].id
     )
     assert "checkout" in json_payload
-    assert "channel" in json_payload["checkout"]
+    assert "tenant" in json_payload["checkout"]

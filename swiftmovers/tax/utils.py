@@ -7,7 +7,7 @@ from . import TaxCalculationStrategy
 
 if TYPE_CHECKING:
     from ..account.models import Address
-    from ..channel.models import Channel
+    from ..tenant.models import Channel
     from ..checkout.fetch import CheckoutInfo, CheckoutLineInfo
     from ..order.models import Order
     from ..tax.models import TaxClass, TaxClassCountryRate
@@ -27,7 +27,7 @@ def get_tax_country(
     - when shipping is required, use the shipping address's country code,
     - when shipping is not required (e.g. because of having only digital products), use
     the billing address's country code,
-    - fallback to channel's default country when addresses are not provided.
+    - fallback to tenant's default country when addresses are not provided.
     """
     if shipping_address and is_shipping_required:
         return shipping_address.country.code
@@ -42,11 +42,11 @@ def get_display_gross_prices(
     channel_tax_configuration: "TaxConfiguration",
     country_tax_configuration: Optional["TaxConfigurationPerCountry"],
 ):
-    """Get display_gross_prices value for tax channel configuration.
+    """Get display_gross_prices value for tax tenant configuration.
 
     :param channel_tax_configuration: Channel-specific tax configuration.
     :param country_tax_configuration: Country-specific tax configuration for the given
-    channel.
+    tenant.
     """
     return (
         country_tax_configuration.display_gross_prices
@@ -59,11 +59,11 @@ def get_charge_taxes(
     channel_tax_configuration: "TaxConfiguration",
     country_tax_configuration: Optional["TaxConfigurationPerCountry"],
 ) -> bool:
-    """Get charge_taxes value for tax channel configuration.
+    """Get charge_taxes value for tax tenant configuration.
 
     :param channel_tax_configuration: Channel-specific tax configuration.
     :param country_tax_configuration: Country-specific tax configuration for the given
-    channel.
+    tenant.
     """
     return (
         country_tax_configuration.charge_taxes
@@ -76,11 +76,11 @@ def get_tax_calculation_strategy(
     channel_tax_configuration: "TaxConfiguration",
     country_tax_configuration: Optional["TaxConfigurationPerCountry"],
 ) -> str:
-    """Get tax_calculation_strategy value for tax channel configuration.
+    """Get tax_calculation_strategy value for tax tenant configuration.
 
     :param channel_tax_configuration: Channel-specific tax configuration.
     :param country_tax_configuration: Country-specific tax configuration for the given
-    channel.
+    tenant.
     """
     return (
         country_tax_configuration.tax_calculation_strategy

@@ -72,7 +72,7 @@ def test_digital_content_query_invalid_id(
     digital_content_id = "'"
     variables = {
         "id": digital_content_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = staff_api_client.post_graphql(
         QUERY_DIGITAL_CONTENT, variables, permissions=[permission_manage_products]
@@ -91,7 +91,7 @@ def test_digital_content_query_object_with_given_id_does_not_exist(
     digital_content_id = graphene.Node.to_global_id("DigitalContent", -1)
     variables = {
         "id": digital_content_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = staff_api_client.post_graphql(
         QUERY_DIGITAL_CONTENT, variables, permissions=[permission_manage_products]
@@ -106,7 +106,7 @@ def test_digital_content_query_with_invalid_object_type(
     digital_content_id = graphene.Node.to_global_id("Product", digital_content.pk)
     variables = {
         "id": digital_content_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = staff_api_client.post_graphql(
         QUERY_DIGITAL_CONTENT, variables, permissions=[permission_manage_products]

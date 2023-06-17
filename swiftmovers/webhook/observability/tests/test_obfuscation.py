@@ -131,7 +131,7 @@ def test_anonymize_gql_operation_response_with_fragment_spread(gql_operation_fac
       name
     }
     query products($first: Int){
-      products(channel: "channel-pln", first:$first){
+      products(tenant: "tenant-pln", first:$first){
         edges{
           node{
             ... ProductFragment

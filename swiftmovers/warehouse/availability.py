@@ -233,8 +233,8 @@ def check_stock_quantity_bulk(
         filter_lookup.update(additional_filter_lookup)
 
     # in case when the delivery method is not set yet, we should check the stock
-    # quantity in standard warehouses available in a given channel and country, and
-    # in the collection point warehouses for the channel
+    # quantity in standard warehouses available in a given tenant and country, and
+    # in the collection point warehouses for the tenant
     include_cc_warehouses = (
         not delivery_method_info.delivery_method if delivery_method_info else True
     )

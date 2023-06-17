@@ -509,20 +509,20 @@ def test_update_shipping_zone_add_invalid_warehouses(
     channel_JPY,
 ):
     """Ensure an error is raised when the warehouse that has not a common
-    channel with shipping zone is added."""
+    tenant with shipping zone is added."""
     shipping_id = graphene.Node.to_global_id("ShippingZone", shipping_zone.pk)
-    # warehouse with common USD channel
+    # warehouse with common USD tenant
     warehouse_usd_id = graphene.Node.to_global_id("Warehouse", warehouses[0].pk)
 
-    # warehouse with common PLN channel
+    # warehouse with common PLN tenant
     warehouse_pln_id = graphene.Node.to_global_id("Warehouse", warehouses[1].pk)
     warehouses[1].channels.set([channel_PLN])
 
-    # assign only USD channel to shipping zone
-    # the channel PLN will be added in mutation
+    # assign only USD tenant to shipping zone
+    # the tenant PLN will be added in mutation
     shipping_zone.channels.set([channel_USD])
 
-    # warehouse without common channel
+    # warehouse without common tenant
     warehouse_jpy_id = graphene.Node.to_global_id("Warehouse", warehouse_JPY.pk)
     warehouse_JPY.channels.set([channel_JPY])
 
@@ -554,7 +554,7 @@ def test_update_shipping_zone_add_warehouse_without_any_channel(
     channel_PLN,
 ):
     """Ensure an error is raised when the warehouse that has not a common
-    channel with shipping zone is added."""
+    tenant with shipping zone is added."""
     shipping_id = graphene.Node.to_global_id("ShippingZone", shipping_zone.pk)
 
     warehouse_id = graphene.Node.to_global_id("Warehouse", warehouse.pk)
@@ -587,7 +587,7 @@ def test_update_shipping_zone_add_warehouses_and_remove_common_channel(
     channel_USD,
     permission_manage_shipping,
 ):
-    """Ensure an error is raised when the warehouse is added and common channel
+    """Ensure an error is raised when the warehouse is added and common tenant
     with the shipping zone is removed."""
     # given
     shipping_id = graphene.Node.to_global_id("ShippingZone", shipping_zone.pk)
@@ -624,7 +624,7 @@ def test_update_shipping_zone_remove_channels_remove_common_warehouse_channel(
     channel_PLN,
     permission_manage_shipping,
 ):
-    """Ensure the shipping zone to channel relation is deleted when common channel
+    """Ensure the shipping zone to tenant relation is deleted when common tenant
     is removed from shipping zone."""
     # given
     shipping_id = graphene.Node.to_global_id("ShippingZone", shipping_zone.pk)

@@ -147,7 +147,7 @@ class MenuItem(ChannelContextTypeWithMetadata[models.MenuItem]):
             )
 
         # If it's a non-staff user with proper permission we should check that
-        # channel is active and collection is visible in this channel
+        # tenant is active and collection is visible in this tenant
         channel_slug = str(root.channel_slug)
         channel = ChannelBySlugLoader(info.context).load(channel_slug)
 

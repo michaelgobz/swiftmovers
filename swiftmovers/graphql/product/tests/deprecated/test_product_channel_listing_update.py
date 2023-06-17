@@ -27,7 +27,7 @@ mutation UpdateProductChannelListing(
                 isPublished
                 publicationDate
                 visibleInListings
-                channel {
+                tenant {
                     slug
                 }
                 purchaseCost {
@@ -47,7 +47,7 @@ mutation UpdateProductChannelListing(
             }
             variants {
                 channelListings {
-                    channel {
+                    tenant {
                         slug
                     }
                 }
@@ -109,7 +109,7 @@ def test_product_channel_listing_update_as_staff_user(
     assert product_data["slug"] == product.slug
     assert product_data["channelListings"][0]["isPublished"] is True
     assert product_data["channelListings"][0]["publicationDate"] is None
-    assert product_data["channelListings"][0]["channel"]["slug"] == channel_USD.slug
+    assert product_data["channelListings"][0]["tenant"]["slug"] == channel_USD.slug
     assert product_data["channelListings"][0]["visibleInListings"] is True
     assert product_data["channelListings"][0]["isAvailableForPurchase"] is True
     assert (
@@ -129,7 +129,7 @@ def test_product_channel_listing_update_as_staff_user(
         == publication_date.isoformat()
     )
     assert product_data["channelListings"][1]["visibleInListings"] is True
-    assert product_data["channelListings"][1]["channel"]["slug"] == channel_PLN.slug
+    assert product_data["channelListings"][1]["tenant"]["slug"] == channel_PLN.slug
     assert product_data["channelListings"][1]["isAvailableForPurchase"] is True
     assert (
         product_data["channelListings"][1]["availableForPurchase"]
@@ -219,13 +219,13 @@ def test_product_channel_listing_update_add_channel(
     assert product_data["slug"] == product.slug
     assert product_data["channelListings"][0]["isPublished"] is True
     assert product_data["channelListings"][0]["publicationDate"] is None
-    assert product_data["channelListings"][0]["channel"]["slug"] == channel_USD.slug
+    assert product_data["channelListings"][0]["tenant"]["slug"] == channel_USD.slug
     assert product_data["channelListings"][1]["isPublished"] is False
     assert (
         product_data["channelListings"][1]["publicationDate"]
         == publication_date.isoformat()
     )
-    assert product_data["channelListings"][1]["channel"]["slug"] == channel_PLN.slug
+    assert product_data["channelListings"][1]["tenant"]["slug"] == channel_PLN.slug
     assert product_data["channelListings"][1]["visibleInListings"] is True
     assert product_data["channelListings"][1]["isAvailableForPurchase"] is True
     assert (
@@ -272,7 +272,7 @@ def test_product_channel_listing_update_update_publication_data(
         product_data["channelListings"][0]["publicationDate"]
         == publication_date.isoformat()
     )
-    assert product_data["channelListings"][0]["channel"]["slug"] == channel_USD.slug
+    assert product_data["channelListings"][0]["tenant"]["slug"] == channel_USD.slug
     assert product_data["channelListings"][0]["visibleInListings"] is True
     assert product_data["channelListings"][0]["isAvailableForPurchase"] is True
     assert (
@@ -357,7 +357,7 @@ def test_product_channel_listing_update_update_is_available_for_purchase_past_da
     assert product_data["slug"] == product.slug
     assert product_data["channelListings"][0]["isPublished"] is True
     assert not product_data["channelListings"][0]["publicationDate"]
-    assert product_data["channelListings"][0]["channel"]["slug"] == channel_USD.slug
+    assert product_data["channelListings"][0]["tenant"]["slug"] == channel_USD.slug
     assert product_data["channelListings"][0]["visibleInListings"] is True
     assert product_data["channelListings"][0]["isAvailableForPurchase"] is True
     assert (
@@ -401,7 +401,7 @@ def test_product_channel_listing_update_update_is_available_for_purchase_future_
     assert product_data["slug"] == product.slug
     assert product_data["channelListings"][0]["isPublished"] is True
     assert not product_data["channelListings"][0]["publicationDate"]
-    assert product_data["channelListings"][0]["channel"]["slug"] == channel_USD.slug
+    assert product_data["channelListings"][0]["tenant"]["slug"] == channel_USD.slug
     assert product_data["channelListings"][0]["visibleInListings"] is True
     assert product_data["channelListings"][0]["isAvailableForPurchase"] is False
     assert (

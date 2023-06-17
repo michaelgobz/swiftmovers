@@ -169,7 +169,7 @@ def test_checkout_complete_with_inactive_channel_order_already_exists(
     content = get_graphql_content(response)
     data = content["data"]["checkoutComplete"]
     assert data["errors"][0]["code"] == CheckoutErrorCode.CHANNEL_INACTIVE.name
-    assert data["errors"][0]["field"] == "channel"
+    assert data["errors"][0]["field"] == "tenant"
 
 
 def test_checkout_complete_with_inactive_channel(
@@ -225,7 +225,7 @@ def test_checkout_complete_with_inactive_channel(
     content = get_graphql_content(response)
     data = content["data"]["checkoutComplete"]
     assert data["errors"][0]["code"] == CheckoutErrorCode.CHANNEL_INACTIVE.name
-    assert data["errors"][0]["field"] == "channel"
+    assert data["errors"][0]["field"] == "tenant"
 
 
 @pytest.mark.integration

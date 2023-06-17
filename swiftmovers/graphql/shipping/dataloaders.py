@@ -2,7 +2,7 @@ from collections import defaultdict
 
 from django.db.models import Exists, F, OuterRef
 
-from ...channel.models import Channel
+from ...tenant.models import Channel
 from ...shipping.models import (
     ShippingMethod,
     ShippingMethodChannelListing,

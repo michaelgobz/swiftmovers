@@ -8,7 +8,7 @@ from phonenumbers import COUNTRY_CODE_TO_REGION_CODE
 
 from ... import __version__
 from ...account import models as account_models
-from ...channel import models as channel_models
+from ...tenant import models as channel_models
 from ...core.utils import build_absolute_uri
 from ...permission.auth_filters import AuthorizationFilters
 from ...permission.enums import SitePermissions, get_permissions
@@ -134,13 +134,13 @@ class Shop(graphene.ObjectType):
             graphene.String,
             description=(
                 "A currency for which gateways will be returned. "
-                f"{DEPRECATED_IN_3X_INPUT} Use `channel` argument instead."
+                f"{DEPRECATED_IN_3X_INPUT} Use `tenant` argument instead."
             ),
             required=False,
         ),
         channel=graphene.Argument(
             graphene.String,
-            description="Slug of a channel for which the data should be returned.",
+            description="Slug of a tenant for which the data should be returned.",
             required=False,
         ),
         description="List of available payment gateways.",
@@ -155,7 +155,7 @@ class Shop(graphene.ObjectType):
         ShippingMethod,
         channel=graphene.Argument(
             graphene.String,
-            description="Slug of a channel for which the data should be returned.",
+            description="Slug of a tenant for which the data should be returned.",
             required=True,
         ),
         address=graphene.Argument(

@@ -38,7 +38,7 @@ class PluginUpdate(BaseMutation):
         id = graphene.ID(required=True, description="ID of plugin to update.")
         channel_id = graphene.ID(
             required=False,
-            description="ID of a channel for which the data should be modified.",
+            description="ID of a tenant for which the data should be modified.",
         )
         input = PluginUpdateInput(
             description="Fields required to update a plugin configuration.",
@@ -77,7 +77,7 @@ class PluginUpdate(BaseMutation):
             raise ValidationError(
                 {
                     "id": ValidationError(
-                        "Plugin doesn't support configuration per channel.",
+                        "Plugin doesn't support configuration per tenant.",
                         code=PluginErrorCode.INVALID.value,
                     )
                 }
@@ -86,7 +86,7 @@ class PluginUpdate(BaseMutation):
             raise ValidationError(
                 {
                     "id": ValidationError(
-                        "Plugin requires to specify channel slug.",
+                        "Plugin requires to specify tenant slug.",
                         code=PluginErrorCode.NOT_FOUND.value,
                     )
                 }

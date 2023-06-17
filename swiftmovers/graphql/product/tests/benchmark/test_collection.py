@@ -54,8 +54,8 @@ def test_collection_view(api_client, published_collection, count_queries, channe
           }
         }
 
-        query Collection($id: ID!, $pageSize: Int, $channel: String) {
-          collection(id: $id, channel: $channel) {
+        query Collection($id: ID!, $pageSize: Int, $tenant: String) {
+          collection(id: $id, tenant: $tenant) {
             id
             slug
             name
@@ -68,7 +68,7 @@ def test_collection_view(api_client, published_collection, count_queries, channe
           products (
             first: $pageSize,
             filter: {collections: [$id]},
-            channel: $channel
+            tenant: $tenant
           ) {
             totalCount
             edges {
@@ -88,7 +88,7 @@ def test_collection_view(api_client, published_collection, count_queries, channe
               startCursor
             }
           }
-          attributes(filter: {inCollection: $id}, channel: $channel, first: 100) {
+          attributes(filter: {inCollection: $id}, tenant: $tenant, first: 100) {
             edges {
               node {
                 id
@@ -111,7 +111,7 @@ def test_collection_view(api_client, published_collection, count_queries, channe
     variables = {
         "pageSize": 100,
         "id": graphene.Node.to_global_id("Collection", published_collection.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     get_graphql_content(api_client.post_graphql(query, variables))
 
@@ -126,15 +126,15 @@ def test_retrieve_collection_channel_listings(
     channel_USD,
 ):
     query = """
-        query($channel: String) {
-          collections(first: 10, channel: $channel) {
+        query($tenant: String) {
+          collections(first: 10, tenant: $tenant) {
             edges {
               node {
                 id
                 channelListings {
                   publicationDate
                   isPublished
-                  channel{
+                  tenant{
                     slug
                     currencyCode
                     name
@@ -147,7 +147,7 @@ def test_retrieve_collection_channel_listings(
         }
     """
 
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     get_graphql_content(
         staff_api_client.post_graphql(
             query,

@@ -15,8 +15,8 @@ from ...views import generate_cache_key
 
 def test_batch_queries(category, product, api_client, channel_USD):
     query_product = """
-        query GetProduct($id: ID!, $channel: String) {
-            product(id: $id, channel: $channel) {
+        query GetProduct($id: ID!, $tenant: String) {
+            product(id: $id, tenant: $tenant) {
                 name
             }
         }
@@ -33,14 +33,14 @@ def test_batch_queries(category, product, api_client, channel_USD):
             "query": query_category,
             "variables": {
                 "id": graphene.Node.to_global_id("Category", category.pk),
-                "channel": channel_USD.slug,
+                "tenant": channel_USD.slug,
             },
         },
         {
             "query": query_product,
             "variables": {
                 "id": graphene.Node.to_global_id("Product", product.pk),
-                "channel": channel_USD.slug,
+                "tenant": channel_USD.slug,
             },
         },
     ]
@@ -225,12 +225,12 @@ def test_unexpected_exceptions_are_logged_in_their_own_logger(
     staff_api_client.user.user_permissions.add(permission_manage_products)
     variables = {
         "id": graphene.Node.to_global_id("Collection", published_collection.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = staff_api_client.post_graphql(
         """
-        query($id: ID!,$channel:String) {
-            collection(id: $id,channel:$channel) {
+        query($id: ID!,$tenant:String) {
+            collection(id: $id,tenant:$tenant) {
                 name
             }
         }""",
@@ -251,7 +251,7 @@ def test_example_query(api_client, product):
 
 @pytest.mark.parametrize(
     "other_query",
-    ["me{email}", 'products(first:5,channel:"channel"){edges{node{name}}}'],
+    ["me{email}", 'products(first:5,tenant:"tenant"){edges{node{name}}}'],
 )
 def test_query_contains_not_only_schema_raise_error(
     other_query, api_client, graphql_log_handler

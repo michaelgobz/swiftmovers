@@ -27,7 +27,7 @@ def test_notify_via_external_notification_trigger(
             "externalEventType": test_template_id,
         },
         "pluginId": "mirumee.notifications.sendgrid_email",
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
 
     response = staff_api_client.post_graphql(

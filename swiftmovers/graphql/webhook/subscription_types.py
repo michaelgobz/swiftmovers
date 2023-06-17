@@ -318,8 +318,8 @@ class CategoryDeleted(SubscriptionObjectType, CategoryBase):
 
 class ChannelBase(AbstractType):
     channel = graphene.Field(
-        "swiftmovers.graphql.channel.types.Channel",
-        description="The channel the event relates to.",
+        "swiftmovers.graphql.tenant.types.Channel",
+        description="The tenant the event relates to.",
     )
 
     @staticmethod
@@ -333,7 +333,7 @@ class ChannelCreated(SubscriptionObjectType, ChannelBase):
         root_type = "Channel"
         enable_dry_run = True
         interfaces = (Event,)
-        description = "Event sent when new channel is created." + ADDED_IN_32
+        description = "Event sent when new tenant is created." + ADDED_IN_32
 
 
 class ChannelUpdated(SubscriptionObjectType, ChannelBase):
@@ -341,7 +341,7 @@ class ChannelUpdated(SubscriptionObjectType, ChannelBase):
         root_type = "Channel"
         enable_dry_run = True
         interfaces = (Event,)
-        description = "Event sent when channel is updated." + ADDED_IN_32
+        description = "Event sent when tenant is updated." + ADDED_IN_32
 
 
 class ChannelDeleted(SubscriptionObjectType, ChannelBase):
@@ -349,7 +349,7 @@ class ChannelDeleted(SubscriptionObjectType, ChannelBase):
         root_type = "Channel"
         enable_dry_run = True
         interfaces = (Event,)
-        description = "Event sent when channel is deleted." + ADDED_IN_32
+        description = "Event sent when tenant is deleted." + ADDED_IN_32
 
 
 class ChannelStatusChanged(SubscriptionObjectType, ChannelBase):
@@ -357,7 +357,7 @@ class ChannelStatusChanged(SubscriptionObjectType, ChannelBase):
         root_type = "Channel"
         enable_dry_run = True
         interfaces = (Event,)
-        description = "Event sent when channel status has changed." + ADDED_IN_32
+        description = "Event sent when tenant status has changed." + ADDED_IN_32
 
 
 class OrderBase(AbstractType):
@@ -500,7 +500,7 @@ class GiftCardDeleted(SubscriptionObjectType, GiftCardBase):
 
 class GiftCardSent(SubscriptionObjectType, GiftCardBase):
     channel = graphene.String(
-        description="Slug of a channel for which this gift card email was sent."
+        description="Slug of a tenant for which this gift card email was sent."
     )
     sent_to_email = graphene.String(
         description="E-mail address to which gift card was sent.",
@@ -550,7 +550,7 @@ class MenuBase(AbstractType):
     menu = graphene.Field(
         "swiftmovers.graphql.menu.types.Menu",
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description="The menu the event relates to.",
     )
@@ -589,7 +589,7 @@ class MenuItemBase(AbstractType):
     menu_item = graphene.Field(
         "swiftmovers.graphql.menu.types.MenuItem",
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description="The menu item the event relates to.",
     )
@@ -628,7 +628,7 @@ class ProductBase(AbstractType):
     product = graphene.Field(
         "swiftmovers.graphql.product.types.Product",
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description="The product the event relates to.",
     )
@@ -720,7 +720,7 @@ class ProductVariantBase(AbstractType):
     product_variant = graphene.Field(
         "swiftmovers.graphql.product.types.ProductVariant",
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description="The product variant the event relates to.",
     )
@@ -846,7 +846,7 @@ class SaleBase(AbstractType):
     sale = graphene.Field(
         "swiftmovers.graphql.discount.types.Sale",
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description="The sale the event relates to.",
     )
@@ -885,7 +885,7 @@ class SaleToggle(SubscriptionObjectType, SaleBase):
     sale = graphene.Field(
         "swiftmovers.graphql.discount.types.Sale",
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description="The sale the event relates to." + ADDED_IN_35,
     )
@@ -1043,7 +1043,7 @@ class CollectionBase(AbstractType):
     collection = graphene.Field(
         "swiftmovers.graphql.product.types.collections.Collection",
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description="The collection the event relates to.",
     )
@@ -1245,14 +1245,14 @@ class ShippingPriceBase(AbstractType):
     shipping_method = graphene.Field(
         "swiftmovers.graphql.shipping.types.ShippingMethodType",
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description="The shipping method the event relates to.",
     )
     shipping_zone = graphene.Field(
         "swiftmovers.graphql.shipping.types.ShippingZone",
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description="The shipping zone the shipping method belongs to.",
     )
@@ -1299,7 +1299,7 @@ class ShippingZoneBase(AbstractType):
     shipping_zone = graphene.Field(
         "swiftmovers.graphql.shipping.types.ShippingZone",
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description="The shipping zone the event relates to.",
     )
@@ -1666,7 +1666,7 @@ class VoucherBase(AbstractType):
     voucher = graphene.Field(
         "swiftmovers.graphql.discount.types.Voucher",
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description="The voucher the event relates to.",
     )

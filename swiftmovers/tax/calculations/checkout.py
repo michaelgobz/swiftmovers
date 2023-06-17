@@ -13,7 +13,7 @@ from . import calculate_flat_rate_tax
 
 if TYPE_CHECKING:
     from ...account.models import Address
-    from ...channel.models import Channel
+    from ...tenant.models import Channel
     from ...checkout.fetch import CheckoutInfo, CheckoutLineInfo
     from ...checkout.models import Checkout
 

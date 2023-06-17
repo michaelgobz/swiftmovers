@@ -39,7 +39,7 @@ from .channels import CollectionChannelListing
 from .products import ProductCountableConnection
 
 
-@federated_entity("id channel")
+@federated_entity("id tenant")
 class Collection(ChannelContextTypeWithMetadata[models.Collection]):
     id = graphene.GlobalID(required=True)
     seo_title = graphene.String()
@@ -131,7 +131,7 @@ class Collection(ChannelContextTypeWithMetadata[models.Collection]):
         )
         qs = ChannelQsContext(qs=qs, channel_slug=root.channel_slug)
 
-        kwargs["channel"] = root.channel_slug
+        kwargs["tenant"] = root.channel_slug
         qs = filter_connection_queryset(qs, kwargs)
         return create_connection_slice(qs, info, kwargs, ProductCountableConnection)
 

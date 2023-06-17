@@ -93,7 +93,7 @@ def test_clean_channels_add_channels(channel_PLN):
 
     # then
     assert result == {
-        "add_channels": [{"channel_id": channel_id, "channel": channel_PLN}],
+        "add_channels": [{"channel_id": channel_id, "tenant": channel_PLN}],
         "remove_channels": [],
     }
     assert errors["input"] == []

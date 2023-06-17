@@ -55,7 +55,7 @@ from .models import Order, OrderGrantedRefund, OrderLine
 
 if TYPE_CHECKING:
     from ..app.models import App
-    from ..channel.models import Channel
+    from ..tenant.models import Channel
     from ..checkout.fetch import CheckoutInfo
     from ..payment.models import Payment, TransactionItem
     from ..plugins.manager import PluginsManager
@@ -1032,7 +1032,7 @@ def update_order_display_gross_prices(order: "Order"):
     """Update Order's `display_gross_prices` DB field.
 
     It gets the appropriate country code based on the current order lines and addresses.
-    Having the country code get the proper tax configuration for this channel and
+    Having the country code get the proper tax configuration for this tenant and
     country and determine whether gross prices should be displayed for this order.
     Doesn't save the value in the database.
     """

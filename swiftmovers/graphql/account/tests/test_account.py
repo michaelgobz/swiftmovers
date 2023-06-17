@@ -1175,13 +1175,13 @@ def test_me_query_checkout_with_inactive_channel(user_api_client, checkout):
 
 def test_me_query_checkouts_with_channel(user_api_client, checkout, checkout_JPY):
     query = """
-        query Me($channel: String) {
+        query Me($tenant: String) {
             me {
-                checkouts(first: 10, channel: $channel) {
+                checkouts(first: 10, tenant: $tenant) {
                     edges {
                         node {
                             id
-                            channel {
+                            tenant {
                                 slug
                             }
                         }
@@ -1197,7 +1197,7 @@ def test_me_query_checkouts_with_channel(user_api_client, checkout, checkout_JPY
     checkout.save()
     checkout_JPY.save()
 
-    response = user_api_client.post_graphql(query, {"channel": checkout.channel.slug})
+    response = user_api_client.post_graphql(query, {"tenant": checkout.channel.slug})
 
     content = get_graphql_content(response)
     data = content["data"]["me"]["checkouts"]
@@ -1205,13 +1205,13 @@ def test_me_query_checkouts_with_channel(user_api_client, checkout, checkout_JPY
         "Checkout", checkout.pk
     )
     assert data["totalCount"] == 1
-    assert data["edges"][0]["node"]["channel"]["slug"] == checkout.channel.slug
+    assert data["edges"][0]["node"]["tenant"]["slug"] == checkout.channel.slug
 
 
 QUERY_ME_CHECKOUT_TOKENS = """
-query getCheckoutTokens($channel: String) {
+query getCheckoutTokens($tenant: String) {
   me {
-    checkoutTokens(channel: $channel)
+    checkoutTokens(tenant: $tenant)
   }
 }
 """
@@ -1260,7 +1260,7 @@ def test_me_checkout_tokens_with_channel(
 
     # when
     response = user_api_client.post_graphql(
-        QUERY_ME_CHECKOUT_TOKENS, {"channel": channel_USD.slug}
+        QUERY_ME_CHECKOUT_TOKENS, {"tenant": channel_USD.slug}
     )
 
     # then
@@ -1279,7 +1279,7 @@ def test_me_checkout_tokens_with_inactive_channel(
 
     # when
     response = user_api_client.post_graphql(
-        QUERY_ME_CHECKOUT_TOKENS, {"channel": channel_USD.slug}
+        QUERY_ME_CHECKOUT_TOKENS, {"tenant": channel_USD.slug}
     )
 
     # then
@@ -1295,7 +1295,7 @@ def test_me_checkout_tokens_with_not_existing_channel(
 
     # when
     response = user_api_client.post_graphql(
-        QUERY_ME_CHECKOUT_TOKENS, {"channel": "Not-existing"}
+        QUERY_ME_CHECKOUT_TOKENS, {"tenant": "Not-existing"}
     )
 
     # then
@@ -1387,7 +1387,7 @@ ACCOUNT_REGISTER_MUTATION = """
         $redirectUrl: String,
         $languageCode: LanguageCodeEnum
         $metadata: [MetadataInput!],
-        $channel: String
+        $tenant: String
     ) {
         accountRegister(
             input: {
@@ -1398,7 +1398,7 @@ ACCOUNT_REGISTER_MUTATION = """
                 redirectUrl: $redirectUrl,
                 languageCode: $languageCode,
                 metadata: $metadata,
-                channel: $channel
+                tenant: $tenant
             }
         ) {
             errors {
@@ -1440,7 +1440,7 @@ def test_customer_register(
         "lastName": "rocks",
         "languageCode": "PL",
         "metadata": [{"key": "meta", "value": "data"}],
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
     query = ACCOUNT_REGISTER_MUTATION
     mutation_name = "accountRegister"
@@ -1531,7 +1531,7 @@ def test_customer_register_upper_case_email(api_client):
 
 CUSTOMER_CREATE_MUTATION = """
     mutation CreateCustomer(
-        $email: String, $firstName: String, $lastName: String, $channel: String
+        $email: String, $firstName: String, $lastName: String, $tenant: String
         $note: String, $billing: AddressInput, $shipping: AddressInput,
         $redirect_url: String, $languageCode: LanguageCodeEnum,
         $externalReference: String
@@ -1545,7 +1545,7 @@ CUSTOMER_CREATE_MUTATION = """
             defaultBillingAddress: $billing,
             redirectUrl: $redirect_url,
             languageCode: $languageCode,
-            channel: $channel,
+            tenant: $tenant,
             externalReference: $externalReference
         }) {
             errors {
@@ -1606,7 +1606,7 @@ def test_customer_create(
         "billing": address_data,
         "redirect_url": redirect_url,
         "languageCode": "PL",
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
         "externalReference": external_reference,
     }
 
@@ -1678,7 +1678,7 @@ def test_customer_create_send_password_with_url(
     variables = {
         "email": email,
         "redirect_url": "https://www.example.com",
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
 
     response = staff_api_client.post_graphql(
@@ -2447,8 +2447,8 @@ def test_logged_customer_update_anonymous_user(api_client):
 
 
 ACCOUNT_REQUEST_DELETION_MUTATION = """
-    mutation accountRequestDeletion($redirectUrl: String!, $channel: String) {
-        accountRequestDeletion(redirectUrl: $redirectUrl, channel: $channel) {
+    mutation accountRequestDeletion($redirectUrl: String!, $tenant: String) {
+        accountRequestDeletion(redirectUrl: $redirectUrl, tenant: $tenant) {
             errors {
                 field
                 code
@@ -2467,7 +2467,7 @@ def test_account_request_deletion(
     mocked_token.return_value = "token"
     user = user_api_client.user
     redirect_url = "https://www.example.com"
-    variables = {"redirectUrl": redirect_url, "channel": channel_PLN.slug}
+    variables = {"redirectUrl": redirect_url, "tenant": channel_PLN.slug}
     response = user_api_client.post_graphql(
         ACCOUNT_REQUEST_DELETION_MUTATION, variables
     )
@@ -2500,7 +2500,7 @@ def test_account_request_deletion_token_validation(
     user = user_api_client.user
     token = account_delete_token_generator.make_token(user)
     redirect_url = "https://www.example.com"
-    variables = {"redirectUrl": redirect_url, "channel": channel_PLN.slug}
+    variables = {"redirectUrl": redirect_url, "tenant": channel_PLN.slug}
     response = user_api_client.post_graphql(
         ACCOUNT_REQUEST_DELETION_MUTATION, variables
     )
@@ -2564,7 +2564,7 @@ def test_account_request_deletion_all_storefront_hosts_allowed(
     token = account_delete_token_generator.make_token(user)
     settings.ALLOWED_CLIENT_HOSTS = ["*"]
     redirect_url = "https://www.test.com"
-    variables = {"redirectUrl": redirect_url, "channel": channel_PLN.slug}
+    variables = {"redirectUrl": redirect_url, "tenant": channel_PLN.slug}
     response = user_api_client.post_graphql(
         ACCOUNT_REQUEST_DELETION_MUTATION, variables
     )
@@ -2599,7 +2599,7 @@ def test_account_request_deletion_subdomain(
     token = account_delete_token_generator.make_token(user)
     settings.ALLOWED_CLIENT_HOSTS = [".example.com"]
     redirect_url = "https://sub.example.com"
-    variables = {"redirectUrl": redirect_url, "channel": channel_PLN.slug}
+    variables = {"redirectUrl": redirect_url, "tenant": channel_PLN.slug}
     response = user_api_client.post_graphql(
         ACCOUNT_REQUEST_DELETION_MUTATION, variables
     )
@@ -5272,9 +5272,9 @@ def test_address_validation_rules_fields_in_camel_case(user_api_client):
 
 REQUEST_PASSWORD_RESET_MUTATION = """
     mutation RequestPasswordReset(
-        $email: String!, $redirectUrl: String!, $channel: String) {
+        $email: String!, $redirectUrl: String!, $tenant: String) {
         requestPasswordReset(
-            email: $email, redirectUrl: $redirectUrl, channel: $channel) {
+            email: $email, redirectUrl: $redirectUrl, tenant: $tenant) {
             errors {
                 field
                 message
@@ -5314,7 +5314,7 @@ def test_account_reset_password(
     variables = {
         "email": customer_user.email,
         "redirectUrl": redirect_url,
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
     response = user_api_client.post_graphql(REQUEST_PASSWORD_RESET_MUTATION, variables)
     content = get_graphql_content(response)
@@ -5351,7 +5351,7 @@ def test_account_reset_password_on_cooldown(
     variables = {
         "email": customer_user.email,
         "redirectUrl": redirect_url,
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
     user = user_api_client.user
     user.last_password_reset_request = timezone.now()
@@ -5377,7 +5377,7 @@ def test_account_reset_password_after_cooldown(
     variables = {
         "email": customer_user.email,
         "redirectUrl": redirect_url,
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
     user = user_api_client.user
     user.last_password_reset_request = timezone.now() - datetime.timedelta(
@@ -5403,7 +5403,7 @@ def test_account_reset_password_with_upper_case_email(
     variables = {
         "email": customer_user.email.upper(),
         "redirectUrl": redirect_url,
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
     response = user_api_client.post_graphql(REQUEST_PASSWORD_RESET_MUTATION, variables)
     content = get_graphql_content(response)
@@ -5444,7 +5444,7 @@ def test_account_confirmation(
     variables = {
         "email": customer_user.email,
         "token": default_token_generator.make_token(customer_user),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(CONFIRM_ACCOUNT_MUTATION, variables)
     content = get_graphql_content(response)
@@ -5469,7 +5469,7 @@ def test_account_confirmation_invalid_user(
     variables = {
         "email": "non-existing@example.com",
         "token": default_token_generator.make_token(customer_user),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(CONFIRM_ACCOUNT_MUTATION, variables)
     content = get_graphql_content(response)
@@ -5494,7 +5494,7 @@ def test_account_confirmation_invalid_token(
     variables = {
         "email": customer_user.email,
         "token": "invalid_token",
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(CONFIRM_ACCOUNT_MUTATION, variables)
     content = get_graphql_content(response)
@@ -5544,7 +5544,7 @@ def test_account_reset_password_invalid_email(
     variables = {
         "email": "non-existing-email@email.com",
         "redirectUrl": "https://www.example.com",
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(REQUEST_PASSWORD_RESET_MUTATION, variables)
     content = get_graphql_content(response)
@@ -5564,7 +5564,7 @@ def test_account_reset_password_user_is_inactive(
     variables = {
         "email": customer_user.email,
         "redirectUrl": "https://www.example.com",
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(REQUEST_PASSWORD_RESET_MUTATION, variables)
     results = response.json()
@@ -5583,7 +5583,7 @@ def test_account_reset_password_storefront_hosts_not_allowed(
     variables = {
         "email": customer_user.email,
         "redirectUrl": "https://www.fake.com",
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(REQUEST_PASSWORD_RESET_MUTATION, variables)
     content = get_graphql_content(response)
@@ -5609,7 +5609,7 @@ def test_account_reset_password_all_storefront_hosts_allowed(
     variables = {
         "email": customer_user.email,
         "redirectUrl": redirect_url,
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
     response = user_api_client.post_graphql(REQUEST_PASSWORD_RESET_MUTATION, variables)
     content = get_graphql_content(response)
@@ -5645,7 +5645,7 @@ def test_account_reset_password_subdomain(
     variables = {
         "email": customer_user.email,
         "redirectUrl": redirect_url,
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
     response = user_api_client.post_graphql(REQUEST_PASSWORD_RESET_MUTATION, variables)
     content = get_graphql_content(response)
@@ -6875,13 +6875,13 @@ def test_address_query_with_invalid_object_type(
 
 REQUEST_EMAIL_CHANGE_QUERY = """
 mutation requestEmailChange(
-    $password: String!, $new_email: String!, $redirect_url: String!, $channel:String
+    $password: String!, $new_email: String!, $redirect_url: String!, $tenant:String
 ) {
     requestEmailChange(
         password: $password,
         newEmail: $new_email,
         redirectUrl: $redirect_url,
-        channel: $channel
+        tenant: $tenant
     ) {
         user {
             email
@@ -6912,7 +6912,7 @@ def test_account_request_email_change_with_upper_case_email(
         "new_email": new_email,
         "redirect_url": redirect_url,
         "password": "password",
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
     token_payload = {
         "old_email": customer_user.email,
@@ -6954,7 +6954,7 @@ def test_request_email_change(user_api_client, customer_user, channel_PLN):
         "password": "password",
         "new_email": "new_email@example.com",
         "redirect_url": "http://www.example.com",
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
 
     response = user_api_client.post_graphql(REQUEST_EMAIL_CHANGE_QUERY, variables)
@@ -7022,8 +7022,8 @@ def test_request_email_change_with_invalid_password(user_api_client, customer_us
 
 
 EMAIL_UPDATE_QUERY = """
-mutation emailUpdate($token: String!, $channel: String) {
-    confirmEmailChange(token: $token, channel: $channel){
+mutation emailUpdate($token: String!, $tenant: String) {
+    confirmEmailChange(token: $token, tenant: $tenant){
         user {
             email
         }
@@ -7055,7 +7055,7 @@ def test_email_update(
     user = user_api_client.user
 
     token = create_token(payload, timedelta(hours=1))
-    variables = {"token": token, "channel": channel_PLN.slug}
+    variables = {"token": token, "tenant": channel_PLN.slug}
 
     response = user_api_client.post_graphql(EMAIL_UPDATE_QUERY, variables)
     content = get_graphql_content(response)

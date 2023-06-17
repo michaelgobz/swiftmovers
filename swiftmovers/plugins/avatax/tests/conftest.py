@@ -40,7 +40,7 @@ def plugin_configuration(db, channel_USD):
         data = {
             "active": active,
             "name": AvataxPlugin.PLUGIN_NAME,
-            "channel": channel,
+            "tenant": channel,
             "configuration": [
                 {"name": "Username or account", "value": username},
                 {"name": "Password or license", "value": password},

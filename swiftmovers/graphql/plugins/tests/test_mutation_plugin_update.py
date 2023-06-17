@@ -15,12 +15,12 @@ PLUGIN_UPDATE_MUTATION = """
     mutation pluginUpdate(
         $id: ID!
         $active: Boolean
-        $channel: ID
+        $tenant: ID
         $configuration: [ConfigurationItemInput!]
     ) {
         pluginUpdate(
             id: $id
-            channelId: $channel
+            channelId: $tenant
             input: { active: $active, configuration: $configuration }
         ) {
             plugin {
@@ -35,14 +35,14 @@ PLUGIN_UPDATE_MUTATION = """
                     type
                     label
                   }
-                  channel{
+                  tenant{
                     id
                     slug
                   }
                 }
                 channelConfigurations{
                   active
-                  channel{
+                  tenant{
                     id
                     slug
                   }
@@ -86,7 +86,7 @@ def test_plugin_configuration_update(
     variables = {
         "id": plugin.PLUGIN_ID,
         "active": active,
-        "channel": None,
+        "tenant": None,
         "configuration": [updated_configuration_item],
     }
     response = staff_api_client_can_manage_plugins.post_graphql(
@@ -130,7 +130,7 @@ def test_plugin_configuration_update_value_not_given(
     variables = {
         "id": plugin.PLUGIN_ID,
         "active": active,
-        "channel": None,
+        "tenant": None,
         "configuration": [configuration_item],
     }
     response = staff_api_client_can_manage_plugins.post_graphql(
@@ -179,8 +179,8 @@ def test_plugin_configuration_update_for_channel_configurations(
     variables = {
         "id": plugin.PLUGIN_ID,
         "active": active,
-        "channel": graphene.Node.to_global_id("Channel", channel_PLN.id),
-        "configuration": [{"name": "input-per-channel", "value": "update-value"}],
+        "tenant": graphene.Node.to_global_id("Channel", channel_PLN.id),
+        "configuration": [{"name": "input-per-tenant", "value": "update-value"}],
     }
     response = staff_api_client_can_manage_plugins.post_graphql(
         PLUGIN_UPDATE_MUTATION, variables
@@ -199,7 +199,7 @@ def test_plugin_configuration_update_for_channel_configurations(
     assert plugin.active == active == api_configuration["active"]
 
     configuration_item = plugin.configuration[0]
-    assert configuration_item["name"] == "input-per-channel"
+    assert configuration_item["name"] == "input-per-tenant"
     assert configuration_item["value"] == "update-value"
 
     configuration = api_configuration["configuration"]
@@ -220,8 +220,8 @@ def test_plugin_configuration_update_channel_slug_required(
     variables = {
         "id": plugin.PLUGIN_ID,
         "active": True,
-        "channel": None,
-        "configuration": [{"name": "input-per-channel", "value": "update-value"}],
+        "tenant": None,
+        "configuration": [{"name": "input-per-tenant", "value": "update-value"}],
     }
 
     response = staff_api_client_can_manage_plugins.post_graphql(
@@ -246,8 +246,8 @@ def test_plugin_configuration_update_unneeded_channel_slug(
     variables = {
         "id": plugin.PLUGIN_ID,
         "active": True,
-        "channel": graphene.Node.to_global_id("Channel", channel_PLN.id),
-        "configuration": [{"name": "input-per-channel", "value": "update-value"}],
+        "tenant": graphene.Node.to_global_id("Channel", channel_PLN.id),
+        "configuration": [{"name": "input-per-tenant", "value": "update-value"}],
     }
 
     response = staff_api_client_can_manage_plugins.post_graphql(
@@ -268,7 +268,7 @@ def test_plugin_configuration_update_containing_invalid_plugin_id(
     variables = {
         "id": "fake-id",
         "active": True,
-        "channel": None,
+        "tenant": None,
         "configuration": [{"name": "Username", "value": "user"}],
     }
     response = staff_api_client_can_manage_plugins.post_graphql(
@@ -291,7 +291,7 @@ def test_plugin_update_saves_boolean_as_boolean(
     variables = {
         "id": plugin.PLUGIN_ID,
         "active": plugin.active,
-        "channel": None,
+        "tenant": None,
         "configuration": [{"name": "Use sandbox", "value": True}],
     }
     response = staff_api_client_can_manage_plugins.post_graphql(
@@ -311,7 +311,7 @@ def test_plugin_configuration_update_as_customer_user(user_api_client, settings)
     variables = {
         "id": plugin.PLUGIN_ID,
         "active": True,
-        "channel": None,
+        "tenant": None,
         "configuration": [{"name": "Username", "value": "user"}],
     }
     response = user_api_client.post_graphql(PLUGIN_UPDATE_MUTATION, variables)
@@ -332,7 +332,7 @@ def test_cannot_update_configuration_hidden_plugin(
     variables = {
         "id": plugin_id,
         "active": False,
-        "channel": None,
+        "tenant": None,
         "configuration": [{"name": "Username", "value": "MyNewUsername"}],
     }
 
@@ -365,7 +365,7 @@ def test_cannot_update_configuration_hidden_multi_channel_plugin(
     staff_api_client_can_manage_plugins,
     channel_USD,
 ):
-    """Ensure one cannot edit the configuration of hidden multi channel plugins"""
+    """Ensure one cannot edit the configuration of hidden multi tenant plugins"""
     client = staff_api_client_can_manage_plugins
     settings.PLUGINS = ["swiftmovers.plugins.tests.sample_plugins.ChannelPluginSample"]
 
@@ -379,8 +379,8 @@ def test_cannot_update_configuration_hidden_multi_channel_plugin(
     variables = {
         "id": plugin_id,
         "active": False,
-        "channel": graphene.Node.to_global_id("Channel", channel_USD.id),
-        "configuration": [{"name": "input-per-channel", "value": "NewValue"}],
+        "tenant": graphene.Node.to_global_id("Channel", channel_USD.id),
+        "configuration": [{"name": "input-per-tenant", "value": "NewValue"}],
     }
 
     # Attempt to update hidden plugin, should error with object not found

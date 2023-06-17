@@ -64,7 +64,7 @@ class Category(ModelObjectType[models.Category]):
         ),
         sort_by=ProductOrder(description="Sort products." + ADDED_IN_310),
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description=(
             "List of products in the category. Requires the following permissions to "
@@ -169,7 +169,7 @@ class Category(ModelObjectType[models.Category]):
         qs = qs.filter(category__in=tree)
         qs = ChannelQsContext(qs=qs, channel_slug=channel)
 
-        kwargs["channel"] = channel
+        kwargs["tenant"] = channel
         qs = filter_connection_queryset(qs, kwargs)
         return create_connection_slice(qs, info, kwargs, ProductCountableConnection)
 

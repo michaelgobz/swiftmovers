@@ -53,7 +53,7 @@ PRODUCT_BULK_CREATE_MUTATION = """
                     }
                     channelListings{
                         id
-                        channel{
+                        tenant{
                             name
                         }
                     }
@@ -756,11 +756,11 @@ def test_product_bulk_create_with_channel_listings(
     assert not data["results"][1]["errors"]
     assert data["count"] == 2
     assert (
-        data["results"][0]["product"]["channelListings"][0]["channel"]["name"]
+        data["results"][0]["product"]["channelListings"][0]["tenant"]["name"]
         == channel_USD.name
     )
     assert (
-        data["results"][1]["product"]["channelListings"][0]["channel"]["name"]
+        data["results"][1]["product"]["channelListings"][0]["tenant"]["name"]
         == channel_USD.name
     )
     assert Product.objects.count() == 2
@@ -1412,8 +1412,8 @@ def test_product_bulk_create_with_variants_and_channel_listings(
     assert product_1_variant.channel_listings.last().channel_id == channel_USD.id
     assert product_2_variant.channel_listings.last().channel_id == channel_USD.id
 
-    # 2 product channel listing and 2 variant channel listing were created but
-    # all are using same channel so only one event should be sent
+    # 2 product tenant listing and 2 variant tenant listing were created but
+    # all are using same tenant so only one event should be sent
     channel_updated_webhook_mock.assert_called_once_with(channel_USD)
 
 

@@ -1,6 +1,6 @@
 import pytest
 
-from .....channel.models import Channel
+from .....tenant.models import Channel
 from .....warehouse.models import Warehouse
 
 CHANNEL_COUNT_IN_BENCHMARKS = 10

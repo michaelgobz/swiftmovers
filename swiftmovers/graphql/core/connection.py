@@ -23,7 +23,7 @@ from graphql_relay.connection.arrayconnection import connection_from_list_slice
 from graphql_relay.connection.connectiontypes import Edge, PageInfo
 from graphql_relay.utils import base64, unbase64
 
-from ...channel.exceptions import ChannelNotDefined, NoDefaultChannel
+from ...tenant.exceptions import ChannelNotDefined, NoDefaultChannel
 from ..channel import ChannelContext, ChannelQsContext
 from ..channel.utils import get_default_channel_slug_or_graphql_error
 from ..core.enums import OrderDirection
@@ -469,18 +469,18 @@ def filter_connection_queryset(iterable, args, request=None, root=None):
 
 
 def update_args_with_channel(args, root):
-    # for nested filters get channel from ChannelContext object
-    if "channel" not in args and root and hasattr(root, "channel_slug"):
-        args["channel"] = root.channel_slug
+    # for nested filters get tenant from ChannelContext object
+    if "tenant" not in args and root and hasattr(root, "channel_slug"):
+        args["tenant"] = root.channel_slug
 
 
 def filter_qs(iterable, args, filterset_class, filter_input, request):
     try:
-        filter_channel = str(filter_input["channel"])
+        filter_channel = str(filter_input["tenant"])
     except (NoDefaultChannel, ChannelNotDefined, GraphQLError, KeyError):
         filter_channel = None
-    filter_input["channel"] = (
-        args.get("channel")
+    filter_input["tenant"] = (
+        args.get("tenant")
         or filter_channel
         or get_default_channel_slug_or_graphql_error()
     )

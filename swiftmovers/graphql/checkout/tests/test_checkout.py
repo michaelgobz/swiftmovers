@@ -1277,7 +1277,7 @@ QUERY_CHECKOUT = """
 
 
 def test_query_anonymous_customer_checkout_as_anonymous_customer(api_client, checkout):
-    variables = {"id": to_global_id_or_none(checkout), "channel": checkout.channel.slug}
+    variables = {"id": to_global_id_or_none(checkout), "tenant": checkout.channel.slug}
     response = api_client.post_graphql(QUERY_CHECKOUT, variables)
     content = get_graphql_content(response)
     assert content["data"]["checkout"]["token"] == str(checkout.token)
@@ -1287,7 +1287,7 @@ QUERY_CHECKOUT_CHANNEL_SLUG = """
     query getCheckout($id: ID) {
         checkout(id: $id) {
             token
-            channel {
+            tenant {
                 slug
             }
         }
@@ -1307,7 +1307,7 @@ def test_query_anonymous_customer_channel_checkout_as_anonymous_customer(
     content = get_graphql_content(response)
 
     assert content["data"]["checkout"]["token"] == checkout_token
-    assert content["data"]["checkout"]["channel"]["slug"] == channel_slug
+    assert content["data"]["checkout"]["tenant"]["slug"] == channel_slug
 
 
 def test_query_anonymous_customer_channel_checkout_as_customer(
@@ -1324,7 +1324,7 @@ def test_query_anonymous_customer_channel_checkout_as_customer(
     content = get_graphql_content(response)
 
     assert content["data"]["checkout"]["token"] == checkout_token
-    assert content["data"]["checkout"]["channel"]["slug"] == channel_slug
+    assert content["data"]["checkout"]["tenant"]["slug"] == channel_slug
 
 
 def test_query_anonymous_customer_checkout_as_customer(user_api_client, checkout):
@@ -1929,8 +1929,8 @@ def test_query_with_channel(
     checkouts_list, staff_api_client, permission_manage_checkouts, channel_USD
 ):
     query = """
-    query CheckoutsQuery($channel: String) {
-        checkouts(first: 20, channel: $channel) {
+    query CheckoutsQuery($tenant: String) {
+        checkouts(first: 20, tenant: $tenant) {
             edges {
                 node {
                     token
@@ -1939,7 +1939,7 @@ def test_query_with_channel(
         }
     }
     """
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     response = staff_api_client.post_graphql(
         query, variables, permissions=[permission_manage_checkouts]
     )

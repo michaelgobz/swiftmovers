@@ -15,8 +15,8 @@ from .....product.search import prepare_product_search_vector_value
 from ....tests.utils import get_graphql_content
 
 QUERY_FETCH_ALL_PRODUCTS = """
-    query ($channel:String){
-        products(first: 10, channel: $channel) {
+    query ($tenant:String){
+        products(first: 10, tenant: $tenant) {
             totalCount
             edges {
                 node {
@@ -35,7 +35,7 @@ QUERY_FETCH_ALL_PRODUCTS = """
 def test_fetch_all_products_available_as_staff_user(
     staff_api_client, permission_manage_products, product, channel_USD
 ):
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     response = staff_api_client.post_graphql(
         QUERY_FETCH_ALL_PRODUCTS,
         variables,
@@ -51,7 +51,7 @@ def test_fetch_all_products_available_as_staff_user(
 def test_fetch_all_product_variants_available_as_staff_user_with_channel(
     staff_api_client, permission_manage_products, product_variant_list, channel_USD
 ):
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     response = staff_api_client.post_graphql(
         QUERY_FETCH_ALL_PRODUCTS,
         variables,
@@ -96,7 +96,7 @@ def test_fetch_all_product_variants_available_as_staff_user_without_channel(
 def test_fetch_all_products_not_available_as_staff_user(
     staff_api_client, permission_manage_products, product, channel_USD
 ):
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     ProductChannelListing.objects.filter(product=product, channel=channel_USD).update(
         is_published=False
     )
@@ -116,7 +116,7 @@ def test_fetch_all_products_not_available_as_staff_user(
 def test_fetch_all_products_not_existing_in_channel_as_staff_user(
     staff_api_client, permission_manage_products, channel_USD, product_list
 ):
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     ProductChannelListing.objects.filter(
         product=product_list[0], channel=channel_USD
     ).delete()
@@ -129,7 +129,7 @@ def test_fetch_all_products_not_existing_in_channel_as_staff_user(
     )
     content = get_graphql_content(response)
 
-    # if channel slug is provided we return all products related to this channel
+    # if tenant slug is provided we return all products related to this tenant
     num_products = Product.objects.count() - 1
 
     assert content["data"]["products"]["totalCount"] == num_products
@@ -157,7 +157,7 @@ def test_fetch_all_products_as_staff_user_without_channel_slug(
 def test_fetch_all_products_available_as_app(
     app_api_client, permission_manage_products, product, channel_USD
 ):
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     response = app_api_client.post_graphql(
         QUERY_FETCH_ALL_PRODUCTS,
         variables,
@@ -173,7 +173,7 @@ def test_fetch_all_products_available_as_app(
 def test_fetch_all_products_not_available_as_app(
     app_api_client, permission_manage_products, product, channel_USD
 ):
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     ProductChannelListing.objects.filter(product=product, channel=channel_USD).update(
         is_published=False
     )
@@ -193,7 +193,7 @@ def test_fetch_all_products_not_available_as_app(
 def test_fetch_all_products_not_existing_in_channel_as_app(
     app_api_client, permission_manage_products, product_list, channel_USD
 ):
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     ProductChannelListing.objects.filter(
         product=product_list[0], channel=channel_USD
     ).delete()
@@ -205,7 +205,7 @@ def test_fetch_all_products_not_existing_in_channel_as_app(
         check_no_permissions=False,
     )
     content = get_graphql_content(response)
-    # if channel slug is provided we return all products related to this channel
+    # if tenant slug is provided we return all products related to this tenant
 
     num_products = Product.objects.count() - 1
     assert content["data"]["products"]["totalCount"] == num_products
@@ -233,7 +233,7 @@ def test_fetch_all_products_as_app_without_channel_slug(
 def test_fetch_all_products_available_as_customer(
     user_api_client, product, channel_USD
 ):
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     response = user_api_client.post_graphql(QUERY_FETCH_ALL_PRODUCTS, variables)
     content = get_graphql_content(response)
     num_products = Product.objects.count()
@@ -244,7 +244,7 @@ def test_fetch_all_products_available_as_customer(
 def test_fetch_all_products_not_available_as_customer(
     user_api_client, product, channel_USD
 ):
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     ProductChannelListing.objects.filter(product=product, channel=channel_USD).update(
         is_published=False
     )
@@ -261,7 +261,7 @@ def test_fetch_all_products_not_available_as_customer(
 def test_fetch_all_products_not_existing_in_channel_as_customer(
     user_api_client, product, channel_USD
 ):
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     ProductChannelListing.objects.filter(product=product, channel=channel_USD).delete()
 
     response = user_api_client.post_graphql(QUERY_FETCH_ALL_PRODUCTS, variables)
@@ -271,7 +271,7 @@ def test_fetch_all_products_not_existing_in_channel_as_customer(
 
 
 def test_fetch_all_products_available_as_anonymous(api_client, product, channel_USD):
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     response = api_client.post_graphql(QUERY_FETCH_ALL_PRODUCTS, variables)
     content = get_graphql_content(response)
     num_products = Product.objects.count()
@@ -282,7 +282,7 @@ def test_fetch_all_products_available_as_anonymous(api_client, product, channel_
 def test_fetch_all_products_not_available_as_anonymous(
     api_client, product, channel_USD
 ):
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     ProductChannelListing.objects.filter(product=product, channel=channel_USD).update(
         is_published=False
     )
@@ -299,7 +299,7 @@ def test_fetch_all_products_not_available_as_anonymous(
 def test_fetch_all_products_not_existing_in_channel_as_anonymous(
     api_client, product, channel_USD
 ):
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     ProductChannelListing.objects.filter(product=product, channel=channel_USD).delete()
 
     response = api_client.post_graphql(QUERY_FETCH_ALL_PRODUCTS, variables)
@@ -315,7 +315,7 @@ def test_fetch_all_products_visible_in_listings(
     product_list[0].channel_listings.update(visible_in_listings=False)
 
     product_count = Product.objects.count()
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
 
     # when
     response = user_api_client.post_graphql(QUERY_FETCH_ALL_PRODUCTS, variables)
@@ -335,7 +335,7 @@ def test_fetch_all_products_visible_in_listings_by_staff_with_perm(
     product_list[0].channel_listings.update(visible_in_listings=False)
 
     product_count = Product.objects.count()
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -358,7 +358,7 @@ def test_fetch_all_products_visible_in_listings_by_staff_without_manage_products
     product_list[0].channel_listings.update(visible_in_listings=False)
 
     product_count = Product.objects.count()
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
 
     # when
     response = staff_api_client.post_graphql(QUERY_FETCH_ALL_PRODUCTS, variables)
@@ -376,7 +376,7 @@ def test_fetch_all_products_visible_in_listings_by_app_with_perm(
     product_list[0].channel_listings.update(visible_in_listings=False)
 
     product_count = Product.objects.count()
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
 
     # when
     response = app_api_client.post_graphql(
@@ -399,7 +399,7 @@ def test_fetch_all_products_visible_in_listings_by_app_without_manage_products(
     product_list[0].channel_listings.update(visible_in_listings=False)
 
     product_count = Product.objects.count()
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
 
     # when
     response = app_api_client.post_graphql(QUERY_FETCH_ALL_PRODUCTS, variables)
@@ -414,11 +414,11 @@ def test_filter_products_by_wrong_attributes(user_api_client, product, channel_U
     product_attr = product.product_type.product_attributes.get(slug="color")
     attr_value = product.product_type.variant_attributes.get(slug="size").values.first()
     query = """
-    query ($channel: String, $filter: ProductFilterInput){
+    query ($tenant: String, $filter: ProductFilterInput){
         products(
             filter: $filter,
             first: 1,
-            channel: $channel
+            tenant: $tenant
         ) {
             edges {
                 node {
@@ -430,7 +430,7 @@ def test_filter_products_by_wrong_attributes(user_api_client, product, channel_U
     """
 
     variables = {
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "filter": {
             "attributes": [{"slug": product_attr.slug, "values": [attr_value.slug]}]
         },
@@ -449,11 +449,11 @@ def test_filter_products_with_unavailable_variants_attributes_as_user(
     attr_value = product_attr.values.first()
 
     query = """
-    query Products($attributesFilter: [AttributeInput!], $channel: String) {
+    query Products($attributesFilter: [AttributeInput!], $tenant: String) {
         products(
             first: 5,
             filter: {attributes: $attributesFilter},
-            channel: $channel
+            tenant: $tenant
         ) {
             edges {
                 node {
@@ -466,7 +466,7 @@ def test_filter_products_with_unavailable_variants_attributes_as_user(
     second_product_id = graphene.Node.to_global_id("Product", product_list[1].id)
     third_product_id = graphene.Node.to_global_id("Product", product_list[2].id)
     variables = {
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "attributesFilter": [
             {"slug": f"{product_attr.slug}", "values": [f"{attr_value.slug}"]}
         ],
@@ -492,11 +492,11 @@ def test_filter_products_with_unavailable_variants_attributes_as_staff(
     staff_api_client.user.user_permissions.add(permission_manage_products)
 
     query = """
-    query Products($attributesFilter: [AttributeInput!], $channel: String) {
+    query Products($attributesFilter: [AttributeInput!], $tenant: String) {
         products(
             first: 5,
             filter: {attributes: $attributesFilter},
-            channel: $channel
+            tenant: $tenant
         ) {
             edges {
                 node {
@@ -508,7 +508,7 @@ def test_filter_products_with_unavailable_variants_attributes_as_staff(
     """
 
     variables = {
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "attributesFilter": [
             {"slug": f"{product_attr.slug}", "values": [f"{attr_value.slug}"]}
         ],
@@ -525,9 +525,9 @@ def test_filter_products_with_unavailable_variants_attributes_as_staff(
 
 
 SORT_PRODUCTS_QUERY = """
-    query ($channel:String) {
+    query ($tenant:String) {
         products (
-            sortBy: %(sort_by_product_order)s, first: 3, channel: $channel
+            sortBy: %(sort_by_product_order)s, first: 3, tenant: $tenant
         ) {
             edges {
                 node {
@@ -597,7 +597,7 @@ def test_sort_products(user_api_client, product, channel_USD):
         channel=channel_USD,
         currency=channel_USD.currency_code,
     )
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     query = SORT_PRODUCTS_QUERY
 
     # Test sorting by PRICE, ascending
@@ -707,7 +707,7 @@ def test_sort_products_by_price_as_staff(
         channel=channel_USD,
         currency=channel_USD.currency_code,
     )
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     query = SORT_PRODUCTS_QUERY
 
     # Test sorting by PRICE, ascending
@@ -745,7 +745,7 @@ def test_sort_products_by_price_as_staff(
 def test_sort_products_product_type_name(
     user_api_client, product, product_with_default_variant, channel_USD
 ):
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
 
     # Test sorting by TYPE, ascending
     asc_published_query = SORT_PRODUCTS_QUERY % {
@@ -773,14 +773,14 @@ SEARCH_PRODUCTS_QUERY = """
     query Products(
         $filters: ProductFilterInput,
         $sortBy: ProductOrder,
-        $channel: String,
+        $tenant: String,
         $after: String,
     ) {
         products(
             first: 5,
             filter: $filters,
             sortBy: $sortBy,
-            channel: $channel,
+            tenant: $tenant,
             after: $after,
         ) {
             edges {
@@ -796,12 +796,12 @@ SEARCH_PRODUCTS_QUERY = """
 
 
 def test_search_product_by_description(user_api_client, product_list, channel_USD):
-    variables = {"filters": {"search": "big"}, "channel": channel_USD.slug}
+    variables = {"filters": {"search": "big"}, "tenant": channel_USD.slug}
     response = user_api_client.post_graphql(SEARCH_PRODUCTS_QUERY, variables)
     content = get_graphql_content(response)
     assert len(content["data"]["products"]["edges"]) == 2
 
-    variables = {"filters": {"search": "small"}, "channel": channel_USD.slug}
+    variables = {"filters": {"search": "small"}, "tenant": channel_USD.slug}
     response = user_api_client.post_graphql(SEARCH_PRODUCTS_QUERY, variables)
     content = get_graphql_content(response)
 
@@ -835,7 +835,7 @@ def test_search_product_by_description_and_name(
         "filters": {
             "search": "new",
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(SEARCH_PRODUCTS_QUERY, variables)
     content = get_graphql_content(response)
@@ -854,7 +854,7 @@ def test_sort_product_by_rank_without_search(
 ):
     variables = {
         "sortBy": {"field": "RANK", "direction": "DESC"},
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(SEARCH_PRODUCTS_QUERY, variables)
     content = get_graphql_content(response, ignore_errors=True)
@@ -890,7 +890,7 @@ def test_search_product_by_description_and_name_without_sort_by(
         "filters": {
             "search": "new",
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(SEARCH_PRODUCTS_QUERY, variables)
     content = get_graphql_content(response)
@@ -929,7 +929,7 @@ def test_search_product_by_description_and_name_and_use_cursor(
         "filters": {
             "search": "new",
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(SEARCH_PRODUCTS_QUERY, variables)
     content = get_graphql_content(response)
@@ -940,7 +940,7 @@ def test_search_product_by_description_and_name_and_use_cursor(
             "search": "new",
         },
         "after": cursor,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(SEARCH_PRODUCTS_QUERY, variables)
     content = get_graphql_content(response)
@@ -959,7 +959,7 @@ def test_hidden_product_access_with_proper_permissions(
     hidden_product.channel_listings.all().update(is_published=False)
 
     variables = {
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = staff_api_client.post_graphql(
@@ -983,7 +983,7 @@ def test_hidden_product_access_with_permission_manage_orders(
     hidden_product.channel_listings.all().update(is_published=False)
 
     variables = {
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = staff_api_client.post_graphql(
         QUERY_FETCH_ALL_PRODUCTS,
@@ -1006,7 +1006,7 @@ def test_hidden_product_access_with_permission_manage_discounts(
     hidden_product.channel_listings.all().update(is_published=False)
 
     variables = {
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = staff_api_client.post_graphql(
         QUERY_FETCH_ALL_PRODUCTS,
@@ -1029,7 +1029,7 @@ def test_hidden_product_access_with_permission_manage_channels(
     hidden_product.channel_listings.all().update(is_published=False)
 
     variables = {
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = staff_api_client.post_graphql(
         QUERY_FETCH_ALL_PRODUCTS,
@@ -1051,8 +1051,8 @@ def test_product_filter_by_attribute_values(
     channel_USD,
 ):
     query = """
-    query Products($filters: ProductFilterInput, $channel: String) {
-      products(first: 5, filter: $filters, channel: $channel) {
+    query Products($filters: ProductFilterInput, $tenant: String) {
+      products(first: 5, filter: $filters, tenant: $tenant) {
         edges {
         node {
           id
@@ -1076,7 +1076,7 @@ def test_product_filter_by_attribute_values(
         "attributes": [
             {"slug": color_attribute.slug, "values": [pink_attribute_value.slug]}
         ],
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(query, variables)
     content = get_graphql_content(response)

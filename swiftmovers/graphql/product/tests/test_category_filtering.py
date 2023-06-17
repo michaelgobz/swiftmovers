@@ -76,16 +76,16 @@ def test_categories_with_filtering(
 
 
 GET_FILTERED_PRODUCTS_CATEGORY_QUERY = """
-query ($id: ID!, $channel: String, $filters: ProductFilterInput) {
+query ($id: ID!, $tenant: String, $filters: ProductFilterInput) {
   category(id: $id) {
     id
     name
-    products(first: 5, channel: $channel, filter: $filters) {
+    products(first: 5, tenant: $tenant, filter: $filters) {
       edges {
         node {
           id
           name
-          channel
+          tenant
           attributes {
             attribute {
               choices(first: 10) {
@@ -106,7 +106,7 @@ query ($id: ID!, $channel: String, $filters: ProductFilterInput) {
 
 
 @pytest.mark.parametrize(
-    "channel, filter_channel, count, indexes_of_products_in_result",
+    "tenant, filter_channel, count, indexes_of_products_in_result",
     [
         ("channel_USD.slug", "channel_USD.slug", 2, [1, 2]),
         ("channel_USD.slug", "channel_PLN.slug", 2, [1, 2]),
@@ -143,8 +143,8 @@ def test_category_filter_products_by_channel(
 
     variables = {
         "id": graphene.Node.to_global_id("Category", category.pk),
-        "channel": eval(channel),
-        "filters": {"channel": eval(filter_channel)},
+        "tenant": eval(channel),
+        "filters": {"tenant": eval(filter_channel)},
     }
 
     # when
@@ -189,7 +189,7 @@ def test_category_filter_products_by_is_published(
 
     variables = {
         "id": graphene.Node.to_global_id("Category", category.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "filters": {"isPublished": is_published},
     }
 
@@ -222,7 +222,7 @@ def test_category_filter_products_by_multiple_attributes(
 
     variables = {
         "id": graphene.Node.to_global_id("Category", category.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "filters": {"attributes": [{"slug": "modes", "values": ["eco"]}]},
     }
 
@@ -284,7 +284,7 @@ def test_category_filter_products_by_stock_availability(
 
     variables = {
         "id": graphene.Node.to_global_id("Category", category.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "filters": {"stockAvailability": stock_availability},
     }
 
@@ -378,7 +378,7 @@ def test_category_filter_products_by_stocks(
 
     variables = {
         "id": graphene.Node.to_global_id("Category", category.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "filters": {
             "stocks": {"quantity": quantity_input, "warehouseIds": warehouse_ids}
         },
@@ -428,7 +428,7 @@ def test_category_filter_products_search_by_sku(
 
     variables = {
         "id": graphene.Node.to_global_id("Category", category.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "filters": {"search": "1234"},
     }
 
@@ -464,8 +464,8 @@ def test_category_filter_products_by_price(
     # when
     variables = {
         "id": graphene.Node.to_global_id("Category", category.pk),
-        "channel": channel_USD.slug,
-        "filters": {"price": {"gte": 5, "lte": 25}, "channel": channel_USD.slug},
+        "tenant": channel_USD.slug,
+        "filters": {"price": {"gte": 5, "lte": 25}, "tenant": channel_USD.slug},
     }
 
     response = user_api_client.post_graphql(
@@ -494,7 +494,7 @@ def test_category_filter_products_by_ids(
 
     variables = {
         "id": graphene.Node.to_global_id("Category", category.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "filters": {"ids": product_ids},
     }
 
@@ -513,10 +513,10 @@ def test_category_filter_products_by_ids(
 
 
 GET_SORTED_PRODUCTS_CATEGORY_QUERY = """
-query ($id: ID!, $channel: String, $filters: ProductFilterInput, $sortBy: ProductOrder){
+query ($id: ID!, $tenant: String, $filters: ProductFilterInput, $sortBy: ProductOrder){
   category(id: $id) {
     id
-    products(first: 10, channel: $channel, sortBy: $sortBy, filter: $filters) {
+    products(first: 10, tenant: $tenant, sortBy: $sortBy, filter: $filters) {
       edges {
         node {
           id
@@ -537,8 +537,8 @@ def test_category_sort_products_by_name(
     # given
     variables = {
         "id": graphene.Node.to_global_id("Category", category.pk),
-        "channel": channel_USD.slug,
-        "filters": {"channel": channel_USD.slug},
+        "tenant": channel_USD.slug,
+        "filters": {"tenant": channel_USD.slug},
         "sortBy": {"direction": "DESC", "field": "NAME"},
     }
 

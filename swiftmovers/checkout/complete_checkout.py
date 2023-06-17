@@ -24,7 +24,7 @@ from prices import Money, TaxedMoney
 from ..account.error_codes import AccountErrorCode
 from ..account.models import User
 from ..account.utils import store_user_address
-from ..channel import MarkAsPaidStrategy
+from ..tenant import MarkAsPaidStrategy
 from ..checkout import CheckoutAuthorizeStatus, calculations
 from ..checkout.error_codes import CheckoutErrorCode
 from ..core.exceptions import GiftCardNotApplicable, InsufficientStock
@@ -660,8 +660,8 @@ def _prepare_checkout(
     if not checkout_info.channel.is_active:
         raise ValidationError(
             {
-                "channel": ValidationError(
-                    "Cannot complete checkout with inactive channel.",
+                "tenant": ValidationError(
+                    "Cannot complete checkout with inactive tenant.",
                     code=CheckoutErrorCode.CHANNEL_INACTIVE.value,
                 )
             }

@@ -95,7 +95,7 @@ def test_order_from_checkout_with_inactive_channel(
         data["errors"][0]["code"]
         == OrderCreateFromCheckoutErrorCode.CHANNEL_INACTIVE.name
     )
-    assert data["errors"][0]["field"] == "channel"
+    assert data["errors"][0]["field"] == "tenant"
 
 
 @pytest.mark.integration

@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from ....channel.models import Channel
+from ....tenant.models import Channel
 from ....core.management.commands.populatedb import Command as PopulateDBCommand
 from ....payment.gateways.braintree.plugin import BraintreeGatewayPlugin
 from ....plugins.manager import get_plugins_manager

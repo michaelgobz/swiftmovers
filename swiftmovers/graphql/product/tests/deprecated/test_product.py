@@ -2,8 +2,8 @@ import warnings
 
 import graphene
 
-from .....channel.models import Channel
-from .....channel.utils import DEPRECATION_WARNING_MESSAGE
+from .....tenant.models import Channel
+from .....tenant.utils import DEPRECATION_WARNING_MESSAGE
 from .....product.models import Collection, CollectionChannelListing, Product
 from .....tests.utils import dummy_editorjs
 from ....tests.utils import get_graphql_content
@@ -180,10 +180,10 @@ def test_sort_products_product_type_name(
 
 
 QUERY_COLLECTION_FROM_PRODUCT = """
-    query ($id: ID, $channel:String){
+    query ($id: ID, $tenant:String){
         product(
             id: $id,
-            channel: $channel
+            tenant: $tenant
         ) {
             collections {
                 name

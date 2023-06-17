@@ -257,7 +257,7 @@ def test_request_data_for_payment(dummy_payment_data, dummy_address_data):
         "origin": return_url,
         "shopperIP": data["shopperIP"],
         "browserInfo": data["browserInfo"],
-        "channel": "web",
+        "tenant": "web",
         "shopperEmail": "example@test.com",
         "shopperName": {
             "firstName": dummy_payment_data.billing.first_name,
@@ -463,7 +463,7 @@ def test_request_data_for_payment_without_shipping(
         "origin": return_url,
         "shopperIP": data["shopperIP"],
         "browserInfo": data["browserInfo"],
-        "channel": "web",
+        "tenant": "web",
         "shopperEmail": "example@test.com",
         "shopperName": {
             "firstName": dummy_payment_data.billing.first_name,
@@ -521,7 +521,7 @@ def test_request_data_for_payment_native_3d_secure(
         "origin": return_url,
         "shopperIP": data["shopperIP"],
         "browserInfo": data["browserInfo"],
-        "channel": "web",
+        "tenant": "web",
         "additionalData": {"allow3DS2": "true"},
         "shopperEmail": "example@test.com",
         "shopperName": {
@@ -554,7 +554,7 @@ def test_request_data_for_payment_channel_different_than_web(
     # given
     return_url = "https://www.example.com"
     merchant_account = "MerchantTestAccount"
-    data = {"is_valid": True, "paymentMethod": {"type": "scheme"}, "channel": "iOS"}
+    data = {"is_valid": True, "paymentMethod": {"type": "scheme"}, "tenant": "iOS"}
     dummy_payment_data.data = data
     dummy_payment_data.billing = dummy_address_data
     dummy_payment_data.shipping = dummy_address_data
@@ -577,7 +577,7 @@ def test_request_data_for_payment_channel_different_than_web(
         "paymentMethod": {"type": "scheme"},
         "returnUrl": return_url,
         "merchantAccount": merchant_account,
-        "channel": "iOS",
+        "tenant": "iOS",
         "additionalData": {"allow3DS2": "true"},
         "shopperEmail": "example@test.com",
         "shopperName": {
@@ -719,7 +719,7 @@ def test_request_data_for_gateway_config(checkout_with_item, address):
     assert response_config == {
         "merchantAccount": merchant_account,
         "countryCode": checkout_with_item.billing_address.country,
-        "channel": "web",
+        "tenant": "web",
         "amount": {"currency": "USD", "value": "3000"},
     }
 
@@ -735,7 +735,7 @@ def test_request_data_for_gateway_config_no_country(checkout, address, settings)
     assert response_config == {
         "merchantAccount": merchant_account,
         "countryCode": settings.DEFAULT_COUNTRY,
-        "channel": "web",
+        "tenant": "web",
         "amount": {"currency": "USD", "value": "0"},
     }
 

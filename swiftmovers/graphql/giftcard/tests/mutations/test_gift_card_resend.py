@@ -66,7 +66,7 @@ def test_resend_gift_card(
         "input": {
             "id": graphene.Node.to_global_id("GiftCard", gift_card.pk),
             "email": email,
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
         }
     }
 
@@ -115,7 +115,7 @@ def test_resend_gift_card_as_app(
     variables = {
         "input": {
             "id": graphene.Node.to_global_id("GiftCard", gift_card.pk),
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
         }
     }
 
@@ -160,7 +160,7 @@ def test_update_gift_card_no_permission(
     variables = {
         "input": {
             "id": graphene.Node.to_global_id("GiftCard", gift_card.pk),
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
         }
     }
 
@@ -192,7 +192,7 @@ def test_resend_gift_card_malformed_email(
         "input": {
             "id": graphene.Node.to_global_id("GiftCard", gift_card.pk),
             "email": "malformed",
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
         }
     }
 
@@ -246,7 +246,7 @@ def test_resend_gift_card_triggers_gift_card_sent_event(
         "input": {
             "id": graphene.Node.to_global_id("GiftCard", gift_card.pk),
             "email": email,
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
         }
     }
 
@@ -312,7 +312,7 @@ def test_resend_gift_card_expired_card(
         "input": {
             "id": graphene.Node.to_global_id("GiftCard", gift_card.pk),
             "email": email,
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
         }
     }
 

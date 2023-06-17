@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('tax', '0001_initial'),
         ('order', '0001_initial'),
-        ('channel', '0001_initial'),
+        ('tenant', '0001_initial'),
     ]
 
     operations = [
@@ -217,7 +217,7 @@ class Migration(migrations.Migration):
                 ('available_for_purchase_at', models.DateTimeField(blank=True, null=True)),
                 ('currency', models.CharField(max_length=3)),
                 ('discounted_price_amount', models.DecimalField(blank=True, decimal_places=3, max_digits=12, null=True)),
-                ('channel', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='product_listings', to='channel.channel')),
+                ('tenant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='product_listings', to='tenant.tenant')),
                 ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='channel_listings', to='product.product')),
             ],
             options={
@@ -282,7 +282,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('published_at', models.DateTimeField(blank=True, null=True)),
                 ('is_published', models.BooleanField(default=False)),
-                ('channel', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='collection_listings', to='channel.channel')),
+                ('tenant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='collection_listings', to='tenant.tenant')),
                 ('collection', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='channel_listings', to='product.collection')),
             ],
             options={
@@ -327,12 +327,12 @@ class Migration(migrations.Migration):
                 ('cost_price_amount', models.DecimalField(blank=True, decimal_places=3, max_digits=12, null=True)),
                 ('discounted_price_amount', models.DecimalField(blank=True, decimal_places=3, max_digits=12, null=True)),
                 ('preorder_quantity_threshold', models.IntegerField(blank=True, null=True)),
-                ('channel', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='variant_listings', to='channel.channel')),
+                ('tenant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='variant_listings', to='tenant.tenant')),
                 ('variant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='channel_listings', to='product.productvariant')),
             ],
             options={
                 'ordering': ('pk',),
-                'unique_together': {('variant', 'channel')},
+                'unique_together': {('variant', 'tenant')},
             },
         ),
         migrations.AddIndex(
@@ -377,7 +377,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterUniqueTogether(
             name='productchannellisting',
-            unique_together={('product', 'channel')},
+            unique_together={('product', 'tenant')},
         ),
         migrations.AddIndex(
             model_name='product',
@@ -413,7 +413,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterUniqueTogether(
             name='collectionchannellisting',
-            unique_together={('collection', 'channel')},
+            unique_together={('collection', 'tenant')},
         ),
         migrations.AddIndex(
             model_name='collection',

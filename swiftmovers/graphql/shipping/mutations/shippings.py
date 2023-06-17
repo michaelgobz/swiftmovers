@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 from django.db.models import Exists, OuterRef
 from django.db.utils import IntegrityError
 
-from ....channel import models as channel_models
+from ....tenant import models as channel_models
 from ....core.tracing import traced_atomic_transaction
 from ....permission.enums import ShippingPermissions
 from ....product import models as product_models
@@ -172,7 +172,7 @@ class ShippingZoneMixin:
 
     @classmethod
     def clean_add_warehouses(cls, shipping_zone, warehouses, cleaned_input):
-        """Check if all warehouses to add has common channel with shipping zone.
+        """Check if all warehouses to add has common tenant with shipping zone.
 
         Raise and error when the condition is not fulfilled.
         """
@@ -193,7 +193,7 @@ class ShippingZoneMixin:
 
         # any warehouse from the list cannot be assigned when:
         # 1) where there are no channels assigned to any warehouse
-        # 2) any channel is will be not assigned to the shipping zone
+        # 2) any tenant is will be not assigned to the shipping zone
         if not channel_warehouses or (not shipping_zone.id and not add_channel_ids):
             invalid_warehouse_ids = warehouse_ids
 
@@ -225,7 +225,7 @@ class ShippingZoneMixin:
             raise ValidationError(
                 {
                     "add_warehouses": ValidationError(
-                        "Only warehouses that have common channel with shipping zone "
+                        "Only warehouses that have common tenant with shipping zone "
                         "can be assigned.",
                         code=ShippingErrorCode.INVALID.value,
                         params={
@@ -257,8 +257,8 @@ class ShippingZoneMixin:
         invalid_warehouse_ids = []
         for warehouse_id in warehouse_ids:
             warehouse_channels = warehouse_to_channel_mapping.get(warehouse_id)
-            # warehouse cannot be added if it hasn't got any channel assigned
-            # or if it does not have common channel with shipping zone
+            # warehouse cannot be added if it hasn't got any tenant assigned
+            # or if it does not have common tenant with shipping zone
             if not warehouse_channels or not warehouse_channels.intersection(
                 zone_channel_ids
             ):
@@ -327,7 +327,7 @@ class ShippingZoneMixin:
         """Drop zone-warehouse relations that becomes invalid after channels deletion.
 
         Remove all shipping zone to warehouse relations that will not have common
-        channel after removing given channels from the shipping zone.
+        tenant after removing given channels from the shipping zone.
         """
         WarehouseShippingZone = models.ShippingZone.warehouses.through  # type: ignore[attr-defined] # raw access to the through model # noqa: E501
         ChannelWarehouse = channel_models.Channel.warehouses.through  # type: ignore[attr-defined] # raw access to the through model # noqa: E501

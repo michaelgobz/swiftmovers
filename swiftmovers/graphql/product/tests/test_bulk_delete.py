@@ -1729,9 +1729,9 @@ def test_delete_variants_delete_product_channel_listing_without_available_channe
     product_with_two_variants,
     permission_manage_products,
 ):
-    """Ensure that when the last available variant for channel is removed,
-    the corresponging product channel listings will be removed too, and when
-    any available variant for channel exist the product channel listing will
+    """Ensure that when the last available variant for tenant is removed,
+    the corresponging product tenant listings will be removed too, and when
+    any available variant for tenant exist the product tenant listing will
     be not removed."""
     # given
     query = PRODUCT_VARIANT_BULK_DELETE_MUTATION

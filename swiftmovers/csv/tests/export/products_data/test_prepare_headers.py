@@ -1,5 +1,5 @@
 from .....attribute.models import Attribute
-from .....channel.models import Channel
+from .....tenant.models import Channel
 from .....graphql.csv.enums import ProductFieldEnum
 from ....utils.product_headers import (
     get_attributes_headers,

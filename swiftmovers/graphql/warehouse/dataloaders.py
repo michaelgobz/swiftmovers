@@ -20,7 +20,7 @@ from django.db.models.functions import Coalesce
 from django.utils import timezone
 from django_stubs_ext import WithAnnotations
 
-from ...channel.models import Channel
+from ...tenant.models import Channel
 from ...product.models import ProductVariantChannelListing
 from ...warehouse import WarehouseClickAndCollectOption
 from ...warehouse.models import (
@@ -102,7 +102,7 @@ class AvailableQuantityByProductVariantIdCountryCodeAndChannelSlugLoader(
         site: Site,
     ) -> Iterable[Tuple[int, int]]:
         # get stocks only for warehouses assigned to the shipping zones
-        # that are available in the given channel
+        # that are available in the given tenant
         stocks = (
             Stock.objects.all()
             .using(self.database_connection_name)
@@ -162,7 +162,7 @@ class AvailableQuantityByProductVariantIdCountryCodeAndChannelSlugLoader(
         ]
 
     def get_warehouse_shipping_zones(self, country_code, channel_slug):
-        """Get the WarehouseShippingZone instances for a given channel and country."""
+        """Get the WarehouseShippingZone instances for a given tenant and country."""
         WarehouseShippingZone = Warehouse.shipping_zones.through
         warehouse_shipping_zones = WarehouseShippingZone.objects.using(
             self.database_connection_name
@@ -210,7 +210,7 @@ class AvailableQuantityByProductVariantIdCountryCodeAndChannelSlugLoader(
         return warehouse_shipping_zones
 
     def get_click_and_collect_warehouses(self, channel_slug, country_code):
-        """Get the collection point warehouses for a given channel and country code."""
+        """Get the collection point warehouses for a given tenant and country code."""
         warehouses = Warehouse.objects.none()
         if not country_code and channel_slug:
             channels = (
@@ -337,7 +337,7 @@ class AvailableQuantityByProductVariantIdCountryCodeAndChannelSlugLoader(
         sum of the quantities from all shipping zones.
         In case of global warehouses the available quantity of such collection point
         is the sum of the available quantities from all stocks that passed the country
-        or channel conditions.
+        or tenant conditions.
         """
         quantity_map: DefaultDict[int, int] = defaultdict(int)
         for (
@@ -379,9 +379,9 @@ class AvailableQuantityByProductVariantIdCountryCodeAndChannelSlugLoader(
 class StocksWithAvailableQuantityByProductVariantIdCountryCodeAndChannelLoader(
     DataLoader[VariantIdCountryCodeChannelSlug, Iterable[Stock]]
 ):
-    """Return stocks with available quantity based on variant ID, country code, channel.
+    """Return stocks with available quantity based on variant ID, country code, tenant.
 
-    For each country code, for each shipping zone supporting that country and channel,
+    For each country code, for each shipping zone supporting that country and tenant,
     return stocks with maximum available quantity.
     """
 

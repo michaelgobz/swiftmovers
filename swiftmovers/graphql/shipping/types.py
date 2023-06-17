@@ -62,7 +62,7 @@ class ShippingMethodChannelListing(
     price = graphene.Field(Money)
 
     class Meta:
-        description = "Represents shipping method channel listing."
+        description = "Represents shipping method tenant listing."
         model = models.ShippingMethodChannelListing
         interfaces = [relay.Node]
 

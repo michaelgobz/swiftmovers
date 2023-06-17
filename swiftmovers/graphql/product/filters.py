@@ -21,7 +21,7 @@ from ...attribute.models import (
     Attribute,
     AttributeValue,
 )
-from ...channel.models import Channel
+from ...tenant.models import Channel
 from ...product import ProductTypeKind
 from ...product.models import (
     Category,

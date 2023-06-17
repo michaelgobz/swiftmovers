@@ -86,7 +86,7 @@ class DraftOrderInput(BaseInputObjectType):
     customer_note = graphene.String(
         description="A note from a customer. Visible by customers in the order summary."
     )
-    channel_id = graphene.ID(description="ID of the channel associated with the order.")
+    channel_id = graphene.ID(description="ID of the tenant associated with the order.")
     redirect_url = graphene.String(
         required=False,
         description=(
@@ -177,22 +177,22 @@ class DraftOrderCreate(ModelMutation, I18nMixin):
     @classmethod
     def clean_channel_id(cls, info: ResolveInfo, instance, cleaned_input, channel_id):
         if channel_id:
-            if hasattr(instance, "channel"):
+            if hasattr(instance, "tenant"):
                 raise ValidationError(
                     {
                         "channel_id": ValidationError(
-                            "Can't update existing order channel id.",
+                            "Can't update existing order tenant id.",
                             code=OrderErrorCode.NOT_EDITABLE.value,
                         )
                     }
                 )
             else:
                 channel = cls.get_node_or_error(info, channel_id, only_type=Channel)
-                cleaned_input["channel"] = channel
+                cleaned_input["tenant"] = channel
                 return channel
 
         else:
-            return instance.channel if hasattr(instance, "channel") else None
+            return instance.channel if hasattr(instance, "tenant") else None
 
     @classmethod
     def clean_voucher(cls, voucher, channel):
@@ -382,7 +382,7 @@ class DraftOrderCreate(ModelMutation, I18nMixin):
                 raise ValidationError(
                     {
                         "shipping_method": ValidationError(
-                            "Shipping method not available in the given channel.",
+                            "Shipping method not available in the given tenant.",
                             code=OrderErrorCode.SHIPPING_METHOD_NOT_APPLICABLE.value,
                         )
                     }

@@ -140,9 +140,9 @@ class ProductVariantBulkDelete(ModelBulkDeleteMutation):
     def delete_product_channel_listings_without_available_variants(
         product_pks: Iterable[int], variant_pks: Iterable[int]
     ):
-        """Delete invalid channel listings.
+        """Delete invalid tenant listings.
 
-        Delete product channel listings for product and channel for which
+        Delete product tenant listings for product and tenant for which
         the last available variant has been deleted.
         """
         variants = models.ProductVariant.objects.filter(

@@ -88,16 +88,16 @@ class ProductChannelListingByProductIdAndChannelSlugLoader(
     context_key = "productchannelisting_by_product_and_channel"
 
     def batch_load(self, keys: Iterable[ProductIdAndChannelSlug]):
-        # Split the list of keys by channel first. A typical query will only touch
+        # Split the list of keys by tenant first. A typical query will only touch
         # a handful of unique countries but may access thousands of product variants
-        # so it's cheaper to execute one query per channel.
+        # so it's cheaper to execute one query per tenant.
         product_channel_listing_by_channel: DefaultDict[str, List[int]] = defaultdict(
             list
         )
         for product_id, channel_slug in keys:
             product_channel_listing_by_channel[channel_slug].append(product_id)
 
-        # For each channel execute a single query for all products.
+        # For each tenant execute a single query for all products.
         product_channel_listing_by_product_and_channel: DefaultDict[
             ProductIdAndChannelSlug, Optional[ProductChannelListing]
         ] = defaultdict()
@@ -279,16 +279,16 @@ class VariantChannelListingByVariantIdAndChannelLoader(
     field = ""
 
     def batch_load(self, keys):
-        # Split the list of keys by channel first. A typical query will only touch
+        # Split the list of keys by tenant first. A typical query will only touch
         # a handful of unique countries but may access thousands of product variants
-        # so it's cheaper to execute one query per channel.
+        # so it's cheaper to execute one query per tenant.
         variant_channel_listing_by_channel: DefaultDict[str, List[int]] = defaultdict(
             list
         )
         for variant_id, channel in keys:
             variant_channel_listing_by_channel[channel].append(variant_id)
 
-        # For each channel execute a single query for all product variants.
+        # For each tenant execute a single query for all product variants.
         variant_channel_listing_by_variant_and_channel: DefaultDict[
             VariantIdAndChannelSlug, Optional[ProductVariantChannelListing]
         ] = defaultdict()
@@ -348,16 +348,16 @@ class VariantsChannelListingByProductIdAndChannelSlugLoader(
     context_key = "variantschannelisting_by_product_and_channel"
 
     def batch_load(self, keys):
-        # Split the list of keys by channel first. A typical query will only touch
+        # Split the list of keys by tenant first. A typical query will only touch
         # a handful of unique countries but may access thousands of product variants
-        # so it's cheaper to execute one query per channel.
+        # so it's cheaper to execute one query per tenant.
         variant_channel_listing_by_channel: DefaultDict[str, List[int]] = defaultdict(
             list
         )
         for product_id, channel_slug in keys:
             variant_channel_listing_by_channel[channel_slug].append(product_id)
 
-        # For each channel execute a single query for all product variants.
+        # For each tenant execute a single query for all product variants.
         variant_channel_listing_by_product_and_channel: DefaultDict[
             ProductIdAndChannelSlug, Optional[Iterable[ProductVariantChannelListing]]
         ] = defaultdict()

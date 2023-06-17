@@ -1,6 +1,6 @@
 from typing import Optional
 
-from ...channel import models
+from ...tenant import models
 from ...permission.auth_filters import is_app, is_staff_user
 from ..core.utils import from_global_id_or_error
 from ..core.validators import validate_one_of_args_is_in_query

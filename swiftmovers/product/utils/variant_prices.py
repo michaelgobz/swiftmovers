@@ -5,7 +5,7 @@ from django.db.models import Exists, OuterRef
 from django.db.models.query_utils import Q
 from prices import Money
 
-from ...channel.models import Channel
+from ...tenant.models import Channel
 from ...discount import DiscountInfo
 from ...discount.models import Sale
 from ...discount.utils import calculate_discounted_price, fetch_active_discounts

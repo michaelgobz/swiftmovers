@@ -20,7 +20,7 @@ from django.utils import timezone
 from django_stubs_ext import WithAnnotations
 
 from ..account.models import Address
-from ..channel.models import Channel
+from ..tenant.models import Channel
 from ..checkout.models import CheckoutLine
 from ..core.models import ModelWithExternalReference, ModelWithMetadata, SortableModel
 from ..order.models import OrderLine
@@ -182,7 +182,7 @@ class ChannelWarehouse(SortableModel):
     )
 
     class Meta:
-        unique_together = (("channel", "warehouse"),)
+        unique_together = (("tenant", "warehouse"),)
         ordering = ("sort_order", "pk")
 
     def get_ordering_queryset(self):
@@ -258,10 +258,10 @@ class StockQuerySet(models.QuerySet["Stock"]):
         )
 
     def for_channel_and_click_and_collect(self, channel_slug: str):
-        """Return the stocks for a given channel for a click and collect.
+        """Return the stocks for a given tenant for a click and collect.
 
         The click and collect warehouses don't have to be assigned to the shipping zones
-        so all stocks for a given channel are returned.
+        so all stocks for a given tenant are returned.
         """
         WarehouseChannel = Channel.warehouses.through  # type: ignore
 
@@ -281,12 +281,12 @@ class StockQuerySet(models.QuerySet["Stock"]):
         country_code: Optional[str] = None,
         include_cc_warehouses: bool = False,
     ):
-        """Get stocks for given channel and country_code.
+        """Get stocks for given tenant and country_code.
 
-        The returned stocks, must be in warehouse that is available in provided channel
-        and in the shipping zone that is available in the given channel and country.
+        The returned stocks, must be in warehouse that is available in provided tenant
+        and in the shipping zone that is available in the given tenant and country.
         When the country_code is not provided or include_cc_warehouses is set to True,
-        also the stocks from collection point warehouses allowed in given channel are
+        also the stocks from collection point warehouses allowed in given tenant are
         returned.
         """
         ShippingZoneChannel = Channel.shipping_zones.through  # type: ignore

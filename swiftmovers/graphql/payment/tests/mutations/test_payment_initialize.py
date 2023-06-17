@@ -8,8 +8,8 @@ from ....tests.utils import get_graphql_content
 
 PAYMENT_INITIALIZE_MUTATION = """
 mutation PaymentInitialize(
-    $gateway: String!,$channel: String!, $paymentData: JSONString){
-      paymentInitialize(gateway: $gateway, channel: $channel, paymentData: $paymentData)
+    $gateway: String!,$tenant: String!, $paymentData: JSONString){
+      paymentInitialize(gateway: $gateway, tenant: $tenant, paymentData: $paymentData)
       {
         initializedPayment{
           gateway
@@ -41,7 +41,7 @@ def test_payment_initialize(mocked_initialize_payment, api_client, channel_USD):
     query = PAYMENT_INITIALIZE_MUTATION
     variables = {
         "gateway": exected_initialize_payment_response.gateway,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "paymentData": json.dumps(
             {"paymentMethod": "applepay", "validationUrl": "https://127.0.0.1/valid"}
         ),
@@ -61,7 +61,7 @@ def test_payment_initialize_gateway_doesnt_exist(api_client, channel_USD):
     query = PAYMENT_INITIALIZE_MUTATION
     variables = {
         "gateway": "wrong.gateway",
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "paymentData": json.dumps(
             {"paymentMethod": "applepay", "validationUrl": "https://127.0.0.1/valid"}
         ),
@@ -81,7 +81,7 @@ def test_payment_initialize_plugin_raises_error(
     query = PAYMENT_INITIALIZE_MUTATION
     variables = {
         "gateway": "gateway.id",
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "paymentData": json.dumps({"validationUrl": "https://127.0.0.1/valid"}),
     }
     response = api_client.post_graphql(query, variables)

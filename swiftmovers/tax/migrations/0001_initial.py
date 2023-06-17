@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('channel', '0001_initial'),
+        ('tenant', '0001_initial'),
     ]
 
     operations = [
@@ -38,7 +38,7 @@ class Migration(migrations.Migration):
                 ('tax_calculation_strategy', models.CharField(blank=True, choices=[('FLAT_RATES', 'Flat rates'), ('TAX_APP', 'Tax app')], default='FLAT_RATES', max_length=20, null=True)),
                 ('display_gross_prices', models.BooleanField(default=True)),
                 ('prices_entered_with_tax', models.BooleanField(default=True)),
-                ('channel', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='tax_configuration', to='channel.channel')),
+                ('tenant', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='tax_configuration', to='tenant.tenant')),
             ],
             options={
                 'ordering': ('pk',),

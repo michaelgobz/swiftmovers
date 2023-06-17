@@ -49,7 +49,7 @@ class SaleChannelListing(ModelObjectType[models.SaleChannelListing]):
     currency = graphene.String(required=True)
 
     class Meta:
-        description = "Represents sale channel listing."
+        description = "Represents sale tenant listing."
         model = models.SaleChannelListing
         interfaces = [relay.Node]
 
@@ -204,7 +204,7 @@ class VoucherChannelListing(ModelObjectType[models.VoucherChannelListing]):
     min_spent = graphene.Field(Money)
 
     class Meta:
-        description = "Represents voucher channel listing."
+        description = "Represents voucher tenant listing."
         model = models.VoucherChannelListing
         interfaces = [graphene.relay.Node]
 

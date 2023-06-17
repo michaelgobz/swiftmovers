@@ -28,8 +28,8 @@ from ....tests.utils import get_graphql_content
 @pytest.fixture
 def query_products_with_filter():
     query = """
-        query ($filter: ProductFilterInput!, $channel: String) {
-          products(first:5, filter: $filter, channel: $channel) {
+        query ($filter: ProductFilterInput!, $tenant: String) {
+          products(first:5, filter: $filter, tenant: $tenant) {
             edges{
               node{
                 id
@@ -706,7 +706,7 @@ def test_products_query_filter_by_non_existing_attribute(
     query_products_with_filter, api_client, product_list, channel_USD
 ):
     variables = {
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "filter": {"attributes": [{"slug": "i-do-not-exist", "values": ["red"]}]},
     }
     response = api_client.post_graphql(query_products_with_filter, variables)
@@ -936,7 +936,7 @@ def test_products_query_with_filter(
         *prepare_product_search_vector_value(second_product)
     )
     second_product.save(update_fields=["search_vector"])
-    variables = {"filter": products_filter, "channel": channel_USD.slug}
+    variables = {"filter": products_filter, "tenant": channel_USD.slug}
     staff_api_client.user.user_permissions.add(permission_manage_products)
     response = staff_api_client.post_graphql(query_products_with_filter, variables)
     content = get_graphql_content(response)
@@ -960,7 +960,7 @@ def test_products_query_with_price_filter_as_staff(
 
     variables = {
         "filter": {"price": {"gte": 9, "lte": 31}},
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     staff_api_client.user.user_permissions.add(permission_manage_products)
     response = staff_api_client.post_graphql(query_products_with_filter, variables)
@@ -983,7 +983,7 @@ def test_products_query_with_price_filter_as_user(
     third_product_id = graphene.Node.to_global_id("Product", product_list[2].id)
     variables = {
         "filter": {"price": {"gte": 9, "lte": 31}},
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(query_products_with_filter, variables)
     content = get_graphql_content(response)
@@ -1050,7 +1050,7 @@ def test_products_query_with_filter_search_by_dropdown_attribute_value(
     )
     product_with_dropdown_attr.save(update_fields=["search_document", "search_vector"])
 
-    variables = {"filter": {"search": search_value}, "channel": channel_USD.slug}
+    variables = {"filter": {"search": search_value}, "tenant": channel_USD.slug}
 
     # when
     staff_api_client.user.user_permissions.add(permission_manage_products)
@@ -1113,7 +1113,7 @@ def test_products_query_with_filter_search_by_multiselect_attribute_value(
     )
     product_with_multiselect_attr.save(update_fields=["search_vector"])
 
-    variables = {"filter": {"search": search_value}, "channel": channel_USD.slug}
+    variables = {"filter": {"search": search_value}, "tenant": channel_USD.slug}
 
     # when
     staff_api_client.user.user_permissions.add(permission_manage_products)
@@ -1161,7 +1161,7 @@ def test_products_query_with_filter_search_by_rich_text_attribute(
     )
     product_with_rich_text_attr.save(update_fields=["search_vector"])
 
-    variables = {"filter": {"search": search_value}, "channel": channel_USD.slug}
+    variables = {"filter": {"search": search_value}, "tenant": channel_USD.slug}
 
     # when
     staff_api_client.user.user_permissions.add(permission_manage_products)
@@ -1209,7 +1209,7 @@ def test_products_query_with_filter_search_by_plain_text_attribute(
     )
     product_with_plain_text_attr.save(update_fields=["search_vector"])
 
-    variables = {"filter": {"search": search_value}, "channel": channel_USD.slug}
+    variables = {"filter": {"search": search_value}, "tenant": channel_USD.slug}
 
     # when
     staff_api_client.user.user_permissions.add(permission_manage_products)
@@ -1260,7 +1260,7 @@ def test_products_query_with_filter_search_by_numeric_attribute_value(
     )
     product_with_numeric_attr.save(update_fields=["search_vector"])
 
-    variables = {"filter": {"search": search_value}, "channel": channel_USD.slug}
+    variables = {"filter": {"search": search_value}, "tenant": channel_USD.slug}
 
     # when
     staff_api_client.user.user_permissions.add(permission_manage_products)
@@ -1307,7 +1307,7 @@ def test_products_query_with_filter_search_by_numeric_attribute_value_without_un
     )
     product_with_numeric_attr.save(update_fields=["search_vector"])
 
-    variables = {"filter": {"search": "13456"}, "channel": channel_USD.slug}
+    variables = {"filter": {"search": "13456"}, "tenant": channel_USD.slug}
 
     # when
     staff_api_client.user.user_permissions.add(permission_manage_products)
@@ -1355,7 +1355,7 @@ def test_products_query_with_filter_search_by_date_attribute_value(
     )
     product_with_date_attr.save(update_fields=["search_vector"])
 
-    variables = {"filter": {"search": search_value}, "channel": channel_USD.slug}
+    variables = {"filter": {"search": search_value}, "tenant": channel_USD.slug}
 
     # when
     staff_api_client.user.user_permissions.add(permission_manage_products)
@@ -1403,7 +1403,7 @@ def test_products_query_with_filter_search_by_date_time_attribute_value(
     )
     product_with_date_time_attr.save(update_fields=["search_vector"])
 
-    variables = {"filter": {"search": search_value}, "channel": channel_USD.slug}
+    variables = {"filter": {"search": search_value}, "tenant": channel_USD.slug}
 
     # when
     staff_api_client.user.user_permissions.add(permission_manage_products)
@@ -1431,7 +1431,7 @@ def test_products_query_with_is_published_filter_variants_without_prices(
         variant__product=variant.product
     ).update(price_amount=None)
 
-    variables = {"channel": channel_USD.slug, "filter": {"isPublished": True}}
+    variables = {"tenant": channel_USD.slug, "filter": {"isPublished": True}}
     response = staff_api_client.post_graphql(
         query_products_with_filter,
         variables,
@@ -1453,7 +1453,7 @@ def test_products_query_with_is_published_filter_one_variant_without_price(
 ):
     variant.channel_listings.update(price_amount=None)
 
-    variables = {"channel": channel_USD.slug, "filter": {"isPublished": True}}
+    variables = {"tenant": channel_USD.slug, "filter": {"isPublished": True}}
     response = staff_api_client.post_graphql(
         query_products_with_filter,
         variables,
@@ -1485,7 +1485,7 @@ def test_products_query_with_filter_stock_availability_as_staff(
     )
     variables = {
         "filter": {"stockAvailability": "OUT_OF_STOCK"},
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     staff_api_client.user.user_permissions.add(permission_manage_products)
     response = staff_api_client.post_graphql(query_products_with_filter, variables)
@@ -1540,7 +1540,7 @@ def test_products_query_with_filter_stock_availability_including_reservations(
     )
     variables = {
         "filter": {"stockAvailability": "OUT_OF_STOCK"},
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     staff_api_client.user.user_permissions.add(permission_manage_products)
 
@@ -1575,7 +1575,7 @@ def test_products_query_with_filter_stock_availability_as_user(
     )
     variables = {
         "filter": {"stockAvailability": "OUT_OF_STOCK"},
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(query_products_with_filter, variables)
     content = get_graphql_content(response)
@@ -1601,7 +1601,7 @@ def test_products_query_with_filter_stock_availability_channel_without_shipping_
     channel_USD.shipping_zones.clear()
     variables = {
         "filter": {"stockAvailability": "OUT_OF_STOCK"},
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     staff_api_client.user.user_permissions.add(permission_manage_products)
     response = staff_api_client.post_graphql(query_products_with_filter, variables)
@@ -1631,7 +1631,7 @@ def test_products_query_with_filter_stock_availability_only_stock_in_cc_warehous
 
     variables = {
         "filter": {"stockAvailability": "IN_STOCK"},
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -1723,7 +1723,7 @@ def test_products_query_with_filter_stocks(
         "filter": {
             "stocks": {"quantity": quantity_input, "warehouseIds": warehouse_pks}
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = staff_api_client.post_graphql(
         query_products_with_filter, variables, check_no_permissions=False
@@ -1749,7 +1749,7 @@ def test_query_products_with_filter_ids(
     ][:2]
     variables = {
         "filter": {"ids": product_ids},
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when

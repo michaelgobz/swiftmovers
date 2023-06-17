@@ -5,7 +5,7 @@ from django.db.models import Value as V
 from django.db.models.functions import Concat
 
 from ...attribute.models import Attribute
-from ...channel.models import Channel
+from ...tenant.models import Channel
 from ...warehouse.models import Warehouse
 from . import ProductExportFields
 
@@ -115,9 +115,9 @@ def get_channels_headers(export_info: Dict[str, list]) -> List[str]:
     Headers are build from slug and exported field.
 
     Example:
-    - currency code data header: "slug-value (channel currency code)"
-    - published data header: "slug-value (channel visible)"
-    - publication date data header: "slug-value (channel publication date)"
+    - currency code data header: "slug-value (tenant currency code)"
+    - published data header: "slug-value (tenant visible)"
+    - publication date data header: "slug-value (tenant publication date)"
 
     """
     channel_ids = export_info.get("channels")
@@ -138,7 +138,7 @@ def get_channels_headers(export_info: Dict[str, list]) -> List[str]:
     for slug in channels_slugs:
         channels_headers.extend(
             [
-                f"{slug} (channel {field.replace('_', ' ')})"
+                f"{slug} (tenant {field.replace('_', ' ')})"
                 for field in fields
                 if field not in ["slug", "channel_pk"]
             ]

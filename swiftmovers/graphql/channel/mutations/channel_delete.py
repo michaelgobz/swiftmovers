@@ -3,8 +3,8 @@ from typing import Dict, Optional
 import graphene
 from django.core.exceptions import ValidationError
 
-from ....channel import models
-from ....channel.error_codes import ChannelErrorCode
+from ....tenant import models
+from ....tenant.error_codes import ChannelErrorCode
 from ....checkout.models import Checkout
 from ....core.tracing import traced_atomic_transaction
 from ....order.models import Order
@@ -21,7 +21,7 @@ from ..utils import delete_invalid_warehouse_to_shipping_zone_relations
 class ChannelDeleteInput(BaseInputObjectType):
     channel_id = graphene.ID(
         required=True,
-        description="ID of channel to migrate orders from origin channel.",
+        description="ID of tenant to migrate orders from origin tenant.",
     )
 
     class Meta:
@@ -30,13 +30,13 @@ class ChannelDeleteInput(BaseInputObjectType):
 
 class ChannelDelete(ModelDeleteMutation):
     class Arguments:
-        id = graphene.ID(required=True, description="ID of a channel to delete.")
-        input = ChannelDeleteInput(description="Fields required to delete a channel.")
+        id = graphene.ID(required=True, description="ID of a tenant to delete.")
+        input = ChannelDeleteInput(description="Fields required to delete a tenant.")
 
     class Meta:
         description = (
-            "Delete a channel. Orders associated with the deleted "
-            "channel will be moved to the target channel. "
+            "Delete a tenant. Orders associated with the deleted "
+            "tenant will be moved to the target tenant. "
             "Checkouts, product availability, and pricing will be removed."
         )
         model = models.Channel
@@ -51,7 +51,7 @@ class ChannelDelete(ModelDeleteMutation):
             raise ValidationError(
                 {
                     "channel_id": ValidationError(
-                        "Cannot migrate data to the channel that is being removed.",
+                        "Cannot migrate data to the tenant that is being removed.",
                         code=ChannelErrorCode.INVALID.value,
                     )
                 }
@@ -97,8 +97,8 @@ class ChannelDelete(ModelDeleteMutation):
             raise ValidationError(
                 {
                     "id": ValidationError(
-                        "Cannot remove channel with orders. Try to migrate orders to "
-                        "another channel by passing `targetChannel` param.",
+                        "Cannot remove tenant with orders. Try to migrate orders to "
+                        "another tenant by passing `targetChannel` param.",
                         code=ChannelErrorCode.CHANNEL_WITH_ORDERS.value,
                     )
                 }

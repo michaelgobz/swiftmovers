@@ -4,7 +4,7 @@ from typing import DefaultDict
 import graphene
 from django.core.exceptions import ValidationError
 
-from ....channel.error_codes import ChannelErrorCode
+from ....tenant.error_codes import ChannelErrorCode
 from ....core.tracing import traced_atomic_transaction
 from ....permission.enums import ChannelPermissions
 from ...core import ResolveInfo
@@ -25,19 +25,19 @@ class ChannelReorderWarehouses(BaseMutation):
 
     class Arguments:
         channel_id = graphene.ID(
-            description="ID of a channel.",
+            description="ID of a tenant.",
             required=True,
         )
         moves = NonNullList(
             ReorderInput,
             required=True,
             description=(
-                "The list of reordering operations for the given channel warehouses."
+                "The list of reordering operations for the given tenant warehouses."
             ),
         )
 
     class Meta:
-        description = "Reorder the warehouses of a channel." + ADDED_IN_37
+        description = "Reorder the warehouses of a tenant." + ADDED_IN_37
         doc_category = DOC_CATEGORY_CHANNELS
         permissions = (ChannelPermissions.MANAGE_CHANNELS,)
         error_type_class = ChannelError

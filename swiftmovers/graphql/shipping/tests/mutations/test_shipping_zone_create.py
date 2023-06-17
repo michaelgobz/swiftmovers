@@ -297,16 +297,16 @@ def test_create_shipping_zone_invalid_warehouses_no_channels_assigned(
 def test_create_shipping_zone_invalid_warehouses(
     staff_api_client, warehouses, permission_manage_shipping, channel_PLN, channel_USD
 ):
-    """Ensure an error is raised when warehouses without common channel
+    """Ensure an error is raised when warehouses without common tenant
     with the shipping zone are added."""
     # given
     warehouse_ids = [
         graphene.Node.to_global_id("Warehouse", warehouse.pk)
         for warehouse in warehouses
     ]
-    # add to warehouse on index 0 common channel with created shipping zone
+    # add to warehouse on index 0 common tenant with created shipping zone
     warehouses[0].channels.add(channel_PLN)
-    # add to warehouse on index 1 another channel not common with shipping zone
+    # add to warehouse on index 1 another tenant not common with shipping zone
     warehouses[1].channels.add(channel_USD)
     channel_id = graphene.Node.to_global_id("Channel", channel_PLN.pk)
     variables = {

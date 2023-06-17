@@ -29,7 +29,7 @@ class PluginConfiguration(graphene.ObjectType):
     )
     channel = graphene.Field(
         Channel,
-        description="The channel to which the plugin configuration is assigned to.",
+        description="The tenant to which the plugin configuration is assigned to.",
     )
     configuration = NonNullList(
         ConfigurationItem, description="Configuration of the plugin."
@@ -51,7 +51,7 @@ class Plugin(graphene.ObjectType):
     )
     global_configuration = graphene.Field(
         PluginConfiguration,
-        description="Global configuration of the plugin (not channel-specific).",
+        description="Global configuration of the plugin (not tenant-specific).",
     )
     channel_configurations = NonNullList(
         PluginConfiguration,

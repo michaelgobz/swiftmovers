@@ -4,7 +4,7 @@ from typing import Iterable, List, Optional, Tuple
 
 from prices import Money, MoneyRange, TaxedMoney, TaxedMoneyRange
 
-from ...channel.models import Channel
+from ...tenant.models import Channel
 from ...core.utils import to_local_currency
 from ...discount import DiscountInfo
 from ...discount.utils import calculate_discounted_price

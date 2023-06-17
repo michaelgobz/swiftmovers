@@ -82,8 +82,8 @@ def test_reporting_period_to_date():
 
 def test_require_pagination(api_client, channel_USD):
     query = """
-    query GetProducts($channel: String) {
-        products(channel: $channel) {
+    query GetProducts($tenant: String) {
+        products(tenant: $tenant) {
             edges {
                 node {
                     name
@@ -92,7 +92,7 @@ def test_require_pagination(api_client, channel_USD):
         }
     }
     """
-    response = api_client.post_graphql(query, {"channel": channel_USD.slug})
+    response = api_client.post_graphql(query, {"tenant": channel_USD.slug})
     content = get_graphql_content_from_response(response)
     assert "errors" in content
     assert content["errors"][0]["message"] == (
@@ -103,13 +103,13 @@ def test_require_pagination(api_client, channel_USD):
 
 def test_total_count_query(api_client, product, channel_USD):
     query = """
-    query ($channel: String){
-        products (channel: $channel){
+    query ($tenant: String){
+        products (tenant: $tenant){
             totalCount
         }
     }
     """
-    response = api_client.post_graphql(query, {"channel": channel_USD.slug})
+    response = api_client.post_graphql(query, {"tenant": channel_USD.slug})
     content = get_graphql_content(response)
     assert content["data"]["products"]["totalCount"] == Product.objects.count()
 

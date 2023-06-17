@@ -48,14 +48,14 @@ from ..types.collections import Collection
 from ..types.products import Product, ProductVariant
 
 if TYPE_CHECKING:
-    from ....channel.models import Channel as ChannelModel
+    from ....tenant.models import Channel as ChannelModel
     from ....product.models import Collection as CollectionModel
 
 ErrorType = DefaultDict[str, List[ValidationError]]
 
 
 class PublishableChannelListingInput(BaseInputObjectType):
-    channel_id = graphene.ID(required=True, description="ID of a channel.")
+    channel_id = graphene.ID(required=True, description="ID of a tenant.")
     is_published = graphene.Boolean(
         description="Determines if object is visible to customers."
     )
@@ -100,12 +100,12 @@ class ProductChannelListingAddInput(PublishableChannelListingInput):
     )
     add_variants = NonNullList(
         graphene.ID,
-        description="List of variants to which the channel should be assigned.",
+        description="List of variants to which the tenant should be assigned.",
         required=False,
     )
     remove_variants = NonNullList(
         graphene.ID,
-        description="List of variants from which the channel should be unassigned.",
+        description="List of variants from which the tenant should be unassigned.",
         required=False,
     )
 
@@ -138,7 +138,7 @@ class ProductChannelListingUpdate(BaseChannelListingMutation):
         id = graphene.ID(required=True, description="ID of a product to update.")
         input = ProductChannelListingUpdateInput(
             required=True,
-            description="Fields required to create or update product channel listings.",
+            description="Fields required to create or update product tenant listings.",
         )
 
     class Meta:
@@ -231,7 +231,7 @@ class ProductChannelListingUpdate(BaseChannelListingMutation):
     @classmethod
     def update_channels(cls, product: "ProductModel", update_channels: List[Dict]):
         for update_channel in update_channels:
-            channel = update_channel["channel"]
+            channel = update_channel["tenant"]
             add_variants = update_channel.get("add_variants", None)
             remove_variants = update_channel.get("remove_variants", None)
             defaults = {"currency": channel.currency_code}
@@ -294,7 +294,7 @@ class ProductChannelListingUpdate(BaseChannelListingMutation):
             raise ValidationError(
                 {
                     "addVariants": ValidationError(
-                        "One of channel listing already "
+                        "One of tenant listing already "
                         "exists for this product variant.",
                         code=ProductErrorCode.ALREADY_EXISTS.value,
                     )
@@ -385,13 +385,13 @@ class ProductChannelListingUpdate(BaseChannelListingMutation):
 
 
 class ProductVariantChannelListingAddInput(BaseInputObjectType):
-    channel_id = graphene.ID(required=True, description="ID of a channel.")
+    channel_id = graphene.ID(required=True, description="ID of a tenant.")
     price = PositiveDecimal(
-        required=True, description="Price of the particular variant in channel."
+        required=True, description="Price of the particular variant in tenant."
     )
-    cost_price = PositiveDecimal(description="Cost price of the variant in channel.")
+    cost_price = PositiveDecimal(description="Cost price of the variant in tenant.")
     preorder_threshold = graphene.Int(
-        description=("The threshold for preorder variant in channel." + ADDED_IN_31)
+        description=("The threshold for preorder variant in tenant." + ADDED_IN_31)
     )
 
     class Meta:
@@ -416,7 +416,7 @@ class ProductVariantChannelListingUpdate(BaseMutation):
             required=True,
             description=(
                 "List of fields required to create or upgrade product variant "
-                "channel listings."
+                "tenant listings."
             ),
         )
 
@@ -438,7 +438,7 @@ class ProductVariantChannelListingUpdate(BaseMutation):
         if duplicates:
             errors["channelId"].append(
                 ValidationError(
-                    "Duplicated channel ID.",
+                    "Duplicated tenant ID.",
                     code=ProductErrorCode.DUPLICATED_INPUT_ITEM.value,
                     params={"channels": duplicates},
                 )
@@ -450,7 +450,7 @@ class ProductVariantChannelListingUpdate(BaseMutation):
                     add_channels_ids, "channel_id", Channel
                 )
             for channel_listing_data, channel in zip(input, channels):
-                channel_listing_data["channel"] = channel
+                channel_listing_data["tenant"] = channel
                 cleaned_input.append(channel_listing_data)
         return cleaned_input
 
@@ -459,7 +459,7 @@ class ProductVariantChannelListingUpdate(BaseMutation):
         cls, variant: "ProductVariantModel", cleaned_input: List, errors: ErrorType
     ):
         channel_pks = [
-            channel_listing_data["channel"].pk for channel_listing_data in cleaned_input
+            channel_listing_data["tenant"].pk for channel_listing_data in cleaned_input
         ]
         channels_assigned_to_product = list(
             ProductChannelListing.objects.filter(
@@ -473,7 +473,7 @@ class ProductVariantChannelListingUpdate(BaseMutation):
             channel_global_ids = []
             for channel_listing_data in cleaned_input:
                 if (
-                    channel_listing_data["channel"].pk
+                    channel_listing_data["tenant"].pk
                     in channels_not_assigned_to_product
                 ):
                     channel_global_ids.append(channel_listing_data["channel_id"])
@@ -502,7 +502,7 @@ class ProductVariantChannelListingUpdate(BaseMutation):
             price = channel_listing_data.get("price")
             cost_price = channel_listing_data.get("cost_price")
             channel_id = channel_listing_data["channel_id"]
-            currency_code = channel_listing_data["channel"].currency_code
+            currency_code = channel_listing_data["tenant"].currency_code
 
             cls.clean_price(price, "price", currency_code, channel_id, errors)
             cls.clean_price(cost_price, "cost_price", currency_code, channel_id, errors)
@@ -515,7 +515,7 @@ class ProductVariantChannelListingUpdate(BaseMutation):
     ):
         with traced_atomic_transaction():
             for channel_listing_data in cleaned_input:
-                channel = channel_listing_data["channel"]
+                channel = channel_listing_data["tenant"]
                 defaults = {"currency": channel.currency_code}
                 if "price" in channel_listing_data.keys():
                     defaults["price_amount"] = channel_listing_data.get("price", None)
@@ -600,7 +600,7 @@ class CollectionChannelListingUpdate(BaseChannelListingMutation):
         input = CollectionChannelListingUpdateInput(
             required=True,
             description=(
-                "Fields required to create or update collection channel listings."
+                "Fields required to create or update collection tenant listings."
             ),
         )
 
@@ -619,7 +619,7 @@ class CollectionChannelListingUpdate(BaseChannelListingMutation):
                 if field in add_channel.keys():
                     defaults[field] = add_channel[field]
             CollectionChannelListing.objects.update_or_create(
-                collection=collection, channel=add_channel["channel"], defaults=defaults
+                collection=collection, channel=add_channel["tenant"], defaults=defaults
             )
 
     @classmethod

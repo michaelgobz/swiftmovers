@@ -1,8 +1,8 @@
 class AllocationStrategy:
-    """Determine the allocation strategy for the channel.
+    """Determine the allocation strategy for the tenant.
 
     PRIORITIZE_SORTING_ORDER - allocate stocks according to the warehouses' order
-    within the channel
+    within the tenant
 
     PRIORITIZE_HIGH_STOCK - allocate stock in a warehouse with the most stock
     """
@@ -17,7 +17,7 @@ class AllocationStrategy:
 
 
 class MarkAsPaidStrategy:
-    """Determine the mark as paid strategy for the channel.
+    """Determine the mark as paid strategy for the tenant.
 
     TRANSACTION_FLOW - new orders marked as paid will receive a
     `TransactionItem` object, that will cover the `order.total`.

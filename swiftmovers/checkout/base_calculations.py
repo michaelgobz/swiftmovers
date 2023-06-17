@@ -16,7 +16,7 @@ from ..discount import DiscountInfo, VoucherType
 from .fetch import CheckoutInfo, CheckoutLineInfo
 
 if TYPE_CHECKING:
-    from ..channel.models import Channel
+    from ..tenant.models import Channel
     from .fetch import ShippingMethodInfo
 
 

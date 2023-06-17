@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
         ('account', '0001_initial'),
         ('shipping', '0001_initial'),
         ('order', '0001_initial'),
-        ('channel', '0001_initial'),
+        ('tenant', '0001_initial'),
     ]
 
     operations = [
@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('sort_order', models.IntegerField(db_index=True, editable=False, null=True)),
-                ('channel', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='channelwarehouse', to='channel.channel')),
+                ('tenant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='channelwarehouse', to='tenant.tenant')),
             ],
             options={
                 'ordering': ('sort_order', 'pk'),
@@ -45,7 +45,7 @@ class Migration(migrations.Migration):
                 ('click_and_collect_option', models.CharField(choices=[('disabled', 'Disabled'), ('local', 'Local stock only'), ('all', 'All warehouses')], default='disabled', max_length=30)),
                 ('is_private', models.BooleanField(default=True)),
                 ('address', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='account.address')),
-                ('channels', models.ManyToManyField(related_name='warehouses', through='warehouse.ChannelWarehouse', to='channel.Channel')),
+                ('channels', models.ManyToManyField(related_name='warehouses', through='warehouse.ChannelWarehouse', to='tenant.Channel')),
                 ('shipping_zones', models.ManyToManyField(blank=True, related_name='warehouses', to='shipping.ShippingZone')),
             ],
             options={
@@ -155,7 +155,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterUniqueTogether(
             name='channelwarehouse',
-            unique_together={('channel', 'warehouse')},
+            unique_together={('tenant', 'warehouse')},
         ),
         migrations.AlterUniqueTogether(
             name='allocation',

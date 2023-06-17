@@ -3,7 +3,7 @@ from decimal import Decimal
 
 import graphene
 
-from .....channel import TransactionFlowStrategy
+from .....tenant import TransactionFlowStrategy
 from .....payment.interface import (
     PaymentGatewayData,
     TransactionProcessActionData,

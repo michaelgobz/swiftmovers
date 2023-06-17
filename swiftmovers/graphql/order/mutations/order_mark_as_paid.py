@@ -4,7 +4,7 @@ import graphene
 from django.core.exceptions import ValidationError
 
 from ....account.models import User
-from ....channel import MarkAsPaidStrategy
+from ....tenant import MarkAsPaidStrategy
 from ....order import models as order_models
 from ....order.actions import (
     clean_mark_order_as_paid,

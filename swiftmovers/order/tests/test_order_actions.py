@@ -4,7 +4,7 @@ from unittest.mock import patch
 import pytest
 from prices import Money, TaxedMoney
 
-from ...channel import MarkAsPaidStrategy
+from ...tenant import MarkAsPaidStrategy
 from ...giftcard import GiftCardEvents
 from ...giftcard.models import GiftCard, GiftCardEvent
 from ...order.fetch import OrderLineInfo, fetch_order_info

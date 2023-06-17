@@ -4,7 +4,7 @@ import graphene
 import pytest
 
 from .....attribute.models import Attribute
-from .....channel.models import Channel
+from .....tenant.models import Channel
 from .....csv import ExportEvents
 from .....csv.error_codes import ExportErrorCode
 from .....csv.models import ExportEvent

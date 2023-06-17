@@ -21,11 +21,11 @@ from ...tests.utils import (
 )
 
 QUERY_COLLECTION = """
-    query ($id: ID, $slug: String, $channel: String){
+    query ($id: ID, $slug: String, $tenant: String){
         collection(
             id: $id,
             slug: $slug,
-            channel: $channel,
+            tenant: $tenant,
         ) {
             id
             name
@@ -37,7 +37,7 @@ QUERY_COLLECTION = """
 def test_collection_query_by_id(user_api_client, published_collection, channel_USD):
     variables = {
         "id": graphene.Node.to_global_id("Collection", published_collection.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = user_api_client.post_graphql(QUERY_COLLECTION, variables=variables)
@@ -53,7 +53,7 @@ def test_collection_query_unpublished_collection_by_id_as_app(
     # given
     variables = {
         "id": graphene.Node.to_global_id("Collection", unpublished_collection.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -74,7 +74,7 @@ def test_collection_query_unpublished_collection_by_id_as_app(
 def test_collection_query_by_slug(user_api_client, published_collection, channel_USD):
     variables = {
         "slug": published_collection.slug,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(QUERY_COLLECTION, variables=variables)
     content = get_graphql_content(response)
@@ -90,7 +90,7 @@ def test_collection_query_unpublished_collection_by_slug_as_staff(
     user = staff_api_client.user
     user.user_permissions.add(permission_manage_products)
 
-    variables = {"slug": unpublished_collection.slug, "channel": channel_USD.slug}
+    variables = {"slug": unpublished_collection.slug, "tenant": channel_USD.slug}
 
     # when
     response = staff_api_client.post_graphql(QUERY_COLLECTION, variables=variables)
@@ -106,7 +106,7 @@ def test_collection_query_unpublished_collection_by_slug_and_anonymous_user(
     api_client, unpublished_collection, channel_USD
 ):
     # given
-    variables = {"slug": unpublished_collection.slug, "channel": channel_USD.slug}
+    variables = {"slug": unpublished_collection.slug, "tenant": channel_USD.slug}
 
     # when
     response = api_client.post_graphql(QUERY_COLLECTION, variables=variables)
@@ -156,8 +156,8 @@ def test_collections_query(
     channel_USD,
 ):
     query = """
-        query Collections ($channel: String) {
-            collections(first:2, channel: $channel) {
+        query Collections ($tenant: String) {
+            collections(first:2, tenant: $tenant) {
                 edges {
                     node {
                         name
@@ -174,7 +174,7 @@ def test_collections_query(
     """
 
     # query public collections only as regular user
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     description = dummy_editorjs("Test description.", json_format=True)
     response = user_api_client.post_graphql(query, variables)
     content = get_graphql_content(response)
@@ -199,8 +199,8 @@ def test_collections_query_without_description(
     channel_USD,
 ):
     query = """
-        query Collections ($channel: String) {
-            collections(first:2, channel: $channel) {
+        query Collections ($tenant: String) {
+            collections(first:2, tenant: $tenant) {
                 edges {
                     node {
                         name
@@ -214,7 +214,7 @@ def test_collections_query_without_description(
     """
 
     # query public collections only as regular user
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     collection = published_collection
     collection.description = None
     collection.save()
@@ -237,8 +237,8 @@ def test_collections_query_as_staff(
     channel_USD,
 ):
     query = """
-        query Collections($channel: String) {
-            collections(first: 2, channel: $channel) {
+        query Collections($tenant: String) {
+            collections(first: 2, tenant: $tenant) {
                 edges {
                     node {
                         name
@@ -253,7 +253,7 @@ def test_collections_query_as_staff(
         }
     """
     # query all collections only as a staff user with proper permissions
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     staff_api_client.user.user_permissions.add(permission_manage_products)
     response = staff_api_client.post_graphql(query, variables)
     content = get_graphql_content(response)
@@ -269,8 +269,8 @@ def test_collections_query_as_staff_without_channel(
     channel_USD,
 ):
     query = """
-        query Collections($channel: String) {
-            collections(first: 2, channel: $channel) {
+        query Collections($tenant: String) {
+            collections(first: 2, tenant: $tenant) {
                 edges {
                     node {
                         name
@@ -293,8 +293,8 @@ def test_collections_query_as_staff_without_channel(
 
 
 GET_FILTERED_PRODUCTS_COLLECTION_QUERY = """
-query CollectionProducts($id: ID!,$channel: String, $filters: ProductFilterInput) {
-  collection(id: $id, channel: $channel) {
+query CollectionProducts($id: ID!,$tenant: String, $filters: ProductFilterInput) {
+  collection(id: $id, tenant: $tenant) {
     products(first: 10, filter: $filters) {
       edges {
         node {
@@ -332,7 +332,7 @@ def test_filter_collection_products(
     variables = {
         "id": graphene.Node.to_global_id("Collection", published_collection.pk),
         "filters": {"search": product.name},
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -364,7 +364,7 @@ def test_filter_collection_published_products(
     variables = {
         "id": graphene.Node.to_global_id("Collection", published_collection.pk),
         "filters": {"isPublished": True},
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -397,7 +397,7 @@ def test_filter_collection_products_by_multiple_attributes(
     variables = {
         "id": graphene.Node.to_global_id("Collection", published_collection.pk),
         "filters": filters,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -1417,8 +1417,8 @@ def test_remove_products_from_collection_trigger_product_updated_webhook(
 
 
 NOT_EXISTS_IDS_COLLECTIONS_QUERY = """
-    query ($filter: CollectionFilterInput!, $channel: String) {
-        collections(first: 5, filter: $filter, channel: $channel) {
+    query ($filter: CollectionFilterInput!, $tenant: String) {
+        collections(first: 5, filter: $filter, tenant: $tenant) {
             edges {
                 node {
                     id
@@ -1436,7 +1436,7 @@ def test_collections_query_ids_not_exists(
     query = NOT_EXISTS_IDS_COLLECTIONS_QUERY
     variables = {
         "filter": {"ids": ["ncXc5tP7kmV6pxE=", "yMyDVE5S2LWWTqK="]},
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(query, variables)
     content = get_graphql_content(response, ignore_errors=True)
@@ -1449,9 +1449,9 @@ def test_collections_query_ids_not_exists(
 
 FETCH_COLLECTION_QUERY = """
     query fetchCollection(
-        $id: ID!, $channel: String,  $size: Int, $format: ThumbnailFormatEnum
+        $id: ID!, $tenant: String,  $size: Int, $format: ThumbnailFormatEnum
     ){
-        collection(id: $id, channel: $channel) {
+        collection(id: $id, tenant: $tenant) {
             name
             backgroundImage(size: $size, format: $format) {
                url
@@ -1480,7 +1480,7 @@ def test_collection_image_query_with_size_and_format_proxy_url_returned(
     collection_id = graphene.Node.to_global_id("Collection", collection.pk)
     variables = {
         "id": collection_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "size": 120,
         "format": format,
     }
@@ -1514,7 +1514,7 @@ def test_collection_image_query_with_size_proxy_url_returned(
     collection_id = graphene.Node.to_global_id("Collection", collection.pk)
     variables = {
         "id": collection_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "size": size,
     }
 
@@ -1552,7 +1552,7 @@ def test_collection_image_query_with_size_thumbnail_url_returned(
     collection_id = graphene.Node.to_global_id("Collection", collection.pk)
     variables = {
         "id": collection_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "size": 120,
     }
 
@@ -1587,7 +1587,7 @@ def test_collection_image_query_zero_size_custom_format_provided(
     collection_id = graphene.Node.to_global_id("Collection", collection.pk)
     variables = {
         "id": collection_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "format": format,
         "size": 0,
     }
@@ -1622,7 +1622,7 @@ def test_collection_image_query_zero_size_value_original_image_returned(
     collection_id = graphene.Node.to_global_id("Collection", collection.pk)
     variables = {
         "id": collection_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "size": 0,
     }
 
@@ -1647,7 +1647,7 @@ def test_collection_image_query_without_associated_file(
     # given
     collection = published_collection
     collection_id = graphene.Node.to_global_id("Collection", collection.pk)
-    variables = {"id": collection_id, "channel": channel_USD.slug}
+    variables = {"id": collection_id, "tenant": channel_USD.slug}
 
     # when
     response = user_api_client.post_graphql(FETCH_COLLECTION_QUERY, variables)
@@ -1665,7 +1665,7 @@ def test_collection_query_invalid_id(
     collection_id = "'"
     variables = {
         "id": collection_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(FETCH_COLLECTION_QUERY, variables)
     content = get_graphql_content_from_response(response)
@@ -1680,7 +1680,7 @@ def test_collection_query_object_with_given_id_does_not_exist(
     collection_id = graphene.Node.to_global_id("Collection", -1)
     variables = {
         "id": collection_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(FETCH_COLLECTION_QUERY, variables)
     content = get_graphql_content(response)
@@ -1693,7 +1693,7 @@ def test_collection_query_object_with_invalid_object_type(
     collection_id = graphene.Node.to_global_id("Product", published_collection.pk)
     variables = {
         "id": collection_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(FETCH_COLLECTION_QUERY, variables)
     content = get_graphql_content(response)
@@ -1739,8 +1739,8 @@ def test_update_collection_mutation_remove_background_image(
 
 def _fetch_collection(client, collection, channel_slug, permissions=None):
     query = """
-    query fetchCollection($id: ID!, $channel: String){
-        collection(id: $id, channel: $channel) {
+    query fetchCollection($id: ID!, $tenant: String){
+        collection(id: $id, tenant: $tenant) {
             name,
             channelListings {
                 isPublished
@@ -1750,7 +1750,7 @@ def _fetch_collection(client, collection, channel_slug, permissions=None):
     """
     variables = {
         "id": graphene.Node.to_global_id("Collection", collection.id),
-        "channel": channel_slug,
+        "tenant": channel_slug,
     }
     response = client.post_graphql(
         query, variables, permissions=permissions, check_no_permissions=False
@@ -1791,8 +1791,8 @@ def test_fetch_unpublished_collection_anonymous_user(
 
 
 GET_SORTED_PRODUCTS_COLLECTION_QUERY = """
-query CollectionProducts($id: ID!, $channel: String, $sortBy: ProductOrder) {
-  collection(id: $id, channel: $channel) {
+query CollectionProducts($id: ID!, $tenant: String, $sortBy: ProductOrder) {
+  collection(id: $id, tenant: $tenant) {
     products(first: 10, sortBy: $sortBy) {
       edges {
         node {
@@ -1815,7 +1815,7 @@ def test_sort_collection_products_by_name(
     variables = {
         "id": graphene.Node.to_global_id("Collection", published_collection.pk),
         "sortBy": {"direction": "DESC", "field": "NAME"},
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -1854,7 +1854,7 @@ def test_query_collection_for_federation(api_client, published_collection, chann
             {
                 "__typename": "Collection",
                 "id": collection_id,
-                "channel": channel_USD.slug,
+                "tenant": channel_USD.slug,
             },
         ],
     }
@@ -1899,8 +1899,8 @@ def test_collections_query_with_filter(
     permission_manage_products,
 ):
     query = """
-        query ($filter: CollectionFilterInput!, $channel: String) {
-              collections(first:5, filter: $filter, channel: $channel) {
+        query ($filter: CollectionFilterInput!, $tenant: String) {
+              collections(first:5, filter: $filter, tenant: $tenant) {
                 edges{
                   node{
                     id
@@ -1943,7 +1943,7 @@ def test_collections_query_with_filter(
     )
     variables = {
         "filter": collection_filter,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     staff_api_client.user.user_permissions.add(permission_manage_products)
     response = staff_api_client.post_graphql(query, variables)
@@ -1954,8 +1954,8 @@ def test_collections_query_with_filter(
 
 
 QUERY_COLLECTIONS_WITH_SORT = """
-    query ($sort_by: CollectionSortingInput!, $channel: String) {
-        collections(first:5, sortBy: $sort_by, channel: $channel) {
+    query ($sort_by: CollectionSortingInput!, $tenant: String) {
+        collections(first:5, sortBy: $sort_by, tenant: $tenant) {
                 edges{
                     node{
                         name
@@ -2002,7 +2002,7 @@ def test_collections_query_with_sort(
         ]
     )
     product.collections.add(Collection.objects.get(name="Coll2"))
-    variables = {"sort_by": collection_sort, "channel": channel_USD.slug}
+    variables = {"sort_by": collection_sort, "tenant": channel_USD.slug}
     staff_api_client.user.user_permissions.add(permission_manage_products)
     response = staff_api_client.post_graphql(QUERY_COLLECTIONS_WITH_SORT, variables)
     content = get_graphql_content(response)
@@ -2013,9 +2013,9 @@ def test_collections_query_with_sort(
 
 QUERY_PAGINATED_SORTED_COLLECTIONS = """
     query (
-        $first: Int, $sort_by: CollectionSortingInput!, $after: String, $channel: String
+        $first: Int, $sort_by: CollectionSortingInput!, $after: String, $tenant: String
     ) {
-        collections(first: $first, sortBy: $sort_by, after: $after, channel: $channel) {
+        collections(first: $first, sortBy: $sort_by, after: $after, tenant: $tenant) {
                 edges{
                     node{
                         slug
@@ -2061,7 +2061,7 @@ def test_pagination_for_sorting_collections_by_published_at_date(
     first = 2
     variables = {
         "sort_by": {"direction": "DESC", "field": "PUBLISHED_AT"},
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "first": first,
     }
 

@@ -9,7 +9,7 @@ from graphene.types.objecttype import ObjectType
 from graphene.types.resolver import get_default_resolver
 from promise import Promise
 
-from ...channel import models
+from ...tenant import models
 from ...core.models import ModelWithMetadata
 from ...permission.auth_filters import AuthorizationFilters
 from ...permission.enums import ChannelPermissions, OrderPermissions
@@ -163,7 +163,7 @@ class StockSettings(BaseObjectType):
     )
 
     class Meta:
-        description = "Represents the channel stock settings." + ADDED_IN_37
+        description = "Represents the tenant stock settings." + ADDED_IN_37
         doc_category = DOC_CATEGORY_PRODUCTS
 
 
@@ -214,7 +214,7 @@ class OrderSettings(ObjectType):
     )
 
     class Meta:
-        description = "Represents the channel-specific order settings."
+        description = "Represents the tenant-specific order settings."
         doc_category = DOC_CATEGORY_ORDERS
 
 
@@ -222,12 +222,12 @@ class Channel(ModelObjectType):
     id = graphene.GlobalID(required=True)
     slug = graphene.String(
         required=True,
-        description="Slug of the channel.",
+        description="Slug of the tenant.",
     )
 
     name = PermissionsField(
         graphene.String,
-        description="Name of the channel.",
+        description="Name of the tenant.",
         required=True,
         permissions=[
             AuthorizationFilters.AUTHENTICATED_APP,
@@ -236,7 +236,7 @@ class Channel(ModelObjectType):
     )
     is_active = PermissionsField(
         graphene.Boolean,
-        description="Whether the channel is active.",
+        description="Whether the tenant is active.",
         required=True,
         permissions=[
             AuthorizationFilters.AUTHENTICATED_APP,
@@ -245,7 +245,7 @@ class Channel(ModelObjectType):
     )
     currency_code = PermissionsField(
         graphene.String,
-        description="A currency that is assigned to the channel.",
+        description="A currency that is assigned to the tenant.",
         required=True,
         permissions=[
             AuthorizationFilters.AUTHENTICATED_APP,
@@ -254,7 +254,7 @@ class Channel(ModelObjectType):
     )
     has_orders = PermissionsField(
         graphene.Boolean,
-        description="Whether a channel has associated orders.",
+        description="Whether a tenant has associated orders.",
         permissions=[
             ChannelPermissions.MANAGE_CHANNELS,
         ],
@@ -263,7 +263,7 @@ class Channel(ModelObjectType):
     default_country = PermissionsField(
         CountryDisplay,
         description=(
-            "Default country for the channel. Default country can be "
+            "Default country for the tenant. Default country can be "
             "used in checkout to determine the stock quantities or calculate taxes "
             "when the country was not explicitly provided." + ADDED_IN_31
         ),
@@ -275,7 +275,7 @@ class Channel(ModelObjectType):
     )
     warehouses = PermissionsField(
         NonNullList(Warehouse),
-        description="List of warehouses assigned to this channel." + ADDED_IN_35,
+        description="List of warehouses assigned to this tenant." + ADDED_IN_35,
         required=True,
         permissions=[
             AuthorizationFilters.AUTHENTICATED_APP,
@@ -284,18 +284,18 @@ class Channel(ModelObjectType):
     )
     countries = NonNullList(
         CountryDisplay,
-        description="List of shippable countries for the channel." + ADDED_IN_36,
+        description="List of shippable countries for the tenant." + ADDED_IN_36,
     )
 
     available_shipping_methods_per_country = graphene.Field(
         NonNullList("swiftmovers.graphql.shipping.types.ShippingMethodsPerCountry"),
         countries=graphene.Argument(NonNullList(CountryCodeEnum)),
-        description="Shipping methods that are available for the channel."
+        description="Shipping methods that are available for the tenant."
         + ADDED_IN_36,
     )
     stock_settings = PermissionsField(
         StockSettings,
-        description=("Define the stock setting for this channel." + ADDED_IN_37),
+        description=("Define the stock setting for this tenant." + ADDED_IN_37),
         required=True,
         permissions=[
             AuthorizationFilters.AUTHENTICATED_APP,
@@ -313,7 +313,7 @@ class Channel(ModelObjectType):
     )
 
     class Meta:
-        description = "Represents channel."
+        description = "Represents tenant."
         model = models.Channel
         interfaces = [graphene.relay.Node]
 

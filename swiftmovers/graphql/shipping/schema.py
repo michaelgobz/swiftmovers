@@ -33,7 +33,7 @@ class ShippingQueries(graphene.ObjectType):
             graphene.ID, description="ID of the shipping zone.", required=True
         ),
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description="Look up a shipping zone by ID.",
         permissions=[ShippingPermissions.MANAGE_SHIPPING],
@@ -45,7 +45,7 @@ class ShippingQueries(graphene.ObjectType):
             description="Filtering options for shipping zones."
         ),
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description="List of the shop's shipping zones.",
         permissions=[ShippingPermissions.MANAGE_SHIPPING],

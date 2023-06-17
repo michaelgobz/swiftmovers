@@ -144,10 +144,10 @@ def attributes_for_filtering_with_channels(
 
 QUERY_ATTRIBUTES_FILTERING = """
     query (
-        $filter: AttributeFilterInput, $channel: String
+        $filter: AttributeFilterInput, $tenant: String
     ){
         attributes (
-            first: 10, filter: $filter, channel: $channel
+            first: 10, filter: $filter, tenant: $tenant
         ) {
             edges {
                 node {
@@ -189,7 +189,7 @@ def test_attributes_with_filtering_without_channel(
     )
 
     # then
-    assert_graphql_error_with_message(response, "A default channel does not exist.")
+    assert_graphql_error_with_message(response, "A default tenant does not exist.")
 
 
 @pytest.mark.parametrize(
@@ -215,7 +215,7 @@ def test_products_with_filtering_with_channel_as_staff_user(
         raise AssertionError(tested_field)
     filter_by = {tested_field: filtered_by_node_id}
 
-    variables = {"filter": filter_by, "channel": channel_USD.slug}
+    variables = {"filter": filter_by, "tenant": channel_USD.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -241,7 +241,7 @@ def test_products_with_alternative_filtering_with_channel_as_staff_user(
     # given
     filtered_by_node_id = graphene.Node.to_global_id("Category", category.pk)
     filter_by = {"inCategory": filtered_by_node_id}
-    filter_by["channel"] = channel_USD.slug
+    filter_by["tenant"] = channel_USD.slug
 
     variables = {"filter": filter_by}
 
@@ -281,7 +281,7 @@ def test_products_with_filtering_as_anonymous_client(
         raise AssertionError(tested_field)
     filter_by = {tested_field: filtered_by_node_id}
 
-    variables = {"filter": filter_by, "channel": channel_USD.slug}
+    variables = {"filter": filter_by, "tenant": channel_USD.slug}
 
     # when
     response = api_client.post_graphql(QUERY_ATTRIBUTES_FILTERING, variables)
@@ -315,7 +315,7 @@ def test_products_with_filtering_with_not_visible_in_listings_as_staff_user(
         raise AssertionError(tested_field)
     filter_by = {tested_field: filtered_by_node_id}
 
-    variables = {"filter": filter_by, "channel": channel_PLN.slug}
+    variables = {"filter": filter_by, "tenant": channel_PLN.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -357,7 +357,7 @@ def test_products_with_filtering_with_not_visible_in_listings_as_anonymous_clien
         raise AssertionError(tested_field)
     filter_by = {tested_field: filtered_by_node_id}
 
-    variables = {"filter": filter_by, "channel": channel_PLN.slug}
+    variables = {"filter": filter_by, "tenant": channel_PLN.slug}
 
     # when
     response = api_client.post_graphql(QUERY_ATTRIBUTES_FILTERING, variables)
@@ -391,7 +391,7 @@ def test_products_with_filtering_with_not_published_as_staff_user(
         raise AssertionError(tested_field)
     filter_by = {tested_field: filtered_by_node_id}
 
-    variables = {"filter": filter_by, "channel": other_channel_USD.slug}
+    variables = {"filter": filter_by, "tenant": other_channel_USD.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -429,7 +429,7 @@ def test_products_with_filtering_with_not_published_as_anonymous_client(
         raise AssertionError(tested_field)
     filter_by = {tested_field: filtered_by_node_id}
 
-    variables = {"filter": filter_by, "channel": other_channel_USD.slug}
+    variables = {"filter": filter_by, "tenant": other_channel_USD.slug}
 
     # when
     response = api_client.post_graphql(QUERY_ATTRIBUTES_FILTERING, variables)
@@ -460,7 +460,7 @@ def test_products_with_filtering_not_existing_channel(
         raise AssertionError(tested_field)
     filter_by = {tested_field: filtered_by_node_id}
 
-    variables = {"filter": filter_by, "channel": "Not-existing"}
+    variables = {"filter": filter_by, "tenant": "Not-existing"}
 
     # when
     response = api_client.post_graphql(QUERY_ATTRIBUTES_FILTERING, variables)

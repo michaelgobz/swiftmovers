@@ -853,8 +853,8 @@ def test_query_public_meta_for_category_as_app(
 
 
 QUERY_COLLECTION_PUBLIC_META = """
-    query collectionMeta($id: ID!, $channel: String) {
-        collection(id: $id, channel: $channel) {
+    query collectionMeta($id: ID!, $tenant: String) {
+        collection(id: $id, tenant: $tenant) {
             metadata{
                 key
                 value
@@ -873,7 +873,7 @@ def test_query_public_meta_for_collection_as_anonymous_user(
     collection.save(update_fields=["metadata"])
     variables = {
         "id": graphene.Node.to_global_id("Collection", collection.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     # when
     response = api_client.post_graphql(QUERY_COLLECTION_PUBLIC_META, variables)
@@ -894,7 +894,7 @@ def test_query_public_meta_for_collection_as_customer(
     collection.save(update_fields=["metadata"])
     variables = {
         "id": graphene.Node.to_global_id("Collection", collection.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -916,7 +916,7 @@ def test_query_public_meta_for_collection_as_staff(
     collection.save(update_fields=["metadata"])
     variables = {
         "id": graphene.Node.to_global_id("Collection", collection.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -943,7 +943,7 @@ def test_query_public_meta_for_collection_as_app(
     collection.save(update_fields=["metadata"])
     variables = {
         "id": graphene.Node.to_global_id("Collection", collection.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     # when
     response = app_api_client.post_graphql(
@@ -1280,8 +1280,8 @@ def test_query_public_meta_for_payment_as_app_without_permission(
 
 
 QUERY_PRODUCT_PUBLIC_META = """
-    query productsMeta($id: ID!, $channel: String){
-        product(id: $id, channel: $channel){
+    query productsMeta($id: ID!, $tenant: String){
+        product(id: $id, tenant: $tenant){
             metadata{
                 key
                 value
@@ -1299,7 +1299,7 @@ def test_query_public_meta_for_product_as_anonymous_user(
     product.save(update_fields=["metadata"])
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -1320,7 +1320,7 @@ def test_query_public_meta_for_product_as_customer(
     product.save(update_fields=["metadata"])
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -1470,8 +1470,8 @@ def test_query_public_meta_for_product_type_as_app(
 
 
 QUERY_PRODUCT_VARIANT_PUBLIC_META = """
-    query productVariantMeta($id: ID!, $channel: String){
-        productVariant(id: $id, channel: $channel){
+    query productVariantMeta($id: ID!, $tenant: String){
+        productVariant(id: $id, tenant: $tenant){
             metadata{
                 key
                 value
@@ -1489,7 +1489,7 @@ def test_query_public_meta_for_product_variant_as_anonymous_user(
     variant.save(update_fields=["metadata"])
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -1510,7 +1510,7 @@ def test_query_public_meta_for_product_variant_as_customer(
     variant.save(update_fields=["metadata"])
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -2571,8 +2571,8 @@ def test_query_private_meta_for_category_as_app(
 
 
 QUERY_COLLECTION_PRIVATE_META = """
-    query collectionMeta($id: ID!, $channel: String){
-        collection(id: $id, channel: $channel){
+    query collectionMeta($id: ID!, $tenant: String){
+        collection(id: $id, tenant: $tenant){
             privateMetadata{
                 key
                 value
@@ -2588,7 +2588,7 @@ def test_query_private_meta_for_collection_as_anonymous_user(
     # given
     variables = {
         "id": graphene.Node.to_global_id("Collection", published_collection.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -2604,7 +2604,7 @@ def test_query_private_meta_for_collection_as_customer(
     # given
     variables = {
         "id": graphene.Node.to_global_id("Collection", published_collection.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -2623,7 +2623,7 @@ def test_query_private_meta_for_collection_as_staff(
     collection.save(update_fields=["private_metadata"])
     variables = {
         "id": graphene.Node.to_global_id("Collection", published_collection.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -2650,7 +2650,7 @@ def test_query_private_meta_for_collection_as_app(
     collection.save(update_fields=["private_metadata"])
     variables = {
         "id": graphene.Node.to_global_id("Collection", collection.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -2956,8 +2956,8 @@ def test_query_private_meta_for_payment_as_app_without_permission(
 
 
 QUERY_PRODUCT_PRIVATE_META = """
-    query productsMeta($id: ID!, $channel: String){
-        product(id: $id, channel: $channel){
+    query productsMeta($id: ID!, $tenant: String){
+        product(id: $id, tenant: $tenant){
             privateMetadata{
                 key
                 value
@@ -2973,7 +2973,7 @@ def test_query_private_meta_for_product_as_anonymous_user(
     # given
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -2989,7 +2989,7 @@ def test_query_private_meta_for_product_as_customer(
     # given
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -3130,8 +3130,8 @@ def test_query_private_meta_for_product_type_as_app(
 
 
 QUERY_PRODUCT_VARIANT_PRIVATE_META = """
-    query productVariantMeta($id: ID!, $channel: String){
-        productVariant(id: $id, channel: $channel){
+    query productVariantMeta($id: ID!, $tenant: String){
+        productVariant(id: $id, tenant: $tenant){
             privateMetadata{
                 key
                 value
@@ -3149,7 +3149,7 @@ def test_query_private_meta_for_product_variant_as_anonymous_user(
     variant.save(update_fields=["private_metadata"])
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -3167,7 +3167,7 @@ def test_query_private_meta_for_product_variant_as_customer(
     variant.save(update_fields=["private_metadata"])
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -3997,9 +3997,9 @@ QUERY_PRODUCT_MEDIA_METADATA = """
     query productMediaById(
         $mediaId: ID!,
         $productId: ID!,
-        $channel: String,
+        $tenant: String,
     ) {
-        product(id: $productId, channel: $channel) {
+        product(id: $productId, tenant: $tenant) {
             mediaById(id: $mediaId) {
                 metadata {
                     key
@@ -4031,7 +4031,7 @@ def test_query_metadata_for_product_media_as_staff(
     variables = {
         "productId": graphene.Node.to_global_id("Product", product_with_image.pk),
         "mediaId": graphene.Node.to_global_id("ProductMedia", media.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -4064,7 +4064,7 @@ def test_query_metadata_for_product_media_as_app(
     variables = {
         "productId": graphene.Node.to_global_id("Product", product_with_image.pk),
         "mediaId": graphene.Node.to_global_id("ProductMedia", media.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -4090,7 +4090,7 @@ def test_query_metadata_for_product_media_as_anonymous_user(
     variables = {
         "productId": graphene.Node.to_global_id("Product", product_with_image.pk),
         "mediaId": graphene.Node.to_global_id("ProductMedia", media.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -4109,7 +4109,7 @@ def test_query_metadata_for_product_media_as_customer_user(
     variables = {
         "productId": graphene.Node.to_global_id("Product", product_with_image.pk),
         "mediaId": graphene.Node.to_global_id("ProductMedia", media.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -4129,7 +4129,7 @@ def test_query_metadata_for_product_media_as_staff_missing_permissions(
     variables = {
         "productId": graphene.Node.to_global_id("Product", product_with_image.pk),
         "mediaId": graphene.Node.to_global_id("ProductMedia", media.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when

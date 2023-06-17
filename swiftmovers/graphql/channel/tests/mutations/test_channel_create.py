@@ -7,8 +7,8 @@ from django.utils.functional import SimpleLazyObject
 from django.utils.text import slugify
 from freezegun import freeze_time
 
-from .....channel.error_codes import ChannelErrorCode
-from .....channel.models import Channel
+from .....tenant.error_codes import ChannelErrorCode
+from .....tenant.models import Channel
 from .....core.utils.json_serializer import CustomJsonEncoder
 from .....tax.models import TaxConfiguration
 from .....webhook.event_types import WebhookEventAsyncType
@@ -23,7 +23,7 @@ from ...enums import (
 CHANNEL_CREATE_MUTATION = """
     mutation CreateChannel($input: ChannelCreateInput!){
         channelCreate(input: $input){
-            channel{
+            tenant{
                 id
                 name
                 slug
@@ -92,7 +92,7 @@ def test_channel_create_mutation_as_staff_user(
     # then
     data = content["data"]["channelCreate"]
     assert not data["errors"]
-    channel_data = data["channel"]
+    channel_data = data["tenant"]
     channel = Channel.objects.get()
     assert channel_data["name"] == channel.name == name
     assert channel_data["slug"] == channel.slug == slug
@@ -140,7 +140,7 @@ def test_channel_create_mutation_as_app(
     # then
     data = content["data"]["channelCreate"]
     assert not data["errors"]
-    channel_data = data["channel"]
+    channel_data = data["tenant"]
     channel = Channel.objects.get()
     assert channel_data["name"] == channel.name == name
     assert channel_data["slug"] == channel.slug == slug
@@ -267,7 +267,7 @@ def test_channel_create_mutation_disabled_expire_orders(
     content = get_graphql_content(response)
     data = content["data"]["channelCreate"]
     assert not data["errors"]
-    assert data["channel"]["orderSettings"]["expireOrdersAfter"] is None
+    assert data["tenant"]["orderSettings"]["expireOrdersAfter"] is None
 
 
 def test_channel_create_mutation_as_anonymous(api_client):
@@ -323,7 +323,7 @@ def test_channel_create_mutation_slugify_slug_field(
     content = get_graphql_content(response)
 
     # then
-    channel_data = content["data"]["channelCreate"]["channel"]
+    channel_data = content["data"]["channelCreate"]["tenant"]
     assert channel_data["slug"] == slugify(slug)
 
 
@@ -396,7 +396,7 @@ def test_channel_create_mutation_with_shipping_zones(
     # then
     data = content["data"]["channelCreate"]
     assert not data["errors"]
-    channel_data = data["channel"]
+    channel_data = data["tenant"]
     channel = Channel.objects.get(
         id=graphene.Node.from_global_id(channel_data["id"])[1]
     )
@@ -445,7 +445,7 @@ def test_channel_create_mutation_with_warehouses(
     # then
     data = content["data"]["channelCreate"]
     assert not data["errors"]
-    channel_data = data["channel"]
+    channel_data = data["tenant"]
     channel = Channel.objects.get(
         id=graphene.Node.from_global_id(channel_data["id"])[1]
     )
@@ -499,7 +499,7 @@ def test_channel_create_mutation_trigger_webhook(
     data = content["data"]["channelCreate"]
 
     # then
-    assert data["channel"]
+    assert data["tenant"]
     assert not data["errors"]
 
     mocked_webhook_trigger.assert_called_once_with(
@@ -526,7 +526,7 @@ def test_channel_create_creates_tax_configuration(
     permission_manage_channels, staff_api_client
 ):
     # given
-    slug = "channel-with-tax-config"
+    slug = "tenant-with-tax-config"
     variables = {
         "input": {
             "name": "Channel with tax config",
@@ -580,7 +580,7 @@ def test_channel_create_set_order_mark_as_paid(
     # then
     data = content["data"]["channelCreate"]
     assert not data["errors"]
-    channel_data = data["channel"]
+    channel_data = data["tenant"]
     channel = Channel.objects.get()
     assert (
         channel_data["orderSettings"]["markAsPaidStrategy"]
@@ -626,7 +626,7 @@ def test_channel_create_set_default_transaction_flow_strategy(
     # then
     data = content["data"]["channelCreate"]
     assert not data["errors"]
-    channel_data = data["channel"]
+    channel_data = data["tenant"]
     channel = Channel.objects.get()
     assert (
         channel_data["orderSettings"]["defaultTransactionFlowStrategy"]

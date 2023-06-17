@@ -115,7 +115,7 @@ def test_create_never_expiry_gift_card(
                 "currency": currency,
             },
             "userEmail": customer_user.email,
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
             "addTags": tags,
             "note": note,
             "isActive": True,
@@ -271,7 +271,7 @@ def test_create_gift_card_by_customer(api_client, customer_user, channel_USD):
                 "currency": currency,
             },
             "userEmail": customer_user.email,
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
             "addTags": [tag],
             "note": "This is gift card note that will be save in gift card event.",
             "expiryDate": None,
@@ -452,7 +452,7 @@ def test_create_gift_card_lack_of_channel(
     assert not data
     assert len(errors) == 1
     error = errors[0]
-    assert error["field"] == "channel"
+    assert error["field"] == "tenant"
     assert error["code"] == GiftCardErrorCode.REQUIRED.name
 
 
@@ -523,7 +523,7 @@ def test_create_gift_card_with_expiry_date(
                 "currency": currency,
             },
             "userEmail": customer_user.email,
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
             "addTags": [tag],
             "expiryDate": date_value,
             "isActive": True,
@@ -727,7 +727,7 @@ def test_create_gift_card_with_email_triggers_gift_card_sent_webhook(
             "note": note,
             "expiryDate": None,
             "isActive": False,
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
             "userEmail": customer_user.email,
         }
     }

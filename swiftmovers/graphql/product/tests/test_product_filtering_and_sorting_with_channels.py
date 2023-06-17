@@ -99,7 +99,7 @@ def products_for_sorting_with_channels(category, channel_USD, channel_PLN):
                     2001, 1, 1, tzinfo=pytz.UTC
                 ),
             ),
-            # Second channel
+            # Second tenant
             ProductChannelListing(
                 product=products[0],
                 channel=channel_PLN,
@@ -201,7 +201,7 @@ def products_for_sorting_with_channels(category, channel_USD, channel_PLN):
                 price_amount=Decimal(7),
                 currency=channel_USD.currency_code,
             ),
-            # Second channel
+            # Second tenant
             ProductVariantChannelListing(
                 variant=variants[0],
                 channel=channel_PLN,
@@ -245,9 +245,9 @@ def products_for_sorting_with_channels(category, channel_USD, channel_PLN):
 
 
 QUERY_PRODUCTS_WITH_SORTING_AND_FILTERING = """
-    query ($sortBy: ProductOrder, $filter: ProductFilterInput, $channel: String){
+    query ($sortBy: ProductOrder, $filter: ProductFilterInput, $tenant: String){
         products (
-            first: 10, sortBy: $sortBy, filter: $filter, channel: $channel
+            first: 10, sortBy: $sortBy, filter: $filter, tenant: $tenant
         ) {
             edges {
                 node {
@@ -286,7 +286,7 @@ def test_products_with_sorting_and_without_channel(
     )
 
     # then
-    assert_graphql_error_with_message(response, "A default channel does not exist.")
+    assert_graphql_error_with_message(response, "A default tenant does not exist.")
 
 
 @pytest.mark.parametrize(
@@ -351,7 +351,7 @@ def test_products_with_sorting_and_channel_USD(
     channel_USD,
 ):
     # given
-    variables = {"sortBy": sort_by, "channel": channel_USD.slug}
+    variables = {"sortBy": sort_by, "tenant": channel_USD.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -430,7 +430,7 @@ def test_products_with_sorting_and_channel_PLN(
     channel_PLN,
 ):
     # given
-    variables = {"sortBy": sort_by, "channel": channel_PLN.slug}
+    variables = {"sortBy": sort_by, "tenant": channel_PLN.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -463,7 +463,7 @@ def test_products_with_sorting_and_not_existing_channel_asc(
     channel_USD,
 ):
     # given
-    variables = {"sortBy": sort_by, "channel": "Not-existing"}
+    variables = {"sortBy": sort_by, "tenant": "Not-existing"}
 
     # when
     response = staff_api_client.post_graphql(
@@ -494,7 +494,7 @@ def test_products_with_sorting_and_not_existing_channel_desc(
     channel_USD,
 ):
     # given
-    variables = {"sortBy": sort_by, "channel": "Not-existing"}
+    variables = {"sortBy": sort_by, "tenant": "Not-existing"}
 
     # when
     response = staff_api_client.post_graphql(
@@ -528,7 +528,7 @@ def test_products_with_filtering_without_channel(
     )
 
     # then
-    assert_graphql_error_with_message(response, "A default channel does not exist.")
+    assert_graphql_error_with_message(response, "A default tenant does not exist.")
 
 
 @pytest.mark.parametrize(
@@ -560,7 +560,7 @@ def test_products_with_filtering_with_channel_USD(
     channel_USD,
 ):
     # given
-    variables = {"filter": filter_by, "channel": channel_USD.slug}
+    variables = {"filter": filter_by, "tenant": channel_USD.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -602,7 +602,7 @@ def test_products_with_filtering_with_channel_PLN(
     channel_PLN,
 ):
     # given
-    variables = {"filter": filter_by, "channel": channel_PLN.slug}
+    variables = {"filter": filter_by, "tenant": channel_PLN.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -644,7 +644,7 @@ def test_products_with_filtering_and_not_existing_channel(
     channel_USD,
 ):
     # given
-    variables = {"filter": filter_by, "channel": "Not-existing"}
+    variables = {"filter": filter_by, "tenant": "Not-existing"}
 
     # when
     response = staff_api_client.post_graphql(
@@ -668,7 +668,7 @@ def test_published_products_without_sku_as_staff(
 ):
     # given
     ProductVariant.objects.update(sku=None)
-    variables = {"filter": {"isPublished": True}, "channel": channel_USD.slug}
+    variables = {"filter": {"isPublished": True}, "tenant": channel_USD.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -741,8 +741,8 @@ def test_product_query_with_filter_updated_at(
 
 
 GET_SORTED_VARIANTS_QUERY = """
-query Variants($sortBy: ProductVariantSortingInput, $channel: String) {
-    productVariants(first: 10, sortBy: $sortBy, channel: $channel) {
+query Variants($sortBy: ProductVariantSortingInput, $tenant: String) {
+    productVariants(first: 10, sortBy: $sortBy, tenant: $tenant) {
       edges {
         node {
           name
@@ -775,7 +775,7 @@ def test_products_variants_with_sorting_and_channel_USD(
     channel_USD,
 ):
     # given
-    variables = {"sortBy": sort_by, "channel": channel_USD.slug}
+    variables = {"sortBy": sort_by, "tenant": channel_USD.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -814,7 +814,7 @@ def test_products_variants_with_sorting_and_channel_PLN(
     channel_PLN,
 ):
     # given
-    variables = {"sortBy": sort_by, "channel": channel_PLN.slug}
+    variables = {"sortBy": sort_by, "tenant": channel_PLN.slug}
 
     # when
     response = staff_api_client.post_graphql(

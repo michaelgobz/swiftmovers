@@ -13,7 +13,7 @@ from .management import sort_stocks
 from .models import Allocation, PreorderReservation, Reservation, Stock
 
 if TYPE_CHECKING:
-    from ..channel.models import Channel
+    from ..tenant.models import Channel
     from ..checkout.fetch import CheckoutLine
 
 StockData = namedtuple("StockData", ["pk", "quantity"])

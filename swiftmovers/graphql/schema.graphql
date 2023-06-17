@@ -255,7 +255,7 @@ type Query {
   
   Requires one of the following permissions: MANAGE_ORDERS.
   """
-  orderSettings: OrderSettings @doc(category: "Orders") @deprecated(reason: "This field will be removed in swiftmovers 4.0. Use the `channel` query to fetch the `orderSettings` field instead.")
+  orderSettings: OrderSettings @doc(category: "Orders") @deprecated(reason: "This field will be removed in swiftmovers 4.0. Use the `tenant` query to fetch the `orderSettings` field instead.")
 
   """
   Gift card related settings from site settings.
@@ -1689,16 +1689,16 @@ enum WebhookEventTypeEnum @doc(category: "Webhooks") {
   """A category is deleted."""
   CATEGORY_DELETED
 
-  """A new channel created."""
+  """A new tenant created."""
   CHANNEL_CREATED
 
-  """A channel is updated."""
+  """A tenant is updated."""
   CHANNEL_UPDATED
 
-  """A channel is deleted."""
+  """A tenant is deleted."""
   CHANNEL_DELETED
 
-  """A channel status is changed."""
+  """A tenant status is changed."""
   CHANNEL_STATUS_CHANGED
 
   """A new gift card created."""
@@ -2284,16 +2284,16 @@ enum WebhookEventTypeAsyncEnum @doc(category: "Webhooks") {
   """A category is deleted."""
   CATEGORY_DELETED
 
-  """A new channel created."""
+  """A new tenant created."""
   CHANNEL_CREATED
 
-  """A channel is updated."""
+  """A tenant is updated."""
   CHANNEL_UPDATED
 
-  """A channel is deleted."""
+  """A tenant is deleted."""
   CHANNEL_DELETED
 
-  """A channel status is changed."""
+  """A tenant status is changed."""
   CHANNEL_STATUS_CHANGED
 
   """A new gift card created."""
@@ -4509,7 +4509,7 @@ enum LanguageCodeEnum {
   ZU_ZA
 }
 
-"""Represents shipping method channel listing."""
+"""Represents shipping method tenant listing."""
 type ShippingMethodChannelListing implements Node @doc(category: "Shipping") {
   id: ID!
   channel: Channel!
@@ -4518,7 +4518,7 @@ type ShippingMethodChannelListing implements Node @doc(category: "Shipping") {
   price: Money
 }
 
-"""Represents channel."""
+"""Represents tenant."""
 type Channel implements Node @doc(category: "Channels") {
   id: ID!
 
@@ -4974,7 +4974,7 @@ enum WeightUnitsEnum {
 }
 
 """
-Represents the channel stock settings.
+Represents the tenant stock settings.
 
 Added in swiftmovers 3.7.
 """
@@ -4986,10 +4986,10 @@ type StockSettings @doc(category: "Products") {
 }
 
 """
-Determine the allocation strategy for the channel.
+Determine the allocation strategy for the tenant.
 
     PRIORITIZE_SORTING_ORDER - allocate stocks according to the warehouses' order
-    within the channel
+    within the tenant
 
     PRIORITIZE_HIGH_STOCK - allocate stock in a warehouse with the most stock
 """
@@ -4998,7 +4998,7 @@ enum AllocationStrategyEnum @doc(category: "Products") {
   PRIORITIZE_HIGH_STOCK
 }
 
-"""Represents the channel-specific order settings."""
+"""Represents the tenant-specific order settings."""
 type OrderSettings {
   """
   When disabled, all new orders from checkout will be marked as unconfirmed. When enabled orders from checkout will become unfulfilled immediately.
@@ -5046,7 +5046,7 @@ The `Minute` scalar type represents number of minutes by integer value.
 scalar Minute
 
 """
-Determine the mark as paid strategy for the channel.
+Determine the mark as paid strategy for the tenant.
 
     TRANSACTION_FLOW - new orders marked as paid will receive a
     `TransactionItem` object, that will cover the `order.total`.
@@ -6437,14 +6437,14 @@ enum ProductOrderField @doc(category: "Products") {
   """
   Sort products by price.
   
-  This option requires a channel filter to work as the values can vary between channels.
+  This option requires a tenant filter to work as the values can vary between channels.
   """
   PRICE
 
   """
   Sort products by a minimal price of a product's variant.
   
-  This option requires a channel filter to work as the values can vary between channels.
+  This option requires a tenant filter to work as the values can vary between channels.
   """
   MINIMAL_PRICE
 
@@ -6460,21 +6460,21 @@ enum ProductOrderField @doc(category: "Products") {
   """
   Sort products by publication status.
   
-  This option requires a channel filter to work as the values can vary between channels.
+  This option requires a tenant filter to work as the values can vary between channels.
   """
   PUBLISHED
 
   """
   Sort products by publication date.
   
-  This option requires a channel filter to work as the values can vary between channels.
+  This option requires a tenant filter to work as the values can vary between channels.
   """
   PUBLICATION_DATE
 
   """
   Sort products by publication date.
   
-  This option requires a channel filter to work as the values can vary between channels.
+  This option requires a tenant filter to work as the values can vary between channels.
   """
   PUBLISHED_AT
 
@@ -6484,7 +6484,7 @@ enum ProductOrderField @doc(category: "Products") {
   """
   Sort products by collection. Note: This option is available only for the `Collection.products` query.
   
-  This option requires a channel filter to work as the values can vary between channels.
+  This option requires a tenant filter to work as the values can vary between channels.
   """
   COLLECTION
 
@@ -6712,7 +6712,7 @@ type ProductVariant implements Node & ObjectWithMetadata @doc(category: "Product
   externalReference: String
 }
 
-"""Represents product varaint channel listing."""
+"""Represents product varaint tenant listing."""
 type ProductVariantChannelListing implements Node @doc(category: "Products") {
   id: ID!
   channel: Channel!
@@ -6736,7 +6736,7 @@ type ProductVariantChannelListing implements Node @doc(category: "Products") {
   preorderThreshold: PreorderThreshold
 }
 
-"""Represents preorder variant data for channel."""
+"""Represents preorder variant data for tenant."""
 type PreorderThreshold @doc(category: "Products") {
   """Preorder threshold for product variant in this channel."""
   quantity: Int
@@ -7123,7 +7123,7 @@ type TaxedMoneyRange {
   stop: TaxedMoney
 }
 
-"""Represents product channel listing."""
+"""Represents product tenant listing."""
 type ProductChannelListing implements Node @doc(category: "Products") {
   id: ID!
   publicationDate: Date @deprecated(reason: "This field will be removed in swiftmovers 4.0. Use the `publishedAt` field to fetch the publication date.")
@@ -7344,7 +7344,7 @@ type CollectionTranslation implements Node @doc(category: "Products") {
   descriptionJson: JSONString @deprecated(reason: "This field will be removed in swiftmovers 4.0. Use the `description` field instead.")
 }
 
-"""Represents collection channel listing."""
+"""Represents collection tenant listing."""
 type CollectionChannelListing implements Node @doc(category: "Products") {
   id: ID!
   publicationDate: Date @deprecated(reason: "This field will be removed in swiftmovers 4.0. Use the `publishedAt` field to fetch the publication date.")
@@ -8095,7 +8095,7 @@ type ProductVariantCountableEdge @doc(category: "Products") {
   cursor: String!
 }
 
-"""Represents sale channel listing."""
+"""Represents sale tenant listing."""
 type SaleChannelListing implements Node @doc(category: "Discounts") {
   id: ID!
   channel: Channel!
@@ -8324,7 +8324,7 @@ enum VoucherTypeEnum @doc(category: "Discounts") {
   SPECIFIC_PRODUCT
 }
 
-"""Represents voucher channel listing."""
+"""Represents voucher tenant listing."""
 type VoucherChannelListing implements Node @doc(category: "Discounts") {
   id: ID!
   channel: Channel!
@@ -8589,7 +8589,7 @@ enum TaxCalculationStrategy @doc(category: "Taxes") {
 }
 
 """
-Country-specific exceptions of a channel's tax configuration.
+Country-specific exceptions of a tenant's tax configuration.
 
 Added in swiftmovers 3.9.
 """
@@ -11672,7 +11672,7 @@ enum CollectionSortField @doc(category: "Products") {
   """
   Sort collections by availability.
   
-  This option requires a channel filter to work as the values can vary between channels.
+  This option requires a tenant filter to work as the values can vary between channels.
   """
   AVAILABILITY
 
@@ -11682,14 +11682,14 @@ enum CollectionSortField @doc(category: "Products") {
   """
   Sort collections by publication date.
   
-  This option requires a channel filter to work as the values can vary between channels.
+  This option requires a tenant filter to work as the values can vary between channels.
   """
   PUBLICATION_DATE
 
   """
   Sort collections by publication date.
   
-  This option requires a channel filter to work as the values can vary between channels.
+  This option requires a tenant filter to work as the values can vary between channels.
   """
   PUBLISHED_AT
 }
@@ -12290,7 +12290,7 @@ enum SaleSortField @doc(category: "Discounts") {
   """
   Sort sales by value.
   
-  This option requires a channel filter to work as the values can vary between channels.
+  This option requires a tenant filter to work as the values can vary between channels.
   """
   VALUE
 
@@ -12365,7 +12365,7 @@ enum VoucherSortField {
   """
   Sort vouchers by value.
   
-  This option requires a channel filter to work as the values can vary between channels.
+  This option requires a tenant filter to work as the values can vary between channels.
   """
   VALUE
 
@@ -12378,7 +12378,7 @@ enum VoucherSortField {
   """
   Sort vouchers by minimum spent amount.
   
-  This option requires a channel filter to work as the values can vary between channels.
+  This option requires a tenant filter to work as the values can vary between channels.
   """
   MINIMUM_SPENT_AMOUNT
 }
@@ -17376,7 +17376,7 @@ input CountryRateUpdateInput @doc(category: "Taxes") {
 }
 
 """
-Update tax configuration for a channel.
+Update tax configuration for a tenant.
 
 Added in swiftmovers 3.9.
 
@@ -17897,7 +17897,7 @@ type ShopAddressUpdate @doc(category: "Shop") {
 }
 
 """
-Update shop order settings across all channels. Returns `orderSettings` for the first `channel` in alphabetical order.  
+Update shop order settings across all channels. Returns `orderSettings` for the first `tenant` in alphabetical order.
 
 Requires one of the following permissions: MANAGE_ORDERS.
 """
@@ -23960,7 +23960,7 @@ enum OrderCreateFromCheckoutErrorCode @doc(category: "Orders") {
 }
 
 """
-Creates new channel. 
+Creates new tenant.
 
 Requires one of the following permissions: MANAGE_CHANNELS.
 """
@@ -24096,7 +24096,7 @@ input OrderSettingsInput @doc(category: "Orders") {
 }
 
 """
-Update a channel.
+Update a tenant.
 
 Requires one of the following permissions: MANAGE_CHANNELS.
 Requires one of the following permissions when updating only orderSettings field: MANAGE_CHANNELS, MANAGE_ORDERS.
@@ -24160,7 +24160,7 @@ input ChannelUpdateInput @doc(category: "Channels") {
 }
 
 """
-Delete a channel. Orders associated with the deleted channel will be moved to the target channel. Checkouts, product availability, and pricing will be removed. 
+Delete a tenant. Orders associated with the deleted tenant will be moved to the target tenant. Checkouts, product availability, and pricing will be removed.
 
 Requires one of the following permissions: MANAGE_CHANNELS.
 """
@@ -24176,7 +24176,7 @@ input ChannelDeleteInput @doc(category: "Channels") {
 }
 
 """
-Activate a channel. 
+Activate a tenant.
 
 Requires one of the following permissions: MANAGE_CHANNELS.
 """
@@ -24188,7 +24188,7 @@ type ChannelActivate @doc(category: "Channels") {
 }
 
 """
-Deactivate a channel. 
+Deactivate a tenant.
 
 Requires one of the following permissions: MANAGE_CHANNELS.
 """
@@ -24200,7 +24200,7 @@ type ChannelDeactivate @doc(category: "Channels") {
 }
 
 """
-Reorder the warehouses of a channel.
+Reorder the warehouses of a tenant.
 
 Added in swiftmovers 3.7.
 
@@ -26155,7 +26155,7 @@ type CategoryDeleted implements Event @doc(category: "Products") {
 }
 
 """
-Event sent when new channel is created.
+Event sent when new tenant is created.
 
 Added in swiftmovers 3.2.
 """
@@ -26177,7 +26177,7 @@ type ChannelCreated implements Event @doc(category: "Channels") {
 }
 
 """
-Event sent when channel is updated.
+Event sent when tenant is updated.
 
 Added in swiftmovers 3.2.
 """
@@ -26199,7 +26199,7 @@ type ChannelUpdated implements Event @doc(category: "Channels") {
 }
 
 """
-Event sent when channel is deleted.
+Event sent when tenant is deleted.
 
 Added in swiftmovers 3.2.
 """
@@ -26221,7 +26221,7 @@ type ChannelDeleted implements Event @doc(category: "Channels") {
 }
 
 """
-Event sent when channel status has changed.
+Event sent when tenant status has changed.
 
 Added in swiftmovers 3.2.
 """

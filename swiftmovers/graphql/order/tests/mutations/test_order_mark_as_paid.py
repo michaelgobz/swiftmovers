@@ -2,7 +2,7 @@ import graphene
 import pytest
 from prices import Money, TaxedMoney
 
-from .....channel import MarkAsPaidStrategy
+from .....tenant import MarkAsPaidStrategy
 from .....order import OrderStatus
 from .....order import events as order_events
 from .....order.actions import MARK_AS_PAID_TRANSACTION_NAME

@@ -8,7 +8,7 @@ from django.http import HttpResponseNotFound, JsonResponse
 from mock import patch
 from prices import Money, TaxedMoney
 
-from ...channel import TransactionFlowStrategy
+from ...tenant import TransactionFlowStrategy
 from ...checkout.fetch import fetch_checkout_info, fetch_checkout_lines
 from ...core.prices import quantize_price
 from ...core.taxes import TaxType, zero_money, zero_taxed_money
@@ -68,7 +68,7 @@ def test_manager_with_default_configuration_for_channel_plugins(
             ]
         )
 
-    # global plugin + plugins for each channel
+    # global plugin + plugins for each tenant
     assert len(manager.all_plugins) == 3
 
 
@@ -89,7 +89,7 @@ def test_manager_with_channel_plugins(
         # make sure that we load proper config from DB
         assert plugins[0].configuration[0]["value"] == channel_slug
 
-    # global plugin + plugins for each channel
+    # global plugin + plugins for each tenant
     assert len(manager.all_plugins) == 2
 
 

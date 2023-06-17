@@ -314,7 +314,7 @@ def test_applicable_shipping_methods_price_rate_use_proper_channel(
     price_method_3 = shipping_zone.shipping_methods.create(
         type=ShippingMethodType.PRICE_BASED,
     )
-    # Price method not assigned to channel
+    # Price method not assigned to tenant
     price_method_4 = shipping_zone.shipping_methods.create(
         type=ShippingMethodType.PRICE_BASED,
     )

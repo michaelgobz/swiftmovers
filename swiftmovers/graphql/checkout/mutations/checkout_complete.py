@@ -204,8 +204,8 @@ class CheckoutComplete(BaseMutation, I18nMixin):
                 if not order.channel.is_active:
                     raise ValidationError(
                         {
-                            "channel": ValidationError(
-                                "Cannot complete checkout with inactive channel.",
+                            "tenant": ValidationError(
+                                "Cannot complete checkout with inactive tenant.",
                                 code=CheckoutErrorCode.CHANNEL_INACTIVE.value,
                             )
                         }

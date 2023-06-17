@@ -29,7 +29,7 @@ from ..warehouse.models import Warehouse
 
 if TYPE_CHECKING:
     from ..account.models import Address, User
-    from ..channel.models import Channel
+    from ..tenant.models import Channel
     from ..discount.interface import VoucherInfo
     from ..discount.models import Voucher
     from ..plugins.manager import PluginsManager

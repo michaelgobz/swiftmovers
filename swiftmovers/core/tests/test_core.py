@@ -11,7 +11,7 @@ from django_countries.fields import Country
 from ...account.models import Address, User
 from ...account.utils import create_superuser
 from ...attribute.models import AttributeValue
-from ...channel.models import Channel
+from ...tenant.models import Channel
 from ...discount.models import Sale, SaleChannelListing, Voucher, VoucherChannelListing
 from ...giftcard.models import GiftCard, GiftCardEvent
 from ...order.models import Order
@@ -97,7 +97,7 @@ def test_create_channels(db):
     for _ in random_data.create_channels():
         pass
     assert Channel.objects.all().count() == 2
-    assert Channel.objects.get(slug="channel-pln")
+    assert Channel.objects.get(slug="tenant-pln")
 
 
 @override_settings(DEFAULT_CHANNEL_SLUG="test-slug")

@@ -273,7 +273,7 @@ def test_create_checkout(
     checkout_counts = Checkout.objects.count()
     variables = {
         "checkoutInput": {
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
             "email": "test@example.com",
             "shippingAddress": graphql_address_data,
             "lines": [
@@ -383,7 +383,7 @@ def test_create_checkout_with_reservations(
     shipping_address = graphql_address_data
     variables = {
         "checkoutInput": {
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
             "lines": [new_lines[0]],
             "email": test_email,
             "shippingAddress": shipping_address,
@@ -401,7 +401,7 @@ def test_create_checkout_with_reservations(
     shipping_address = graphql_address_data
     variables = {
         "checkoutInput": {
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
             "lines": new_lines,
             "email": test_email,
             "shippingAddress": shipping_address,

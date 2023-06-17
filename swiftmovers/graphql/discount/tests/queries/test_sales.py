@@ -60,8 +60,8 @@ def test_sale_query_with_channel_slug(
     staff_api_client, sale, permission_manage_discounts, channel_USD
 ):
     query = """
-        query sales($channel: String) {
-            sales(first: 1, channel: $channel) {
+        query sales($tenant: String) {
+            sales(first: 1, tenant: $tenant) {
                 edges {
                     node {
                         type
@@ -83,7 +83,7 @@ def test_sale_query_with_channel_slug(
             }
         }
     """
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     response = staff_api_client.post_graphql(
         query, variables, permissions=[permission_manage_discounts]
     )
@@ -136,8 +136,8 @@ def test_sales_query_with_channel_slug(
     permission_manage_products,
 ):
     query = """
-        query sales($channel: String) {
-            sales(first: 2, channel: $channel) {
+        query sales($tenant: String) {
+            sales(first: 2, tenant: $tenant) {
                 edges {
                     node {
                         name
@@ -146,7 +146,7 @@ def test_sales_query_with_channel_slug(
             }
         }
         """
-    variables = {"channel": channel_PLN.slug}
+    variables = {"tenant": channel_PLN.slug}
     response = staff_api_client.post_graphql(
         query,
         variables,

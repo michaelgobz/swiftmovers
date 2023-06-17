@@ -360,7 +360,7 @@ def generate_order_payload(
         [order],
         fields=ORDER_FIELDS,
         additional_fields={
-            "channel": (lambda o: o.channel, CHANNEL_FIELDS),
+            "tenant": (lambda o: o.channel, CHANNEL_FIELDS),
             "shipping_address": (lambda o: o.shipping_address, ADDRESS_FIELDS),
             "billing_address": (lambda o: o.billing_address, ADDRESS_FIELDS),
             "discounts": (lambda _: discounts, discount_fields),
@@ -566,7 +566,7 @@ def generate_checkout_payload(
         fields=checkout_fields,
         pk_field_name="token",
         additional_fields={
-            "channel": (lambda o: o.channel, CHANNEL_FIELDS),
+            "tenant": (lambda o: o.channel, CHANNEL_FIELDS),
             "user": (lambda c: c.user, user_fields),
             "billing_address": (lambda c: c.billing_address, ADDRESS_FIELDS),
             "shipping_address": (lambda c: c.shipping_address, ADDRESS_FIELDS),
@@ -1331,7 +1331,7 @@ def generate_checkout_payload_for_tax_calculation(
         fields=checkout_fields,
         pk_field_name="token",
         additional_fields={
-            "channel": (lambda c: c.channel, CHANNEL_FIELDS),
+            "tenant": (lambda c: c.channel, CHANNEL_FIELDS),
             "address": (lambda _: address, ADDRESS_FIELDS),
         },
         extra_dict_data={
@@ -1427,7 +1427,7 @@ def generate_order_payload_for_tax_calculation(order: "Order"):
         [order],
         fields=["currency", "metadata"],
         additional_fields={
-            "channel": (lambda o: o.channel, CHANNEL_FIELDS),
+            "tenant": (lambda o: o.channel, CHANNEL_FIELDS),
             "address": (lambda o: address, ADDRESS_FIELDS),
         },
         extra_dict_data={

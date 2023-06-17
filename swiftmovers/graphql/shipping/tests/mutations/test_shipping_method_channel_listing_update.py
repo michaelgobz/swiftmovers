@@ -37,7 +37,7 @@ mutation UpdateShippingMethodChannelListing(
                 minimumOrderPrice {
                     amount
                 }
-                channel {
+                tenant {
                     slug
                 }
             }
@@ -102,7 +102,7 @@ def test_shipping_method_channel_listing_create_as_staff_user(
         == min_value
     )
     assert (
-        shipping_method_data["channelListings"][1]["channel"]["slug"]
+        shipping_method_data["channelListings"][1]["tenant"]["slug"]
         == channel_PLN.slug
     )
 
@@ -291,7 +291,7 @@ def test_shipping_method_channel_listing_update_as_staff_user(
         == min_value
     )
     assert (
-        shipping_method_data["channelListings"][0]["channel"]["slug"]
+        shipping_method_data["channelListings"][0]["tenant"]["slug"]
         == channel_USD.slug
     )
 

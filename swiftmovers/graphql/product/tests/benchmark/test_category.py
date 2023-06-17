@@ -54,11 +54,11 @@ def test_category_view(api_client, category_with_products, count_queries, channe
           }
         }
 
-        query Category($id: ID!, $pageSize: Int, $channel: String) {
+        query Category($id: ID!, $pageSize: Int, $tenant: String) {
           products (
             first: $pageSize,
             filter: {categories: [$id]},
-            channel: $channel
+            tenant: $tenant
           ) {
             totalCount
             edges {
@@ -103,7 +103,7 @@ def test_category_view(api_client, category_with_products, count_queries, channe
               }
             }
           }
-          attributes(filter: {inCategory: $id}, channel: $channel, first: 100) {
+          attributes(filter: {inCategory: $id}, tenant: $tenant, first: 100) {
             edges {
               node {
                 id
@@ -126,7 +126,7 @@ def test_category_view(api_client, category_with_products, count_queries, channe
     variables = {
         "pageSize": 100,
         "id": graphene.Node.to_global_id("Category", category_with_products.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     content = get_graphql_content(api_client.post_graphql(query, variables))
     assert content["data"]["category"] is not None

@@ -128,7 +128,7 @@ class CheckoutLineInput(BaseInputObjectType):
 
 class CheckoutCreateInput(BaseInputObjectType):
     channel = graphene.String(
-        description="Slug of a channel in which to create a checkout."
+        description="Slug of a tenant in which to create a checkout."
     )
     lines = NonNullList(
         CheckoutLineInput,
@@ -267,10 +267,10 @@ class CheckoutCreate(ModelMutation, I18nMixin):
     @classmethod
     def clean_input(cls, info: ResolveInfo, instance: models.Checkout, data, **kwargs):
         user = info.context.user
-        channel = data.pop("channel")
+        channel = data.pop("tenant")
         cleaned_input = super().clean_input(info, instance, data, **kwargs)
 
-        cleaned_input["channel"] = channel
+        cleaned_input["tenant"] = channel
         cleaned_input["currency"] = channel.currency_code
 
         shipping_address = cls.retrieve_shipping_address(user, data)
@@ -291,7 +291,7 @@ class CheckoutCreate(ModelMutation, I18nMixin):
                 info,
                 lines,
                 country,
-                cleaned_input["channel"],
+                cleaned_input["tenant"],
             )
 
         # Use authenticated user's email as default email
@@ -317,7 +317,7 @@ class CheckoutCreate(ModelMutation, I18nMixin):
             country = cleaned_input["country"]
             instance.set_country(country)
             # Create checkout lines
-            channel = cleaned_input["channel"]
+            channel = cleaned_input["tenant"]
             variants = cleaned_input.get("variants")
             checkout_lines_data = cleaned_input.get("lines_data")
             if variants and checkout_lines_data:
@@ -358,10 +358,10 @@ class CheckoutCreate(ModelMutation, I18nMixin):
     def perform_mutation(  # type: ignore[override]
         cls, _root, info: ResolveInfo, /, *, input
     ):
-        channel_input = input.get("channel")
+        channel_input = input.get("tenant")
         channel = clean_channel(channel_input, error_class=CheckoutErrorCode)
         if channel:
-            input["channel"] = channel
+            input["tenant"] = channel
         response = super().perform_mutation(_root, info, input=input)
         manager = get_plugin_manager_promise(info.context).get()
         cls.call_event(manager.checkout_created, response.checkout)

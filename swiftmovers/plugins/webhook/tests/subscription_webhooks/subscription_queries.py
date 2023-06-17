@@ -262,7 +262,7 @@ GIFT_CARD_SENT = (
           giftCard{
             ...GiftCardDetails
           }
-          channel
+          tenant
           sentToEmail
         }
       }
@@ -401,7 +401,7 @@ CHANNEL_CREATED = """
     subscription{
       event{
         ...on ChannelCreated{
-          channel{
+          tenant{
             id
           }
         }
@@ -413,7 +413,7 @@ CHANNEL_UPDATED = """
     subscription{
       event{
         ...on ChannelUpdated{
-          channel{
+          tenant{
             id
           }
         }
@@ -425,7 +425,7 @@ CHANNEL_DELETED = """
     subscription{
       event{
         ...on ChannelDeleted{
-          channel{
+          tenant{
             id
           }
         }
@@ -437,7 +437,7 @@ CHANNEL_STATUS_CHANGED = """
     subscription{
       event{
         ...on ChannelStatusChanged{
-          channel{
+          tenant{
             id
             isActive
           }
@@ -1231,7 +1231,7 @@ COLLECTION_CREATED = (
     subscription{
       event{
         ...on CollectionCreated{
-          collection(channel: "main"){
+          collection(tenant: "main"){
             ...CollectionDetails
           }
         }
@@ -1247,7 +1247,7 @@ COLLECTION_UPDATED = (
     subscription{
       event{
         ...on CollectionUpdated{
-          collection(channel: "main"){
+          collection(tenant: "main"){
             ...CollectionDetails
           }
         }
@@ -1262,7 +1262,7 @@ COLLECTION_DELETED = (
     subscription{
       event{
         ...on CollectionDeleted{
-          collection(channel: "main"){
+          collection(tenant: "main"){
             ...CollectionDetails
           }
         }
@@ -1278,7 +1278,7 @@ COLLECTION_METADATA_UPDATED = (
     subscription{
       event{
         ...on CollectionMetadataUpdated{
-          collection(channel: "main"){
+          collection(tenant: "main"){
             ...CollectionDetails
           }
         }

@@ -4,8 +4,8 @@ from ....core.enums import ReportingPeriod
 from ....tests.utils import get_graphql_content
 
 QUERY_REPORT_PRODUCT_SALES = """
-query TopProducts($period: ReportingPeriod!, $channel: String!) {
-    reportProductSales(period: $period, first: 20, channel: $channel) {
+query TopProducts($period: ReportingPeriod!, $tenant: String!) {
+    reportProductSales(period: $period, first: 20, tenant: $tenant) {
         edges {
             node {
                 revenue(period: $period) {
@@ -31,7 +31,7 @@ def test_report_product_sales(
     channel_USD,
 ):
     order = order_with_lines
-    variables = {"period": ReportingPeriod.TODAY.name, "channel": channel_USD.slug}
+    variables = {"period": ReportingPeriod.TODAY.name, "tenant": channel_USD.slug}
     permissions = [permission_manage_orders, permission_manage_products]
     response = staff_api_client.post_graphql(
         QUERY_REPORT_PRODUCT_SALES, variables, permissions
@@ -61,7 +61,7 @@ def test_report_product_sales_channel_pln(
     channel_PLN,
 ):
     order = order_with_lines_channel_PLN
-    variables = {"period": ReportingPeriod.TODAY.name, "channel": channel_PLN.slug}
+    variables = {"period": ReportingPeriod.TODAY.name, "tenant": channel_PLN.slug}
     permissions = [permission_manage_orders, permission_manage_products]
     response = staff_api_client.post_graphql(
         QUERY_REPORT_PRODUCT_SALES, variables, permissions
@@ -89,7 +89,7 @@ def test_report_product_sales_not_existing_channel(
     permission_manage_products,
     permission_manage_orders,
 ):
-    variables = {"period": ReportingPeriod.TODAY.name, "channel": "not-existing"}
+    variables = {"period": ReportingPeriod.TODAY.name, "tenant": "not-existing"}
     permissions = [permission_manage_orders, permission_manage_products]
     response = staff_api_client.post_graphql(
         QUERY_REPORT_PRODUCT_SALES, variables, permissions

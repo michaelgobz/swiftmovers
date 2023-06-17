@@ -5,8 +5,8 @@ import graphene
 from django.utils.functional import SimpleLazyObject
 from freezegun import freeze_time
 
-from .....channel.error_codes import ChannelErrorCode
-from .....channel.models import Channel
+from .....tenant.error_codes import ChannelErrorCode
+from .....tenant.models import Channel
 from .....checkout.models import Checkout
 from .....core.utils.json_serializer import CustomJsonEncoder
 from .....order.models import Order
@@ -17,7 +17,7 @@ from ....tests.utils import assert_no_permission, get_graphql_content
 CHANNEL_DELETE_MUTATION = """
     mutation deleteChannel($id: ID!, $input: ChannelDeleteInput){
         channelDelete(id: $id, input: $input){
-            channel{
+            tenant{
                 id
                 name
                 slug
@@ -302,24 +302,24 @@ def test_channel_delete_mutation_deletes_invalid_warehouse_to_zone_relations(
     shipping_zones,
     other_channel_USD,
 ):
-    """Ensure deleting channel deletes no longer valid warehouse to zone relations."""
+    """Ensure deleting tenant deletes no longer valid warehouse to zone relations."""
     # given
     order = order_list[0]
     order.channel = channel_USD
     order.save()
 
     # prepare warehouse to shipping zone relations:
-    # warehouse[0] - with channel USD, PLN assigned to both shipping zones
-    # warehouse[1] - with channel USD, JPY assigned to both shipping zones
-    # shipping_zones[0] - assigned to channel USD and PLN
-    # shipping_zones[0] - assigned to channel USD, PLN, JPY
+    # warehouse[0] - with tenant USD, PLN assigned to both shipping zones
+    # warehouse[1] - with tenant USD, JPY assigned to both shipping zones
+    # shipping_zones[0] - assigned to tenant USD and PLN
+    # shipping_zones[0] - assigned to tenant USD, PLN, JPY
     channel_USD.warehouses.add(*warehouses)
     channel_PLN.warehouses.add(warehouses[0])
     channel_JPY.warehouses.add(warehouses[1])
     for shipping_zone in shipping_zones:
         shipping_zone.warehouses.add(*warehouses)
 
-    # add additional common channel for warehouse[1]
+    # add additional common tenant for warehouse[1]
     shipping_zones[0].channels.add(channel_JPY)
 
     channel_id = graphene.Node.to_global_id("Channel", channel_USD.id)
@@ -343,14 +343,14 @@ def test_channel_delete_mutation_deletes_invalid_warehouse_to_zone_relations(
     assert not Channel.objects.filter(slug=channel_USD.slug).exists()
 
     # ensure warehouse from index 1 has not been deleted from any shipping zone
-    # common PLN channel
+    # common PLN tenant
     for zone in shipping_zones:
         zone.refresh_from_db()
         assert warehouses[0] in zone.warehouses.all()
 
     # ensure warehouse from index 1 has not been deleted from shipping zone
-    # with JPY channel
+    # with JPY tenant
     assert warehouses[1] in shipping_zones[0].warehouses.all()
     # ensure warehouse from index 1 has been deleted from shipping zone
-    # without JPY channel
+    # without JPY tenant
     assert warehouses[1] not in shipping_zones[1].warehouses.all()

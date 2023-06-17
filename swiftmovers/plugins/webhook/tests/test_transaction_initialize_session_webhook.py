@@ -5,7 +5,7 @@ from unittest import mock
 import graphene
 from freezegun import freeze_time
 
-from ....channel import TransactionFlowStrategy
+from ....tenant import TransactionFlowStrategy
 from ....core import EventDeliveryStatus
 from ....core.models import EventDelivery, EventPayload
 from ....payment.interface import (

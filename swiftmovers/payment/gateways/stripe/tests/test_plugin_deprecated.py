@@ -68,7 +68,7 @@ def test_process_payment_with_customer_and_future_usage(
         customer=customer,
         setup_future_usage="off_session",
         metadata={
-            "channel": channel_USD.slug,
+            "tenant": channel_USD.slug,
             "payment_id": payment_info.graphql_payment_id,
         },
         receipt_email=payment_stripe_for_checkout.checkout.email,

@@ -3,14 +3,14 @@ import uuid
 import graphene
 import pytest
 
-from .....channel.error_codes import ChannelErrorCode
+from .....tenant.error_codes import ChannelErrorCode
 from .....warehouse.models import ChannelWarehouse
 from ....tests.utils import get_graphql_content
 
 CHANNEL_REORDER_WAREHOUSES = """
     mutation ChannelReorderWarehouses($channelId: ID!, $moves: [ReorderInput!]!) {
         channelReorderWarehouses(channelId: $channelId, moves: $moves) {
-            channel {
+            tenant {
                 id
                 warehouses {
                     id
@@ -92,10 +92,10 @@ def test_sort_warehouses_with_channel(
     data = content["data"]["channelReorderWarehouses"]
     errors = data["errors"]
     assert not errors
-    assert len(data["channel"]["warehouses"]) == 3
+    assert len(data["tenant"]["warehouses"]) == 3
     expected_order = [warehouses[index] for index in expected_order]
     assert [
-        warehouse_data["id"] for warehouse_data in data["channel"]["warehouses"]
+        warehouse_data["id"] for warehouse_data in data["tenant"]["warehouses"]
     ] == expected_order
 
 

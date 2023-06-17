@@ -6,7 +6,7 @@ import pytest
 from django.utils import timezone
 from django_countries import countries
 
-from ....channel.utils import DEPRECATION_WARNING_MESSAGE
+from ....tenant.utils import DEPRECATION_WARNING_MESSAGE
 from ....shipping.models import ShippingZone
 from ....warehouse import WarehouseClickAndCollectOption
 from ....warehouse.models import PreorderReservation, Reservation, Stock, Warehouse
@@ -15,8 +15,8 @@ from ...tests.utils import get_graphql_content
 COUNTRY_CODE = "US"
 
 QUERY_QUANTITY_AVAILABLE = """
-    query variantAvailability($id: ID!, $channel: String) {
-        productVariant(id: $id, channel: $channel) {
+    query variantAvailability($id: ID!, $tenant: String) {
+        productVariant(id: $id, tenant: $tenant) {
             quantityAvailable
         }
     }
@@ -28,7 +28,7 @@ def test_variant_quantity_available_without_country_code(
 ):
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant_with_many_stocks.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_QUANTITY_AVAILABLE, variables)
     content = get_graphql_content(response)
@@ -63,7 +63,7 @@ def test_variant_quantity_available_without_country_code_stock_only_in_cc_wareho
 
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -93,7 +93,7 @@ def test_variant_quantity_available_without_country_code_local_cc_warehouse(
 
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -129,7 +129,7 @@ def test_variant_quantity_available_without_country_code_global_cc_warehouse(
 
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -153,7 +153,7 @@ def test_variant_quantity_available_when_one_stock_is_exceeded(
 
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant_with_many_stocks.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_QUANTITY_AVAILABLE, variables)
     content = get_graphql_content(response)
@@ -169,7 +169,7 @@ def test_variant_quantity_available_without_country_code_and_no_channel_shipping
     channel_USD.shipping_zones.clear()
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant_with_many_stocks.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_QUANTITY_AVAILABLE, variables)
     content = get_graphql_content(response)
@@ -191,7 +191,7 @@ def test_variant_quantity_available_no_country_warehouse_without_zone(
 
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant_with_many_stocks.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -277,9 +277,9 @@ def test_variant_quantity_available_only_warehouse_without_zone_no_channel_no_co
 
 QUERY_VARIANT_AVAILABILITY = """
     query variantAvailability(
-        $id: ID!, $country: CountryCode, $address: AddressInput, $channel: String
+        $id: ID!, $country: CountryCode, $address: AddressInput, $tenant: String
     ) {
-        productVariant(id: $id, channel: $channel) {
+        productVariant(id: $id, tenant: $tenant) {
             deprecatedByCountry: quantityAvailable(countryCode: $country)
             byAddress: quantityAvailable(address: $address)
         }
@@ -293,7 +293,7 @@ def test_variant_quantity_available_with_country_code(
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant_with_many_stocks.pk),
         "address": {"country": COUNTRY_CODE},
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_VARIANT_AVAILABILITY, variables)
     content = get_graphql_content(response)
@@ -315,7 +315,7 @@ def test_variant_quantity_available_with_country_code_warehouse_in_many_shipping
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant_with_many_stocks.pk),
         "address": {"country": COUNTRY_CODE},
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_VARIANT_AVAILABILITY, variables)
     content = get_graphql_content(response)
@@ -331,7 +331,7 @@ def test_variant_quantity_available_with_country_code_no_channel_shipping_zones(
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant_with_many_stocks.pk),
         "address": {"country": COUNTRY_CODE},
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_VARIANT_AVAILABILITY, variables)
     content = get_graphql_content(response)
@@ -350,7 +350,7 @@ def test_variant_quantity_available_with_country_code_only_one_available_warehou
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant_with_many_stocks.pk),
         "address": {"country": COUNTRY_CODE},
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_VARIANT_AVAILABILITY, variables)
     content = get_graphql_content(response)
@@ -365,7 +365,7 @@ def test_variant_quantity_available_with_null_as_country_code(
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant_with_many_stocks.pk),
         "country": None,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_VARIANT_AVAILABILITY, variables)
     content = get_graphql_content(response)
@@ -398,7 +398,7 @@ def test_variant_quantity_available_with_country_code_only_negative_quantity(
 
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "address": {"country": COUNTRY_CODE},
         "country": COUNTRY_CODE,
     }
@@ -437,7 +437,7 @@ def test_variant_quantity_available_with_country_code_and_cc_warehouse_without_z
 
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "address": {"country": COUNTRY_CODE},
         "country": COUNTRY_CODE,
     }
@@ -473,7 +473,7 @@ def test_variant_quantity_available_with_country_code_and_local_cc_warehouse_wit
 
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "address": {"country": COUNTRY_CODE},
         "country": COUNTRY_CODE,
     }
@@ -509,7 +509,7 @@ def test_variant_qty_available_with_country_code_and_local_cc_warehouse_negative
 
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "address": {"country": COUNTRY_CODE},
         "country": COUNTRY_CODE,
     }
@@ -543,7 +543,7 @@ def test_variant_quantity_available_with_country_code_and_global_cc_warehouse(
 
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "address": {"country": COUNTRY_CODE},
         "country": COUNTRY_CODE,
     }
@@ -569,7 +569,7 @@ def test_variant_quantity_available_with_max(
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant_with_many_stocks.pk),
         "country": COUNTRY_CODE,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_VARIANT_AVAILABILITY, variables)
     content = get_graphql_content(response)
@@ -587,7 +587,7 @@ def test_variant_quantity_available_without_stocks(
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant_with_many_stocks.pk),
         "country": COUNTRY_CODE,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_VARIANT_AVAILABILITY, variables)
     content = get_graphql_content(response)
@@ -606,7 +606,7 @@ def test_variant_quantity_available_with_allocations(
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant_with_many_stocks.pk),
         "country": COUNTRY_CODE,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_VARIANT_AVAILABILITY, variables)
     content = get_graphql_content(response)
@@ -625,7 +625,7 @@ def test_variant_quantity_available_with_enabled_reservations(
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
         "country": COUNTRY_CODE,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_VARIANT_AVAILABILITY, variables)
     content = get_graphql_content(response)
@@ -645,7 +645,7 @@ def test_variant_quantity_available_with_enabled_expired_reservations(
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
         "country": COUNTRY_CODE,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_VARIANT_AVAILABILITY, variables)
     content = get_graphql_content(response)
@@ -663,7 +663,7 @@ def test_variant_quantity_available_with_disabled_reservations(
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
         "country": COUNTRY_CODE,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_VARIANT_AVAILABILITY, variables)
     content = get_graphql_content(response)
@@ -682,7 +682,7 @@ def test_variant_quantity_available_without_inventory_tracking(
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant_with_many_stocks.pk),
         "country": COUNTRY_CODE,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_VARIANT_AVAILABILITY, variables)
     content = get_graphql_content(response)
@@ -703,7 +703,7 @@ def test_variant_quantity_available_without_inventory_tracking_no_global_limit(
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant_with_many_stocks.pk),
         "country": COUNTRY_CODE,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_VARIANT_AVAILABILITY, variables)
     content = get_graphql_content(response)
@@ -722,7 +722,7 @@ def test_variant_quantity_available_without_inventory_tracking_and_stocks(
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
         "country": COUNTRY_CODE,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_VARIANT_AVAILABILITY, variables)
     content = get_graphql_content(response)
@@ -743,7 +743,7 @@ def test_variant_qty_available_without_inventory_tracking_and_stocks_no_global_l
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
         "country": COUNTRY_CODE,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_VARIANT_AVAILABILITY, variables)
     content = get_graphql_content(response)
@@ -767,7 +767,7 @@ def test_variant_quantity_available_preorder_with_channel_threshold(
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
         "country": COUNTRY_CODE,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_VARIANT_AVAILABILITY, variables)
     content = get_graphql_content(response)
@@ -793,7 +793,7 @@ def test_variant_quantity_available_preorder_without_reservations(
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
         "country": COUNTRY_CODE,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_VARIANT_AVAILABILITY, variables)
     content = get_graphql_content(response)
@@ -820,7 +820,7 @@ def test_variant_quantity_available_preorder_with_channel_threshold_and_reservat
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
         "country": COUNTRY_CODE,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_VARIANT_AVAILABILITY, variables)
     content = get_graphql_content(response)
@@ -849,7 +849,7 @@ def test_variant_quantity_available_preorder_with_global_threshold(
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
         "country": COUNTRY_CODE,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_VARIANT_AVAILABILITY, variables)
     content = get_graphql_content(response)
@@ -880,7 +880,7 @@ def test_variant_quantity_available_preorder_with_global_threshold_and_reservati
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
         "country": COUNTRY_CODE,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_VARIANT_AVAILABILITY, variables)
     content = get_graphql_content(response)
@@ -906,7 +906,7 @@ def test_variant_quantity_available_preorder_without_threshold(
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
         "country": COUNTRY_CODE,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_VARIANT_AVAILABILITY, variables)
     content = get_graphql_content(response)
@@ -931,7 +931,7 @@ def test_variant_quantity_available_preorder_without_channel(
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
         "country": COUNTRY_CODE,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(QUERY_VARIANT_AVAILABILITY, variables)
     content = get_graphql_content(response)

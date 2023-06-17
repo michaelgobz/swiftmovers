@@ -1,4 +1,4 @@
-from ...channel import AllocationStrategy, MarkAsPaidStrategy, TransactionFlowStrategy
+from ...tenant import AllocationStrategy, MarkAsPaidStrategy, TransactionFlowStrategy
 from ..core.doc_category import (
     DOC_CATEGORY_CHANNELS,
     DOC_CATEGORY_PAYMENTS,

@@ -303,7 +303,7 @@ class GiftCard(ModelObjectType[models.GiftCard]):
     )
     bought_in_channel = graphene.String(
         description=(
-            "Slug of the channel where the gift card was bought." + ADDED_IN_31
+            "Slug of the tenant where the gift card was bought." + ADDED_IN_31
         ),
         required=False,
     )

@@ -51,12 +51,12 @@ def validate_and_get_external_event_type(data_input):
 
 
 def validate_and_get_channel(data_input, error_class):
-    if channel_slug := data_input.get("channel"):
+    if channel_slug := data_input.get("tenant"):
         return validate_channel(channel_slug, error_class).slug
     raise ValidationError(
         {
-            "channel": ValidationError(
-                "The obligatory param 'channel' is empty.",
+            "tenant": ValidationError(
+                "The obligatory param 'tenant' is empty.",
                 code=ExternalNotificationTriggerErrorCode.REQUIRED.value,
             )
         }

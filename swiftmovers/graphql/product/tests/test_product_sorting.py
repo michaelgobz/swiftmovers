@@ -146,8 +146,8 @@ def test_sort_products_within_collection(
 
 
 GET_SORTED_PRODUCTS_QUERY = """
-query Products($sortBy: ProductOrder, $channel: String) {
-    products(first: 10, sortBy: $sortBy, channel: $channel) {
+query Products($sortBy: ProductOrder, $tenant: String) {
+    products(first: 10, sortBy: $sortBy, tenant: $tenant) {
       edges {
         node {
           id
@@ -183,7 +183,7 @@ def test_sort_products_by_published_at(
             "direction": direction,
             "field": "PUBLISHED_AT",
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -208,7 +208,7 @@ def test_sort_products_by_created_at(direction, api_client, product_list, channe
             "direction": direction,
             "field": "CREATED_AT",
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = api_client.post_graphql(GET_SORTED_PRODUCTS_QUERY, variables)
@@ -235,7 +235,7 @@ def test_sort_products_by_rating(
 
     variables = {
         "sortBy": {"direction": direction, "field": "RATING"},
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -254,9 +254,9 @@ def test_sort_products_by_rating(
 
 QUERY_PAGINATED_SORTED_PRODUCTS = """
     query Products(
-        $first: Int, $sortBy: ProductOrder, $channel: String, $after: String
+        $first: Int, $sortBy: ProductOrder, $tenant: String, $after: String
     ) {
-        products(first: $first, sortBy: $sortBy, after: $after, channel: $channel) {
+        products(first: $first, sortBy: $sortBy, after: $after, tenant: $tenant) {
             edges {
                 node {
                     id
@@ -291,7 +291,7 @@ def test_pagination_for_sorting_products_by_published_at_date(
     first = 2
     variables = {
         "sortBy": {"direction": "ASC", "field": "PUBLISHED_AT"},
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "first": first,
     }
 
@@ -323,8 +323,8 @@ def test_pagination_for_sorting_products_by_published_at_date(
 
 
 QUERY_SORT_BY_COLLECTION = """
-query CollectionProducts($id: ID, $channel: String, $after: String) {
-  collection(id: $id channel: $channel) {
+query CollectionProducts($id: ID, $tenant: String, $after: String) {
+  collection(id: $id tenant: $tenant) {
     id
     products(first: 2, sortBy: {field: COLLECTION, direction: ASC},after: $after) {
       totalCount
@@ -376,7 +376,7 @@ def test_query_products_sorted_by_collection(
 
     variables = {
         "id": collection_id,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "after": to_global_cursor(
             (collection_prod_2.sort_order, collection_prod_2.product.pk)
         ),

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Notifies about deployment status to a given slack channel.
+Notifies about deployment status to a given slack tenant.
 
 This file currently needs to be duplicated between repositories until
 https://github.com/github/roadmap/issues/98 is closed.

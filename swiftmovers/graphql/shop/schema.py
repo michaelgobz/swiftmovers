@@ -1,6 +1,6 @@
 import graphene
 
-from ...channel import models as channel_models
+from ...tenant import models as channel_models
 from ...permission.enums import GiftcardPermissions, OrderPermissions
 from ..channel.types import OrderSettings
 from ..core.descriptions import DEPRECATED_IN_3X_FIELD, DEPRECATED_IN_3X_MUTATION
@@ -32,12 +32,12 @@ class ShopQueries(graphene.ObjectType):
         OrderSettings,
         description=(
             "Order related settings from site settings. "
-            "Returns `orderSettings` for the first `channel` in "
+            "Returns `orderSettings` for the first `tenant` in "
             "alphabetical order."
         ),
         deprecation_reason=(
             f"{DEPRECATED_IN_3X_FIELD} "
-            "Use the `channel` query to fetch the `orderSettings` field instead."
+            "Use the `tenant` query to fetch the `orderSettings` field instead."
         ),
         permissions=[OrderPermissions.MANAGE_ORDERS],
         doc_category=DOC_CATEGORY_ORDERS,

@@ -25,14 +25,14 @@ fragment Pricing on ProductPricingInfo {
   }
   displayGrossPrices
 }
-query FetchProduct($id: ID, $channel: String, $address: AddressInput) {
-  product(id: $id, channel: $channel) {
+query FetchProduct($id: ID, $tenant: String, $address: AddressInput) {
+  product(id: $id, tenant: $tenant) {
     id
     pricing(address: $address) {
       ...Pricing
     }
     channelListings {
-      channel {
+      tenant {
         slug
       }
       pricing(address: $address) {
@@ -62,7 +62,7 @@ def test_product_channel_listing_pricing_field(
     country = "PL"
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "address": {"country": country},
     }
     product.channel_listings.exclude(channel__slug=channel_USD.slug).delete()
@@ -99,8 +99,8 @@ fragment Pricing on ProductPricingInfo {
     }
   }
 }
-query FetchProduct($id: ID, $channel: String) {
-  product(id: $id, channel: $channel) {
+query FetchProduct($id: ID, $tenant: String) {
+  product(id: $id, tenant: $tenant) {
     id
     pricing {
       ...Pricing
@@ -128,7 +128,7 @@ def test_product_channel_listing_pricing_field_no_address(
     channel_USD.save()
     variables = {
         "id": graphene.Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     product.channel_listings.exclude(channel__slug=channel_USD.slug).delete()
 
@@ -188,10 +188,10 @@ FRAGMENT_PRICING = (
 
 QUERY_PRODUCT_PRICING = (
     """
-  query Product($id: ID!, $channel: String!) {
-    product(id: $id, channel: $channel) {
+  query Product($id: ID!, $tenant: String!) {
+    product(id: $id, tenant: $tenant) {
       channelListings {
-        channel {
+        tenant {
           slug
         }
         pricingPL: pricing(address: { country: PL }) {
@@ -262,7 +262,7 @@ def test_product_pricing(
     # when
     variables = {
         "id": graphene.Node.to_global_id("Product", product.id),
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
     response = staff_api_client.post_graphql(
         QUERY_PRODUCT_PRICING,
@@ -275,7 +275,7 @@ def test_product_pricing(
     # then
     data = None
     for channel_data in content["data"]["product"]["channelListings"]:
-        if channel_data["channel"]["slug"] == channel_PLN.slug:
+        if channel_data["tenant"]["slug"] == channel_PLN.slug:
             data = channel_data
 
     price_range_PL = data["pricingPL"]["priceRange"]
@@ -318,7 +318,7 @@ def test_product_pricing_default_country_default_rate(
     # when
     variables = {
         "id": graphene.Node.to_global_id("Product", product.id),
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
     response = staff_api_client.post_graphql(
         QUERY_PRODUCT_PRICING,
@@ -331,7 +331,7 @@ def test_product_pricing_default_country_default_rate(
     # then
     data = None
     for channel_data in content["data"]["product"]["channelListings"]:
-        if channel_data["channel"]["slug"] == channel_PLN.slug:
+        if channel_data["tenant"]["slug"] == channel_PLN.slug:
             data = channel_data
 
     variant = product.variants.first()
@@ -373,7 +373,7 @@ def test_product_pricing_use_tax_class_from_product_type(
     # when
     variables = {
         "id": graphene.Node.to_global_id("Product", product.id),
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
     response = staff_api_client.post_graphql(
         QUERY_PRODUCT_PRICING,
@@ -393,7 +393,7 @@ def test_product_pricing_use_tax_class_from_product_type(
 
     data = None
     for channel_data in content["data"]["product"]["channelListings"]:
-        if channel_data["channel"]["slug"] == channel_PLN.slug:
+        if channel_data["tenant"]["slug"] == channel_PLN.slug:
             data = channel_data
 
     price_range_PL = data["pricingPL"]["priceRange"]
@@ -425,7 +425,7 @@ def test_product_pricing_no_flat_rates_in_one_country(
     # when
     variables = {
         "id": graphene.Node.to_global_id("Product", product.id),
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
     response = staff_api_client.post_graphql(
         QUERY_PRODUCT_PRICING,
@@ -446,7 +446,7 @@ def test_product_pricing_no_flat_rates_in_one_country(
 
     data = None
     for channel_data in content["data"]["product"]["channelListings"]:
-        if channel_data["channel"]["slug"] == channel_PLN.slug:
+        if channel_data["tenant"]["slug"] == channel_PLN.slug:
             data = channel_data
 
     price_range_PL = data["pricingPL"]["priceRange"]

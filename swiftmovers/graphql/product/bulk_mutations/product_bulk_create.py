@@ -73,7 +73,7 @@ def get_results(instances_data_with_errors_list, reject_everything=False):
 
 
 class ProductChannelListingCreateInput(BaseInputObjectType):
-    channel_id = graphene.ID(required=True, description="ID of a channel.")
+    channel_id = graphene.ID(required=True, description="ID of a tenant.")
     is_published = graphene.Boolean(
         description="Determines if object is visible to customers."
     )
@@ -317,7 +317,7 @@ class ProductBulkCreate(BaseMutation):
             index_error_map[product_index].append(
                 ProductBulkCreateError(
                     path="channelListings",
-                    message="Not existing channel ID.",
+                    message="Not existing tenant ID.",
                     code=ProductBulkCreateErrorCode.NOT_FOUND.value,
                     channels=wrong_channel_ids,
                 )
@@ -328,7 +328,7 @@ class ProductBulkCreate(BaseMutation):
             index_error_map[product_index].append(
                 ProductBulkCreateError(
                     path="channelListings",
-                    message="Duplicated channel ID.",
+                    message="Duplicated tenant ID.",
                     code=ProductBulkCreateErrorCode.DUPLICATED_INPUT_ITEM.value,
                     channels=duplicates,
                 )
@@ -399,7 +399,7 @@ class ProductBulkCreate(BaseMutation):
                     continue
 
                 channel = channel_global_id_to_instance_map[listing_data["channel_id"]]
-                listing_data["channel"] = channel
+                listing_data["tenant"] = channel
                 listing_data["currency"] = channel.currency_code
                 cls.set_published_at(listing_data)
 
@@ -646,7 +646,7 @@ class ProductBulkCreate(BaseMutation):
                     )
                     cleaned_input["variants"] = variants
 
-                # assign product instance to channel listings data
+                # assign product instance to tenant listings data
                 if channel_listings := cleaned_input.get("channel_listings"):
                     for channel_listing in channel_listings:
                         channel_listing["product"] = instance
@@ -756,8 +756,8 @@ class ProductBulkCreate(BaseMutation):
         listings_to_create += [
             models.ProductChannelListing(
                 product=product,
-                channel=listing_data["channel"],
-                currency=listing_data["channel"].currency_code,
+                channel=listing_data["tenant"],
+                currency=listing_data["tenant"].currency_code,
                 is_published=listing_data.get("is_published", False),
                 published_at=listing_data.get("published_at"),
                 visible_in_listings=listing_data.get("visible_in_listings", False),
@@ -766,7 +766,7 @@ class ProductBulkCreate(BaseMutation):
             for listing_data in listings_input
         ]
         updated_channels.update(
-            {listing_data["channel"] for listing_data in listings_input}
+            {listing_data["tenant"] for listing_data in listings_input}
         )
 
     @classmethod

@@ -75,8 +75,8 @@ def test_retrieve_variant_list(
           }
         }
 
-        query VariantList($ids: [ID!], $channel: String) {
-          productVariants(ids: $ids, first: 100, channel: $channel) {
+        query VariantList($ids: [ID!], $tenant: String) {
+          productVariants(ids: $ids, first: 100, tenant: $tenant) {
             edges {
               node {
                 ...ProductVariantFields
@@ -110,7 +110,7 @@ def test_retrieve_variant_list(
             graphene.Node.to_global_id("ProductVariant", variant.pk)
             for variant in product_variant_list
         ],
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     get_graphql_content(api_client.post_graphql(query, variables))
 
@@ -379,7 +379,7 @@ def test_products_variants_for_federation_query_count(
                 "id": graphene.Node.to_global_id(
                     "ProductVariant", product_variant_list[0].pk
                 ),
-                "channel": channel_USD.slug,
+                "tenant": channel_USD.slug,
             },
         ],
     }
@@ -394,7 +394,7 @@ def test_products_variants_for_federation_query_count(
             {
                 "__typename": "ProductVariant",
                 "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
-                "channel": channel_USD.slug,
+                "tenant": channel_USD.slug,
             }
             for variant in product_variant_list
         ],

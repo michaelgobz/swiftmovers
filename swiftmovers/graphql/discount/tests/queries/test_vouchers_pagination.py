@@ -100,12 +100,12 @@ def vouchers_for_pagination(db, channel_USD):
 
 QUERY_VOUCHERS_PAGINATION = """
     query (
-        $first: Int, $last: Int, $after: String, $before: String, $channel: String
+        $first: Int, $last: Int, $after: String, $before: String, $tenant: String
         $sortBy: VoucherSortingInput, $filter: VoucherFilterInput
     ){
         vouchers(
             first: $first, last: $last, after: $after, before: $before,
-            sortBy: $sortBy, filter: $filter, channel: $channel
+            sortBy: $sortBy, filter: $filter, tenant: $tenant
         ) {
             edges {
                 node {
@@ -191,7 +191,7 @@ def test_vouchers_pagination_with_sorting_and_channel(
         "first": page_size,
         "after": None,
         "sortBy": sort_by,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = staff_api_client.post_graphql(
         QUERY_VOUCHERS_PAGINATION,

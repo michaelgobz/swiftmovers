@@ -160,7 +160,7 @@ def test_generate_order_payload(
         "language_code": order.language_code,
         "metadata": order.metadata,
         "private_metadata": order.private_metadata,
-        "channel": {
+        "tenant": {
             "id": graphene.Node.to_global_id("Channel", order.channel_id),
             "type": "Channel",
             "slug": order.channel.slug,
@@ -327,7 +327,7 @@ def test_generate_order_payload_for_tax_calculation(
     assert payload == {
         "type": "Order",
         "id": graphene.Node.to_global_id("Order", order.id),
-        "channel": {
+        "tenant": {
             "id": graphene.Node.to_global_id("Channel", order.channel_id),
             "type": "Channel",
             "slug": order.channel.slug,
@@ -1107,7 +1107,7 @@ def test_generate_list_gateways_payload(checkout):
     payload = generate_list_gateways_payload(currency, checkout)
     data = json.loads(payload)
     assert data["checkout"] == json.loads(generate_checkout_payload(checkout))[0]
-    assert data["checkout"]["channel"]["id"] == graphene.Node.to_global_id(
+    assert data["checkout"]["tenant"]["id"] == graphene.Node.to_global_id(
         "Channel", checkout.channel.pk
     )
     assert data["currency"] == currency
@@ -1700,7 +1700,7 @@ def test_generate_checkout_payload_for_tax_calculation_entire_order_voucher(
             "country_area": address.country_area,
             "phone": str(address.phone),
         },
-        "channel": {
+        "tenant": {
             "type": "Channel",
             "id": graphene.Node.to_global_id("Channel", checkout.channel_id),
             "currency_code": checkout.channel.currency_code,
@@ -1803,7 +1803,7 @@ def test_generate_checkout_payload_for_tax_calculation_specific_product_voucher(
             "country_area": address.country_area,
             "phone": str(address.phone),
         },
-        "channel": {
+        "tenant": {
             "type": "Channel",
             "id": graphene.Node.to_global_id("Channel", checkout.channel_id),
             "currency_code": checkout.channel.currency_code,
@@ -1885,7 +1885,7 @@ def test_generate_checkout_payload_for_tax_calculation_digital_checkout(
             "country_area": address.country_area,
             "phone": str(address.phone),
         },
-        "channel": {
+        "tenant": {
             "type": "Channel",
             "id": graphene.Node.to_global_id("Channel", checkout.channel_id),
             "currency_code": checkout.channel.currency_code,
@@ -1954,7 +1954,7 @@ def test_generate_checkout_payload(
         "language_code": checkout.language_code,
         "private_metadata": checkout.metadata_storage.private_metadata,
         "metadata": checkout.metadata_storage.metadata,
-        "channel": {
+        "tenant": {
             "type": "Channel",
             "id": graphene.Node.to_global_id("Channel", checkout.channel_id),
             "currency_code": checkout.channel.currency_code,

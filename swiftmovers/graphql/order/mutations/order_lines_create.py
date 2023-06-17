@@ -54,7 +54,7 @@ class OrderLinesCreate(EditableOrderValidationMixin, BaseMutation):
         permissions = (OrderPermissions.MANAGE_ORDERS,)
         error_type_class = OrderError
         error_type_field = "order_errors"
-        errors_mapping = {"lines": "input", "channel": "input"}
+        errors_mapping = {"lines": "input", "tenant": "input"}
 
     @classmethod
     def validate_lines(cls, info: ResolveInfo, data, existing_lines_info):

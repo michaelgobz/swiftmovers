@@ -7,7 +7,7 @@ import graphene
 import pytest
 from prices import Money, TaxedMoney, fixed_discount
 
-from .....channel.utils import DEPRECATION_WARNING_MESSAGE
+from .....tenant.utils import DEPRECATION_WARNING_MESSAGE
 from .....core.prices import quantize_price
 from .....discount import DiscountValueType
 from .....order import OrderEvents, OrderOrigin, OrderStatus
@@ -32,8 +32,8 @@ def assert_proper_webhook_called_once(order, status, draft_mock, order_mock):
 
 
 QUERY_ORDER_TOTAL = """
-query Orders($period: ReportingPeriod, $channel: String) {
-    ordersTotal(period: $period, channel: $channel ) {
+query Orders($period: ReportingPeriod, $tenant: String) {
+    ordersTotal(period: $period, tenant: $tenant ) {
         gross {
             amount
             currency

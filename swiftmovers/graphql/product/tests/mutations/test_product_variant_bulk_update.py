@@ -39,7 +39,7 @@ PRODUCT_VARIANT_BULK_UPDATE_MUTATION = """
                             quantity
                         }
                         channelListings {
-                            channel {
+                            tenant {
                                 slug
                             }
                             price {

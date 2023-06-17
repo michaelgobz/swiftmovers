@@ -397,7 +397,7 @@ class Group(models.Model):
         blank=True,
     )
     restricted_access_to_channels = models.BooleanField(default=False)
-    channels = models.ManyToManyField("channel.Channel", blank=True)
+    channels = models.ManyToManyField("swiftmovers.tenant.Channel", blank=True)
 
     objects = GroupManager()
 

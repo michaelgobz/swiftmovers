@@ -49,8 +49,8 @@ class ChannelSortInputObjectType(SortInputObjectType):
     channel = graphene.Argument(
         graphene.String,
         description=(
-            "Specifies the channel in which to sort the data."
-            f"{DEPRECATED_IN_3X_INPUT} Use root-level channel argument instead."
+            "Specifies the tenant in which to sort the data."
+            f"{DEPRECATED_IN_3X_INPUT} Use root-level tenant argument instead."
         ),
     )
 

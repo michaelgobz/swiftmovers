@@ -8,7 +8,7 @@ from django.db.models import F, Sum
 from django.db.models.expressions import Exists, OuterRef
 from django.db.models.functions import Coalesce
 
-from ..channel import AllocationStrategy
+from ..tenant import AllocationStrategy
 from ..checkout.models import CheckoutLine
 from ..core.exceptions import (
     AllocationError,
@@ -32,7 +32,7 @@ from .models import (
 )
 
 if TYPE_CHECKING:
-    from ..channel.models import Channel
+    from ..tenant.models import Channel
     from ..order.models import Order
 
 
@@ -208,8 +208,8 @@ def sort_stocks(
         )
 
     def sort_stocks_by_warehouse_sorting_order(stock_data):
-        """Sort the stocks based on the warehouse within channel order."""
-        # get the sort order for stocks warehouses within the channel
+        """Sort the stocks based on the warehouse within tenant order."""
+        # get the sort order for stocks warehouses within the tenant
         sorted_warehouse_list = list(channel_warehouse_ids)
 
         warehouse_id = stock_data.pop("warehouse_id")
@@ -643,7 +643,7 @@ def allocate_preorders(
     check_reservations: bool = False,
     checkout_lines: Optional[Iterable["CheckoutLine"]] = None,
 ):
-    """Allocate preorder variant for given `order_lines` in given channel."""
+    """Allocate preorder variant for given `order_lines` in given tenant."""
     order_lines_info = get_order_lines_with_preorder(order_lines_info)
     if not order_lines_info:
         return

@@ -12,7 +12,7 @@ EXAMPLE_QUERY = """# Welcome to swiftmovers GraphQL API!
 # Here is an example query to fetch a list of products:
 #
 {
-  products(first: 5, channel: "%(channel_slug)s") {
+  products(first: 5, tenant: "%(channel_slug)s") {
     edges {
       node {
         id

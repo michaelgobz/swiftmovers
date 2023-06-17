@@ -46,8 +46,8 @@ def test_report_product_sales(
     count_queries,
 ):
     query = """
-        query TopProducts($period: ReportingPeriod!, $channel: String!) {
-          reportProductSales(period: $period, first: 20, channel: $channel) {
+        query TopProducts($period: ReportingPeriod!, $tenant: String!) {
+          reportProductSales(period: $period, first: 20, tenant: $tenant) {
             edges {
               node {
                 revenue(period: $period) {
@@ -62,7 +62,7 @@ def test_report_product_sales(
           }
         }
     """
-    variables = {"period": ReportingPeriod.TODAY.name, "channel": channel_USD.slug}
+    variables = {"period": ReportingPeriod.TODAY.name, "tenant": channel_USD.slug}
     permissions = [permission_manage_orders, permission_manage_products]
     response = staff_api_client.post_graphql(query, variables, permissions)
     get_graphql_content(response)

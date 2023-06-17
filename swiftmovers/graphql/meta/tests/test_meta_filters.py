@@ -4,8 +4,8 @@ from ....product.models import Product
 from ...tests.utils import get_graphql_content
 
 FILTER_BY_META_QUERY = """
-query filterProductsByMetadata ($filter:ProductFilterInput, $channel: String){
-  products(first: 100, channel: $channel, filter: $filter){
+query filterProductsByMetadata ($filter:ProductFilterInput, $tenant: String){
+  products(first: 100, tenant: $tenant, filter: $filter){
     edges {
       node {
         slug
@@ -99,7 +99,7 @@ def test_filter_by_meta_total_returned_objects(
 ):
     product1, product2, product3 = product_list
     variables = {
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "filter": {
             "metadata": metadata,
         },
@@ -118,7 +118,7 @@ def test_filter_by_meta_expected_product_for_key_and_value(
 ):
     product = product_list[0]
     variables = {
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "filter": {
             "metadata": [{"key": "A", "value": "1"}],
         },
@@ -141,7 +141,7 @@ def test_filter_by_meta_expected_product_for_only_key(
 ):
     product = product_list[0]
     variables = {
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "filter": {
             "metadata": [{"key": "A"}],
         },

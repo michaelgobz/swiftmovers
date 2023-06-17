@@ -43,7 +43,7 @@ def add_gift_card_code_to_checkout(
     validate_checkout_email(checkout)
 
     try:
-        # only active gift card with currency the same as channel currency can be used
+        # only active gift card with currency the same as tenant currency can be used
         gift_card = (
             GiftCard.objects.active(date=date.today())
             .filter(currency=currency)
@@ -144,7 +144,7 @@ def fulfill_gift_card_lines(
             stock = line.variant.stocks.for_channel_and_country(channel_slug).first()
             if not stock:
                 raise GiftCardNotApplicable(
-                    message="Lack of gift card stock for checkout channel.",
+                    message="Lack of gift card stock for checkout tenant.",
                 )
             warehouse_pk = stock.warehouse_id
             lines_for_warehouses[warehouse_pk].append(

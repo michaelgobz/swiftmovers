@@ -57,11 +57,11 @@ class ProductVariantStocksUpdateInput(BaseInputObjectType):
 
 
 class ChannelListingUpdateInput(BaseInputObjectType):
-    channel_listing = graphene.ID(required=True, description="ID of a channel listing.")
-    price = PositiveDecimal(description="Price of the particular variant in channel.")
-    cost_price = PositiveDecimal(description="Cost price of the variant in channel.")
+    channel_listing = graphene.ID(required=True, description="ID of a tenant listing.")
+    price = PositiveDecimal(description="Price of the particular variant in tenant.")
+    cost_price = PositiveDecimal(description="Cost price of the variant in tenant.")
     preorder_threshold = graphene.Int(
-        description="The threshold for preorder variant in channel."
+        description="The threshold for preorder variant in tenant."
     )
 
     class Meta:
@@ -71,17 +71,17 @@ class ChannelListingUpdateInput(BaseInputObjectType):
 class ProductVariantChannelListingUpdateInput(BaseInputObjectType):
     create = NonNullList(
         ProductVariantChannelListingAddInput,
-        description="List of channels to create variant channel listings.",
+        description="List of channels to create variant tenant listings.",
         required=False,
     )
     update = NonNullList(
         ChannelListingUpdateInput,
-        description="List of channel listings to update.",
+        description="List of tenant listings to update.",
         required=False,
     )
     remove = NonNullList(
         graphene.ID,
-        description="List of channel listings to remove.",
+        description="List of tenant listings to remove.",
         required=False,
     )
 
@@ -537,11 +537,11 @@ class ProductVariantBulkUpdate(BaseMutation):
         if listings_data := listings_input.get("create"):
             listings_to_create += [
                 models.ProductVariantChannelListing(
-                    channel=listing_data["channel"],
+                    channel=listing_data["tenant"],
                     variant=variant,
                     price_amount=listing_data["price"],
                     cost_price_amount=listing_data.get("cost_price"),
-                    currency=listing_data["channel"].currency_code,
+                    currency=listing_data["tenant"].currency_code,
                     preorder_quantity_threshold=listing_data.get("preorder_threshold"),
                 )
                 for listing_data in listings_data

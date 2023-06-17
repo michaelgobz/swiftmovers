@@ -19,7 +19,7 @@ DRAFT_ORDER_CREATE_MUTATION = """
     mutation draftCreate(
         $user: ID, $discount: PositiveDecimal, $lines: [OrderLineCreateInput!],
         $shippingAddress: AddressInput, $billingAddress: AddressInput,
-        $shippingMethod: ID, $voucher: ID, $customerNote: String, $channel: ID,
+        $shippingMethod: ID, $voucher: ID, $customerNote: String, $tenant: ID,
         $redirectUrl: String, $externalReference: String
         ) {
             draftOrderCreate(
@@ -28,7 +28,7 @@ DRAFT_ORDER_CREATE_MUTATION = """
                     lines: $lines, shippingAddress: $shippingAddress,
                     billingAddress: $billingAddress,
                     shippingMethod: $shippingMethod, voucher: $voucher,
-                    channelId: $channel,
+                    channelId: $tenant,
                     redirectUrl: $redirectUrl,
                     customerNote: $customerNote,
                     externalReference: $externalReference
@@ -127,7 +127,7 @@ def test_draft_order_create(
         "shippingMethod": shipping_id,
         "voucher": voucher_id,
         "customerNote": customer_note,
-        "channel": channel_id,
+        "tenant": channel_id,
         "redirectUrl": redirect_url,
         "externalReference": external_reference,
     }
@@ -230,7 +230,7 @@ def test_draft_order_create_with_same_variant_and_force_new_line(
         "shippingMethod": shipping_id,
         "voucher": voucher_id,
         "customerNote": customer_note,
-        "channel": channel_id,
+        "tenant": channel_id,
         "redirectUrl": redirect_url,
     }
     response = staff_api_client.post_graphql(
@@ -332,7 +332,7 @@ def test_draft_order_create_with_inactive_channel(
         "shippingMethod": shipping_id,
         "voucher": voucher_id,
         "customerNote": customer_note,
-        "channel": channel_id,
+        "tenant": channel_id,
     }
     response = staff_api_client.post_graphql(
         query, variables, permissions=[permission_manage_orders]
@@ -410,7 +410,7 @@ def test_draft_order_create_without_sku(
         "shippingMethod": shipping_id,
         "voucher": voucher_id,
         "customerNote": customer_note,
-        "channel": channel_id,
+        "tenant": channel_id,
         "redirectUrl": redirect_url,
     }
     response = staff_api_client.post_graphql(
@@ -490,7 +490,7 @@ def test_draft_order_create_variant_with_0_price(
         "lines": variant_list,
         "shippingAddress": shipping_address,
         "shippingMethod": shipping_id,
-        "channel": channel_id,
+        "tenant": channel_id,
     }
     response = staff_api_client.post_graphql(
         query, variables, permissions=[permission_manage_orders]
@@ -565,7 +565,7 @@ def test_draft_order_create_tax_error(
         "shippingMethod": shipping_id,
         "voucher": voucher_id,
         "customerNote": customer_note,
-        "channel": channel_id,
+        "tenant": channel_id,
     }
     response = staff_api_client.post_graphql(
         query, variables, permissions=[permission_manage_orders]
@@ -616,7 +616,7 @@ def test_draft_order_create_with_voucher_not_assigned_to_order_channel(
         "shippingMethod": shipping_id,
         "voucher": voucher_id,
         "customerNote": customer_note,
-        "channel": channel_id,
+        "tenant": channel_id,
     }
     response = staff_api_client.post_graphql(
         query, variables, permissions=[permission_manage_orders]
@@ -656,7 +656,7 @@ def test_draft_order_create_with_product_and_variant_not_assigned_to_order_chann
         "shippingAddress": shipping_address,
         "shippingMethod": shipping_id,
         "customerNote": customer_note,
-        "channel": channel_id,
+        "tenant": channel_id,
     }
     response = staff_api_client.post_graphql(
         query, variables, permissions=[permission_manage_orders]
@@ -697,7 +697,7 @@ def test_draft_order_create_with_variant_not_assigned_to_order_channel(
         "shippingAddress": shipping_address,
         "shippingMethod": shipping_id,
         "customerNote": customer_note,
-        "channel": channel_id,
+        "tenant": channel_id,
     }
     response = staff_api_client.post_graphql(
         query, variables, permissions=[permission_manage_orders]
@@ -743,7 +743,7 @@ def test_draft_order_create_without_channel(
     content = get_graphql_content(response)
     error = content["data"]["draftOrderCreate"]["errors"][0]
     assert error["code"] == OrderErrorCode.REQUIRED.name
-    assert error["field"] == "channel"
+    assert error["field"] == "tenant"
 
 
 def test_draft_order_create_with_negative_quantity_line(
@@ -776,7 +776,7 @@ def test_draft_order_create_with_negative_quantity_line(
     variables = {
         "user": user_id,
         "lines": variant_list,
-        "channel": channel_id,
+        "tenant": channel_id,
     }
     response = staff_api_client.post_graphql(
         query, variables, permissions=[permission_manage_orders]
@@ -828,7 +828,7 @@ def test_draft_order_create_with_channel_with_unpublished_product(
     variables = {
         "user": user_id,
         "discount": discount,
-        "channel": channel_id,
+        "tenant": channel_id,
         "lines": variant_list,
         "shippingAddress": shipping_address,
         "shippingMethod": shipping_id,
@@ -888,7 +888,7 @@ def test_draft_order_create_with_channel_with_unpublished_product_by_date(
     variables = {
         "user": user_id,
         "discount": discount,
-        "channel": channel_id,
+        "tenant": channel_id,
         "lines": variant_list,
         "shippingAddress": shipping_address,
         "shippingMethod": shipping_id,
@@ -945,7 +945,7 @@ def test_draft_order_create_with_channel(
     variables = {
         "user": user_id,
         "discount": discount,
-        "channel": channel_id,
+        "tenant": channel_id,
         "lines": variant_list,
         "shippingAddress": shipping_address,
         "shippingMethod": shipping_id,
@@ -1017,7 +1017,7 @@ def test_draft_order_create_product_without_shipping(
     variables = {
         "user": user_id,
         "discount": discount,
-        "channel": channel_id,
+        "tenant": channel_id,
         "lines": variant_list,
         "shippingAddress": shipping_address,
         "shippingMethod": shipping_id,
@@ -1101,7 +1101,7 @@ def test_draft_order_create_invalid_billing_address(
         "shippingMethod": shipping_id,
         "voucher": voucher_id,
         "customerNote": customer_note,
-        "channel": channel_id,
+        "tenant": channel_id,
         "redirectUrl": redirect_url,
     }
     response = staff_api_client.post_graphql(
@@ -1161,7 +1161,7 @@ def test_draft_order_create_invalid_shipping_address(
         "shippingMethod": shipping_id,
         "voucher": voucher_id,
         "customerNote": customer_note,
-        "channel": channel_id,
+        "tenant": channel_id,
         "redirectUrl": redirect_url,
     }
     response = staff_api_client.post_graphql(
@@ -1221,7 +1221,7 @@ def test_draft_order_create_price_recalculation(
         "billingAddress": address,
         "shippingAddress": address,
         "voucher": voucher_id,
-        "channel": channel_id,
+        "tenant": channel_id,
     }
 
     # when
@@ -1265,7 +1265,7 @@ def test_draft_order_create_update_display_gross_prices(
         "lines": variant_list,
         "billingAddress": graphql_address_data,
         "shippingAddress": graphql_address_data,
-        "channel": channel_id,
+        "tenant": channel_id,
     }
 
     # when
@@ -1297,7 +1297,7 @@ def test_draft_order_create_with_non_unique_external_reference(
     order.external_reference = ext_ref
     order.save(update_fields=["external_reference"])
 
-    variables = {"channel": channel_id, "externalReference": ext_ref}
+    variables = {"tenant": channel_id, "externalReference": ext_ref}
 
     # when
     response = staff_api_client.post_graphql(

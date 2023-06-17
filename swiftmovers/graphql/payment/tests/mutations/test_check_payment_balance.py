@@ -44,7 +44,7 @@ def test_payment_check_balance_mutation_validate_gateway_does_not_exist(
 
 @patch.object(PluginsManager, "check_payment_balance")
 @patch.object(PaymentCheckBalance, "validate_gateway")
-@patch("swiftmovers.graphql.channel.utils.validate_channel")
+@patch("swiftmovers.graphql.tenant.utils.validate_channel")
 def test_payment_check_balance_validate_not_supported_currency(
     _, __, check_payment_balance_mock, staff_api_client, check_payment_balance_input
 ):
@@ -73,7 +73,7 @@ def test_payment_check_balance_validate_not_supported_currency(
 def test_payment_check_balance_validate_channel_does_not_exist(
     _, __, check_payment_balance_mock, staff_api_client, check_payment_balance_input
 ):
-    check_payment_balance_input["channel"] = "not_existing_channel"
+    check_payment_balance_input["tenant"] = "not_existing_channel"
     response = staff_api_client.post_graphql(
         MUTATION_CHECK_PAYMENT_BALANCE, {"input": check_payment_balance_input}
     )
@@ -83,7 +83,7 @@ def test_payment_check_balance_validate_channel_does_not_exist(
 
     assert len(errors) == 1
     assert errors[0]["code"] == PaymentErrorCode.NOT_FOUND.value.upper()
-    assert errors[0]["field"] == "channel"
+    assert errors[0]["field"] == "tenant"
     assert errors[0]["message"] == (
         "Channel with 'not_existing_channel' slug does not exist."
     )
@@ -104,7 +104,7 @@ def test_payment_check_balance_validate_channel_inactive(
 ):
     channel_USD.is_active = False
     channel_USD.save(update_fields=["is_active"])
-    check_payment_balance_input["channel"] = "main"
+    check_payment_balance_input["tenant"] = "main"
 
     response = staff_api_client.post_graphql(
         MUTATION_CHECK_PAYMENT_BALANCE, {"input": check_payment_balance_input}
@@ -115,7 +115,7 @@ def test_payment_check_balance_validate_channel_inactive(
 
     assert len(errors) == 1
     assert errors[0]["code"] == PaymentErrorCode.CHANNEL_INACTIVE.value.upper()
-    assert errors[0]["field"] == "channel"
+    assert errors[0]["field"] == "tenant"
     assert errors[0]["message"] == "Channel with 'main' is inactive."
     assert check_payment_balance_mock.call_count == 0
 

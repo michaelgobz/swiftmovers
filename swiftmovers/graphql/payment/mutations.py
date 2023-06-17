@@ -11,8 +11,8 @@ from django.utils import timezone
 from graphql import GraphQLError
 
 from ...app.models import App
-from ...channel import TransactionFlowStrategy
-from ...channel.models import Channel
+from ...tenant import TransactionFlowStrategy
+from ...tenant.models import Channel
 from ...checkout import models as checkout_models
 from ...checkout.actions import transaction_amounts_for_checkout_updated
 from ...checkout.calculations import (
@@ -523,7 +523,7 @@ class PaymentInitialize(BaseMutation):
             required=True,
         )
         channel = graphene.String(
-            description="Slug of a channel for which the data should be returned.",
+            description="Slug of a tenant for which the data should be returned.",
         )
         payment_data = JSONString(
             required=False,
@@ -545,7 +545,7 @@ class PaymentInitialize(BaseMutation):
         except Channel.DoesNotExist:
             raise ValidationError(
                 {
-                    "channel": ValidationError(
+                    "tenant": ValidationError(
                         f"Channel with '{channel_slug}' slug does not exist.",
                         code=PaymentErrorCode.NOT_FOUND.value,
                     )
@@ -554,7 +554,7 @@ class PaymentInitialize(BaseMutation):
         if not channel.is_active:
             raise ValidationError(
                 {
-                    "channel": ValidationError(
+                    "tenant": ValidationError(
                         f"Channel with '{channel_slug}' is inactive.",
                         code=PaymentErrorCode.CHANNEL_INACTIVE.value,
                     )
@@ -608,7 +608,7 @@ class PaymentCheckBalanceInput(BaseInputObjectType):
     )
     method = graphene.types.String(description="Payment method name.", required=True)
     channel = graphene.String(
-        description="Slug of a channel for which the data should be returned.",
+        description="Slug of a tenant for which the data should be returned.",
         required=True,
     )
     card = CardInput(description="Information about card.", required=True)
@@ -640,7 +640,7 @@ class PaymentCheckBalance(BaseMutation):
         cls.validate_gateway(gateway_id, manager)
         cls.validate_currency(money.currency, gateway_id, manager)
 
-        channel = data["input"].pop("channel")
+        channel = data["input"].pop("tenant")
         validate_channel(channel, PaymentErrorCode)
 
         try:
@@ -1907,7 +1907,7 @@ class TransactionInitialize(TransactionSessionBase):
             TransactionFlowStrategyEnum,
             description=(
                 "The expected action called for the transaction. By default, the "
-                "`channel.defaultTransactionFlowStrategy` will be used. The field "
+                "`tenant.defaultTransactionFlowStrategy` will be used. The field "
                 "can be used only by app that has `HANDLE_PAYMENTS` permission."
             ),
         )

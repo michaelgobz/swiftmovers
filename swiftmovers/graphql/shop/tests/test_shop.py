@@ -828,9 +828,9 @@ def test_query_available_payment_gateways_specified_currency_EUR(
 
 
 AVAILABLE_SHIPPING_METHODS_QUERY = """
-    query Shop($channel: String!, $address: AddressInput){
+    query Shop($tenant: String!, $address: AddressInput){
         shop {
-            availableShippingMethods(channel: $channel, address: $address) {
+            availableShippingMethods(tenant: $tenant, address: $address) {
                 id
                 name
             }
@@ -846,7 +846,7 @@ def test_query_available_shipping_methods_no_address(
     query = AVAILABLE_SHIPPING_METHODS_QUERY
 
     # when
-    response = staff_api_client.post_graphql(query, {"channel": channel_USD.slug})
+    response = staff_api_client.post_graphql(query, {"tenant": channel_USD.slug})
 
     # then
     content = get_graphql_content(response)
@@ -869,7 +869,7 @@ def test_query_available_shipping_methods_no_channel_shipping_zones(
     channel_USD.shipping_zones.clear()
 
     # when
-    response = staff_api_client.post_graphql(query, {"channel": channel_USD.slug})
+    response = staff_api_client.post_graphql(query, {"tenant": channel_USD.slug})
 
     # then
     content = get_graphql_content(response)
@@ -888,7 +888,7 @@ def test_query_available_shipping_methods_for_given_address(
     query = AVAILABLE_SHIPPING_METHODS_QUERY
     shipping_method_count = ShippingMethod.objects.count()
     variables = {
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "address": {"country": CountryCodeEnum.US.name},
     }
 
@@ -911,7 +911,7 @@ def test_query_available_shipping_methods_for_excluded_postal_code(
     # given
     query = AVAILABLE_SHIPPING_METHODS_QUERY
     variables = {
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "address": {"country": CountryCodeEnum.PL.name, "postalCode": "53-601"},
     }
     shipping_method.postal_code_rules.create(
@@ -935,7 +935,7 @@ def test_query_available_shipping_methods_for_included_postal_code(
     # given
     query = AVAILABLE_SHIPPING_METHODS_QUERY
     variables = {
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "address": {"country": CountryCodeEnum.PL.name, "postalCode": "53-601"},
     }
     shipping_method.postal_code_rules.create(

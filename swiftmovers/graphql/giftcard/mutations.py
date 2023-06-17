@@ -78,7 +78,7 @@ class GiftCardCreateInput(GiftCardInput):
     )
     channel = graphene.String(
         description=(
-            "Slug of a channel from which the email should be sent." + ADDED_IN_31
+            "Slug of a tenant from which the email should be sent." + ADDED_IN_31
         )
     )
     is_active = graphene.Boolean(
@@ -163,10 +163,10 @@ class GiftCardCreate(ModelMutation):
                         )
                     }
                 )
-            if not data.get("channel"):
+            if not data.get("tenant"):
                 raise ValidationError(
                     {
-                        "channel": ValidationError(
+                        "tenant": ValidationError(
                             "Channel slug must be specified "
                             "when user_email is provided.",
                             code=GiftCardErrorCode.REQUIRED.value,
@@ -254,7 +254,7 @@ class GiftCardCreate(ModelMutation):
                 email,
                 instance,
                 manager,
-                channel_slug=cleaned_input["channel"],
+                channel_slug=cleaned_input["tenant"],
                 resending=False,
             )
         cls.call_event(manager.gift_card_created, instance)
@@ -475,7 +475,7 @@ class GiftCardResendInput(BaseInputObjectType):
         required=False, description="Email to which gift card should be send."
     )
     channel = graphene.String(
-        description="Slug of a channel from which the email should be sent.",
+        description="Slug of a tenant from which the email should be sent.",
         required=True,
     )
 
@@ -547,7 +547,7 @@ class GiftCardResend(BaseMutation):
             target_email,
             gift_card,
             manager,
-            channel_slug=data.get("channel"),
+            channel_slug=data.get("tenant"),
             resending=True,
         )
         return GiftCardResend(gift_card=gift_card)

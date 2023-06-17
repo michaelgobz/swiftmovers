@@ -81,14 +81,14 @@ def test_product_details(product_with_image, api_client, count_queries, channel_
           }
         }
 
-        query ProductDetails($id: ID!, $channel: String) {
-          product(id: $id, channel: $channel) {
+        query ProductDetails($id: ID!, $tenant: String) {
+          product(id: $id, tenant: $tenant) {
             ...BasicProductFields
             description
             category {
               id
               name
-              products(first: 4, channel: $channel) {
+              products(first: 4, tenant: $tenant) {
                 edges {
                   node {
                     ...BasicProductFields
@@ -167,7 +167,7 @@ def test_product_details(product_with_image, api_client, count_queries, channel_
 
     variables = {
         "id": Node.to_global_id("Product", product.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     get_graphql_content(api_client.post_graphql(query, variables))
 
@@ -178,8 +178,8 @@ def test_retrieve_product_attributes(
     product_list, api_client, count_queries, channel_USD
 ):
     query = """
-        query($sortBy: ProductOrder, $channel: String) {
-          products(first: 10, sortBy: $sortBy, channel: $channel) {
+        query($sortBy: ProductOrder, $tenant: String) {
+          products(first: 10, sortBy: $sortBy, tenant: $tenant) {
             edges {
               node {
                 id
@@ -194,7 +194,7 @@ def test_retrieve_product_attributes(
         }
     """
 
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     get_graphql_content(api_client.post_graphql(query, variables))
 
 
@@ -202,8 +202,8 @@ def test_retrieve_product_attributes(
 @pytest.mark.count_queries(autouse=False)
 def test_retrieve_product_images(product_list, api_client, count_queries, channel_USD):
     query = """
-        query($sortBy: ProductOrder, $channel: String) {
-          products(first: 10, sortBy: $sortBy, channel: $channel) {
+        query($sortBy: ProductOrder, $tenant: String) {
+          products(first: 10, sortBy: $sortBy, tenant: $tenant) {
             edges {
               node {
                 id
@@ -216,7 +216,7 @@ def test_retrieve_product_images(product_list, api_client, count_queries, channe
         }
     """
 
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     get_graphql_content(api_client.post_graphql(query, variables))
 
 
@@ -224,8 +224,8 @@ def test_retrieve_product_images(product_list, api_client, count_queries, channe
 @pytest.mark.count_queries(autouse=False)
 def test_retrieve_product_media(product_list, api_client, count_queries, channel_USD):
     query = """
-        query($sortBy: ProductOrder, $channel: String) {
-          products(first: 10, sortBy: $sortBy, channel: $channel) {
+        query($sortBy: ProductOrder, $tenant: String) {
+          products(first: 10, sortBy: $sortBy, tenant: $tenant) {
             edges {
               node {
                 id
@@ -238,7 +238,7 @@ def test_retrieve_product_media(product_list, api_client, count_queries, channel
         }
     """
 
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     get_graphql_content(api_client.post_graphql(query, variables))
 
 
@@ -252,15 +252,15 @@ def test_retrieve_channel_listings(
     channel_USD,
 ):
     query = """
-        query($channel: String) {
-          products(first: 10, channel: $channel) {
+        query($tenant: String) {
+          products(first: 10, tenant: $tenant) {
             edges {
               node {
                 id
                 channelListings {
                   publishedAt
                   isPublished
-                  channel{
+                  tenant{
                     slug
                     currencyCode
                     name
@@ -309,7 +309,7 @@ def test_retrieve_channel_listings(
         }
     """
 
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     get_graphql_content(
         staff_api_client.post_graphql(
             query,
@@ -329,8 +329,8 @@ def test_retrive_products_with_product_types_and_attributes(
     channel_USD,
 ):
     query = """
-        query($channel: String) {
-          products(first: 10, channel: $channel) {
+        query($tenant: String) {
+          products(first: 10, tenant: $tenant) {
             edges {
               node {
                 id
@@ -348,7 +348,7 @@ def test_retrive_products_with_product_types_and_attributes(
           }
         }
     """
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     get_graphql_content(api_client.post_graphql(query, variables))
 
 
@@ -558,9 +558,9 @@ def test_update_product(
 
 
 QUERY_PRODUCTS_WITH_FILTER = """
-    query ($channel: String, $filter: ProductFilterInput){
+    query ($tenant: String, $filter: ProductFilterInput){
         products(
-            channel: $channel,
+            tenant: $tenant,
             filter: $filter,
             first: 20,
         ) {
@@ -583,7 +583,7 @@ def test_filter_products_by_attributes(
     attr_assignment = product.attributes.first()
     attr = attr_assignment.attribute
     variables = {
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "filter": {
             "attributes": [
                 {"slug": attr.slug, "values": [attr_assignment.values.first().slug]}
@@ -604,7 +604,7 @@ def test_filter_products_by_numeric_attributes(
         product, numeric_attribute, *numeric_attribute.values.all()
     )
     variables = {
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "filter": {
             "attributes": [
                 {
@@ -631,7 +631,7 @@ def test_filter_products_by_boolean_attributes(
         product, boolean_attribute, *boolean_attribute.values.all()
     )
     variables = {
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "filter": {
             "attributes": [
                 {
@@ -654,7 +654,7 @@ def test_filter_products_by_gift_card(
     count_queries,
     shippable_gift_card_product,
 ):
-    variables = {"channel": channel_USD.slug, "filter": {"giftCard": True}}
+    variables = {"tenant": channel_USD.slug, "filter": {"giftCard": True}}
 
     get_graphql_content(
         staff_api_client.post_graphql(QUERY_PRODUCTS_WITH_FILTER, variables)
@@ -665,8 +665,8 @@ def test_filter_products_by_gift_card(
 @pytest.mark.count_queries(autouse=False)
 def test_product_translations(api_client, product_list, channel_USD, count_queries):
     query = """
-      query($channel: String) {
-        products(channel: $channel, first: 20) {
+      query($tenant: String) {
+        products(tenant: $tenant, first: 20) {
           edges {
             node {
               name
@@ -683,7 +683,7 @@ def test_product_translations(api_client, product_list, channel_USD, count_queri
         translations.append(ProductTranslation(product=product, language_code="en"))
     ProductTranslation.objects.bulk_create(translations)
 
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     get_graphql_content(api_client.post_graphql(query, variables))
 
 
@@ -714,7 +714,7 @@ def test_products_for_federation_query_count(
             {
                 "__typename": "Product",
                 "id": graphene.Node.to_global_id("Product", product.pk),
-                "channel": channel_USD.slug,
+                "tenant": channel_USD.slug,
             },
         ],
     }
@@ -729,14 +729,14 @@ def test_products_for_federation_query_count(
             {
                 "__typename": "Product",
                 "id": graphene.Node.to_global_id("Product", product.pk),
-                "channel": channel_USD.slug,
+                "tenant": channel_USD.slug,
             },
             {
                 "__typename": "Product",
                 "id": graphene.Node.to_global_id(
                     "Product", shippable_gift_card_product.pk
                 ),
-                "channel": channel_USD.slug,
+                "tenant": channel_USD.slug,
             },
         ],
     }

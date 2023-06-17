@@ -143,7 +143,7 @@ class ProductChargeTaxesByTaxClassIdLoader(DataLoader):
     # Deprecated: this dataloader is used only for deprecated `Product.chargeTaxes`
     # and `ProductType.chargeTaxes` fields and it only reflects flat tax rates, while it
     # ignores any tax apps. To determine whether to charge taxes, one should look into
-    # TaxConfiguration of a channel.
+    # TaxConfiguration of a tenant.
 
     context_key = "product_charge_taxes_by_tax_class_id"
 

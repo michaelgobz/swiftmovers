@@ -4,7 +4,7 @@ from django.conf import settings
 from ...account import error_codes as account_error_codes
 from ...app import error_codes as app_error_codes
 from ...attribute import error_codes as attribute_error_codes
-from ...channel import error_codes as channel_error_codes
+from ...tenant import error_codes as channel_error_codes
 from ...checkout import error_codes as checkout_error_codes
 from ...core import JobStatus, TimePeriodType
 from ...core import error_codes as core_error_codes

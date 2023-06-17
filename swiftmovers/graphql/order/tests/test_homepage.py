@@ -42,8 +42,8 @@ def test_homepage_events(order_events, staff_api_client, permission_manage_order
 
 
 QUERY_ORDER_TOTAL = """
-query Orders($period: ReportingPeriod, $channel: String) {
-    ordersTotal(period: $period, channel: $channel ) {
+query Orders($period: ReportingPeriod, $tenant: String) {
+    ordersTotal(period: $period, tenant: $tenant ) {
         gross {
             amount
             currency
@@ -66,7 +66,7 @@ def test_orders_total(
 ):
     # given
     order = order_with_lines
-    variables = {"period": ReportingPeriod.TODAY.name, "channel": channel_USD.slug}
+    variables = {"period": ReportingPeriod.TODAY.name, "tenant": channel_USD.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -88,7 +88,7 @@ def test_orders_total_channel_pln(
 ):
     # given
     order = order_with_lines_channel_PLN
-    variables = {"period": ReportingPeriod.TODAY.name, "channel": channel_PLN.slug}
+    variables = {"period": ReportingPeriod.TODAY.name, "tenant": channel_PLN.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -108,7 +108,7 @@ def test_orders_total_not_existing_channel(
     order_with_lines_channel_PLN,
 ):
     # given
-    variables = {"period": ReportingPeriod.TODAY.name, "channel": "not-existing"}
+    variables = {"period": ReportingPeriod.TODAY.name, "tenant": "not-existing"}
 
     # when
     response = staff_api_client.post_graphql(
@@ -129,7 +129,7 @@ def test_orders_total_as_staff(
 ):
     # given
     order = order_with_lines
-    variables = {"period": ReportingPeriod.TODAY.name, "channel": channel_USD.slug}
+    variables = {"period": ReportingPeriod.TODAY.name, "tenant": channel_USD.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -151,7 +151,7 @@ def test_orders_total_as_app(
 ):
     # given
     order = order_with_lines
-    variables = {"period": ReportingPeriod.TODAY.name, "channel": channel_USD.slug}
+    variables = {"period": ReportingPeriod.TODAY.name, "tenant": channel_USD.slug}
 
     # when
     response = app_api_client.post_graphql(
@@ -171,7 +171,7 @@ def test_orders_total_as_customer(
     channel_USD,
 ):
     # given
-    variables = {"period": ReportingPeriod.TODAY.name, "channel": channel_USD.slug}
+    variables = {"period": ReportingPeriod.TODAY.name, "tenant": channel_USD.slug}
 
     # when
     response = user_api_client.post_graphql(QUERY_ORDER_TOTAL, variables)
@@ -187,7 +187,7 @@ def test_orders_total_as_anonymous(
     channel_USD,
 ):
     # given
-    variables = {"period": ReportingPeriod.TODAY.name, "channel": channel_USD.slug}
+    variables = {"period": ReportingPeriod.TODAY.name, "tenant": channel_USD.slug}
 
     # when
     response = api_client.post_graphql(QUERY_ORDER_TOTAL, variables)
@@ -197,8 +197,8 @@ def test_orders_total_as_anonymous(
 
 
 QUERY_ORDER_TODAY_COUNT = """
-    query OrdersToday($created: DateRangeInput, $channel: String) {
-        orders(filter: {created: $created}, channel: $channel ) {
+    query OrdersToday($created: DateRangeInput, $tenant: String) {
+        orders(filter: {created: $created}, tenant: $tenant ) {
             totalCount
         }
     }
@@ -243,7 +243,7 @@ def test_orders_total_count_channel_USD(
             "gte": str(date.today() - timedelta(days=3)),
             "lte": str(date.today()),
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -269,7 +269,7 @@ def test_orders_total_count_channel_PLN(
             "gte": str(date.today() - timedelta(days=3)),
             "lte": str(date.today()),
         },
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
 
     # when
@@ -295,7 +295,7 @@ def test_orders_total_count_as_staff(
             "gte": str(date.today() - timedelta(days=3)),
             "lte": str(date.today()),
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -321,7 +321,7 @@ def test_orders_total_count_as_app(
             "gte": str(date.today() - timedelta(days=3)),
             "lte": str(date.today()),
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -346,7 +346,7 @@ def test_orders_total_count_as_customer(
             "gte": str(date.today() - timedelta(days=3)),
             "lte": str(date.today()),
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -368,7 +368,7 @@ def test_orders_total_count_as_anonymous(
             "gte": str(date.today() - timedelta(days=3)),
             "lte": str(date.today()),
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when

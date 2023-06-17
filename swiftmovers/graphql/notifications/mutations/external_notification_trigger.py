@@ -53,7 +53,7 @@ class ExternalNotificationTrigger(BaseMutation):
             required=True,
             description=(
                 "Channel slug. "
-                "swiftmovers will send a notification within a provided channel. "
+                "swiftmovers will send a notification within a provided tenant. "
                 "Please, make sure that necessary plugins are active."
             ),
         )

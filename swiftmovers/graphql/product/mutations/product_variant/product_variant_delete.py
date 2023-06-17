@@ -149,9 +149,9 @@ class ProductVariantDelete(ModelDeleteMutation, ModelWithExtRefMutation):
 
     @staticmethod
     def delete_product_channel_listings_without_available_variants(instance):
-        """Delete invalid product channel listings.
+        """Delete invalid product tenant listings.
 
-        Delete product channel listings for channels for which the deleted variant
+        Delete product tenant listings for channels for which the deleted variant
         was the last available variant.
         """
         channel_ids = set(

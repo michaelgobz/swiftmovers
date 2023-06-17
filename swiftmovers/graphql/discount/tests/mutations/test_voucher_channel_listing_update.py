@@ -24,7 +24,7 @@ mutation UpdateVoucherChannelListing($id: ID!, $input: VoucherChannelListingInpu
         voucher {
             code
             channelListings {
-                channel{
+                tenant{
                     slug
                 }
                 discountValue
@@ -67,7 +67,7 @@ def test_voucher_channel_listing_create_as_staff(
     data = content["data"]["voucherChannelListingUpdate"]["voucher"]
     assert not content["data"]["voucherChannelListingUpdate"]["errors"]
     channel_listing = data["channelListings"]
-    assert channel_listing[0]["channel"]["slug"] == channel_USD.slug
+    assert channel_listing[0]["tenant"]["slug"] == channel_USD.slug
     assert channel_listing[0]["discountValue"] == discount_value
     assert channel_listing[0]["currency"] == channel_USD.currency_code
 
@@ -99,7 +99,7 @@ def test_voucher_channel_listing_update_as_app(
     data = content["data"]["voucherChannelListingUpdate"]["voucher"]
     assert not content["data"]["voucherChannelListingUpdate"]["errors"]
     channel_listing = data["channelListings"]
-    assert channel_listing[0]["channel"]["slug"] == channel_USD.slug
+    assert channel_listing[0]["tenant"]["slug"] == channel_USD.slug
     assert channel_listing[0]["discountValue"] == discount_value
     assert channel_listing[0]["currency"] == channel_USD.currency_code
 
@@ -250,11 +250,11 @@ def test_voucher_channel_listing_create_many_channel(
     data = content["data"]["voucherChannelListingUpdate"]["voucher"]
     assert not content["data"]["voucherChannelListingUpdate"]["errors"]
     channel_listing = data["channelListings"]
-    assert channel_listing[0]["channel"]["slug"] == channel_USD.slug
+    assert channel_listing[0]["tenant"]["slug"] == channel_USD.slug
     assert channel_listing[0]["discountValue"] == discount_value
     assert channel_listing[0]["minSpent"]["amount"] == min_amount_spent
     assert channel_listing[0]["currency"] == channel_USD.currency_code
-    assert channel_listing[1]["channel"]["slug"] == channel_PLN.slug
+    assert channel_listing[1]["tenant"]["slug"] == channel_PLN.slug
     assert channel_listing[1]["discountValue"] == discount_value_pln
     assert channel_listing[1]["minSpent"]["amount"] == min_amount_spent_pln
     assert channel_listing[1]["currency"] == channel_PLN.currency_code
@@ -300,7 +300,7 @@ def test_voucher_channel_listing_create_and_remove(
     assert not content["data"]["voucherChannelListingUpdate"]["errors"]
     channel_listing = data["channelListings"]
     assert len(channel_listing) == 1
-    assert channel_listing[0]["channel"]["slug"] == channel_PLN.slug
+    assert channel_listing[0]["tenant"]["slug"] == channel_PLN.slug
     assert channel_listing[0]["discountValue"] == discount_value_pln
     assert channel_listing[0]["minSpent"]["amount"] == min_amount_spent_pln
     assert channel_listing[0]["currency"] == channel_PLN.currency_code
@@ -344,7 +344,7 @@ def test_voucher_channel_listing_update(
     assert not content["data"]["voucherChannelListingUpdate"]["errors"]
     channel_listing = data["channelListings"]
     assert len(channel_listing) == 1
-    assert channel_listing[0]["channel"]["slug"] == channel_USD.slug
+    assert channel_listing[0]["tenant"]["slug"] == channel_USD.slug
     assert channel_listing[0]["discountValue"] == discount_value
     assert channel_listing[0]["minSpent"]["amount"] == min_amount_spent
     assert channel_listing[0]["currency"] == channel_USD.currency_code
@@ -382,7 +382,7 @@ def test_voucher_channel_listing_update_without_discount_value(
     assert not content["data"]["voucherChannelListingUpdate"]["errors"]
     channel_listing = data["channelListings"]
     assert len(channel_listing) == 1
-    assert channel_listing[0]["channel"]["slug"] == channel_USD.slug
+    assert channel_listing[0]["tenant"]["slug"] == channel_USD.slug
     assert channel_listing[0]["discountValue"] == 20
     assert channel_listing[0]["minSpent"]["amount"] == min_amount_spent
     assert channel_listing[0]["currency"] == channel_USD.currency_code

@@ -506,15 +506,15 @@ def add_channel_info_to_data(
     result_data: Dict[int, dict],
     fields: List[str],
 ) -> Dict[int, dict]:
-    """Add info about channel currency code, whether is published and publication date.
+    """Add info about tenant currency code, whether is published and publication date.
 
-    This functions adds info about channel to dict with product data.
+    This functions adds info about tenant to dict with product data.
     It returns updated data.
     """
     slug = channel_data["slug"]
     if slug:
         for field in fields:
-            header = f"{slug} (channel {field.replace('_', ' ')})"
+            header = f"{slug} (tenant {field.replace('_', ' ')})"
             if header not in result_data[pk]:
                 result_data[pk][header] = channel_data[field]
 

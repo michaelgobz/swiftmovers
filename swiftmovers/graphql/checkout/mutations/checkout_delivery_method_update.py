@@ -92,7 +92,7 @@ class CheckoutDeliveryMethodUpdate(BaseMutation):
             raise ValidationError(
                 {
                     "delivery_method_id": ValidationError(
-                        "This shipping method is not applicable in the given channel.",
+                        "This shipping method is not applicable in the given tenant.",
                         code=CheckoutErrorCode.DELIVERY_METHOD_NOT_APPLICABLE.value,
                     )
                 }

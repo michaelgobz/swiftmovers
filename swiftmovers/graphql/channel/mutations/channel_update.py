@@ -2,8 +2,8 @@ import graphene
 from django.core.exceptions import ValidationError
 from django.utils.text import slugify
 
-from ....channel import models
-from ....channel.error_codes import ChannelErrorCode
+from ....tenant import models
+from ....tenant.error_codes import ChannelErrorCode
 from ....core.tracing import traced_atomic_transaction
 from ....permission.enums import ChannelPermissions, OrderPermissions
 from ....shipping.tasks import (
@@ -23,23 +23,23 @@ from .channel_create import ChannelInput
 
 
 class ChannelUpdateInput(ChannelInput):
-    name = graphene.String(description="Name of the channel.")
-    slug = graphene.String(description="Slug of the channel.")
+    name = graphene.String(description="Name of the tenant.")
+    slug = graphene.String(description="Slug of the tenant.")
     default_country = CountryCodeEnum(
         description=(
-            "Default country for the channel. Default country can be "
+            "Default country for the tenant. Default country can be "
             "used in checkout to determine the stock quantities or calculate taxes "
             "when the country was not explicitly provided." + ADDED_IN_31
         )
     )
     remove_shipping_zones = NonNullList(
         graphene.ID,
-        description="List of shipping zones to unassign from the channel.",
+        description="List of shipping zones to unassign from the tenant.",
         required=False,
     )
     remove_warehouses = NonNullList(
         graphene.ID,
-        description="List of warehouses to unassign from the channel." + ADDED_IN_35,
+        description="List of warehouses to unassign from the tenant." + ADDED_IN_35,
         required=False,
     )
 
@@ -49,14 +49,14 @@ class ChannelUpdateInput(ChannelInput):
 
 class ChannelUpdate(ModelMutation):
     class Arguments:
-        id = graphene.ID(required=True, description="ID of a channel to update.")
+        id = graphene.ID(required=True, description="ID of a tenant to update.")
         input = ChannelUpdateInput(
-            description="Fields required to update a channel.", required=True
+            description="Fields required to update a tenant.", required=True
         )
 
     class Meta:
         description = (
-            "Update a channel.\n\n"
+            "Update a tenant.\n\n"
             "Requires one of the following permissions: MANAGE_CHANNELS.\n"
             "Requires one of the following permissions "
             "when updating only orderSettings field: "

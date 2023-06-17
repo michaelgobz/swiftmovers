@@ -7,14 +7,14 @@ from ....tests.utils import get_graphql_content
 
 def test_product_types(user_api_client, product_type, channel_USD):
     query = """
-    query ($channel: String){
+    query ($tenant: String){
         productTypes(first: 20) {
             totalCount
             edges {
                 node {
                     id
                     name
-                    products(first: 1, channel: $channel) {
+                    products(first: 1, tenant: $tenant) {
                         edges {
                             node {
                                 id
@@ -26,7 +26,7 @@ def test_product_types(user_api_client, product_type, channel_USD):
         }
     }
     """
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     response = user_api_client.post_graphql(query, variables)
     content = get_graphql_content(response)
     no_product_types = ProductType.objects.count()

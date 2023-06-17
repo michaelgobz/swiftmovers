@@ -38,7 +38,7 @@ class Channel(models.Model):
 
     class Meta:
         ordering = ("slug",)
-        app_label = "channel"
+        app_label = "tenant"
         permissions = (
             (
                 ChannelPermissions.MANAGE_CHANNELS.codename,

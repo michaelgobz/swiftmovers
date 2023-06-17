@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('channel', '0001_initial'),
+        ('tenant', '0001_initial'),
     ]
 
     operations = [
@@ -132,7 +132,7 @@ class Migration(migrations.Migration):
                 ('discount_value', models.DecimalField(decimal_places=3, max_digits=12)),
                 ('currency', models.CharField(max_length=3)),
                 ('min_spent_amount', models.DecimalField(blank=True, decimal_places=3, max_digits=12, null=True)),
-                ('channel', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='voucher_listings', to='channel.channel')),
+                ('tenant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='voucher_listings', to='tenant.tenant')),
                 ('voucher', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='channel_listings', to='discount.voucher')),
             ],
             options={

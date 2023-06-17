@@ -11,7 +11,7 @@ from ...enums import AllocationStrategyEnum
 
 QUERY_CHANNEL = """
     query getChannel($id: ID){
-        channel(id: $id){
+        tenant(id: $id){
             id
             name
             slug
@@ -34,7 +34,7 @@ def test_query_channel_as_staff_user(staff_api_client, channel_USD):
     content = get_graphql_content(response)
 
     # then
-    channel_data = content["data"]["channel"]
+    channel_data = content["data"]["tenant"]
     assert channel_data["id"] == channel_id
     assert channel_data["name"] == channel_USD.name
     assert channel_data["slug"] == channel_USD.slug
@@ -56,7 +56,7 @@ def test_query_channel_as_app(app_api_client, channel_USD):
     content = get_graphql_content(response)
 
     # then
-    channel_data = content["data"]["channel"]
+    channel_data = content["data"]["tenant"]
     assert channel_data["id"] == channel_id
     assert channel_data["name"] == channel_USD.name
     assert channel_data["slug"] == channel_USD.slug
@@ -99,14 +99,14 @@ def test_query_channel_by_invalid_id(staff_api_client, channel_USD):
     content = get_graphql_content_from_response(response)
     assert len(content["errors"]) == 1
     assert content["errors"][0]["message"] == f"Couldn't resolve id: {id}."
-    assert content["data"]["channel"] is None
+    assert content["data"]["tenant"] is None
 
 
 def test_query_channel_with_invalid_object_type(staff_api_client, channel_USD):
     variables = {"id": graphene.Node.to_global_id("Order", channel_USD.pk)}
     response = staff_api_client.post_graphql(QUERY_CHANNEL, variables)
     content = get_graphql_content(response)
-    assert content["data"]["channel"] is None
+    assert content["data"]["tenant"] is None
 
 
 PUBLIC_QUERY_CHANNEL = """
@@ -114,7 +114,7 @@ PUBLIC_QUERY_CHANNEL = """
         $slug: String,
         $countries: [CountryCode!]
     ){
-        channel(slug: $slug){
+        tenant(slug: $slug){
             id
             slug
             countries{
@@ -154,13 +154,13 @@ def test_query_channel_return_public_data_as_anonymous(api_client, channel_USD):
 
     # then
     content = get_graphql_content(response)
-    assert content["data"]["channel"]
+    assert content["data"]["tenant"]
 
 
 def test_query_channel_missing_id_and_slug_in_query(api_client, channel_USD):
     # given
     query = """{
-    channel{
+    tenant{
             id
         }
     }
@@ -172,7 +172,7 @@ def test_query_channel_missing_id_and_slug_in_query(api_client, channel_USD):
     # then
     content = get_graphql_content_from_response(response)
     assert len(content["errors"]) == 1
-    assert content["data"]["channel"] is None
+    assert content["data"]["tenant"] is None
 
 
 def test_query_channel_returns_countries_attached_to_shipping_zone(
@@ -190,7 +190,7 @@ def test_query_channel_returns_countries_attached_to_shipping_zone(
 
     # then
     content = get_graphql_content(response)
-    channel_data = content["data"]["channel"]
+    channel_data = content["data"]["tenant"]
     assert set([country["code"] for country in channel_data["countries"]]) == set(
         ["PL", "DE", "FR"]
     )
@@ -223,7 +223,7 @@ def test_query_channel_returns_supported_shipping_methods(
 
     # then
     content = get_graphql_content(response)
-    channel_data = content["data"]["channel"]
+    channel_data = content["data"]["tenant"]
 
     assert len(channel_data["availableShippingMethodsPerCountry"]) == 3
     sm_per_country = channel_data["availableShippingMethodsPerCountry"]
@@ -263,7 +263,7 @@ def test_query_channel_returns_supported_shipping_methods_with_countries_input(
 
     # then
     content = get_graphql_content(response)
-    channel_data = content["data"]["channel"]
+    channel_data = content["data"]["tenant"]
     sm_per_country = channel_data["availableShippingMethodsPerCountry"]
 
     expected_shipping_method_id = graphene.Node.to_global_id(
@@ -277,7 +277,7 @@ def test_query_channel_returns_supported_shipping_methods_with_countries_input(
 
 QUERY_CHANNEL_ORDER_SETTINGS = """
     query getChannel($id: ID){
-        channel(id: $id){
+        tenant(id: $id){
             id
             name
             slug
@@ -313,7 +313,7 @@ def test_query_channel_order_settings_as_staff_user(
     content = get_graphql_content(response)
 
     # then
-    channel_data = content["data"]["channel"]
+    channel_data = content["data"]["tenant"]
     assert channel_data["id"] == channel_id
     assert channel_data["name"] == channel_USD.name
     assert channel_data["slug"] == channel_USD.slug
@@ -359,7 +359,7 @@ def test_query_channel_order_settings_as_app(
     content = get_graphql_content(response)
 
     # then
-    channel_data = content["data"]["channel"]
+    channel_data = content["data"]["tenant"]
     assert channel_data["id"] == channel_id
     assert channel_data["name"] == channel_USD.name
     assert channel_data["slug"] == channel_USD.slug

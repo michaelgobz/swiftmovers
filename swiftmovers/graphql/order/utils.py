@@ -15,7 +15,7 @@ from ...warehouse.availability import check_stock_and_preorder_quantity
 from ..core.validators import validate_variants_available_in_channel
 
 if TYPE_CHECKING:
-    from ...channel.models import Channel
+    from ...tenant.models import Channel
     from ...order.models import Order
 from dataclasses import dataclass
 
@@ -85,7 +85,7 @@ def validate_shipping_method(
         )
     elif not order.shipping_method.shipping_zone.channels.filter(id=order.channel_id):
         error = ValidationError(
-            "Shipping method not available in given channel.",
+            "Shipping method not available in given tenant.",
             code=OrderErrorCode.SHIPPING_METHOD_NOT_APPLICABLE.value,
         )
     else:
@@ -94,7 +94,7 @@ def validate_shipping_method(
         ).last()
         if not listing:
             error = ValidationError(
-                "Shipping method not available in given channel.",
+                "Shipping method not available in given tenant.",
                 code=OrderErrorCode.SHIPPING_METHOD_NOT_APPLICABLE.value,
             )
         else:
@@ -178,8 +178,8 @@ def validate_product_is_published_in_channel(
     if not channel:
         raise ValidationError(
             {
-                "channel": ValidationError(
-                    "Can't add product variant for draft order without channel",
+                "tenant": ValidationError(
+                    "Can't add product variant for draft order without tenant",
                     code=OrderErrorCode.REQUIRED.value,
                 )
             }
@@ -200,7 +200,7 @@ def validate_product_is_published_in_channel(
             {
                 "lines": ValidationError(
                     "Can't add product variant that are not published in "
-                    "the channel associated with this draft order.",
+                    "the tenant associated with this draft order.",
                     code=OrderErrorCode.PRODUCT_NOT_PUBLISHED.value,
                     params={"variants": unpublished_variants_global_ids},
                 )
@@ -214,8 +214,8 @@ def validate_variant_channel_listings(
     if not channel:
         raise ValidationError(
             {
-                "channel": ValidationError(
-                    "Can't add product variant for draft order without channel",
+                "tenant": ValidationError(
+                    "Can't add product variant for draft order without tenant",
                     code=OrderErrorCode.REQUIRED.value,
                 )
             }
@@ -253,9 +253,9 @@ def validate_product_is_available_for_purchase(order: "Order", errors: T_ERRORS)
 
 def validate_channel_is_active(channel: "Channel", errors: T_ERRORS):
     if not channel.is_active:
-        errors["channel"].append(
+        errors["tenant"].append(
             ValidationError(
-                "Cannot complete draft order with inactive channel.",
+                "Cannot complete draft order with inactive tenant.",
                 code=OrderErrorCode.CHANNEL_INACTIVE.value,
             )
         )

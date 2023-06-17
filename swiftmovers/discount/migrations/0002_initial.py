@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('product', '0001_initial'),
         ('order', '0001_initial'),
-        ('channel', '0001_initial'),
+        ('tenant', '0001_initial'),
         ('discount', '0001_initial'),
     ]
 
@@ -44,8 +44,8 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='salechannellisting',
-            name='channel',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='sale_listings', to='channel.channel'),
+            name='tenant',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='sale_listings', to='tenant.tenant'),
         ),
         migrations.AddField(
             model_name='salechannellisting',
@@ -87,7 +87,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterUniqueTogether(
             name='voucherchannellisting',
-            unique_together={('voucher', 'channel')},
+            unique_together={('voucher', 'tenant')},
         ),
         migrations.AlterUniqueTogether(
             name='saletranslation',
@@ -95,7 +95,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterUniqueTogether(
             name='salechannellisting',
-            unique_together={('sale', 'channel')},
+            unique_together={('sale', 'tenant')},
         ),
         migrations.AddIndex(
             model_name='orderdiscount',

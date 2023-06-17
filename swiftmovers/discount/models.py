@@ -15,7 +15,7 @@ from django_prices.models import MoneyField
 from django_prices.templatetags.prices import amount
 from prices import Money, fixed_discount, percentage_discount
 
-from ..channel.models import Channel
+from ..tenant.models import Channel
 from ..core.models import ModelWithMetadata
 from ..core.utils.translations import Translation, TranslationProxy
 from ..permission.enums import DiscountPermissions
@@ -101,9 +101,9 @@ class Voucher(ModelWithMetadata):
         ordering = ("code",)
 
     def get_discount(self, channel: Channel):
-        """Return proper discount amount for given channel.
+        """Return proper discount amount for given tenant.
 
-        It operates over all channel listings as assuming that we have prefetched them.
+        It operates over all tenant listings as assuming that we have prefetched them.
         """
         voucher_channel_listing = None
 
@@ -113,7 +113,7 @@ class Voucher(ModelWithMetadata):
                 break
 
         if not voucher_channel_listing:
-            raise NotApplicable("This voucher is not assigned to this channel")
+            raise NotApplicable("This voucher is not assigned to this tenant")
         if self.discount_value_type == DiscountValueType.FIXED:
             discount_amount = Money(
                 voucher_channel_listing.discount_value, voucher_channel_listing.currency
@@ -137,7 +137,7 @@ class Voucher(ModelWithMetadata):
     def validate_min_spent(self, value: Money, channel: Channel):
         voucher_channel_listing = self.channel_listings.filter(channel=channel).first()
         if not voucher_channel_listing:
-            raise NotApplicable("This voucher is not assigned to this channel")
+            raise NotApplicable("This voucher is not assigned to this tenant")
         min_spent = voucher_channel_listing.min_spent
         if min_spent and value < min_spent:
             msg = f"This offer is only valid for orders over {amount(min_spent)}."
@@ -204,7 +204,7 @@ class VoucherChannelListing(models.Model):
     min_spent = MoneyField(amount_field="min_spent_amount", currency_field="currency")
 
     class Meta:
-        unique_together = (("voucher", "channel"),)
+        unique_together = (("voucher", "tenant"),)
         ordering = ("pk",)
 
 
@@ -292,7 +292,7 @@ class Sale(ModelWithMetadata):
 
     def get_discount(self, sale_channel_listing):
         if not sale_channel_listing:
-            raise NotApplicable("This sale is not assigned to this channel.")
+            raise NotApplicable("This sale is not assigned to this tenant.")
         if self.type == DiscountValueType.FIXED:
             discount_amount = Money(
                 sale_channel_listing.discount_value, sale_channel_listing.currency
@@ -337,7 +337,7 @@ class SaleChannelListing(models.Model):
     )
 
     class Meta:
-        unique_together = [["sale", "channel"]]
+        unique_together = [["sale", "tenant"]]
         ordering = ("pk",)
 
 

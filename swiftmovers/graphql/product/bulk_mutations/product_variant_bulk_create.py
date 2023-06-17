@@ -401,7 +401,7 @@ class ProductVariantBulkCreate(BaseMutation):
 
         duplicates = get_duplicated_values(channel_ids)
         if duplicates:
-            message = "Duplicated channel ID."
+            message = "Duplicated tenant ID."
             index_error_map[variant_index].append(
                 ProductVariantBulkError(
                     field="channelListings",
@@ -455,12 +455,12 @@ class ProductVariantBulkCreate(BaseMutation):
             ):
                 continue
 
-            channel_listing["channel"] = product_channel_global_id_to_instance_map[
+            channel_listing["tenant"] = product_channel_global_id_to_instance_map[
                 channel_id
             ]
             price = channel_listing.get("price")
             cost_price = channel_listing.get("cost_price")
-            currency_code = channel_listing["channel"].currency_code
+            currency_code = channel_listing["tenant"].currency_code
 
             errors_count_before_prices = len(index_error_map[variant_index])
 
@@ -782,11 +782,11 @@ class ProductVariantBulkCreate(BaseMutation):
     def prepare_channel_listings(cls, variant, listings_input, listings_to_create):
         listings_to_create += [
             models.ProductVariantChannelListing(
-                channel=listing_data["channel"],
+                channel=listing_data["tenant"],
                 variant=variant,
                 price_amount=listing_data["price"],
                 cost_price_amount=listing_data.get("cost_price"),
-                currency=listing_data["channel"].currency_code,
+                currency=listing_data["tenant"].currency_code,
                 preorder_quantity_threshold=listing_data.get("preorder_threshold"),
             )
             for listing_data in listings_input

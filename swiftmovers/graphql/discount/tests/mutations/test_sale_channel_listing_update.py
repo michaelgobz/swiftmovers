@@ -23,7 +23,7 @@ mutation UpdateSaleChannelListing(
             name
             channelListings {
                 discountValue
-                channel {
+                tenant {
                     slug
                 }
             }
@@ -73,7 +73,7 @@ def test_sale_channel_listing_create_as_staff_user(
 
     assert shipping_method_data["channelListings"][1]["discountValue"] == discounted
     assert (
-        shipping_method_data["channelListings"][1]["channel"]["slug"]
+        shipping_method_data["channelListings"][1]["tenant"]["slug"]
         == channel_PLN.slug
     )
     mock_update_discounted_prices_of_discount_task.delay.assert_called_once_with(
@@ -384,7 +384,7 @@ mutation UpdateSaleChannelListing(
         sale {
             channelListings {
                 id
-                channel {
+                tenant {
                     id
                 }
             }
@@ -443,7 +443,7 @@ def test_invalidate_data_sale_channel_listings_update(
     assert sale_data["channelListings"] == []
 
     # response from the second mutation contains data
-    assert channel_listings_data["channelListings"][0]["channel"]["id"] == channel_id
+    assert channel_listings_data["channelListings"][0]["tenant"]["id"] == channel_id
     mock_update_discounted_prices_of_discount_task.delay.assert_called_once_with(
         sale.pk,
     )

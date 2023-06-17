@@ -338,33 +338,33 @@ class PluginSample(BasePlugin):
 
 
 class ChannelPluginSample(PluginSample):
-    PLUGIN_ID = "channel.plugin.sample"
+    PLUGIN_ID = "tenant.plugin.sample"
     PLUGIN_NAME = "Channel Plugin"
-    PLUGIN_DESCRIPTION = "Test channel plugin"
+    PLUGIN_DESCRIPTION = "Test tenant plugin"
     DEFAULT_ACTIVE = True
     CONFIGURATION_PER_CHANNEL = True
-    DEFAULT_CONFIGURATION = [{"name": "input-per-channel", "value": None}]
+    DEFAULT_CONFIGURATION = [{"name": "input-per-tenant", "value": None}]
     CONFIG_STRUCTURE = {
-        "input-per-channel": {
+        "input-per-tenant": {
             "type": ConfigurationTypeField.STRING,
             "help_text": "Test input",
-            "label": "Input per channel",
+            "label": "Input per tenant",
         }
     }
 
 
 class InactiveChannelPluginSample(PluginSample):
-    PLUGIN_ID = "channel.plugin.inactive.sample"
+    PLUGIN_ID = "tenant.plugin.inactive.sample"
     PLUGIN_NAME = "Inactive Channel Plugin"
-    PLUGIN_DESCRIPTION = "Test channel plugin"
+    PLUGIN_DESCRIPTION = "Test tenant plugin"
     DEFAULT_ACTIVE = False
     CONFIGURATION_PER_CHANNEL = True
-    DEFAULT_CONFIGURATION = [{"name": "input-per-channel", "value": None}]
+    DEFAULT_CONFIGURATION = [{"name": "input-per-tenant", "value": None}]
     CONFIG_STRUCTURE = {
-        "input-per-channel": {
+        "input-per-tenant": {
             "type": ConfigurationTypeField.STRING,
             "help_text": "Test input",
-            "label": "Input per channel",
+            "label": "Input per tenant",
         }
     }
 

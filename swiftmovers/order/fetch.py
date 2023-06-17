@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING, Iterable, List, Optional
 from uuid import UUID
 
 if TYPE_CHECKING:
-    from ..channel.models import Channel
+    from ..tenant.models import Channel
     from ..payment.models import Payment
     from ..product.models import DigitalContent, ProductVariant
     from .models import Order, OrderLine

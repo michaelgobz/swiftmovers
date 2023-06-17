@@ -37,8 +37,8 @@ def vouchers_list(channel_USD, channel_PLN):
 
 
 VOUCHERS_QUERY = """
-query GetVouchers($channel: String){
-  vouchers(last: 10, channel: $channel) {
+query GetVouchers($tenant: String){
+  vouchers(last: 10, tenant: $tenant) {
     edges {
       node {
         id
@@ -96,7 +96,7 @@ query GetVouchers($channel: String){
             currency
             amount
           }
-          channel {
+          tenant {
             id
             name
             isActive
@@ -122,7 +122,7 @@ def test_vouchers_query_with_channel_slug(
     permission_manage_discounts,
     count_queries,
 ):
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     get_graphql_content(
         staff_api_client.post_graphql(
             VOUCHERS_QUERY,

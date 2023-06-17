@@ -204,14 +204,14 @@ def test_tracing_query_identifier_for_query(
     tracing_mock.return_value = tracer
     query = """
         query test {
-          products(first: 5, channel:"default-channel") {
+          products(first: 5, tenant:"default-tenant") {
             edges {
               node {
                 id
               }
             }
           }
-          otherProducts: products(first: 5, channel:"default-channel") {
+          otherProducts: products(first: 5, tenant:"default-tenant") {
             edges {
               node {
                 id

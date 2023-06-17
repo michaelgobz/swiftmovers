@@ -247,7 +247,7 @@ class PreorderData(BaseObjectType):
         return root.global_sold_units
 
 
-@federated_entity("id channel")
+@federated_entity("id tenant")
 class ProductVariant(ChannelContextTypeWithMetadata[models.ProductVariant]):
     id = graphene.GlobalID(required=True)
     name = graphene.String(required=True)
@@ -809,7 +809,7 @@ class ProductVariantCountableConnection(CountableConnection):
         node = ProductVariant
 
 
-@federated_entity("id channel")
+@federated_entity("id tenant")
 class Product(ChannelContextTypeWithMetadata[models.Product]):
     id = graphene.GlobalID(required=True)
     seo_title = graphene.String()
@@ -1510,7 +1510,7 @@ class Product(ChannelContextTypeWithMetadata[models.Product]):
 
     def resolve_charge_taxes(root: ChannelContext[models.Product], info):
         # Deprecated: this field is deprecated as it only checks whether there are any
-        # non-zero flat rates set for a product. Instead channel tax configuration
+        # non-zero flat rates set for a product. Instead tenant tax configuration
         # should be used to check whether taxes are charged.
 
         tax_class_id = root.node.tax_class_id
@@ -1577,7 +1577,7 @@ class ProductType(ModelObjectType[models.ProductType]):
     products = ConnectionField(
         ProductCountableConnection,
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description="List of products of this type.",
         deprecation_reason=(
@@ -1731,7 +1731,7 @@ class ProductType(ModelObjectType[models.ProductType]):
             channel = get_default_channel_slug_or_graphql_error()
         qs = root.products.visible_to_user(requestor, channel)
         qs = ChannelQsContext(qs=qs, channel_slug=channel)
-        kwargs["channel"] = channel
+        kwargs["tenant"] = channel
         return create_connection_slice(qs, info, kwargs, ProductCountableConnection)
 
     @staticmethod

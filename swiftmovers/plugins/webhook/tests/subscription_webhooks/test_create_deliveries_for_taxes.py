@@ -30,7 +30,7 @@ subscription {
         address {
           id
         }
-        channel {
+        tenant {
             id
         }
 
@@ -120,7 +120,7 @@ def test_checkout_calculate_taxes(
             },
             "currency": "USD",
             "discounts": [],
-            "channel": {"id": to_global_id_or_none(checkout_ready_to_complete.channel)},
+            "tenant": {"id": to_global_id_or_none(checkout_ready_to_complete.channel)},
             "lines": [
                 {
                     "productName": "Test product",
@@ -179,7 +179,7 @@ def test_checkout_calculate_taxes_with_free_shipping_voucher(
             "address": {"id": to_global_id_or_none(checkout.shipping_address)},
             "currency": "USD",
             "discounts": [],
-            "channel": {"id": to_global_id_or_none(checkout.channel)},
+            "tenant": {"id": to_global_id_or_none(checkout.channel)},
             "lines": ANY,
             "pricesEnteredWithTax": True,
             "shippingPrice": {"amount": 0.0},
@@ -221,7 +221,7 @@ def test_checkout_calculate_taxes_with_voucher(
             "address": None,
             "currency": "USD",
             "discounts": [{"amount": {"amount": 20.0}}],
-            "channel": {"id": to_global_id_or_none(checkout_with_voucher.channel)},
+            "tenant": {"id": to_global_id_or_none(checkout_with_voucher.channel)},
             "lines": [
                 {
                     "chargeTaxes": True,
@@ -279,7 +279,7 @@ def test_checkout_calculate_taxes_with_shipping_voucher(
             "address": None,
             "currency": "USD",
             "discounts": [{"amount": {"amount": 20.0}}],
-            "channel": {"id": to_global_id_or_none(checkout_with_voucher.channel)},
+            "tenant": {"id": to_global_id_or_none(checkout_with_voucher.channel)},
             "lines": [
                 {
                     "chargeTaxes": True,
@@ -333,7 +333,7 @@ def test_checkout_calculate_taxes_empty_checkout(
         "__typename": "CalculateTaxes",
         "taxBase": {
             "address": None,
-            "channel": {"id": to_global_id_or_none(checkout.channel)},
+            "tenant": {"id": to_global_id_or_none(checkout.channel)},
             "currency": "USD",
             "discounts": [],
             "lines": [],
@@ -390,7 +390,7 @@ def test_order_calculate_taxes(
             "address": {"id": to_global_id_or_none(order.shipping_address)},
             "currency": "USD",
             "discounts": [],
-            "channel": {"id": to_global_id_or_none(order.channel)},
+            "tenant": {"id": to_global_id_or_none(order.channel)},
             "lines": [
                 {
                     "chargeTaxes": charge_taxes,
@@ -462,7 +462,7 @@ def test_order_calculate_taxes_with_discounts(
             "address": {"id": to_global_id_or_none(order.shipping_address)},
             "currency": "USD",
             "discounts": [{"amount": {"amount": 20.0}}],
-            "channel": {"id": to_global_id_or_none(order.channel)},
+            "tenant": {"id": to_global_id_or_none(order.channel)},
             "lines": [
                 {
                     "chargeTaxes": True,
@@ -515,7 +515,7 @@ def test_order_calculate_taxes_empty_order(
             "lines": [],
             "pricesEnteredWithTax": True,
             "shippingPrice": {"amount": 0.0},
-            "channel": {"id": to_global_id_or_none(order.channel)},
+            "tenant": {"id": to_global_id_or_none(order.channel)},
             "sourceObject": {
                 "__typename": "Order",
                 "id": to_global_id_or_none(order),

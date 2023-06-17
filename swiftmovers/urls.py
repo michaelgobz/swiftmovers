@@ -39,10 +39,10 @@ urlpatterns = [
         name="digital-product",
     ),
     re_path(
-        r"^plugins/channel/(?P<channel_slug>[.0-9A-Za-z_\-]+)/"
+        r"^plugins/tenant/(?P<channel_slug>[.0-9A-Za-z_\-]+)/"
         r"(?P<plugin_id>[.0-9A-Za-z_\-]+)/",
         handle_plugin_per_channel_webhook,
-        name="plugins-per-channel",
+        name="plugins-per-tenant",
     ),
     re_path(
         r"^plugins/global/(?P<plugin_id>[.0-9A-Za-z_\-]+)/",

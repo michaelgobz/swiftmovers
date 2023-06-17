@@ -33,7 +33,7 @@ class TaxConfigurationPerCountryInput(BaseInputObjectType):
         description=(
             "A country-specific strategy to use for tax calculation. Taxes can be "
             "calculated either using user-defined flat rates or with a tax app. If "
-            "not provided, use the value from the channel's tax configuration."
+            "not provided, use the value from the tenant's tax configuration."
         ),
     )
     display_gross_prices = graphene.Boolean(
@@ -50,13 +50,13 @@ class TaxConfigurationPerCountryInput(BaseInputObjectType):
 
 class TaxConfigurationUpdateInput(BaseInputObjectType):
     charge_taxes = graphene.Boolean(
-        description="Determines whether taxes are charged in the given channel."
+        description="Determines whether taxes are charged in the given tenant."
     )
     tax_calculation_strategy = graphene.Field(
         TaxCalculationStrategy,
         required=False,
         description=(
-            "The default strategy to use for tax calculation in the given channel. "
+            "The default strategy to use for tax calculation in the given tenant. "
             "Taxes can be calculated either using user-defined flat rates or with "
             "a tax app. Empty value means that no method is selected and taxes are "
             "not calculated."
@@ -107,7 +107,7 @@ class TaxConfigurationUpdate(ModelMutation):
         )
 
     class Meta:
-        description = "Update tax configuration for a channel." + ADDED_IN_39
+        description = "Update tax configuration for a tenant." + ADDED_IN_39
         error_type_class = TaxConfigurationUpdateError
         model = models.TaxConfiguration
         object_type = TaxConfiguration

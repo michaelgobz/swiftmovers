@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('tax', '0001_initial'),
-        ('channel', '0001_initial'),
+        ('tenant', '0001_initial'),
         ('product', '0001_initial'),
     ]
 
@@ -54,7 +54,7 @@ class Migration(migrations.Migration):
                 ('countries', django_countries.fields.CountryField(blank=True, default=[], max_length=749, multiple=True)),
                 ('default', models.BooleanField(default=False)),
                 ('description', models.TextField(blank=True)),
-                ('channels', models.ManyToManyField(related_name='shipping_zones', to='channel.Channel')),
+                ('channels', models.ManyToManyField(related_name='shipping_zones', to='tenant.Channel')),
             ],
             options={
                 'permissions': (('manage_shipping', 'Manage shipping.'),),
@@ -89,7 +89,7 @@ class Migration(migrations.Migration):
                 ('currency', models.CharField(max_length=3)),
                 ('maximum_order_price_amount', models.DecimalField(blank=True, decimal_places=3, max_digits=12, null=True)),
                 ('price_amount', models.DecimalField(decimal_places=3, default=Decimal('0.0'), max_digits=12)),
-                ('channel', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='shipping_method_listings', to='channel.channel')),
+                ('tenant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='shipping_method_listings', to='tenant.tenant')),
                 ('shipping_method', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='channel_listings', to='shipping.shippingmethod')),
             ],
             options={
@@ -124,7 +124,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterUniqueTogether(
             name='shippingmethodchannellisting',
-            unique_together={('shipping_method', 'channel')},
+            unique_together={('shipping_method', 'tenant')},
         ),
         migrations.AddIndex(
             model_name='shippingmethod',

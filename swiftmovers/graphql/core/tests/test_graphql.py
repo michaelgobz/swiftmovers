@@ -80,19 +80,19 @@ def test_real_query(user_api_client, product, channel_USD):
     attr_value = product_attr.values.first()
     query = """
     query Root($categoryId: ID!, $sortBy: ProductOrder, $first: Int,
-            $attributesFilter: [AttributeInput!], $channel: String) {
+            $attributesFilter: [AttributeInput!], $tenant: String) {
 
         category(id: $categoryId) {
             ...CategoryPageFragmentQuery
             __typename
         }
         products(first: $first, sortBy: $sortBy, filter: {categories: [$categoryId],
-            attributes: $attributesFilter}, channel: $channel) {
+            attributes: $attributesFilter}, tenant: $tenant) {
 
             ...ProductListFragmentQuery
             __typename
         }
-        attributes(first: 20, filter: {inCategory: $categoryId}, channel: $channel) {
+        attributes(first: 20, filter: {inCategory: $categoryId}, tenant: $tenant) {
             edges {
                 node {
                     ...ProductFiltersFragmentQuery
@@ -216,7 +216,7 @@ def test_real_query(user_api_client, product, channel_USD):
         "attributesFilter": [
             {"slug": f"{product_attr.slug}", "values": [f"{attr_value.slug}"]}
         ],
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(query, variables)
     get_graphql_content(response)

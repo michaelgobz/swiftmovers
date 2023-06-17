@@ -1,6 +1,6 @@
 import warnings
 
-from .....channel.utils import DEPRECATION_WARNING_MESSAGE
+from .....tenant.utils import DEPRECATION_WARNING_MESSAGE
 from .....discount.models import Sale, Voucher
 from ....tests.utils import get_graphql_content
 

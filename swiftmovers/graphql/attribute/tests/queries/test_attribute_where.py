@@ -14,8 +14,8 @@ from ....tests.utils import get_graphql_content, get_graphql_content_from_respon
 from ...enums import AttributeEntityTypeEnum, AttributeInputTypeEnum, AttributeTypeEnum
 
 ATTRIBUTES_WHERE_QUERY = """
-    query($where: AttributeWhereInput!, $channel: String) {
-      attributes(first: 10, where: $where, channel: $channel) {
+    query($where: AttributeWhereInput!, $tenant: String) {
+      attributes(first: 10, where: $where, tenant: $tenant) {
         edges {
           node {
             name
@@ -443,7 +443,7 @@ def test_attributes_filter_attributes_in_collection_not_visible_in_listings_by_c
         "where": {
             "inCollection": graphene.Node.to_global_id("Collection", collection.pk),
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -486,7 +486,7 @@ def test_attributes_filter_in_collection_not_published_by_customer(
         "where": {
             "inCollection": graphene.Node.to_global_id("Collection", collection.pk),
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -539,7 +539,7 @@ def test_attributes_filter_in_collection_not_published_by_staff_with_perm(
         "where": {
             "inCollection": graphene.Node.to_global_id("Collection", collection.pk),
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -586,7 +586,7 @@ def test_attributes_filter_in_collection_not_published_by_staff_without_manage_p
         "where": {
             "inCollection": graphene.Node.to_global_id("Collection", collection.pk),
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -636,7 +636,7 @@ def test_attributes_filter_in_collection_not_published_by_app_with_perm(
         "where": {
             "inCollection": graphene.Node.to_global_id("Collection", collection.pk),
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -683,7 +683,7 @@ def test_attributes_filter_in_collection_not_published_by_app_without_manage_pro
         "where": {
             "inCollection": graphene.Node.to_global_id("Collection", collection.pk),
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -724,7 +724,7 @@ def test_attributes_filter_attributes_in_collection_invalid_collection_id(
         "where": {
             "inCollection": "xnd",
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -769,7 +769,7 @@ def test_attributes_filter_attributes_in_collection_object_with_given_id_does_no
         "where": {
             "inCollection": graphene.Node.to_global_id("Product", -1),
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -809,7 +809,7 @@ def test_attributes_filter_in_category_not_visible_in_listings_by_customer(
         "where": {
             "inCategory": graphene.Node.to_global_id("Category", category.pk),
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -859,7 +859,7 @@ def test_attributes_filter_in_category_not_visible_in_listings_by_staff_with_per
         "where": {
             "inCategory": graphene.Node.to_global_id("Category", category.pk),
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -903,7 +903,7 @@ def test_attributes_filter_in_category_not_in_listings_by_staff_without_manage_p
         "where": {
             "inCategory": graphene.Node.to_global_id("Category", category.pk),
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -950,7 +950,7 @@ def test_attributes_filter_in_category_not_visible_in_listings_by_app_with_perm(
         "where": {
             "inCategory": graphene.Node.to_global_id("Category", category.pk),
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -994,7 +994,7 @@ def test_attributes_filter_in_category_not_in_listings_by_app_without_manage_pro
         "where": {
             "inCategory": graphene.Node.to_global_id("Category", category.pk),
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -1035,7 +1035,7 @@ def test_attributes_filter_in_category_not_published_by_customer(
         "where": {
             "inCategory": graphene.Node.to_global_id("Category", category.pk),
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -1085,7 +1085,7 @@ def test_attributes_filter_in_category_not_published_by_staff_with_perm(
         "where": {
             "inCategory": graphene.Node.to_global_id("Category", category.pk),
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -1129,7 +1129,7 @@ def test_attributes_filter_in_category_not_published_by_staff_without_manage_pro
         "where": {
             "inCategory": graphene.Node.to_global_id("Category", category.pk),
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -1176,7 +1176,7 @@ def test_attributes_filter_in_category_not_published_by_app_with_perm(
         "where": {
             "inCategory": graphene.Node.to_global_id("Category", category.pk),
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -1220,7 +1220,7 @@ def test_attributes_filter_in_category_not_published_by_app_without_manage_produ
         "where": {
             "inCategory": graphene.Node.to_global_id("Category", category.pk),
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -1258,7 +1258,7 @@ def test_attributes_filter_in_category_invalid_category_id(
         "where": {
             "inCategory": "xyz",
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -1300,7 +1300,7 @@ def test_attributes_filter_in_category_object_with_given_id_does_not_exist(
         "where": {
             "inCategory": graphene.Node.to_global_id("Product", -1),
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -1611,8 +1611,8 @@ def test_attributes_where_with_multiple_nested_operators(
 
 
 ATTRIBUTES_SEARCH_QUERY = """
-    query($search: String, $channel: String) {
-      attributes(first: 10, search: $search, channel: $channel) {
+    query($search: String, $tenant: String) {
+      attributes(first: 10, search: $search, tenant: $tenant) {
         edges {
           node {
             name

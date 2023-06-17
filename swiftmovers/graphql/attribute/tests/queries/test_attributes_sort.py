@@ -66,8 +66,8 @@ def test_attributes_of_products_are_sorted(
 
     if is_variant:
         query = """
-            query($id: ID!, $channel: String) {
-              productVariant(id: $id, channel: $channel) {
+            query($id: ID!, $tenant: String) {
+              productVariant(id: $id, tenant: $tenant) {
                 attributes {
                   attribute {
                     id
@@ -78,8 +78,8 @@ def test_attributes_of_products_are_sorted(
         """
     else:
         query = """
-            query($id: ID!, $channel: String) {
-              product(id: $id, channel: $channel) {
+            query($id: ID!, $tenant: String) {
+              product(id: $id, tenant: $tenant) {
                 attributes {
                   attribute {
                     id
@@ -129,7 +129,7 @@ def test_attributes_of_products_are_sorted(
     # Retrieve the attributes
     data = get_graphql_content(
         user_api_client.post_graphql(
-            query, {"id": node_id, "channel": channel_USD.slug}
+            query, {"id": node_id, "tenant": channel_USD.slug}
         )
     )["data"]
     attributes = data["productVariant" if is_variant else "product"]["attributes"]

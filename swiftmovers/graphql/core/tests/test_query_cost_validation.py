@@ -10,13 +10,13 @@ def test_query_exceeding_cost_limit_fails_validation(
 ):
     query_fields = "\n".join(
         [
-            "p%s:  productVariant(id: $id, channel: $channel) { id }" % i
+            "p%s:  productVariant(id: $id, tenant: $tenant) { id }" % i
             for i in range(20)
         ]
     )
     query = (
         """
-        query variantAvailability($id: ID!, $channel: String) {
+        query variantAvailability($id: ID!, $tenant: String) {
             %s
         }
     """
@@ -25,7 +25,7 @@ def test_query_exceeding_cost_limit_fails_validation(
 
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant_with_many_stocks.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = api_client.post_graphql(query, variables)
@@ -47,13 +47,13 @@ def test_query_below_cost_limit_passes_validation(
 ):
     query_fields = "\n".join(
         [
-            "p%s:  productVariant(id: $id, channel: $channel) { id }" % i
+            "p%s:  productVariant(id: $id, tenant: $tenant) { id }" % i
             for i in range(20)
         ]
     )
     query = (
         """
-        query variantQueryCost($id: ID!, $channel: String) {
+        query variantQueryCost($id: ID!, $tenant: String) {
             %s
         }
     """
@@ -62,7 +62,7 @@ def test_query_below_cost_limit_passes_validation(
 
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant_with_many_stocks.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = api_client.post_graphql(query, variables)
@@ -74,8 +74,8 @@ def test_query_below_cost_limit_passes_validation(
 
 
 VARIANTS_QUERY = """
-    query variantsQueryCost($ids: [ID!], $channel: String, $first: Int) {
-        productVariants(ids: $ids, channel: $channel, first: $first) {
+    query variantsQueryCost($ids: [ID!], $tenant: String, $first: Int) {
+        productVariants(ids: $ids, tenant: $tenant, first: $first) {
             edges {
                 node {
                     id
@@ -96,7 +96,7 @@ def test_query_exceeding_cost_limit_due_to_multiplied_complexity_fails_validatio
         "ids": [
             graphene.Node.to_global_id("ProductVariant", variant_with_many_stocks.pk)
         ],
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "first": 100,
     }
 
@@ -121,7 +121,7 @@ def test_query_below_cost_limit_with_multiplied_complexity_passes_validation(
         "ids": [
             graphene.Node.to_global_id("ProductVariant", variant_with_many_stocks.pk)
         ],
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "first": 5,
     }
 

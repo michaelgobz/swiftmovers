@@ -49,7 +49,7 @@ def test_drop_invalid_shipping_method_relations(
             checkout_weight_shipping_method,
             checkout_another_shipping_method,
         ],
-        ["shipping_method", "channel", "price_expiration"],
+        ["shipping_method", "tenant", "price_expiration"],
     )
 
     order_confirmed = order_list[0]
@@ -72,7 +72,7 @@ def test_drop_invalid_shipping_method_relations(
 
     Order.objects.bulk_update(
         [order_confirmed, order_draft, order_draft_PLN],
-        ["status", "shipping_method", "channel", "should_refresh_prices"],
+        ["status", "shipping_method", "tenant", "should_refresh_prices"],
     )
 
     # when

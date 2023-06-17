@@ -87,7 +87,7 @@ from .utils import (
 if TYPE_CHECKING:
     from ...account.models import Address, Group, User
     from ...attribute.models import Attribute, AttributeValue
-    from ...channel.models import Channel
+    from ...tenant.models import Channel
     from ...discount.models import Sale, Voucher
     from ...giftcard.models import GiftCard
     from ...invoice.models import Invoice

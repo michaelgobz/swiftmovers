@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from .....channel import MarkAsPaidStrategy
+from .....tenant import MarkAsPaidStrategy
 from .....checkout import calculations
 from .....checkout.error_codes import CheckoutErrorCode
 from .....checkout.fetch import fetch_checkout_info, fetch_checkout_lines

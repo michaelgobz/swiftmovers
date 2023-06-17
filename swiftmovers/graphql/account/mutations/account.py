@@ -66,8 +66,8 @@ class AccountRegisterInput(AccountBaseInput):
     )
     channel = graphene.String(
         description=(
-            "Slug of a channel which will be used to notify users. Optional when "
-            "only one channel exists."
+            "Slug of a tenant which will be used to notify users. Optional when "
+            "only one tenant exists."
         )
     )
 
@@ -126,8 +126,8 @@ class AccountRegister(ModelMutation):
                 }
             )
 
-        data["channel"] = clean_channel(
-            data.get("channel"), error_class=AccountErrorCode
+        data["tenant"] = clean_channel(
+            data.get("tenant"), error_class=AccountErrorCode
         ).slug
 
         data["email"] = data["email"].lower()
@@ -157,7 +157,7 @@ class AccountRegister(ModelMutation):
                     user,
                     cleaned_input["redirect_url"],
                     manager,
-                    channel_slug=cleaned_input["channel"],
+                    channel_slug=cleaned_input["tenant"],
                 )
             else:
                 user.save()
@@ -214,8 +214,8 @@ class AccountRequestDeletion(BaseMutation):
         )
         channel = graphene.String(
             description=(
-                "Slug of a channel which will be used to notify users. Optional when "
-                "only one channel exists."
+                "Slug of a tenant which will be used to notify users. Optional when "
+                "only one tenant exists."
             )
         )
 
@@ -447,8 +447,8 @@ class RequestEmailChange(BaseMutation):
         )
         channel = graphene.String(
             description=(
-                "Slug of a channel which will be used to notify users. Optional when "
-                "only one channel exists."
+                "Slug of a tenant which will be used to notify users. Optional when "
+                "only one tenant exists."
             )
         )
 
@@ -528,8 +528,8 @@ class ConfirmEmailChange(BaseMutation):
         )
         channel = graphene.String(
             description=(
-                "Slug of a channel which will be used to notify users. Optional when "
-                "only one channel exists."
+                "Slug of a tenant which will be used to notify users. Optional when "
+                "only one tenant exists."
             )
         )
 

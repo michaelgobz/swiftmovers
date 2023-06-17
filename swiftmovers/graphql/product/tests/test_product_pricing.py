@@ -52,8 +52,8 @@ FRAGMENT_PRICING = (
 
 QUERY_PRODUCT_PRICING = (
     """
-  query Product($id: ID!, $channel: String!) {
-    product(id: $id, channel: $channel) {
+  query Product($id: ID!, $tenant: String!) {
+    product(id: $id, tenant: $tenant) {
       pricingPL: pricing(address: { country: PL }) {
         ...Pricing
       }
@@ -120,7 +120,7 @@ def test_product_pricing(
     # when
     variables = {
         "id": graphene.Node.to_global_id("Product", product.id),
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
     response = user_api_client.post_graphql(QUERY_PRODUCT_PRICING, variables)
     content = get_graphql_content(response)
@@ -166,7 +166,7 @@ def test_product_pricing_default_country_default_rate(
     # when
     variables = {
         "id": graphene.Node.to_global_id("Product", product.id),
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
     response = user_api_client.post_graphql(QUERY_PRODUCT_PRICING, variables)
     content = get_graphql_content(response)
@@ -210,7 +210,7 @@ def test_product_pricing_use_tax_class_from_product_type(
     # when
     variables = {
         "id": graphene.Node.to_global_id("Product", product.id),
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
     response = user_api_client.post_graphql(QUERY_PRODUCT_PRICING, variables)
     content = get_graphql_content(response)
@@ -252,7 +252,7 @@ def test_product_pricing_no_flat_rates_in_one_country(
     # when
     variables = {
         "id": graphene.Node.to_global_id("Product", product.id),
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
     response = user_api_client.post_graphql(QUERY_PRODUCT_PRICING, variables)
     content = get_graphql_content(response)

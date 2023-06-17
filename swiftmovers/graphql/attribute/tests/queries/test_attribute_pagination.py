@@ -131,12 +131,12 @@ def attributes_for_pagination(collection, category, channel_USD):
 
 QUERY_ATTRIBUTES_PAGINATION = """
     query (
-        $first: Int, $last: Int, $after: String, $before: String, $channel: String
+        $first: Int, $last: Int, $after: String, $before: String, $tenant: String
         $sortBy: AttributeSortingInput, $filter: AttributeFilterInput
     ){
         attributes (
             first: $first, last: $last, after: $after, before: $before,
-            sortBy: $sortBy, filter: $filter, channel: $channel
+            sortBy: $sortBy, filter: $filter, tenant: $tenant
         ) {
             edges {
                 node {
@@ -229,7 +229,7 @@ def test_attributes_pagination_with_filtering_in_collection(
         "first": page_size,
         "after": None,
         "filter": filter_by,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = staff_api_client.post_graphql(QUERY_ATTRIBUTES_PAGINATION, variables)
     content = get_graphql_content(response)
@@ -251,7 +251,7 @@ def test_attributes_pagination_with_filtering_in_category(
         "first": page_size,
         "after": None,
         "filter": filter_by,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = staff_api_client.post_graphql(QUERY_ATTRIBUTES_PAGINATION, variables)
     content = get_graphql_content(response)

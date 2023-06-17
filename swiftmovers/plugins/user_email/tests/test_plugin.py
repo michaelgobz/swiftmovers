@@ -260,7 +260,7 @@ QUERY_GET_PLUGIN = """
       id
       name
       channelConfigurations {
-        channel {
+        tenant {
           slug
         }
         configuration {

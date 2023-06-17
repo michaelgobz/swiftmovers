@@ -76,7 +76,7 @@ def vouchers_for_sorting_with_channels(db, channel_USD, channel_PLN):
                 min_spent_amount=100,
                 currency=channel_USD.currency_code,
             ),
-            # Second channel
+            # Second tenant
             VoucherChannelListing(
                 voucher=vouchers[0],
                 channel=channel_PLN,
@@ -111,10 +111,10 @@ def vouchers_for_sorting_with_channels(db, channel_USD, channel_PLN):
 
 QUERY_VOUCHERS_WITH_SORTING_AND_FILTERING = """
     query (
-        $sortBy: VoucherSortingInput, $filter: VoucherFilterInput, $channel: String
+        $sortBy: VoucherSortingInput, $filter: VoucherFilterInput, $tenant: String
     ){
         vouchers(
-            first: 10, sortBy: $sortBy, filter: $filter, channel: $channel
+            first: 10, sortBy: $sortBy, filter: $filter, tenant: $tenant
         ) {
             edges {
                 node {
@@ -151,7 +151,7 @@ def test_voucher_with_sorting_and_without_channel(
     )
 
     # then
-    assert_graphql_error_with_message(response, "A default channel does not exist.")
+    assert_graphql_error_with_message(response, "A default tenant does not exist.")
 
 
 @pytest.mark.parametrize(
@@ -184,7 +184,7 @@ def test_vouchers_with_sorting_and_channel_USD(
     channel_USD,
 ):
     # given
-    variables = {"sortBy": sort_by, "channel": channel_USD.slug}
+    variables = {"sortBy": sort_by, "tenant": channel_USD.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -231,7 +231,7 @@ def test_vouchers_with_sorting_and_channel_PLN(
     channel_PLN,
 ):
     # given
-    variables = {"sortBy": sort_by, "channel": channel_PLN.slug}
+    variables = {"sortBy": sort_by, "tenant": channel_PLN.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -263,7 +263,7 @@ def test_vouchers_with_sorting_and_not_existing_channel_asc(
     channel_USD,
 ):
     # given
-    variables = {"sortBy": sort_by, "channel": "Not-existing"}
+    variables = {"sortBy": sort_by, "tenant": "Not-existing"}
 
     # when
     response = staff_api_client.post_graphql(
@@ -301,7 +301,7 @@ def test_vouchers_with_filter_and_channel_USD(
     channel_USD,
 ):
     # given
-    variables = {"filter": filter_by, "channel": channel_USD.slug}
+    variables = {"filter": filter_by, "tenant": channel_USD.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -329,7 +329,7 @@ def test_vouchers_with_filter_by_ids_and_channel_USD(
         vouchers_for_sorting_with_channels[1],
     ]
     ids = [graphene.Node.to_global_id("Voucher", voucher.id) for voucher in vouchers]
-    variables = {"filter": {"ids": ids}, "channel": channel_USD.slug}
+    variables = {"filter": {"ids": ids}, "tenant": channel_USD.slug}
 
     # when
     response = staff_api_client.post_graphql(

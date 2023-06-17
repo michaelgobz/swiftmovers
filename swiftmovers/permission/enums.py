@@ -23,8 +23,8 @@ class AppPermission(BasePermissionEnum):
     MANAGE_OBSERVABILITY = "app.manage_observability"
 
 
-class ChannelPermissions(BasePermissionEnum):
-    MANAGE_CHANNELS = "channel.manage_channels"
+class TenantPermissions(BasePermissionEnum):
+    MANAGE_TENANTS = "tenant.manage_tenants"
 
 
 class DiscountPermissions(BasePermissionEnum):
@@ -83,11 +83,18 @@ class SitePermissions(BasePermissionEnum):
     MANAGE_TRANSLATIONS = "site.manage_translations"
 
 
+class TrackingPermissions(BasePermissionEnum):
+    MANAGE_SETTINGS = "tracking.manage_settings"
+    VIEW_TRACKING_TIER_1 = "tracking.view_tracking_tier_1"
+    VIEW_TRACKING_TIER_2 = "tracking.view_tracking_tier_2"
+    VIEW_TRACKING_TIER_3 = "tracking.view_tracking_tier_3"
+
+
 PERMISSIONS_ENUMS = [
     AccountPermissions,
     AppPermission,
     CheckoutPermissions,
-    ChannelPermissions,
+    TenantPermissions,
     DiscountPermissions,
     GiftcardPermissions,
     MenuPermissions,
@@ -100,6 +107,7 @@ PERMISSIONS_ENUMS = [
     ProductTypePermissions,
     ShippingPermissions,
     SitePermissions,
+    TrackingPermissions
 ]
 
 

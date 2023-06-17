@@ -266,8 +266,8 @@ def test_query_menus_with_sort(
 
 
 QUERY_MENU_ITEM_BY_ID = """
-query menuitem($id: ID!, $channel: String) {
-    menuItem(id: $id, channel: $channel) {
+query menuitem($id: ID!, $tenant: String) {
+    menuItem(id: $id, tenant: $tenant) {
         name
         children {
             name
@@ -297,7 +297,7 @@ def test_menu_item_query(user_api_client, menu_item, published_collection, chann
     )
     variables = {
         "id": graphene.Node.to_global_id("MenuItem", menu_item.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(query, variables)
     content = get_graphql_content(response)
@@ -323,7 +323,7 @@ def test_menu_item_query_with_invalid_channel(
     )
     variables = {
         "id": graphene.Node.to_global_id("MenuItem", menu_item.pk),
-        "channel": "invalid",
+        "tenant": "invalid",
     }
     response = user_api_client.post_graphql(query, variables)
     content = get_graphql_content(response)
@@ -374,8 +374,8 @@ def test_menu_items_query(
             slug
         }
     }
-    query menuitem($id: ID!, $channel: String) {
-        menu(id: $id, channel: $channel) {
+    query menuitem($id: ID!, $tenant: String) {
+        menu(id: $id, tenant: $tenant) {
             items {
                 ...SecondaryMenuSubItem
                 children {
@@ -387,7 +387,7 @@ def test_menu_items_query(
     """
     variables = {
         "id": graphene.Node.to_global_id("Menu", menu_with_items.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = user_api_client.post_graphql(query, variables)
 
@@ -404,8 +404,8 @@ def test_menu_items_collection_in_other_channel(
     user_api_client, menu_item, published_collection, channel_PLN
 ):
     query = """
-    query menuitem($id: ID!, $channel: String) {
-        menuItem(id: $id, channel: $channel) {
+    query menuitem($id: ID!, $tenant: String) {
+        menuItem(id: $id, tenant: $tenant) {
             name
             children {
                 name
@@ -434,7 +434,7 @@ def test_menu_items_collection_in_other_channel(
     )
     variables = {
         "id": graphene.Node.to_global_id("MenuItem", menu_item.pk),
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
     response = user_api_client.post_graphql(query, variables)
     content = get_graphql_content(response)

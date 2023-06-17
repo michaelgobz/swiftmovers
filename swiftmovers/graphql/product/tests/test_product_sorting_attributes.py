@@ -18,11 +18,11 @@ query products(
   $field: ProductOrderField
   $attributeId: ID
   $direction: OrderDirection!
-  $channel: String
+  $tenant: String
 ) {
   products(
     first: 100,
-    channel: $channel,
+    tenant: $tenant,
     sortBy: { field: $field, attributeId: $attributeId, direction: $direction }
   ) {
     edges {
@@ -235,7 +235,7 @@ def test_sort_products_cannot_sort_both_by_field_and_by_attribute(
         "field": "NAME",
         "attributeId": "SomeAttributeId",
         "direction": "ASC",
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = api_client.post_graphql(query, variables)
@@ -508,7 +508,7 @@ def test_sort_product_by_attribute_single_value(
     variables = {
         "attributeId": attribute_id,
         "direction": direction,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = get_graphql_content(api_client.post_graphql(query, variables))
@@ -534,7 +534,7 @@ def test_sort_product_by_attribute_multiple_values(
     variables = {
         "attributeId": attribute_id,
         "direction": direction,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = get_graphql_content(api_client.post_graphql(query, variables))
@@ -618,7 +618,7 @@ def test_sort_product_by_attribute_using_invalid_attribute_id(
     variables = {
         "attributeId": attribute_id,
         "direction": "DESC",
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = get_graphql_content(
@@ -643,7 +643,7 @@ def test_sort_product_by_attribute_using_string_as_attribute_id(
     variables = {
         "attributeId": graphene.Node.to_global_id("Attribute", "not a number"),
         "direction": "DESC",
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = api_client.post_graphql(query, variables)
@@ -670,7 +670,7 @@ def test_sort_product_by_attribute_using_attribute_having_no_products(
     variables = {
         "attributeId": attribute_id,
         "direction": direction,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     response = get_graphql_content(api_client.post_graphql(query, variables))

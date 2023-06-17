@@ -1,7 +1,7 @@
 TAX_CONFIGURATION_FRAGMENT = """
   fragment TaxConfiguration on TaxConfiguration {
     id
-    channel {
+    tenant {
       id
       name
     }

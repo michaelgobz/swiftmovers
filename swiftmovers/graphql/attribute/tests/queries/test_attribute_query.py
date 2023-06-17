@@ -639,7 +639,7 @@ def test_attributes_in_collection_query(
     other_collection.products.add(other_product)
 
     query = """
-    query($nodeID: ID!, $channel: String) {
+    query($nodeID: ID!, $tenant: String) {
         attributes(first: 20, %(filter_input)s) {
             edges {
                 node {
@@ -653,10 +653,10 @@ def test_attributes_in_collection_query(
     """
 
     query = query % {
-        "filter_input": "filter: { %s: $nodeID } channel: $channel" % tested_field
+        "filter_input": "filter: { %s: $nodeID } tenant: $tenant" % tested_field
     }
 
-    variables = {"nodeID": filtered_by_node_id, "channel": channel_USD.slug}
+    variables = {"nodeID": filtered_by_node_id, "tenant": channel_USD.slug}
     content = get_graphql_content(user_api_client.post_graphql(query, variables))
     attributes_data = content["data"]["attributes"]["edges"]
 

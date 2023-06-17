@@ -27,7 +27,7 @@ mutation UpdateProductVariantChannelListing(
         variant {
             id
             channelListings {
-                channel {
+                tenant {
                     id
                     slug
                     currencyCode
@@ -231,21 +231,21 @@ def test_variant_channel_listing_update_as_staff_user(
     channel_usd_data = next(
         channel_data
         for channel_data in variant_data["channelListings"]
-        if channel_data["channel"]["id"] == channel_usd_id
+        if channel_data["tenant"]["id"] == channel_usd_id
     )
     channel_pln_data = next(
         channel_data
         for channel_data in variant_data["channelListings"]
-        if channel_data["channel"]["id"] == channel_pln_id
+        if channel_data["tenant"]["id"] == channel_pln_id
     )
     assert channel_usd_data["price"]["currency"] == "USD"
     assert channel_usd_data["price"]["amount"] == price
     assert channel_usd_data["costPrice"]["amount"] == price
-    assert channel_usd_data["channel"]["slug"] == channel_USD.slug
+    assert channel_usd_data["tenant"]["slug"] == channel_USD.slug
     assert channel_pln_data["price"]["currency"] == "PLN"
     assert channel_pln_data["price"]["amount"] == second_price
     assert channel_pln_data["costPrice"]["amount"] == second_price
-    assert channel_pln_data["channel"]["slug"] == channel_PLN.slug
+    assert channel_pln_data["tenant"]["slug"] == channel_PLN.slug
     update_product_discounted_price_task_mock.assert_called_once_with(product.id)
 
 
@@ -292,21 +292,21 @@ def test_variant_channel_listing_update_by_sku(
     channel_usd_data = next(
         channel_data
         for channel_data in variant_data["channelListings"]
-        if channel_data["channel"]["id"] == channel_usd_id
+        if channel_data["tenant"]["id"] == channel_usd_id
     )
     channel_pln_data = next(
         channel_data
         for channel_data in variant_data["channelListings"]
-        if channel_data["channel"]["id"] == channel_pln_id
+        if channel_data["tenant"]["id"] == channel_pln_id
     )
     assert channel_usd_data["price"]["currency"] == "USD"
     assert channel_usd_data["price"]["amount"] == price
     assert channel_usd_data["costPrice"]["amount"] == price
-    assert channel_usd_data["channel"]["slug"] == channel_USD.slug
+    assert channel_usd_data["tenant"]["slug"] == channel_USD.slug
     assert channel_pln_data["price"]["currency"] == "PLN"
     assert channel_pln_data["price"]["amount"] == second_price
     assert channel_pln_data["costPrice"]["amount"] == second_price
-    assert channel_pln_data["channel"]["slug"] == channel_PLN.slug
+    assert channel_pln_data["tenant"]["slug"] == channel_PLN.slug
 
 
 @patch("swiftmovers.plugins.manager.PluginsManager.product_variant_updated")
@@ -392,19 +392,19 @@ def test_variant_channel_listing_update_as_app(
     channel_usd_data = next(
         channel_data
         for channel_data in variant_data["channelListings"]
-        if channel_data["channel"]["id"] == channel_usd_id
+        if channel_data["tenant"]["id"] == channel_usd_id
     )
     channel_pln_data = next(
         channel_data
         for channel_data in variant_data["channelListings"]
-        if channel_data["channel"]["id"] == channel_pln_id
+        if channel_data["tenant"]["id"] == channel_pln_id
     )
     assert channel_usd_data["price"]["currency"] == "USD"
     assert channel_usd_data["price"]["amount"] == 1
-    assert channel_usd_data["channel"]["slug"] == channel_USD.slug
+    assert channel_usd_data["tenant"]["slug"] == channel_USD.slug
     assert channel_pln_data["price"]["currency"] == "PLN"
     assert channel_pln_data["price"]["amount"] == 20
-    assert channel_pln_data["channel"]["slug"] == channel_PLN.slug
+    assert channel_pln_data["tenant"]["slug"] == channel_PLN.slug
 
 
 def test_variant_channel_listing_update_as_customer(
@@ -528,7 +528,7 @@ def test_product_variant_channel_listing_update_remove_cost_price(
     assert variant_data["channelListings"][0]["price"]["currency"] == "USD"
     assert variant_data["channelListings"][0]["price"]["amount"] == 1
     assert not variant_data["channelListings"][0]["costPrice"]
-    assert variant_data["channelListings"][0]["channel"]["slug"] == channel_USD.slug
+    assert variant_data["channelListings"][0]["tenant"]["slug"] == channel_USD.slug
 
 
 def test_product_channel_listing_update_too_many_decimal_places_in_cost_price(
@@ -628,19 +628,19 @@ def test_variant_channel_listing_update_preorder(
     channel_usd_data = next(
         channel_data
         for channel_data in variant_data["channelListings"]
-        if channel_data["channel"]["id"] == channel_usd_id
+        if channel_data["tenant"]["id"] == channel_usd_id
     )
     channel_pln_data = next(
         channel_data
         for channel_data in variant_data["channelListings"]
-        if channel_data["channel"]["id"] == channel_pln_id
+        if channel_data["tenant"]["id"] == channel_pln_id
     )
-    assert channel_usd_data["channel"]["slug"] == channel_USD.slug
+    assert channel_usd_data["tenant"]["slug"] == channel_USD.slug
     assert (
         channel_usd_data["preorderThreshold"]["quantity"]
         == preorder_threshold_channel_usd
     )
-    assert channel_pln_data["channel"]["slug"] == channel_PLN.slug
+    assert channel_pln_data["tenant"]["slug"] == channel_PLN.slug
     assert (
         channel_pln_data["preorderThreshold"]["quantity"]
         == preorder_threshold_channel_pln

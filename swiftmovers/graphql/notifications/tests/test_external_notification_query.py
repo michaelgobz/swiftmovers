@@ -19,8 +19,8 @@ query_test_invalid_data = [
             }
         },
         400,
-        'Argument "channel" of required type String!" provided the variable '
-        '"$channel" which was not provided',
+        'Argument "tenant" of required type String!" provided the variable '
+        '"$tenant" which was not provided',
     ),
     (
         {
@@ -28,7 +28,7 @@ query_test_invalid_data = [
                 "extraPayload": json.dumps("{}"),
                 "externalEventType": {},
             },
-            "channel": "c-pln",
+            "tenant": "c-pln",
         },
         400,
         'Variable "$input" got invalid value {"externalEventType": {},'
@@ -40,7 +40,7 @@ query_test_invalid_data = [
                 "ids": [],
                 "extraPayload": json.dumps("{}"),
             },
-            "channel": "c-pln",
+            "tenant": "c-pln",
         },
         400,
         'Variable "$input" got invalid value {"extraPayload": "\\"{}\\"",'
@@ -90,7 +90,7 @@ def test_notify_via_external_notification_trigger_for_plugin_manager(
             "extraPayload": "{}",
             "externalEventType": UserNotifyEvent.ORDER_CANCELED,
         },
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
     }
 
     response = staff_api_client.post_graphql(
@@ -118,7 +118,7 @@ def test_notify_via_external_notification_trigger_without_permission(
             "extraPayload": "{}",
             "externalEventType": UserNotifyEvent.ORDER_CANCELED,
         },
-        "channel": channel_PLN.slug,
+        "tenant": channel_PLN.slug,
         "pluginId": PluginSample.PLUGIN_ID,
     }
 

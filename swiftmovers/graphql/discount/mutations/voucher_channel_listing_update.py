@@ -20,7 +20,7 @@ from ..types import Voucher
 
 
 class VoucherChannelListingAddInput(BaseInputObjectType):
-    channel_id = graphene.ID(required=True, description="ID of a channel.")
+    channel_id = graphene.ID(required=True, description="ID of a tenant.")
     discount_value = PositiveDecimal(description="Value of the voucher.")
     min_amount_spent = PositiveDecimal(
         description="Min purchase amount required to apply the voucher."
@@ -53,7 +53,7 @@ class VoucherChannelListingUpdate(BaseChannelListingMutation):
         id = graphene.ID(required=True, description="ID of a voucher to update.")
         input = VoucherChannelListingInput(
             required=True,
-            description="Fields required to update voucher channel listings.",
+            description="Fields required to update voucher tenant listings.",
         )
 
     class Meta:
@@ -70,13 +70,13 @@ class VoucherChannelListingUpdate(BaseChannelListingMutation):
         )
 
         for cleaned_channel in cleaned_input.get("add_channels", []):
-            channel = cleaned_channel.get("channel", None)
+            channel = cleaned_channel.get("tenant", None)
             if not channel:
                 continue
             discount_value = cleaned_channel.get("discount_value", "")
-            # New channel listing requires discout value. It raises validation error for
+            # New tenant listing requires discout value. It raises validation error for
             # `discout_value` == `None`.
-            # Updating channel listing doesn't require to pass `discout_value`.
+            # Updating tenant listing doesn't require to pass `discout_value`.
             should_create = channel.slug not in channel_slugs_assigned_to_voucher
             missing_required_value = not discount_value and should_create
             if missing_required_value or discount_value is None:
@@ -173,7 +173,7 @@ class VoucherChannelListingUpdate(BaseChannelListingMutation):
     @classmethod
     def add_channels(cls, voucher, add_channels):
         for add_channel in add_channels:
-            channel = add_channel["channel"]
+            channel = add_channel["tenant"]
             defaults = {"currency": channel.currency_code}
             if "discount_value" in add_channel.keys():
                 defaults["discount_value"] = add_channel.get("discount_value")

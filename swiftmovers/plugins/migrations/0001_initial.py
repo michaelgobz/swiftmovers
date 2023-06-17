@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('channel', '0001_initial'),
+        ('tenant', '0001_initial'),
     ]
 
     operations = [
@@ -23,11 +23,11 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(blank=True)),
                 ('active', models.BooleanField(default=False)),
                 ('configuration', models.JSONField(blank=True, default=dict, encoder=swiftmovers.core.utils.json_serializer.CustomJsonEncoder, null=True)),
-                ('channel', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='channel.channel')),
+                ('tenant', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='tenant.tenant')),
             ],
             options={
                 'permissions': (('manage_plugins', 'Manage plugins'),),
-                'unique_together': {('identifier', 'channel')},
+                'unique_together': {('identifier', 'tenant')},
             },
         ),
         migrations.CreateModel(

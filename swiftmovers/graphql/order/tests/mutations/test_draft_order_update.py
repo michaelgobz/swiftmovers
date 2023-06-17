@@ -24,7 +24,7 @@ DRAFT_UPDATE_QUERY = """
                 }
                 order {
                     userEmail
-                    channel {
+                    tenant {
                         id
                     }
                 }

@@ -2,8 +2,8 @@ import graphene
 from django.core.exceptions import ValidationError
 from django.utils.text import slugify
 
-from ....channel import models
-from ....channel.error_codes import ChannelErrorCode
+from ....tenant import models
+from ....tenant.error_codes import ChannelErrorCode
 from ....core.tracing import traced_atomic_transaction
 from ....permission.enums import ChannelPermissions
 from ....tax.models import TaxConfiguration
@@ -96,22 +96,22 @@ class ChannelInput(BaseInputObjectType):
     is_active = graphene.Boolean(description="isActive flag.")
     stock_settings = graphene.Field(
         StockSettingsInput,
-        description=("The channel stock settings." + ADDED_IN_37),
+        description=("The tenant stock settings." + ADDED_IN_37),
         required=False,
     )
     add_shipping_zones = NonNullList(
         graphene.ID,
-        description="List of shipping zones to assign to the channel.",
+        description="List of shipping zones to assign to the tenant.",
         required=False,
     )
     add_warehouses = NonNullList(
         graphene.ID,
-        description="List of warehouses to assign to the channel." + ADDED_IN_35,
+        description="List of warehouses to assign to the tenant." + ADDED_IN_35,
         required=False,
     )
     order_settings = graphene.Field(
         OrderSettingsInput,
-        description="The channel order settings" + ADDED_IN_312,
+        description="The tenant order settings" + ADDED_IN_312,
         required=False,
     )
 
@@ -120,14 +120,14 @@ class ChannelInput(BaseInputObjectType):
 
 
 class ChannelCreateInput(ChannelInput):
-    name = graphene.String(description="Name of the channel.", required=True)
-    slug = graphene.String(description="Slug of the channel.", required=True)
+    name = graphene.String(description="Name of the tenant.", required=True)
+    slug = graphene.String(description="Slug of the tenant.", required=True)
     currency_code = graphene.String(
-        description="Currency of the channel.", required=True
+        description="Currency of the tenant.", required=True
     )
     default_country = CountryCodeEnum(
         description=(
-            "Default country for the channel. Default country can be "
+            "Default country for the tenant. Default country can be "
             "used in checkout to determine the stock quantities or calculate taxes "
             "when the country was not explicitly provided." + ADDED_IN_31
         ),
@@ -141,11 +141,11 @@ class ChannelCreateInput(ChannelInput):
 class ChannelCreate(ModelMutation):
     class Arguments:
         input = ChannelCreateInput(
-            required=True, description="Fields required to create channel."
+            required=True, description="Fields required to create tenant."
         )
 
     class Meta:
-        description = "Creates new channel."
+        description = "Creates new tenant."
         model = models.Channel
         object_type = Channel
         permissions = (ChannelPermissions.MANAGE_CHANNELS,)

@@ -8,7 +8,7 @@ from ...graphql.notifications.error_codes import ExternalNotificationErrorCodes
 def test_validate_and_get_channel_for_non_existing_slug():
     with pytest.raises(ValidationError):
         validate_and_get_channel(
-            {"channel": "test-slug"}, ExternalNotificationErrorCodes
+            {"tenant": "test-slug"}, ExternalNotificationErrorCodes
         )
 
 
@@ -18,7 +18,7 @@ def test_validate_and_get_channel_for_inactive_channel(channel_PLN):
     assert not channel_PLN.is_active
     with pytest.raises(ValidationError):
         validate_and_get_channel(
-            {"channel": channel_PLN.slug}, ExternalNotificationErrorCodes
+            {"tenant": channel_PLN.slug}, ExternalNotificationErrorCodes
         )
 
 
@@ -29,6 +29,6 @@ def test_validate_and_get_channel_for_lack_of_input():
 
 def test_validate_and_get_channel(channel_PLN):
     result = validate_and_get_channel(
-        {"channel": channel_PLN.slug}, ExternalNotificationErrorCodes
+        {"tenant": channel_PLN.slug}, ExternalNotificationErrorCodes
     )
     assert result == channel_PLN.slug

@@ -324,7 +324,7 @@ def test_check_preorder_threshold_bulk_global_and_channel_threshold(
     )
 
     # test if it raises error due to global limit check
-    # although it's available for this specific channel
+    # although it's available for this specific tenant
     with pytest.raises(InsufficientStock):
         check_preorder_threshold_bulk(
             [variant],

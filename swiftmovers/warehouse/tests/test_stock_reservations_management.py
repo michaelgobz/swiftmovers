@@ -3,7 +3,7 @@ from datetime import timedelta
 import pytest
 from django.utils import timezone
 
-from ...channel import AllocationStrategy
+from ...tenant import AllocationStrategy
 from ...checkout.models import Checkout
 from ...core.exceptions import InsufficientStock
 from ..models import ChannelWarehouse, Reservation, Stock, Warehouse

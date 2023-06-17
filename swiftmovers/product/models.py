@@ -38,7 +38,7 @@ from mptt.managers import TreeManager
 from mptt.models import MPTTModel
 from prices import Money
 
-from ..channel.models import Channel
+from ..tenant.models import Channel
 from ..core.db.fields import SanitizedJSONField
 from ..core.models import (
     ModelWithExternalReference,
@@ -581,7 +581,7 @@ class ProductChannelListing(PublishableModel):
     )
 
     class Meta:
-        unique_together = [["product", "channel"]]
+        unique_together = [["product", "tenant"]]
         ordering = ("pk",)
         indexes = [
             models.Index(fields=["published_at"]),
@@ -786,7 +786,7 @@ class ProductVariantChannelListing(models.Model):
     objects = ProductVariantChannelListingManager()
 
     class Meta:
-        unique_together = [["variant", "channel"]]
+        unique_together = [["variant", "tenant"]]
         ordering = ("pk",)
 
 
@@ -972,7 +972,7 @@ class CollectionChannelListing(PublishableModel):
     )
 
     class Meta:
-        unique_together = [["collection", "channel"]]
+        unique_together = [["collection", "tenant"]]
         ordering = ("pk",)
 
 

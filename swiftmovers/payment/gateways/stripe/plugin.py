@@ -234,7 +234,7 @@ class StripeGatewayPlugin(BasePlugin):
             payment_method_id=payment_method_id,
             metadata={
                 **payment_information.payment_metadata,
-                "channel": self.channel.slug,  # type: ignore
+                "tenant": self.channel.slug,  # type: ignore
                 "payment_id": payment_information.graphql_payment_id,
             },
             setup_future_usage=setup_future_usage,

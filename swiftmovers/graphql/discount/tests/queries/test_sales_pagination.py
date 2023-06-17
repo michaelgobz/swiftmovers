@@ -58,12 +58,12 @@ def sales_for_pagination(channel_USD):
 
 QUERY_SALES_PAGINATION = """
     query (
-        $first: Int, $last: Int, $after: String, $before: String,, $channel: String
+        $first: Int, $last: Int, $after: String, $before: String,, $tenant: String
         $sortBy: SaleSortingInput, $filter: SaleFilterInput
     ){
         sales(
             first: $first, last: $last, after: $after, before: $before,
-            sortBy: $sortBy, filter: $filter, channel: $channel
+            sortBy: $sortBy, filter: $filter, tenant: $tenant
         ) {
             edges {
                 node {
@@ -129,7 +129,7 @@ def test_sales_pagination_with_sorting_and_channel(
         "first": page_size,
         "after": None,
         "sortBy": sort_by,
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = staff_api_client.post_graphql(
         QUERY_SALES_PAGINATION,

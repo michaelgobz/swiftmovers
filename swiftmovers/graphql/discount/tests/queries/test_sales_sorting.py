@@ -49,7 +49,7 @@ def sales_for_sorting_with_channels(db, channel_USD, channel_PLN):
                 channel=channel_USD,
                 currency=channel_USD.currency_code,
             ),
-            # Second channel
+            # Second tenant
             SaleChannelListing(
                 discount_value=7,
                 sale=sales[0],
@@ -88,10 +88,10 @@ def sales_for_sorting_with_channels(db, channel_USD, channel_PLN):
 
 QUERY_SALES_WITH_SORTING_AND_FILTERING = """
     query (
-        $sortBy: SaleSortingInput, $filter: SaleFilterInput, $channel: String
+        $sortBy: SaleSortingInput, $filter: SaleFilterInput, $tenant: String
     ){
         sales (
-            first: 10, sortBy: $sortBy, filter: $filter, channel: $channel
+            first: 10, sortBy: $sortBy, filter: $filter, tenant: $tenant
         ) {
             edges {
                 node {
@@ -119,7 +119,7 @@ def test_sales_with_sorting_and_without_channel(
     )
 
     # then
-    assert_graphql_error_with_message(response, "A default channel does not exist.")
+    assert_graphql_error_with_message(response, "A default tenant does not exist.")
 
 
 @pytest.mark.parametrize(
@@ -160,7 +160,7 @@ def test_sales_with_sorting_and_channel_USD(
     channel_USD,
 ):
     # given
-    variables = {"sortBy": sort_by, "channel": channel_USD.slug}
+    variables = {"sortBy": sort_by, "tenant": channel_USD.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -215,7 +215,7 @@ def test_sales_with_sorting_and_channel_PLN(
     channel_PLN,
 ):
     # given
-    variables = {"sortBy": sort_by, "channel": channel_PLN.slug}
+    variables = {"sortBy": sort_by, "tenant": channel_PLN.slug}
 
     # when
     response = staff_api_client.post_graphql(
@@ -241,7 +241,7 @@ def test_vouchers_with_sorting_and_not_existing_channel_asc(
     # given
     variables = {
         "sortBy": {"field": "VALUE", "direction": "ASC"},
-        "channel": "Not-existing",
+        "tenant": "Not-existing",
     }
 
     # when

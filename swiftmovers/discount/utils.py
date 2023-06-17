@@ -22,7 +22,7 @@ from django.db.models import F
 from django.utils import timezone
 from prices import Money, TaxedMoney, fixed_discount, percentage_discount
 
-from ..channel.models import Channel
+from ..tenant.models import Channel
 from ..core.taxes import zero_money
 from . import DiscountInfo
 from .models import (

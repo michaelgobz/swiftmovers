@@ -20,8 +20,8 @@ from ...tests.utils import get_graphql_content
 from ..enums import ProductAttributeType
 
 QUERY_PRODUCT_AND_VARIANTS_ATTRIBUTES = """
-    query ($channel: String){
-      products(first: 1, channel: $channel) {
+    query ($tenant: String){
+      products(first: 1, tenant: $tenant) {
         edges {
           node {
             attributes {
@@ -65,7 +65,7 @@ def test_resolve_attributes_with_hidden(
     """Ensure non-staff users don't see hidden attributes, and staff users having
     the 'manage product' permission can.
     """
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     query = QUERY_PRODUCT_AND_VARIANTS_ATTRIBUTES
     api_client = user_api_client
 
@@ -98,7 +98,7 @@ def test_resolve_attributes_with_hidden(
 
 def test_resolve_attribute_values(user_api_client, product, staff_user, channel_USD):
     """Ensure the attribute values are properly resolved."""
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     query = QUERY_PRODUCT_AND_VARIANTS_ATTRIBUTES
     api_client = user_api_client
 
@@ -148,7 +148,7 @@ def test_resolve_attribute_values_non_assigned_to_node(
     of the product type but not of the node (product/variant), thus no values should be
     resolved.
     """
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     query = QUERY_PRODUCT_AND_VARIANTS_ATTRIBUTES
     api_client = user_api_client
 
@@ -218,8 +218,8 @@ def test_resolve_assigned_attribute_without_values(
     products = get_graphql_content(
         api_client.post_graphql(
             """
-        query ($channel: String) {
-          products(first: 10, channel: $channel) {
+        query ($tenant: String) {
+          products(first: 10, tenant: $tenant) {
             edges {
               node {
                 attributes {
@@ -245,7 +245,7 @@ def test_resolve_assigned_attribute_without_values(
           }
         }
     """,
-            {"channel": channel_USD.slug},
+            {"tenant": channel_USD.slug},
         )
     )["data"]["products"]["edges"]
 
@@ -1123,8 +1123,8 @@ def test_unassign_attributes_not_in_product_type(
 
 def test_retrieve_product_attributes_input_type(staff_api_client, product, channel_USD):
     query = """
-        query ($channel: String){
-          products(first: 10, channel: $channel) {
+        query ($tenant: String){
+          products(first: 10, tenant: $tenant) {
             edges {
               node {
                 attributes {
@@ -1138,7 +1138,7 @@ def test_retrieve_product_attributes_input_type(staff_api_client, product, chann
         }
     """
 
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     found_products = get_graphql_content(
         staff_api_client.post_graphql(query, variables)
     )["data"]["products"]["edges"]

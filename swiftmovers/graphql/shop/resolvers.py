@@ -51,7 +51,7 @@ def resolve_countries(**kwargs):
 
 
 def get_shipping_method_to_listing_mapping(shipping_methods, channel_slug):
-    """Prepare mapping shipping method to its channel listings."""
+    """Prepare mapping shipping method to its tenant listings."""
     shipping_mapping = {}
     shipping_listings = ShippingMethodChannelListing.objects.filter(
         shipping_method__in=shipping_methods, channel__slug=channel_slug

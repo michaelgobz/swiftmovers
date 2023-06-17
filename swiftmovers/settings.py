@@ -245,7 +245,7 @@ INSTALLED_APPS = [
     'swiftmovers.page',
     'swiftmovers.plugins',
     'swiftmovers.giftcard',
-    'swiftmovers.channel',
+    'swiftmovers.tenant',
     'swiftmovers.menu',
     'swiftmovers.site',
     'swiftmovers.seo',
@@ -768,10 +768,10 @@ REAL_IP_ENVIRON = get_list(os.environ.get("REAL_IP_ENVIRON", "REMOTE_ADDR"))
 # Slugs for menus pre-created in Django migrations
 DEFAULT_MENUS = {"top_menu_name": "navbar", "bottom_menu_name": "footer"}
 
-# Slug for channel pre-created in Django migrations
-DEFAULT_CHANNEL_SLUG = os.environ.get("DEFAULT_CHANNEL_SLUG", "default-channel")
+# Slug for tenant pre-created in Django migrations
+DEFAULT_CHANNEL_SLUG = os.environ.get("DEFAULT_CHANNEL_SLUG", "default-tenant")
 
-# Set this to `True` if you want to create default channel, warehouse, product type and
+# Set this to `True` if you want to create default tenant, warehouse, product type and
 # category during migrations. It makes it easier for the users to create their first
 # product.
 POPULATE_DEFAULTS = get_bool_env("POPULATE_DEFAULTS", True)

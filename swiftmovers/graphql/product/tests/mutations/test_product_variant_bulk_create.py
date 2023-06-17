@@ -56,7 +56,7 @@ PRODUCT_VARIANT_BULK_CREATE_MUTATION = """
                             quantity
                         }
                         channelListings {
-                            channel {
+                            tenant {
                                 slug
                             }
                             price {
@@ -1119,7 +1119,7 @@ def test_product_variant_bulk_create_channel_listings_input(
             "sku": variants[0]["sku"],
             "channelListings": [
                 {
-                    "channel": {"slug": channel_USD.slug},
+                    "tenant": {"slug": channel_USD.slug},
                     "price": {
                         "amount": variants[0]["channelListings"][0]["price"],
                         "currency": channel_USD.currency_code,
@@ -1136,7 +1136,7 @@ def test_product_variant_bulk_create_channel_listings_input(
             "sku": variants[1]["sku"],
             "channelListings": [
                 {
-                    "channel": {"slug": channel_USD.slug},
+                    "tenant": {"slug": channel_USD.slug},
                     "price": {
                         "amount": variants[1]["channelListings"][0]["price"],
                         "currency": channel_USD.currency_code,
@@ -1148,7 +1148,7 @@ def test_product_variant_bulk_create_channel_listings_input(
                     "preorderThreshold": {"quantity": None},
                 },
                 {
-                    "channel": {"slug": channel_PLN.slug},
+                    "tenant": {"slug": channel_PLN.slug},
                     "price": {
                         "amount": variants[1]["channelListings"][1]["price"],
                         "currency": channel_PLN.currency_code,

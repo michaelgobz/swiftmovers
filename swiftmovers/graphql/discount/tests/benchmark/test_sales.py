@@ -33,8 +33,8 @@ def sales_list(channel_USD, channel_PLN):
 
 
 SALES_QUERY = """
-query GetSales($channel: String){
-  sales(last: 10, channel: $channel) {
+query GetSales($tenant: String){
+  sales(last: 10, tenant: $tenant) {
     edges {
       node {
         id
@@ -74,7 +74,7 @@ query GetSales($channel: String){
           id
           discountValue
           currency
-          channel {
+          tenant {
             id
             name
             isActive
@@ -100,7 +100,7 @@ def test_sales_query_with_channel_slug(
     permission_manage_discounts,
     count_queries,
 ):
-    variables = {"channel": channel_USD.slug}
+    variables = {"tenant": channel_USD.slug}
     get_graphql_content(
         staff_api_client.post_graphql(
             SALES_QUERY,

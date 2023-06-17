@@ -194,7 +194,7 @@ class ProductQueries(graphene.ObjectType):
         ),
         slug=graphene.Argument(graphene.String, description="Slug of the category"),
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description=(
             "Look up a collection by ID. Requires one of the following permissions to "
@@ -213,7 +213,7 @@ class ProductQueries(graphene.ObjectType):
             f"{', '.join([p.name for p in ALL_PRODUCTS_PERMISSIONS])}."
         ),
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         doc_category=DOC_CATEGORY_PRODUCTS,
     )
@@ -228,7 +228,7 @@ class ProductQueries(graphene.ObjectType):
             graphene.String, description=f"External ID of the product. {ADDED_IN_310}"
         ),
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description=(
             "Look up a product by ID. Requires one of the following permissions to "
@@ -242,7 +242,7 @@ class ProductQueries(graphene.ObjectType):
         filter=ProductFilterInput(description="Filtering options for products."),
         sort_by=ProductOrder(description="Sort products."),
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description=(
             "List of the shop's products. Requires one of the following permissions to "
@@ -281,7 +281,7 @@ class ProductQueries(graphene.ObjectType):
             graphene.String, description=f"External ID of the product. {ADDED_IN_310}"
         ),
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description=(
             "Look up a product variant by ID or SKU. Requires one of the following "
@@ -296,7 +296,7 @@ class ProductQueries(graphene.ObjectType):
             graphene.ID, description="Filter product variants by given IDs."
         ),
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         filter=ProductVariantFilterInput(
             description="Filtering options for product variant."
@@ -315,7 +315,7 @@ class ProductQueries(graphene.ObjectType):
             ReportingPeriod, required=True, description="Span of time."
         ),
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned.",
+            description="Slug of a tenant for which the data should be returned.",
             required=True,
         ),
         description="List of top selling products.",
@@ -376,7 +376,7 @@ class ProductQueries(graphene.ObjectType):
         if channel is None and not has_required_permissions:
             channel = get_default_channel_slug_or_graphql_error()
         qs = resolve_collections(info, channel)
-        kwargs["channel"] = channel
+        kwargs["tenant"] = channel
         qs = filter_connection_queryset(qs, kwargs)
         return create_connection_slice(qs, info, kwargs, CollectionCountableConnection)
 
@@ -450,7 +450,7 @@ class ProductQueries(graphene.ObjectType):
         if channel is None and not has_required_permissions:
             channel = get_default_channel_slug_or_graphql_error()
         qs = resolve_products(info, requestor, channel_slug=channel)
-        kwargs["channel"] = channel
+        kwargs["tenant"] = channel
         qs = filter_connection_queryset(qs, kwargs)
         return create_connection_slice(qs, info, kwargs, ProductCountableConnection)
 
@@ -516,7 +516,7 @@ class ProductQueries(graphene.ObjectType):
             requestor_has_access_to_all=has_required_permissions,
             requestor=requestor,
         )
-        kwargs["channel"] = qs.channel_slug
+        kwargs["tenant"] = qs.channel_slug
         qs = filter_connection_queryset(qs, kwargs)
         return create_connection_slice(
             qs, info, kwargs, ProductVariantCountableConnection
@@ -528,7 +528,7 @@ class ProductQueries(graphene.ObjectType):
         _root, info: ResolveInfo, *, period, channel, **kwargs
     ):
         qs = resolve_report_product_sales(period, channel_slug=channel)
-        kwargs["channel"] = qs.channel_slug
+        kwargs["tenant"] = qs.channel_slug
         return create_connection_slice(
             qs, info, kwargs, ProductVariantCountableConnection
         )

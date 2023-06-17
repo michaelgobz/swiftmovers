@@ -3302,7 +3302,7 @@ def order_list(customer_user, channel_USD):
         "billing_address": address,
         "user": customer_user,
         "user_email": customer_user.email,
-        "channel": channel_USD,
+        "tenant": channel_USD,
         "origin": OrderOrigin.CHECKOUT,
     }
     order = Order.objects.create(**data)
@@ -4300,7 +4300,7 @@ def order_with_lines_channel_PLN(
         origin=OrderOrigin.CHECKOUT,
     )
     product = Product.objects.create(
-        name="Test product in PLN channel",
+        name="Test product in PLN tenant",
         slug="test-product-8-pln",
         product_type=product_type,
         category=category,
@@ -4351,7 +4351,7 @@ def order_with_lines_channel_PLN(
     )
 
     product = Product.objects.create(
-        name="Test product 2 in PLN channel",
+        name="Test product 2 in PLN tenant",
         slug="test-product-9-pln",
         product_type=product_type,
         category=category,
@@ -6721,7 +6721,7 @@ def webhook_response_failed():
 def check_payment_balance_input():
     return {
         "gatewayId": "mirumee.payments.gateway",
-        "channel": "channel_default",
+        "tenant": "channel_default",
         "method": "givex",
         "card": {
             "cvc": "9891",

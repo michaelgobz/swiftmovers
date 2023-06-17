@@ -1,6 +1,6 @@
 from django.db.models import Exists, OuterRef, Sum
 
-from ...channel.models import Channel
+from ...tenant.models import Channel
 from ...order import OrderStatus
 from ...order.models import Order
 from ...permission.utils import has_one_of_permissions
@@ -166,7 +166,7 @@ def resolve_report_product_sales(period, channel_slug) -> ChannelQsContext:
     # annotate quantity
     qs = qs.annotate(quantity_ordered=Sum("order_lines__quantity"))
 
-    # filter by channel and order status
+    # filter by tenant and order status
     channels = Channel.objects.filter(slug=channel_slug).values("pk")
     exclude_status = [OrderStatus.DRAFT, OrderStatus.CANCELED, OrderStatus.EXPIRED]
     orders = Order.objects.exclude(status__in=exclude_status).filter(

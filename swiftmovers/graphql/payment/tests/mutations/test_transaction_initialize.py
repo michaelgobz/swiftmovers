@@ -3,7 +3,7 @@ from decimal import Decimal
 import mock
 import pytest
 
-from .....channel import TransactionFlowStrategy
+from .....tenant import TransactionFlowStrategy
 from .....checkout import CheckoutAuthorizeStatus, CheckoutChargeStatus
 from .....checkout.calculations import fetch_checkout_data
 from .....checkout.fetch import fetch_checkout_info, fetch_checkout_lines

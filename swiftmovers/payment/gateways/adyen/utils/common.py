@@ -139,7 +139,7 @@ def request_data_for_payment(
         raise PaymentError("Payment data are not valid.")
 
     extra_request_params = {}
-    channel = payment_data.get("channel", "web")
+    channel = payment_data.get("tenant", "web")
     origin_url = payment_data.get("originUrl")
 
     browser_info = payment_data.get("browserInfo")
@@ -173,7 +173,7 @@ def request_data_for_payment(
     if shopper_name:
         extra_request_params["shopperName"] = shopper_name
 
-    extra_request_params["channel"] = channel
+    extra_request_params["tenant"] = channel
 
     payment_method = payment_data.get("paymentMethod")
     if not payment_method:
@@ -352,11 +352,11 @@ def request_data_for_gateway_config(
         country_code = country.code
     else:
         country_code = Country(settings.DEFAULT_COUNTRY).code
-    channel = get_checkout_metadata(checkout).get_value_from_metadata("channel", "web")
+    channel = get_checkout_metadata(checkout).get_value_from_metadata("tenant", "web")
     return {
         "merchantAccount": merchant_account,
         "countryCode": country_code,
-        "channel": channel,
+        "tenant": channel,
         "amount": {
             "value": price_to_minor_unit(total.gross.amount, checkout.currency),
             "currency": checkout.currency,

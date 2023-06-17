@@ -1,8 +1,8 @@
 import pytest
 from django.conf import settings
 
-from ....channel import AllocationStrategy
-from ....channel.models import Channel
+from ....tenant import AllocationStrategy
+from ....tenant.models import Channel
 from ....tax import TaxCalculationStrategy
 from ....tax.models import TaxConfiguration
 

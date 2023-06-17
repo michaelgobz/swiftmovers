@@ -17,7 +17,7 @@ from django_prices.models import MoneyField, TaxedMoneyField
 from measurement.measures import Weight
 
 from ..app.models import App
-from ..channel.models import Channel
+from ..tenant.models import Channel
 from ..core.models import ModelWithExternalReference, ModelWithMetadata
 from ..core.units import WeightUnits
 from ..core.utils.json_serializer import CustomJsonEncoder

@@ -2,7 +2,7 @@ import graphene
 from django.core.exceptions import ValidationError
 
 from ...account import models as account_models
-from ...channel import models as channel_models
+from ...tenant import models as channel_models
 from ...core.error_codes import ShopErrorCode
 from ...core.utils.url import validate_storefront_url
 from ...permission.enums import GiftcardPermissions, OrderPermissions, SitePermissions
@@ -90,14 +90,14 @@ class ShopSettingsInput(graphene.InputObjectType):
     include_taxes_in_prices = graphene.Boolean(
         description=(
             f"Include taxes in prices. {DEPRECATED_IN_3X_INPUT} Use "
-            "`taxConfigurationUpdate` mutation to configure this setting per channel "
+            "`taxConfigurationUpdate` mutation to configure this setting per tenant "
             "or country."
         )
     )
     display_gross_prices = graphene.Boolean(
         description=(
             f"Display prices with tax in store. {DEPRECATED_IN_3X_INPUT} Use "
-            "`taxConfigurationUpdate` mutation to configure this setting per channel "
+            "`taxConfigurationUpdate` mutation to configure this setting per tenant "
             "or country."
         )
     )
@@ -408,7 +408,7 @@ class OrderSettingsUpdate(BaseMutation):
     class Meta:
         description = (
             "Update shop order settings across all channels. "
-            "Returns `orderSettings` for the first `channel` in alphabetical order. "
+            "Returns `orderSettings` for the first `tenant` in alphabetical order. "
         )
         doc_category = DOC_CATEGORY_ORDERS
         permissions = (OrderPermissions.MANAGE_ORDERS,)
@@ -430,7 +430,7 @@ class OrderSettingsUpdate(BaseMutation):
 
         if channel is None:
             raise ValidationError(
-                "There is no active channel available",
+                "There is no active tenant available",
                 code=OrderSettingsErrorCode.INVALID.value,
             )
 

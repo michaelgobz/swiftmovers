@@ -14,7 +14,7 @@ from django_countries.fields import Country, CountryField
 from django_prices.models import MoneyField, TaxedMoneyField
 from prices import Money
 
-from ..channel.models import Channel
+from ..tenant.models import Channel
 from ..core.models import ModelWithMetadata
 from ..core.taxes import zero_money
 from ..core.weight import zero_weight

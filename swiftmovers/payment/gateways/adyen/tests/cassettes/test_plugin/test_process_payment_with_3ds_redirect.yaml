@@ -7,7 +7,7 @@ interactions:
       "merchantAccount": "swiftmoversECOM", "browserInfo": {"acceptHeader": "*/*", "colorDepth":
       24, "language": "en-US", "javaEnabled": false, "screenHeight": 1080, "screenWidth":
       1920, "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML,
-      like Gecko) Chrome/89.0.4389.90 Safari/537.36", "timeZoneOffset": -120}, "channel":
+      like Gecko) Chrome/89.0.4389.90 Safari/537.36", "timeZoneOffset": -120}, "tenant":
       "web", "shopperEmail": "", "applicationInfo": {"adyenLibrary": {"name": "adyen-python-api-library",
       "version": "4.0.0"}}}'
     headers:

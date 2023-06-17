@@ -250,9 +250,9 @@ def test_stock_quantities_in_different_warehouses(
 ):
     query = """
     query ProductVariant(
-        $id: ID!, $channel: String!, $country1: CountryCode, $country2: CountryCode
+        $id: ID!, $tenant: String!, $country1: CountryCode, $country2: CountryCode
     ) {
-        productVariant(id: $id, channel: $channel) {
+        productVariant(id: $id, tenant: $tenant) {
             quantityPL: quantityAvailable(address: { country: $country1 })
             quantityUS: quantityAvailable(address: { country: $country2 })
             quantityNoAddress: quantityAvailable
@@ -268,7 +268,7 @@ def test_stock_quantities_in_different_warehouses(
 
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "country1": "PL",
         "country2": "US",
     }
@@ -292,8 +292,8 @@ def test_stock_quantity_is_max_from_all_warehouses_without_provided_country(
     api_client, channel_USD, variant_with_many_stocks_different_shipping_zones
 ):
     query = """
-    query ProductVariant($id: ID!, $channel: String!) {
-        productVariant(id: $id, channel: $channel) {
+    query ProductVariant($id: ID!, $tenant: String!) {
+        productVariant(id: $id, tenant: $tenant) {
             quantityAvailable
         }
     }
@@ -304,7 +304,7 @@ def test_stock_quantity_is_max_from_all_warehouses_without_provided_country(
 
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
     response = api_client.post_graphql(query, variables)
     content = get_graphql_content(response)
@@ -322,8 +322,8 @@ def test_stock_quantity_is_sum_of_quantities_from_warehouses_that_support_countr
     variant_with_many_stocks_different_shipping_zones,
 ):
     query = """
-    query ProductVariant($id: ID!, $channel: String!, $country: CountryCode) {
-        productVariant(id: $id, channel: $channel) {
+    query ProductVariant($id: ID!, $tenant: String!, $country: CountryCode) {
+        productVariant(id: $id, tenant: $tenant) {
             quantityAvailable(address: { country: $country })
         }
     }
@@ -349,7 +349,7 @@ def test_stock_quantity_is_sum_of_quantities_from_warehouses_that_support_countr
 
     variables = {
         "id": graphene.Node.to_global_id("ProductVariant", variant.pk),
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "country": "PL",
     }
     response = api_client.post_graphql(query, variables)

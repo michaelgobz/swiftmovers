@@ -14,8 +14,8 @@ from .....product.models import (
 from ....tests.utils import assert_graphql_error_with_message, get_graphql_content
 
 GET_SORTED_PRODUCTS_QUERY = """
-query Products($sortBy: ProductOrder, $channel: String) {
-    products(first: 10, sortBy: $sortBy, channel: $channel) {
+query Products($sortBy: ProductOrder, $tenant: String) {
+    products(first: 10, sortBy: $sortBy, tenant: $tenant) {
       edges {
         node {
           id
@@ -50,7 +50,7 @@ def test_sort_products_by_publication_date(
             "direction": direction,
             "field": "PUBLICATION_DATE",
         },
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
     }
 
     # when
@@ -69,9 +69,9 @@ def test_sort_products_by_publication_date(
 
 
 QUERY_PRODUCTS_WITH_SORTING_AND_FILTERING = """
-    query ($sortBy: ProductOrder, $filter: ProductFilterInput, $channel: String){
+    query ($sortBy: ProductOrder, $filter: ProductFilterInput, $tenant: String){
         products (
-            first: 10, sortBy: $sortBy, filter: $filter, channel: $channel
+            first: 10, sortBy: $sortBy, filter: $filter, tenant: $tenant
         ) {
             edges {
                 node {
@@ -100,14 +100,14 @@ def test_products_with_sorting_and_without_channel(
     )
 
     # then
-    assert_graphql_error_with_message(response, "A default channel does not exist.")
+    assert_graphql_error_with_message(response, "A default tenant does not exist.")
 
 
 QUERY_PAGINATED_SORTED_PRODUCTS = """
     query Products(
-        $first: Int, $sortBy: ProductOrder, $channel: String, $after: String
+        $first: Int, $sortBy: ProductOrder, $tenant: String, $after: String
     ) {
-        products(first: $first, sortBy: $sortBy, after: $after, channel: $channel) {
+        products(first: $first, sortBy: $sortBy, after: $after, tenant: $tenant) {
             edges {
                 node {
                     id
@@ -142,7 +142,7 @@ def test_pagination_for_sorting_products_by_publication_date(
     first = 2
     variables = {
         "sortBy": {"direction": "ASC", "field": "PUBLICATION_DATE"},
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "first": first,
     }
 
@@ -175,9 +175,9 @@ def test_pagination_for_sorting_products_by_publication_date(
 
 QUERY_PAGINATED_SORTED_COLLECTIONS = """
     query (
-        $first: Int, $sort_by: CollectionSortingInput!, $after: String, $channel: String
+        $first: Int, $sort_by: CollectionSortingInput!, $after: String, $tenant: String
     ) {
-        collections(first: $first, sortBy: $sort_by, after: $after, channel: $channel) {
+        collections(first: $first, sortBy: $sort_by, after: $after, tenant: $tenant) {
                 edges{
                     node{
                         slug
@@ -223,7 +223,7 @@ def test_pagination_for_sorting_collections_by_publication_date(
     first = 2
     variables = {
         "sort_by": {"direction": "DESC", "field": "PUBLICATION_DATE"},
-        "channel": channel_USD.slug,
+        "tenant": channel_USD.slug,
         "first": first,
     }
 

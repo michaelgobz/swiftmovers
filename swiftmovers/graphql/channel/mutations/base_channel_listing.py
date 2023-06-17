@@ -4,7 +4,7 @@ from typing import DefaultDict, Dict, Iterable, List
 import pytz
 from django.core.exceptions import ValidationError
 
-from ....channel import models
+from ....tenant import models
 from ....core.utils.date_time import convert_to_utc_date_time
 from ...core import ResolveInfo
 from ...core.mutations import BaseMutation
@@ -15,7 +15,7 @@ ErrorType = DefaultDict[str, List[ValidationError]]
 
 
 class BaseChannelListingMutation(BaseMutation):
-    """Base channel listing mutation with basic channel validation."""
+    """Base tenant listing mutation with basic tenant validation."""
 
     class Meta:
         abstract = True
@@ -50,7 +50,7 @@ class BaseChannelListingMutation(BaseMutation):
         if duplicates:
             errors[field_name].append(
                 ValidationError(
-                    "Duplicated channel ID.",
+                    "Duplicated tenant ID.",
                     code=error_code,
                     params={"channels": duplicates},
                 )
@@ -92,7 +92,7 @@ class BaseChannelListingMutation(BaseMutation):
         cleaned_input = {input_source: [], "remove_channels": remove_channels_pks}
 
         for channel_listing, channel in zip(add_channels, channels_to_add):
-            channel_listing["channel"] = channel
+            channel_listing["tenant"] = channel
             cleaned_input[input_source].append(channel_listing)
 
         return cleaned_input

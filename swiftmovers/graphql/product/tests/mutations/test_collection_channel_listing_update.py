@@ -24,7 +24,7 @@ mutation UpdateCollectionChannelListing(
             channelListings {
                 isPublished
                 publishedAt
-                channel {
+                tenant {
                     slug
                 }
             }
@@ -215,14 +215,14 @@ def test_collection_channel_listing_update_as_staff_user(
         collection_data["channelListings"][0]["publishedAt"]
         == publication_date_usd.isoformat()
     )
-    assert collection_data["channelListings"][0]["channel"]["slug"] == channel_USD.slug
+    assert collection_data["channelListings"][0]["tenant"]["slug"] == channel_USD.slug
 
     assert collection_data["channelListings"][1]["isPublished"] is False
     assert (
         collection_data["channelListings"][1]["publishedAt"]
         == publication_date.isoformat()
     )
-    assert collection_data["channelListings"][1]["channel"]["slug"] == channel_PLN.slug
+    assert collection_data["channelListings"][1]["tenant"]["slug"] == channel_PLN.slug
 
 
 def test_collection_channel_listing_update_as_app(
@@ -271,13 +271,13 @@ def test_collection_channel_listing_update_as_app(
         collection_data["channelListings"][0]["publishedAt"]
         == publication_date_usd.isoformat()
     )
-    assert collection_data["channelListings"][0]["channel"]["slug"] == channel_USD.slug
+    assert collection_data["channelListings"][0]["tenant"]["slug"] == channel_USD.slug
     assert collection_data["channelListings"][1]["isPublished"] is False
     assert (
         collection_data["channelListings"][1]["publishedAt"]
         == publication_date.isoformat()
     )
-    assert collection_data["channelListings"][1]["channel"]["slug"] == channel_PLN.slug
+    assert collection_data["channelListings"][1]["tenant"]["slug"] == channel_PLN.slug
 
 
 def test_collection_channel_listing_update_as_customer(
@@ -366,13 +366,13 @@ def test_collection_channel_listing_update_add_channel(
         collection_data["channelListings"][0]["publishedAt"]
         == publication_date_usd.isoformat()
     )
-    assert collection_data["channelListings"][0]["channel"]["slug"] == channel_USD.slug
+    assert collection_data["channelListings"][0]["tenant"]["slug"] == channel_USD.slug
     assert collection_data["channelListings"][1]["isPublished"] is False
     assert (
         collection_data["channelListings"][1]["publishedAt"]
         == publication_date.isoformat()
     )
-    assert collection_data["channelListings"][1]["channel"]["slug"] == channel_PLN.slug
+    assert collection_data["channelListings"][1]["tenant"]["slug"] == channel_PLN.slug
 
 
 def test_collection_channel_listing_update_unpublished(
@@ -406,7 +406,7 @@ def test_collection_channel_listing_update_unpublished(
         collection_data["channelListings"][0]["publishedAt"]
         == publication_date_usd.isoformat()
     )
-    assert collection_data["channelListings"][0]["channel"]["slug"] == channel_USD.slug
+    assert collection_data["channelListings"][0]["tenant"]["slug"] == channel_USD.slug
 
 
 def test_collection_channel_listing_update_update_publication_date(
@@ -440,7 +440,7 @@ def test_collection_channel_listing_update_update_publication_date(
         collection_data["channelListings"][0]["publishedAt"]
         == publication_date.isoformat()
     )
-    assert collection_data["channelListings"][0]["channel"]["slug"] == channel_USD.slug
+    assert collection_data["channelListings"][0]["tenant"]["slug"] == channel_USD.slug
 
 
 def test_collection_channel_listing_update_remove_not_assigned_channel(
@@ -480,7 +480,7 @@ def test_collection_channel_listing_update_remove_not_assigned_channel(
         collection_data["channelListings"][0]["publishedAt"]
         == publication_date.isoformat()
     )
-    assert collection_data["channelListings"][0]["channel"]["slug"] == channel_USD.slug
+    assert collection_data["channelListings"][0]["tenant"]["slug"] == channel_USD.slug
 
 
 @freeze_time("2020-03-18 12:00:00")
@@ -513,13 +513,13 @@ def test_collection_channel_listing_update_add_channel_without_publication_date(
     assert not data["errors"]
     assert collection_data["slug"] == published_collection.slug
     assert collection_data["channelListings"][0]["isPublished"] is True
-    assert collection_data["channelListings"][0]["channel"]["slug"] == channel_USD.slug
+    assert collection_data["channelListings"][0]["tenant"]["slug"] == channel_USD.slug
     assert collection_data["channelListings"][1]["isPublished"] is True
     assert (
         collection_data["channelListings"][1]["publishedAt"]
         == datetime.datetime.now(pytz.utc).isoformat()
     )
-    assert collection_data["channelListings"][1]["channel"]["slug"] == channel_PLN.slug
+    assert collection_data["channelListings"][1]["tenant"]["slug"] == channel_PLN.slug
 
 
 @freeze_time("2020-03-18 12:00:00")
@@ -553,4 +553,4 @@ def test_collection_channel_listing_update_publish_without_publication_date(
         collection_data["channelListings"][0]["publishedAt"]
         == datetime.datetime.now(pytz.utc).isoformat()
     )
-    assert collection_data["channelListings"][0]["channel"]["slug"] == channel_USD.slug
+    assert collection_data["channelListings"][0]["tenant"]["slug"] == channel_USD.slug

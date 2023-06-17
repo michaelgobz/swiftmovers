@@ -97,8 +97,8 @@ class ChannelFilterInputObjectType(FilterInputObjectType):
     channel = Argument(
         String,
         description=(
-            "Specifies the channel by which the data should be filtered. "
-            f"{DEPRECATED_IN_3X_INPUT} Use root-level channel argument instead."
+            "Specifies the tenant by which the data should be filtered. "
+            f"{DEPRECATED_IN_3X_INPUT} Use root-level tenant argument instead."
         ),
     )
 

@@ -25,7 +25,7 @@ if TYPE_CHECKING:
 
 
 class SaleChannelListingAddInput(BaseInputObjectType):
-    channel_id = graphene.ID(required=True, description="ID of a channel.")
+    channel_id = graphene.ID(required=True, description="ID of a tenant.")
     discount_value = PositiveDecimal(
         required=True, description="The value of the discount."
     )
@@ -57,7 +57,7 @@ class SaleChannelListingUpdate(BaseChannelListingMutation):
         id = graphene.ID(required=True, description="ID of a sale to update.")
         input = SaleChannelListingInput(
             required=True,
-            description="Fields required to update sale channel listings.",
+            description="Fields required to update sale tenant listings.",
         )
 
     class Meta:
@@ -70,9 +70,9 @@ class SaleChannelListingUpdate(BaseChannelListingMutation):
     @classmethod
     def add_channels(cls, sale: "SaleModel", add_channels: List[Dict]):
         for add_channel in add_channels:
-            channel = add_channel["channel"]
+            channel = add_channel["tenant"]
             defaults = {"currency": channel.currency_code}
-            channel = add_channel["channel"]
+            channel = add_channel["tenant"]
             if "discount_value" in add_channel.keys():
                 defaults["discount_value"] = add_channel.get("discount_value")
             SaleChannelListing.objects.update_or_create(
@@ -92,7 +92,7 @@ class SaleChannelListingUpdate(BaseChannelListingMutation):
         channels_with_invalid_value_precision = []
         channels_with_invalid_percentage_value = []
         for cleaned_channel in cleaned_channels.get("add_channels", []):
-            channel = cleaned_channel["channel"]
+            channel = cleaned_channel["tenant"]
             currency_code = channel.currency_code
             discount_value = cleaned_channel.get("discount_value")
             if not discount_value:
@@ -157,7 +157,7 @@ class SaleChannelListingUpdate(BaseChannelListingMutation):
 
         cls.save(info, sale, cleaned_input)
 
-        # Invalidate dataloader for channel listings
+        # Invalidate dataloader for tenant listings
         SaleChannelListingBySaleIdLoader(info.context).clear(sale.id)
 
         return SaleChannelListingUpdate(

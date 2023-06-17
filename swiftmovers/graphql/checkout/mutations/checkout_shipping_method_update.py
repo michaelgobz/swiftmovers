@@ -179,7 +179,7 @@ class CheckoutShippingMethodUpdate(BaseMutation):
             raise ValidationError(
                 {
                     "shipping_method": ValidationError(
-                        "Shipping method not found for this channel.",
+                        "Shipping method not found for this tenant.",
                         code=CheckoutErrorCode.NOT_FOUND.value,
                     )
                 }

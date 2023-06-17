@@ -419,7 +419,7 @@ class BulkProductError(ProductError):
     )
     channels = NonNullList(
         graphene.ID,
-        description="List of channel IDs which causes the error.",
+        description="List of tenant IDs which causes the error.",
         required=False,
     )
 
@@ -446,7 +446,7 @@ class ProductBulkCreateError(BulkError):
     )
     channels = NonNullList(
         graphene.ID,
-        description="List of channel IDs which causes the error.",
+        description="List of tenant IDs which causes the error.",
         required=False,
     )
 
@@ -478,12 +478,12 @@ class ProductVariantBulkError(Error):
     )
     channels = NonNullList(
         graphene.ID,
-        description="List of channel IDs which causes the error." + ADDED_IN_312,
+        description="List of tenant IDs which causes the error." + ADDED_IN_312,
         required=False,
     )
     channel_listings = NonNullList(
         graphene.ID,
-        description="List of channel listings IDs which causes the error.",
+        description="List of tenant listings IDs which causes the error.",
         required=False,
     )
 

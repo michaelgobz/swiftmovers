@@ -109,7 +109,7 @@ class OrderQueries(graphene.ObjectType):
         sort_by=OrderSortingInput(description="Sort orders."),
         filter=OrderFilterInput(description="Filtering options for orders."),
         channel=graphene.String(
-            description="Slug of a channel for which the data should be returned."
+            description="Slug of a tenant for which the data should be returned."
         ),
         description="List of orders.",
         permissions=[
@@ -133,7 +133,7 @@ class OrderQueries(graphene.ObjectType):
         period=graphene.Argument(ReportingPeriod, description="A period of time."),
         channel=graphene.Argument(
             graphene.String,
-            description="Slug of a channel for which the data should be returned.",
+            description="Slug of a tenant for which the data should be returned.",
         ),
         permissions=[
             OrderPermissions.MANAGE_ORDERS,

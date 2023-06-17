@@ -5,7 +5,7 @@ import graphene
 from django.utils.functional import SimpleLazyObject
 from freezegun import freeze_time
 
-from .....channel.error_codes import ChannelErrorCode
+from .....tenant.error_codes import ChannelErrorCode
 from .....core.utils.json_serializer import CustomJsonEncoder
 from .....webhook.event_types import WebhookEventAsyncType
 from .....webhook.payloads import generate_meta, generate_requestor
@@ -14,7 +14,7 @@ from ....tests.utils import get_graphql_content
 CHANNEL_DEACTIVATE_MUTATION = """
     mutation DeactivateChannel($id: ID!) {
         channelDeactivate(id: $id){
-            channel {
+            tenant {
                 id
                 name
                 isActive
@@ -47,8 +47,8 @@ def test_channel_deactivate_mutation(
     # then
     data = content["data"]["channelDeactivate"]
     assert not data["errors"]
-    assert data["channel"]["name"] == channel_USD.name
-    assert data["channel"]["isActive"] is False
+    assert data["tenant"]["name"] == channel_USD.name
+    assert data["tenant"]["isActive"] is False
 
 
 @freeze_time("2022-05-12 12:00:00")

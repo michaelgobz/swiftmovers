@@ -10,7 +10,7 @@ from django_prices.models import MoneyField
 from measurement.measures import Weight
 from prices import Money
 
-from ..channel.models import Channel
+from ..tenant.models import Channel
 from ..core.db.fields import SanitizedJSONField
 from ..core.models import ModelWithMetadata
 from ..core.units import WeightUnits
@@ -300,7 +300,7 @@ class ShippingMethodChannelListing(models.Model):
         return self.price
 
     class Meta:
-        unique_together = [["shipping_method", "channel"]]
+        unique_together = [["shipping_method", "tenant"]]
         ordering = ("pk",)
 
 

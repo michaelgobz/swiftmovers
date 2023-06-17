@@ -1,6 +1,6 @@
 from django.db.models import Exists, OuterRef
 
-from ...channel.models import Channel
+from ...tenant.models import Channel
 from ...order.models import Order
 from ..checkout.dataloaders import CheckoutByTokenLoader, CheckoutLineByIdLoader
 from ..core.dataloaders import DataLoader
